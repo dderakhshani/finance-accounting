@@ -1,0 +1,77 @@
+<div class="flex flex-col p-2" [ngClass]="{ 'opacity-70': readonly !== false }">
+    <mat-label *ngIf="label && labelType=='outside'">
+        {{label}}
+        <label *ngIf="mandatory" style="color: red;">*</label>
+    </mat-label>
+    <mat-form-field appearance="outline">
+        <mat-label *ngIf="label && labelType=='inside'" [ngClass]="{ 'pl-4': !!currencyCode }">
+            {{label}}
+            <label *ngIf="mandatory" style="color: red;">*</label>
+        </mat-label>
+
+        @if(type==='number' || type==='money'){
+        @if(type==='number'){
+        <input step="1" matInput (keyup)="onKeyup($event)" [placeholder]="placeholder" [value]="value" [disabled]="!enabled" [readonly]="readonly !== false" type="number" [formControl]="control" [autocomplete]="autocomplete">
+        }
+        @else {
+        <div class="flex items-center">
+            @if(!!currencyCode){
+                <span class="pr-1">{{ currencyCode! | currencySymbol:'narrow' }}</span>
+            }
+            <input step="1" matInput (keyup)="onKeyup($event)" [placeholder]="placeholder" [value]="value" [disabled]="!enabled" [readonly]="readonly !== false" type="number" [formControl]="control" [autocomplete]="autocomplete" />
+        </div>
+        }
+        }@else if(type==='time'){
+        <input step="60" matInput (keyup)="onKeyup($event)" [placeholder]="placeholder" [value]="value" [disabled]="!enabled" [readonly]="readonly !== false" type="time" [formControl]="control" [autocomplete]="autocomplete">
+        }@else if(type === 'percentage'){
+        <div class="flex items-center">
+            <span class="pr-1" *ngIf="control.value">%</span>
+            <input step="1" matInput (keyup)="onKeyup($event)" [placeholder]="placeholder" [value]="value" [disabled]="!enabled" [readonly]="readonly !== false" type="number" [formControl]="control" [autocomplete]="autocomplete" [min]="min" [max]="max" />
+        </div>
+        }@else if(type!='text-area'){
+        <input step="1" matInput (keyup)="onKeyup($event)" [placeholder]="placeholder" [value]="value" [disabled]="!enabled" [readonly]="readonly !== false" [type]="type" [formControl]="control" [autocomplete]="autocomplete">
+        }@else{
+        <textarea matInput (keyup)="onKeyup($event)" [placeholder]="placeholder" [disabled]="!enabled" [formControl]="control" [autocomplete]="autocomplete" cdkTextareaAutosize cdkAutosizeMinRows="4" cdkAutosizeMaxRows="10">
+            </textarea>
+        }
+
+        <!-- this piece of code that I wrote to handle the fluentValidationError error because, ngx-mat-error can't handle it-->
+        <mat-error *ngIf="control.invalid && control.hasError('fluentValidationError')">
+            {{control.getError('fluentValidationError')}}
+        </mat-error>
+        <mat-error ngx-mat-errors>
+            <span *ngxMatErrorDef="let error; for: 'atLeastOneRequired'">
+                {{error.message}}
+            </span>
+            <span *ngxMatErrorDef="let error; for: 'mobile'">
+                {{error.message}}
+            </span>
+            <span *ngxMatErrorDef="let error; for: 'duplicated'">
+                {{error.message}}
+            </span>
+            <span *ngxMatErrorDef="let error; for: 'customError'">
+                {{error.message}}
+            </span>
+        </mat-error>
+        <mat-hint class="leading-4 -mx-3.5" *ngIf="description">
+            {{description}}
+        </mat-hint>        
+        <mat-hint class="leading-4 -mx-3.5 flex-nowrap" *ngIf="duplicateCheckerConfig">
+            <div *ngIf="duplicateMatchedCount" class="ml-2 -mt-5 flex items-center">
+                <mat-icon material-icons-outlined class="scale-150 mr-1" [color]="'warn'">warning_amber</mat-icon>
+                <span class="text-neutral-600 grow-0 text-sm"> {{duplicateMatchedCount}} contact(s) with similar {{duplicateCheckerConfig.fieldName}} found.
+                    <a class="text-link-500 text-xs" href="javascript:void(0)" (click)="showMatchedModal()">
+                        Find out more.
+                        <mat-icon material-icons-outlined class="scale-150 align-middle text-link-500 ">help_outline</mat-icon>
+                    </a>
+                </span>
+            </div>
+        </mat-hint>
+        @if(auditLogHistorySettings){
+        <app-audit-log-history matSuffix [auditLogHistorySettings]="auditLogHistorySettings">
+        </app-audit-log-history>
+        }
+    </mat-form-field>
+    <ng-content></ng-content>
+    <span *ngIf="error" style="color: red;">{{error}}</span>
+</div>

@@ -1,0 +1,31 @@
+<div class="flex flex-col p-2" [ngClass]="{ 'opacity-70': readonly !== false }">
+    <mat-label *ngIf="label && labelType=='outside'">
+        {{label}}
+        <label *ngIf="mandatory" style="color: red;">*</label>
+    </mat-label>
+    <!-- TODO: needs directive of matUseUTC -->
+    <mat-form-field appearance="outline">
+        <mat-label *ngIf="label && labelType=='inside'">
+            {{label}}
+            <label *ngIf="mandatory" style="color: red;">*</label>
+        </mat-label>
+
+        <input matInput [matDatepicker]="picker" [formControl]="control" [min]="min" [max]="max" [readonly]="readonly !== false" [disabled]="!enabled">
+        <div matSuffix class="flex">
+            <mat-datepicker-toggle [for]="picker"></mat-datepicker-toggle>
+            @if(auditLogHistorySettings){
+            <app-audit-log-history [auditLogHistorySettings]="auditLogHistorySettings">
+            </app-audit-log-history>
+            }
+        </div>
+        <mat-datepicker #picker></mat-datepicker>
+        <mat-error ngx-mat-errors>
+            <span *ngxMatErrorDef="let error; for: 'dateRangeInvalid'">
+                {{error.message}}
+            </span>
+        </mat-error>
+        <mat-hint class="leading-4 -mx-3.5 -mt-2 text-gray-500" *ngIf="description">
+            {{description}}
+        </mat-hint>
+    </mat-form-field>
+</div>

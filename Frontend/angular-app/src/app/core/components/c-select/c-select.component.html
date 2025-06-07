@@ -1,0 +1,59 @@
+<div class="flex flex-col p-2">
+    <ng-container *ngIf="!isLoading">
+        <mat-label *ngIf="label && labelType=='outside'">
+            {{label}}
+            <label *ngIf="mandatory" style="color: red;">*</label>
+        </mat-label>
+    </ng-container>
+
+    <mat-form-field appearance="outline">
+
+        <mat-label *ngIf="label && labelType=='inside' && !isLoading">
+            {{label}}
+            <label *ngIf="mandatory" style="color: red;">*</label>
+        </mat-label>
+
+        <!-- loading indicator -->
+        <mat-label *ngIf="isLoading">
+            <mat-spinner class="spinner" diameter="20"></mat-spinner>
+        </mat-label>
+        @if(useDataItemAsValue){
+        <mat-select [formControl]="control" [disabled]="!enabled" (selectionChange)='onSelectionChanged($event)' [compareWith]="compareValue">
+            @if(unselectOptionEnabled){
+            <mat-option [value]="null">
+                None
+            </mat-option>
+            }
+            <mat-option *ngFor="let item of _displayedData" [value]="item">
+                {{item[fieldName]}}
+            </mat-option>
+        </mat-select>
+        } @else {
+        <mat-select [formControl]="control" [disabled]="!enabled" (selectionChange)='onSelectionChanged($event)'>
+            @if(unselectOptionEnabled){
+            <mat-option [value]="null">
+                None
+            </mat-option>
+            }
+            <mat-option *ngFor="let item of _displayedData" [value]="item[valueFieldName]">
+                {{item[fieldName]}}
+            </mat-option>
+        </mat-select>
+        }
+        <!-- this piece of code that I wrote to handle the fluentValidationError error because of ngx-mat-error can't handle it-->
+        <mat-error *ngIf="control.invalid && control.hasError('fluentValidationError')">
+            {{control.getError('fluentValidationError')}}
+        </mat-error>
+        <mat-error ngx-mat-errors></mat-error>
+        <mat-hint class="leading-4 -mx-3.5" *ngIf="description">{{description}}</mat-hint>
+        <mat-error *ngIf="hasError">
+            Please select one item
+        </mat-error>
+        @if(auditLogHistorySettings){
+        <div matSuffix (click)="$event.stopPropagation()">
+            <app-audit-log-history [auditLogHistorySettings]="auditLogHistorySettings">
+            </app-audit-log-history>
+        </div>
+        }
+    </mat-form-field>
+</div>

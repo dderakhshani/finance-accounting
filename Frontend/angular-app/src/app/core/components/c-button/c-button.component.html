@@ -1,0 +1,12 @@
+<button [class]="cssClass" mat-raised-button [color]="color" [disabled]="!enabled" (click)="onButtonClicked()">
+    <mat-icon *ngIf="!isWaitng && iconName">
+        {{iconName}}
+    </mat-icon>
+
+    <mat-icon *ngIf="isWaitng">
+        <mat-spinner color="accent" diameter="20">
+        </mat-spinner>
+    </mat-icon>
+
+    {{label}}
+</button>

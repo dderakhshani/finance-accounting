@@ -1,0 +1,51 @@
+<div class="flex flex-col p-2" [ngClass]="{ 'opacity-70': readonly !== false }">
+    <mat-label *ngIf="label && labelType=='outside'">
+        {{label}}
+        <label *ngIf="mandatory" style="color: red;">*</label>
+    </mat-label>
+
+    <mat-form-field appearance="outline">
+        <mat-label *ngIf="label && labelType=='inside'">
+            {{label}}
+            <label *ngIf="mandatory" style="color: red;">*</label>
+        </mat-label>
+        <div matSuffix class="flex">
+            <mat-datepicker-toggle matTooltip="Select data and time" (click)="openCalendar()" [disabled]="!enabled"></mat-datepicker-toggle>
+        </div>
+        <input matInput placeholder="{{this.dateTimeFormat}}" [formControl]="dateTimeInInputControl" [disabled]="!enabled" [readonly]="readonly !== false" type="text" (input)="dateTimeChanged()" (blur)="onTouched()">
+    </mat-form-field>
+
+    @if(auditLogHistorySettings){
+    <app-audit-log-history [auditLogHistorySettings]="auditLogHistorySettings">
+    </app-audit-log-history>
+    }
+</div>
+
+
+<ng-template #selectDateTemplate let-data>
+    <div class="grid grid-cols-5 gap-2 lg:w-[30rem] bg-white">
+        <div class="col-span-5 lg:col-span-3">
+            <mat-calendar #calendar [(selected)]="matCalendarDate" [startAt]="matCalendarDate" [minDate]="minDate"></mat-calendar>
+        </div>
+        <form [formGroup]='dateTimeInDialogueForm' class="col-span-5 lg:col-span-2 my-4 p-5">
+            <mat-form-field class="w-full py-1" appearance="outline">
+                <mat-label>Date</mat-label>
+                <input class="form-control" matInput placeholder="{{this.dateFormat}}" type="text" formControlName="date" (input)="dateChanged()" />
+                <mat-error ngx-mat-errors>
+                    <span *ngxMatErrorDef="let error; for: 'date'">
+                        Invalid input
+                    </span>
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field class="w-full py-1" appearance="outline">
+                <mat-label>Time</mat-label>
+                <input class="form-control" matInput placeholder="{{this.timeFormat}}" type="time" formControlName="time" />
+                <mat-error ngx-mat-errors>
+                    <span *ngxMatErrorDef="let error; for: 'time'">
+                        {{error.value}}
+                    </span>
+                </mat-error>
+            </mat-form-field>
+        </form>
+    </div>
+</ng-template>
