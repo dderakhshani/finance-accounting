@@ -1,0 +1,20 @@
+<mat-card class="h-100 d-flex flex-column  overflow-auto p-2">
+  <app-action-bar class="pb-2" (onList)="navigateToPayableDocumentList()" (onAdd)="reset()" (onSave)="submitCheck()" (onDelete)="delete()"
+                  (onRefresh)="initialize()" (onCustomClick)="handleCustomAction($event)">
+    <div class="d-flex gap-3">
+      <p>{{titleHeader}}</p>
+<!--      <button mat-raised-button color="primary" [matMenuTriggerFor]="printActions">-->
+<!--        <mat-label> چاپ</mat-label>-->
+<!--        <mat-icon>print</mat-icon>-->
+<!--      </button>-->
+<!--      <mat-menu #printActions>-->
+<!--        <button mat-menu-item (click)="print()">روکش سند</button>-->
+<!--        <button mat-menu-item (click)="printSimple()">ساده</button>-->
+<!--      </mat-menu>-->
+    </div>
+  </app-action-bar>
+
+
+  <app-payable-item-detail [request]="request" style="height: 100%;">
+  </app-payable-item-detail>
+</mat-card>

@@ -1,0 +1,66 @@
+<mat-dialog
+  (onSubmit)="submit()"
+  (onDelete)="delete()"
+  [showDeleteBtn]="pageMode === pageModes.Update"
+>
+
+  <div dialog-header="">آدرس شخص</div>
+  <div dialog-content="" [formGroup]="form">
+
+
+    <div class="row">
+      <div class="col-md-4">
+        <mat-form-field>
+          <mat-label> عنوان</mat-label>
+          <mat-select formControlName="typeBaseId">
+            <mat-option *ngFor="let addressType of addressTypes" [value]="addressType.id">
+              {{addressType.title}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div class="col-md-4">
+        <mat-form-field>
+          <mat-label> شهر</mat-label>
+          <input formControlName="countryDivisionId" type="text" matInput
+                 [matAutocomplete]="cityAuto">
+          <mat-autocomplete [displayWith]="getCountryDivisionTitle.bind(this)" autoActiveFirstOption
+                            #cityAuto="matAutocomplete">
+            <mat-option
+              *ngFor="let countryDivision of countryDivisions | arrayFilter : form.controls['countryDivisionId'].value : ['ostanTitle', 'shahrestanTitle']"
+              [value]="countryDivision.id">
+
+              {{[countryDivision.ostanTitle, countryDivision.shahrestanTitle].join(' ، ')}}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+      </div>
+      <div class="col-md-4">
+        <mat-form-field>
+          <mat-label>کدپستی</mat-label>
+          <input formControlName="postalCode" matInput type="text">
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="row">
+
+
+      <!--      <div class="col-md-4">-->
+      <!--        <mat-form-field >-->
+      <!--          <mat-label>موبایل</mat-label>-->
+      <!--          <input formControlName="mobile" matInput type="text">-->
+      <!--        </mat-form-field>-->
+      <!--      </div>-->
+      <div class="col-md-12">
+        <mat-form-field>
+          <mat-label>آدرس</mat-label>
+          <input formControlName="address" matInput type="text">
+        </mat-form-field>
+      </div>
+    </div>
+
+  </div>
+
+</mat-dialog>

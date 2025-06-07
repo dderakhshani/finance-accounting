@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+     <TargetFramework>net8.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\Core\Eefa.Common\Eefa.Common.csproj" />
+    <ProjectReference Include="..\Eefa.Ticketing.Domain.SeedWork\Eefa.Ticketing.Domain.SeedWork.csproj" />
+  </ItemGroup>
+
+</Project>

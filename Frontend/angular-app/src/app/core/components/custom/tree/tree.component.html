@@ -1,0 +1,93 @@
+
+
+  <div class="app-tree-wrapper">
+    <div class="card-header sticky-header">
+      <div class="card-breadcrumb">
+        <app-breadcrumb   [nodes]="_nestedNodes" [disabled]="displayLayout!=='tree'" (nodeSelected)="onNodeClick($event)" (pathEvent)="handlePathEvent($event)"></app-breadcrumb>
+      </div>
+      <div class="app-tree-search">
+        <div class="d-flex gap-2">
+          <div class="d-flex align-items-center">
+            <mat-button-toggle-group>
+              <mat-button-toggle [checked]="displayLayout==='tree'"
+                                 (click)="displayLayout = 'tree'"
+                                 matTooltip="نمایش درختی">
+                <mat-icon color="primary">account_tree</mat-icon>
+              </mat-button-toggle>
+              <mat-button-toggle [checked]="displayLayout==='grid'"
+                                 (click)="displayLayout = 'grid'"
+                                 matTooltip="نمایش جدولی">
+                <mat-icon color="primary">table_rows</mat-icon>
+              </mat-button-toggle>
+
+
+            </mat-button-toggle-group>
+          </div>
+
+          <div class="w-100">
+            <mat-form-field style="position: relative">
+              <mat-label>{{ searchTitle }}</mat-label>
+              <img style="position: absolute; width: 25px; left: 2.5%; top: 0; bottom: 15%; margin: auto"
+                   src="/assets/icons/search.svg" alt="">
+              <input (keyup)="handleSearchNodes()" [formControl]="searchFormControl"
+                     style="width: 90%; margin-left: auto"
+                     matInput type="text">
+            </mat-form-field>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <div class="d-flex overflow-auto flex-column h-75 " *ngIf="displayLayout==='tree'">
+
+      <div class="app-tree  " >
+
+        <app-tree-item
+          *ngFor="let node of nodes"
+          [node]="node"
+
+          [idKey]="idKey"
+          [parentKey]="parentKey"
+          [childrenKey]="childrenKey"
+          [levelCodeKey]="levelCodeKey"
+          [titleKey]="titleKey"
+          [codeKey]="codeKey"
+          [currentLevel]="2"
+          [restrictedLevel]="restrictedLevel"
+          [selectable]="selectable"
+          [editable]="editable"
+          [canAdd]="canAdd && !isSearching"
+
+          (onClick)="onNodeClick($event)"
+          (onEdit)="onNodeEdit($event)"
+          (onAdd)="onNodeAdd($event)"
+          (onSelect)="onNodeSelect($event)"
+
+          [isSearching]="isSearching"
+        ></app-tree-item>
+
+        <div class="add-node-card py-1" *ngIf="canAdd && !isSearching  &&!isRestrictedLevel()"
+             (click)="onNodeAdd(undefined)">
+          <div class="add-card-detail">
+            <img src="/assets/icons/add-tree.svg" alt="">
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+
+    <div class=" h-75 overflow-auto " style="padding-top: 10px;"
+         *ngIf="displayLayout==='grid' && _gridNodes.length > 0">
+
+      <app-table-virtual-scrolling
+        class=" h-100 overflow-auto"
+        [tableRows]="_gridNodes"
+        [tableConfigurations]="tableConfigurations"
+      >
+
+      </app-table-virtual-scrolling>
+    </div>
+  </div>
+
+

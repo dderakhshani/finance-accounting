@@ -1,0 +1,258 @@
+<mat-dialog-content class="panel">
+
+
+  <table cdkDropList class="table " (cdkDropListDropped)="drop($event)">
+    <thead>
+    <tr class="">
+
+      <!--    <th>ردیف</th>-->
+      <th>ردیف</th>
+      <th>قابلیت جابجایی</th>
+      <th   *ngIf="tableConfigurations?.options?.showGroupRow"> گروه ستون</th>
+      <th>عنوان ستون</th>
+      <th>ترتیب نمایش</th>
+      <th>عرض ستون</th>
+      <th>نام فونت</th>
+      <th>اندازه فونت</th>
+      <th>وزن فونت</th>
+      <th>نوع نمایش اعداد</th>
+      <th>نمایش بصورت چند خطی</th>
+      <th>نمایش راهنما</th>
+      <th>نمایش فیلد</th>
+      <th>پرینت فیلد</th>
+    </tr>
+    </thead>
+    <tbody *ngFor="let column of displayedColumns; index as i"
+           cdkDrag
+           [cdkDragDisabled]="column.isDisableDrop">
+    <tr  *ngIf="column.type != fieldTypes.ExpandRowWithTemplate">
+      <!--    drag-index-->
+
+      <td>
+        <div class="d-flex justify-content-around  w-100">
+          {{ i + 1 }}
+          <div class="flex-row-center mx-1" [style.cursor]="column.isDisableDrop ? 'not-allowed' : 'move'">
+            <mat-icon *ngIf="column.isDisableDrop" class="drag-icon-disable  font-30">
+              do_not_disturb_on
+            </mat-icon>
+            <mat-icon cdkDragHandle *ngIf="!column.isDisableDrop" class="drag-icon font-30">
+              open_with
+            </mat-icon>
+          </div>
+        </div>
+      </td>
+      <!--    isDisableDrop-->
+      <td>
+        <mat-checkbox
+          color="warn" [(ngModel)]="column.isDisableDrop"></mat-checkbox>
+      </td>
+      <!--    group-->
+      <td class="" style="padding: 1px"  *ngIf="tableConfigurations?.options?.showGroupRow">
+
+        <small>  {{column.groupName }}</small>
+      </td>
+      <!--    title-->
+      <td class="" style="padding: 1px">
+
+        <input [(ngModel)]="column.title" style="  margin: 0; font-size: 12px" class="form-control " [disabled]="column.isDisableDrop">
+      </td>
+      <!--    index-->
+      <td>{{ column.index }}</td>
+      <!--    Width-->
+      <td>
+        <div class="flex-row-center">
+          <span class="m-0 font-10">{{ column.width }}</span>
+          <mat-slider
+            class="mat-slider-column"
+            [disabled]="column.isDisableDrop"
+            [invert]="false"
+            [max]="maxWidth"
+            [min]="minWidth"
+            [color]="'warn'"
+            [step]="step"
+            [thumbLabel]="thumbLabelWidth"
+
+            [(ngModel)]="column.width"
+
+            aria-labelledby="example-name-label">
+
+
+          </mat-slider>
+        </div>
+      </td>
+      <!--    //fontFamily-->
+      <td>
+        <div class="form-group " >
+
+          <select id="fontFamilySelect" class="form-select" [(ngModel)]="column.fontFamily" [disabled]="column.isDisableDrop">
+            <option value="" disabled selected>انتخاب کنید</option>
+            <option *ngFor="let family of fontFamilies" [value]="family">
+              {{ fontFamiliesLabelMapping[family] }}
+            </option>
+          </select>
+        </div>
+      </td>
+
+      <!--    //fontWeight-->
+      <td>
+        <div class="form-group "  >
+
+          <select id="fontWeightSelect" class="form-select" [(ngModel)]="column.fontWeight" [disabled]="column.isDisableDrop">
+            <option value="" disabled selected>انتخاب کنید</option>
+            <option *ngFor="let weight of fontWeights" [value]="weight">
+              {{ fontWeightsLabelMapping[weight] }}
+            </option>
+          </select>
+        </div>
+      </td>
+      <!--    //FontSize-->
+      <td>
+        <div class="flex-row-center">
+          <span class="m-0 font-10">{{ column.fontSize }}</span>
+          <mat-slider
+            class="mat-slider-column"
+            [disabled]="column.isDisableDrop"
+            [invert]="false"
+            [max]="maxFontSize"
+            [min]="minFontSize"
+            [color]="'warn'"
+            [step]="step"
+            [thumbLabel]="thumbLabelFontSize"
+
+            [(ngModel)]="column.fontSize"
+
+            aria-labelledby="example-name-label">
+
+
+          </mat-slider>
+        </div>
+      </td>
+      <!-- DecimalFormat    -->
+      <td>
+        <!--        *ngIf="column.type == fieldTypes.Money || column.type == fieldTypes.Number "-->
+        <div class="form-group "  *ngIf="column.type == fieldTypes.Money || column.type == fieldTypes.Number " >
+
+          <select id="decimalFormatSelect" class="form-select" [(ngModel)]="column.digitsInfo" [disabled]="column.isDisableDrop">
+            <option value="" disabled selected>انتخاب کنید</option>
+            <option *ngFor="let format of decimalFormats" [value]="format">
+              {{ DecimalFormatLabelMapping[format] }}
+            </option>
+          </select>
+        </div>
+      </td>
+      <!-- lineStyle   -->
+      <td>
+        <mat-slide-toggle class="mat-slide-toggle-column" [color]="'warn'" [disabled]="column.isDisableDrop"
+                          [checked]="column.lineStyle ==='default'"
+                          (change)="changeLineStyleToggle($event ,column)"
+        ></mat-slide-toggle>
+      </td>
+      <!--    matTooltipDisabled-->
+      <td>
+        <mat-slide-toggle class="mat-slide-toggle-column" [color]="'warn'" [disabled]="column.isDisableDrop"
+                          [checked]="!column.matTooltipDisabled"
+                          (change)="changeMatTooltipDisabledToggle($event ,column)"
+        ></mat-slide-toggle>
+      </td>
+      <td (click)="handleDisplayColumn(column)"  >
+        <mat-icon class="font-30" *ngIf="column.display"
+                  matTooltip="مشاهده">
+          visibility
+        </mat-icon>
+        <mat-icon matTooltip="پنهان" class="font-30" *ngIf="!column.display">
+          visibility_off
+        </mat-icon>
+      </td>
+      <td (click)="handlePrintColumn(column)"  >
+        <mat-icon class="font-30" *ngIf="column.print"
+                  matTooltip="پرینت">
+          print
+        </mat-icon>
+        <mat-icon matTooltip="پنهان" class="font-30" *ngIf="!column.print">
+          print_disabled
+        </mat-icon>
+      </td>
+
+    </tr>
+
+
+    </tbody>
+  </table>
+
+
+  <div class="card-box">
+    <div class="flex-row-space-between px-2 w-100">
+
+      <div class="flex-row-space-between ">
+        <span class="ml-1">
+          نمایش ردیف جمع کل
+        </span>
+        <mat-slide-toggle class="mat-slide-toggle-column" [color]="'warn'" [checked]="options.showSumRow"
+                          (change)="options.showSumRow = !options.showSumRow"
+        ></mat-slide-toggle>
+      </div>
+      <div class="flex-row-space-between ml-1">
+        <span class="mx-1">
+          نمایش ردیف جمع کل در پرینت
+        </span>
+        <mat-slide-toggle class="mat-slide-toggle-column" [color]="'warn'" [checked]="options.printSumRow"
+                          (change)="options.printSumRow = !options.printSumRow"
+        ></mat-slide-toggle>
+      </div>
+      <div class="flex-row-center flex-fill" *ngIf="options.showSumRow">
+        <span class="ml-1">
+          عنوان ردیف جمع کل
+        </span>
+        <input [(ngModel)]="options.sumLabel" class="form-control width-15 ">
+      </div>
+      <div class="flex-row-space-between ">
+
+        <button mat-raised-button color="primary" (click)="rest()"
+                matTooltip="بازگردانی تنظیمات به حالت پیش فرض"
+        >
+          <mat-icon class="material-symbols-outlined">
+            restart_alt
+          </mat-icon>
+          <mat-label>
+            ریست کردن
+          </mat-label>
+        </button>
+
+      </div>
+
+    </div>
+
+
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button mat-raised-button   (click)="save()"
+          matTooltip="ذخیره تنظیمات در مرورگر"
+          cdkFocusInitial
+          style="background-color: #1cac2f !important; color: white !important; border-color: #0ca331 !important;"
+  >
+
+    <mat-icon class="material-symbols-outlined">
+      save
+    </mat-icon>
+    <mat-label>
+      ذخیره و بستن
+
+    </mat-label>
+  </button>
+
+  <button mat-button mat-raised-button  color="warn" (click)="delete()"
+          matTooltip="باز گرداندن به تنظیمات پیش فرض"
+  >
+
+    <mat-icon class="material-symbols-outlined">
+      delete_forever
+    </mat-icon>
+    <mat-label>
+      باز گرداندن به تنظیمات پیش فرض و بستن
+
+    </mat-label>
+  </button>
+  <button mat-button mat-raised-button color="primary" (click)="closeDialog()" >انصراف و بستن</button>
+</mat-dialog-actions>

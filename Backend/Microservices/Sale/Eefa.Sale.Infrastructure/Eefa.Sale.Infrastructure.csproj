@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+     <TargetFramework>net8.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Repositories\_Repository.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Core\Eefa.Common\Eefa.Common.csproj" />
+    <ProjectReference Include="..\Eefa.Sale.Application\Eefa.Sale.Application.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,34 @@
+trigger:
+- master
+
+pool:
+  vmImage: 'windows-latest'
+  name: build
+
+steps:
+- checkout: self
+
+- task: CopyFilesOverSSH@0
+  displayName: Upload Scripts
+  inputs:
+    sshEndpoint: $(Server_Connection_Name)
+    sourceFolder: $(Build.SourcesDirectory)/scripts
+    targetFolder: /tmp
+    
+- task: SSH@0
+  displayName: Pull or Clone The Repo
+  inputs:
+    sshEndpoint: $(Server_Connection_Name)
+    runOptions: 'commands'
+    commands: |
+      chmod +x /tmp/check_and_clone_repo.sh
+      /tmp/check_and_clone_repo.sh "$(PROJECT_FOLDER_NAME)" "$(REPOSITORY_ADDRESS)"
+
+- task: SSH@0
+  displayName: Build Docker image
+  inputs:
+    sshEndpoint: $(Server_Connection_Name)
+    runOptions: 'commands'
+    commands: |
+      chmod +x /tmp/build-and-tag-docker-image.sh
+      /tmp/build-and-tag-docker-image.sh $(PROJECT_FOLDER_NAME) $(PROJECT_NAME)

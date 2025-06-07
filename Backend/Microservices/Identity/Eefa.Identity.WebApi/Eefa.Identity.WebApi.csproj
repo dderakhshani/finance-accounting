@@ -1,0 +1,69 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+     <TargetFramework>net8.0</TargetFramework>
+  </PropertyGroup>
+
+	<PropertyGroup>
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+		<NoWarn>1701;1702;1591;1998</NoWarn>
+		<LangVersion>preview</LangVersion>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+	  <DocumentationFile></DocumentationFile>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <Content Remove="web.release.config" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <_WebToolingArtifacts Remove="Properties\PublishProfiles\DevIISProfile.pubxml" />
+	  <_WebToolingArtifacts Remove="Properties\PublishProfiles\FactoryDevIISProfile.pubxml" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Include="web.release.config" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <PackageReference Include="CacheManager.Serialization.Json" Version="1.2.0" />
+	  <PackageReference Include="CacheManager.StackExchange.Redis" Version="1.2.0" />
+	  <PackageReference Include="EFCoreSecondLevelCacheInterceptor" Version="3.2.0" />
+	  <PackageReference Include="NLog" Version="4.7.12" />
+	  <PackageReference Include="NLog.Extensions.Logging" Version="1.7.4" />
+	  <PackageReference Include="NLog.Web.AspNetCore" Version="4.14.0" />
+	  <PackageReference Include="Scrutor" Version="3.3.0" />
+	</ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Core\Eefa.Persistence\Eefa.Persistence.csproj" />
+    <ProjectReference Include="..\..\..\Core\Library\Library.csproj" />
+    <ProjectReference Include="..\Eefa.Identity.Data\Eefa.Identity.Data.csproj" />
+    <ProjectReference Include="..\Eefa.Identity.Services\Eefa.Identity.Services.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Program.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="InternalLog\" />
+  </ItemGroup>
+
+</Project>

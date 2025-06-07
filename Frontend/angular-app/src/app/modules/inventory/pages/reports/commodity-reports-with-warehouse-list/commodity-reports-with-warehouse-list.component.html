@@ -1,0 +1,297 @@
+<div class="h-100 d-flex flex-column overflow-auto gap-3" style="max-height: inherit; padding: 0!important;">
+
+    <!--    <app-form-actions [actions]="listActions" (OnRefresh)="get()" style="padding:unset !important;margin:unset !important">
+           <button mat-raised-button color="primary" (click)="print()" [disabled]="_notificationService.isLoader">
+               <mat-icon>
+                   print
+               </mat-icon>
+               چاپ
+           </button>
+
+
+       </app-form-actions> -->
+
+    <mat-card>
+        <form [formGroup]="SearchForm">
+            <div class="row">
+                <div class="col-md-2">
+                    <mat-form-field>
+                        <mat-label>از تاریخ مالی</mat-label>
+                        <input tabindex="0" matInput [matDatepicker]="pickerFrom" formControlName="fromDate">
+                        <mat-datepicker-toggle matSuffix [for]="pickerFrom">
+                            <mat-icon matDatepickerToggleIcon>
+                                <img class="mb-3" src="/assets/icons/calendar.svg" alt="">
+                            </mat-icon>
+                        </mat-datepicker-toggle>
+                        <mat-datepicker #pickerFrom></mat-datepicker>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-2">
+                    <mat-form-field>
+                        <mat-label>تا تاریخ مالی</mat-label>
+                        <input tabindex="1" matInput [matDatepicker]="picker" formControlName="toDate">
+                        <mat-datepicker-toggle matSuffix [for]="picker">
+                            <mat-icon matDatepickerToggleIcon>
+                                <img class="mb-3" src="/assets/icons/calendar.svg" alt="">
+                            </mat-icon>
+                        </mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+                </div>
+
+
+
+                <div class="col-md-4">
+
+                    <mat-button-toggle-group style="width: 100%;" class="font-13" value="1">
+                        <mat-button-toggle style="width: 35%;" (click)="setvalue(1)" value="1">
+                            سند زده شدها و نشده ها
+                        </mat-button-toggle>
+                        <mat-button-toggle style="width: 30%;" (click)="setvalue(2)" value="2">
+                            سند زده نشده ها
+                        </mat-button-toggle>
+                        <mat-button-toggle style="width: 28%;" (click)="setvalue(3)" value="3">
+                            سند زده شده ها
+                        </mat-button-toggle>
+
+                    </mat-button-toggle-group>
+                </div>
+                <div class="col-md-4">
+
+                    <app-combo-search-multiper-items [nodes]="WarehouseNodes"
+                                                     [listItems]="filterWarehouseNodes"
+                                                     (SelectedList)="getWarehousesList($event)"
+                                                     [lablelTitleCombo]="'انبارها'"
+                                                     [isRequired]="true"
+                                                     [viewDetalis]="false">
+                    </app-combo-search-multiper-items>
+
+                </div>
+                <div class="col-md-2">
+                    <button mat-raised-button color="primary" (click)="currentPage=1;get()" [disabled]="_notificationService.isLoader" [tabindex]="8" id="Search">
+                        <mat-icon>
+                            search
+                        </mat-icon>
+                        جستجو
+                    </button>
+                    <button mat-stroked-button color="primary" type="button" (click)="ondeleteFilter(SearchForm)" [disabled]="_notificationService.isLoader" [tabindex]="9">
+                        <mat-icon>
+                            delete_forever
+                        </mat-icon>
+                        حذف فیلترها
+                    </button>
+                </div>
+            </div>
+        </form>
+
+    </mat-card>
+
+
+    <mat-spinner style="top:30%;right:40%;position:absolute;z-index:1000" *ngIf="_notificationService.isLoader"></mat-spinner>
+
+    <div [ngClass]="{'modal-large-table':IslargeSize ,'modal-large-close': !IslargeSize}" class="h-100 overflow-auto p-0">
+
+        <div [ngClass]="{'modal-large-table-content':IslargeSize}" >
+
+            <mat-card id="reports-containt">
+
+                <div class="row">
+                    <app-table-filter (GetQuery)="get($event)"
+                                      (onPrint)="print()"
+                                      (IslargeSize)="IslargeSize=$event"
+                                      [data]="Reports_filter"
+                                      (filterTable)="filterTable($event)"
+                                      (isSelectedRows)="selectedRows($event)"
+                                      [IsShowFilter]="true">
+                    </app-table-filter>
+
+                    <div [ngClass]="{'tableFixHead_largSize':IslargeSize ,'tableFixHead': !IslargeSize}" id="report-Used_Quantity-2" [appDynamicTableHeight]="marginFromBottom_appDynamicTableHeight" [tableData]="data">
+                        <table class="mas-table" id="mas-table-2">
+                            <thead>
+                                <tr>
+                                    <td colspan="2" style="width:23%">
+                                    </td>
+
+                                    <td colspan="2" class="width-20">
+                                         ابتدا دوره
+                                    </td>
+                                    <td colspan="4" class="width-20">
+                                        وارده
+                                    </td>
+                                    <td colspan="2" class="width-20">
+                                        صادره
+                                    </td>
+                                    <td colspan="2" class="width-20">
+                                         انتهای دوره
+                                    </td>
+                                </tr>
+                                <tr>
+
+
+                                    <th  resizable class="width-3">
+                                        ردیف
+                                    </th>
+                                    <th  resizable class="width-10" accessKey="warehouseTitle" abbr="string">
+                                        انبار
+                                    </th>
+
+                                    <th  resizable class="width-10" accessKey="prefix_Quantity" abbr="number">
+                                        مقدار اولیه
+                                    </th>
+                                    <th  resizable class="width-10" accessKey="prefix_TotalItemPrice" abbr="number">
+                                        مبلغ اولیه
+                                    </th>
+
+                                    <th  resizable class="width-10" accessKey="current_Enter_Purchase_Quantity" abbr="number">
+                                        مقدار وارده خرید
+                                    </th>
+                                    <th  resizable class="width-10" accessKey="current_Enter_Used_Quantity" abbr="number">
+                                        مقدار وارده مصرف
+                                    </th>
+                                    <th  resizable class="width-10" accessKey="current_Enter_Purchase_TotalItemPrice" abbr="number">
+                                        مبلغ وارده خرید
+                                    </th>
+
+                                    <th  resizable class="width-10" accessKey="current_Enter_Used_TotalItemPrice" abbr="number">
+                                        مبلغ وارده مصرف
+                                    </th>
+
+
+                                    <th  resizable class="width-10" accessKey="current_Exit_Quantity" abbr="number">
+                                        مقدار صادره
+                                    </th>
+                                    <th  resizable class="width-10" accessKey="current_Exit_TotalItemPrice" abbr="number">
+                                        مبلغ صادره
+                                    </th>
+
+                                    <th  resizable class="width-10" accessKey="postfix_Quantity" abbr="number">
+                                        مقدار نهایی
+                                    </th>
+
+                                    <th  resizable class="width-10" accessKey="postfix_TotalItemPrice" abbr="number">
+                                        مبلغ نهایی
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody *ngFor="let item of data ;let i=index">
+
+                                <tr>
+                                    <th   rowspan="2">
+                                        {{i+1}}
+                                    </th>
+                                    <td accessKey="warehouseTitle" rowspan="2">
+
+
+                                        {{item.warehouseTitle}}
+
+                                    </td>
+
+                                    <!---->
+                                    <td accessKey="prefix_Quantity" matTooltip="{{item.prefix_Quantity}}" rowspan="2">
+                                        {{item.prefix_Quantity | number : '1.0-0'}}
+
+                                    </td>
+                                    <td accessKey="prefix_TotalItemPrice" matTooltip="{{item.prefix_TotalItemPrice}}" rowspan="2">
+                                        {{item.prefix_TotalItemPrice | number : '1.0-0'}}
+                                    </td>
+
+                                    <!---->
+                                    <td class="width-10" accessKey="current_Enter_Purchase_Quantity" matTooltip="{{item.current_Enter_Purchase_Quantity}}">
+                                        {{item.current_Enter_Purchase_Quantity | number : '1.0-0'}}
+                                    </td>
+                                    <td class="width-10" accessKey="current_Enter_Used_Quantity" matTooltip="{{item.current_Enter_Used_Quantity}}">
+                                        {{item.current_Enter_Used_Quantity | number : '1.0-0'}}
+                                    </td>
+                                    <td class="width-10" accessKey="current_Enter_Purchase_TotalItemPrice" matTooltip="{{item.current_Enter_Purchase_TotalItemPrice}}">
+                                        {{item.current_Enter_Purchase_TotalItemPrice | number : '1.0-0'}}
+                                    </td>
+
+                                    <td class="width-10" accessKey="current_Enter_Used_TotalItemPrice" matTooltip="{{item.current_Enter_Used_TotalItemPrice}}">
+                                        {{item.current_Enter_Used_TotalItemPrice | number : '1.0-0'}}
+                                    </td>
+
+                                    <!---->
+                                    <td accessKey="current_Exit_Quantity" matTooltip="{{item.current_Exit_Quantity}}" rowspan="2">
+                                        {{item.current_Exit_Quantity | number : '1.0-0'}}
+                                    </td>
+                                    <td accessKey="current_Exit_TotalItemPrice" matTooltip="{{item.current_Exit_TotalItemPrice}}" rowspan="2">
+                                        {{item.current_Exit_TotalItemPrice | number : '1.0-0'}}
+                                    </td>
+                                    <!---->
+                                    <td accessKey="postfix_Quantity" matTooltip="{{item.postfix_Quantity}}" rowspan="2">
+                                        {{((item.prefix_Quantity+item.current_Enter_Purchase_Quantity + item.current_Enter_Used_Quantity)-item.current_Exit_Quantity) | number : '1.0-0'}}
+                                    </td>
+
+                                    <td accessKey="postfix_TotalItemPrice" matTooltip="{{item.postfix_TotalItemPrice}}" rowspan="2">
+
+                                        {{((item.prefix_TotalItemPrice+ item.current_Enter_Purchase_TotalItemPrice + item.current_Enter_Used_TotalItemPrice)-item.current_Exit_TotalItemPrice) | number : '1.0-0'}}
+
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td colspan="2" style="background-color:aliceblue">
+                                        {{item.current_Enter_Purchase_Quantity + item.current_Enter_Used_Quantity | number : '1.0-0'}}
+                                    </td>
+                                    <td colspan="2" style="background-color:aliceblue">
+                                        {{item.current_Enter_Purchase_TotalItemPrice + item.current_Enter_Used_TotalItemPrice | number : '1.0-0'}}
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                            <tfoot>
+
+                                <tr>
+                                    <td rowspan="2">
+                                        {{dataLength}}
+                                    </td>
+
+                                    <td accessKey="warehouseTitle" rowspan="2">
+                                        جمع کل
+                                    </td>
+                                    <td rowspan="2" accessKey="prefix_Quantity" matTooltip="{{prefix_Quantity}}">{{prefix_Quantity | number : '1.0-0'}}</td>
+                                    <td rowspan="2" accessKey="prefix_TotalItemPrice" matTooltip="{{prefix_TotalItemPrice}}">{{prefix_TotalItemPrice | number : '1.0-0'}}</td>
+
+                                    <td  accessKey="current_Enter_Purchase_Quantity" matTooltip="{{current_Enter_Purchase_Quantity}}">{{current_Enter_Purchase_Quantity | number : '1.0-0'}}</td>
+
+                                    <td  accessKey="current_Enter_Used_Quantity" matTooltip="{{current_Enter_Used_Quantity}}">{{current_Enter_Used_Quantity | number : '1.0-0'}}</td>
+
+                                    <td  accessKey="current_Enter_Purchase_TotalItemPrice" matTooltip="{{current_Enter_Purchase_TotalItemPrice}}">{{current_Enter_Purchase_TotalItemPrice | number : '1.0-0'}}</td>
+                                    <td accessKey="current_Enter_Used_TotalItemPrice" matTooltip="{{current_Enter_Used_TotalItemPrice}}">{{current_Enter_Used_TotalItemPrice | number : '1.0-0'}}</td>
+
+                                    <td rowspan="2" accessKey="postfix_Quantity" matTooltip="{{current_Exit_Quantity}}">{{current_Exit_Quantity | number : '1.0-0'}}</td>
+                                    <td rowspan="2" accessKey="current_Exit_TotalItemPrice" matTooltip="{{current_Exit_TotalItemPrice}}">{{current_Exit_TotalItemPrice | number : '1.0-0'}}</td>
+
+                                    <td rowspan="2" accessKey="postfix_Quantity" matTooltip="{{postfix_Quantity}}">{{postfix_Quantity | number : '1.0-0'}}</td>
+
+                                    <td rowspan="2" accessKey="postfix_TotalItemPrice" matTooltip="{{postfix_TotalItemPrice}}">
+                                        {{postfix_TotalItemPrice | number : '1.0-0'}}
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" >
+                                        {{current_Enter_Purchase_Quantity + current_Enter_Used_Quantity | number : '1.0-0'}}
+                                    </td>
+                                    <td colspan="2" >
+                                        {{current_Enter_Purchase_TotalItemPrice + current_Enter_Used_TotalItemPrice | number : '1.0-0'}}
+                                    </td>
+                                </tr>
+                                <tr *ngIf="pageSize<=RowsCount">
+                                    <td colspan="14">
+                                        <app-table-pagging [RowsCount]="RowsCount" [activePage]="currentPage" [pageSize]="pageSize" (ActivePage)="ChangePage($event)" (ExportToALLExcel)="ExportAllToExcel()">
+
+                                        </app-table-pagging>
+                                    </td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+
+
+            </mat-card>
+        </div>
+    </div>
+</div>

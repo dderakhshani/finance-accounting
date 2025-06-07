@@ -1,0 +1,42 @@
+:host {
+  &:last-child .bar1 {
+    display: none;
+  }
+}
+
+.wrapper1 {
+  display: flex;
+  justify-content: flex-end;
+  height: 100%;
+}
+
+.content1 {
+  flex: 1;
+}
+
+.bar1 {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  height: 100%;
+  margin: 0 -5px ;
+  justify-self: flex-end;
+  border: 3px solid #6d72ed ;
+
+  background: #6d72ed ;
+  background-clip: content-box;
+  cursor: ew-resize !important;
+  opacity: 0;
+  transition: opacity .3s;
+  z-index: 998;
+
+  &:hover,
+  &:active {
+    opacity: 1;
+  }
+}
+[resizable] ,[resizableDiv]{
+  cursor: ew-resize;
+  user-select: none;
+}

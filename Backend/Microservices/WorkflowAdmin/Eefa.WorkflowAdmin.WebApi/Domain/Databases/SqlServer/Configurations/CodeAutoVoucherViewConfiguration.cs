@@ -1,0 +1,75 @@
+﻿#nullable disable
+
+using System;
+using Eefa.WorkflowAdmin.WebApi.Domain.Databases.Entities;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+
+namespace Eefa.WorkflowAdmin.WebApi.Domain.Databases.SqlServer.Configurations
+{
+    public partial class CodeAutoVoucherViewConfiguration : IEntityTypeConfiguration<CodeAutoVoucherView>
+    {
+        public void Configure(EntityTypeBuilder<CodeAutoVoucherView> entity)
+        {
+            entity.ToTable("CodeAutoVoucherViews", "accounting");
+
+            entity.Property(e => e.Id).HasComment("کد");
+
+            entity.Property(e => e.CompanyId).HasComment("کد شرکت");
+
+            entity.Property(e => e.CreatedAt)
+                .HasDefaultValueSql("(getdate())")
+                .HasComment("تاریخ و زمان ایجاد");
+
+            entity.Property(e => e.CreatedById).HasComment("ایجاد کننده");
+
+            entity.Property(e => e.IsDeleted).HasComment("آیا حذف شده است؟");
+
+            entity.Property(e => e.ModifiedAt)
+                .HasDefaultValueSql("(getdate())")
+                .HasComment("تاریخ و زمان اصلاح");
+
+            entity.Property(e => e.ModifiedById).HasComment("اصلاح کننده");
+
+            entity.Property(e => e.OwnerRoleId).HasComment("نقش صاحب سند");
+
+            entity.Property(e => e.ViewCaption)
+                .IsRequired()
+                .HasMaxLength(100)
+                .HasComment("مشاهده عنوان");
+
+            entity.Property(e => e.ViewName)
+                .IsRequired()
+                .HasMaxLength(100)
+                .IsUnicode(false)
+                .HasComment("مشاهده نام");
+
+            entity.HasOne(d => d.Company)
+                .WithMany(p => p.CodeAutoVoucherViews)
+                .HasForeignKey(d => d.CompanyId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_CodeAutoVoucherViews_CompanyInformations");
+
+            entity.HasOne(d => d.CreatedBy)
+                .WithMany(p => p.CodeAutoVoucherViewCreatedBies)
+                .HasForeignKey(d => d.CreatedById)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_CodeAutoVoucherViews_Users");
+
+            entity.HasOne(d => d.ModifiedBy)
+                .WithMany(p => p.CodeAutoVoucherViewModifiedBies)
+                .HasForeignKey(d => d.ModifiedById)
+                .HasConstraintName("FK_CodeAutoVoucherViews_Users1");
+
+            entity.HasOne(d => d.OwnerRole)
+                .WithMany(p => p.CodeAutoVoucherViews)
+                .HasForeignKey(d => d.OwnerRoleId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_CodeAutoVoucherViews_Roles");
+
+            OnConfigurePartial(entity);
+        }
+
+        partial void OnConfigurePartial(EntityTypeBuilder<CodeAutoVoucherView> entity);
+    }
+}

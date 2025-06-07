@@ -1,0 +1,34 @@
+@import "/src/assets/scss/variables";
+ .mat-card{
+  padding: 15px !important;
+}
+ .hidden{
+     display:none;
+ }
+.disabled {
+  pointer-events: none;
+  
+}
+.mat-label {
+  font-size: 14px;
+  color: color(primary,500);
+}
+
+.line {
+  line-height: 2.5;
+ 
+}
+.border-dash {
+  border-top-style:dashed;
+  border-top-width: 1.5px;
+  border-top-color: gray;
+  padding-top: 15px;
+}
+
+.mat-elevation-z8 {
+  box-shadow: unset !important;
+}
+.decoration {
+  text-decoration-line: line-through ;
+  color: #6c6868;
+}

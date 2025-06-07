@@ -1,0 +1,573 @@
+﻿{
+   "CodeGenerationMode": 1,
+   "ContextClassName": "BursaryContext",
+   "ContextNamespace": null,
+   "DefaultDacpacSchema": null,
+   "FilterSchemas": false,
+   "IncludeConnectionString": false,
+   "ModelNamespace": null,
+   "OutputContextPath": "",
+   "OutputPath": "EntityConfigurations",
+   "PreserveCasingWithRegex": true,
+   "ProjectRootNamespace": "Eefa.Bursary.Infrastructure",
+   "Schemas": null,
+   "SelectedHandlebarsLanguage": 0,
+   "SelectedToBeGenerated": 1,
+   "Tables": [
+      {
+         "Name": "[accounting].[AccountHead]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[accounting].[AccountHeadRelReferenceGroup]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[accounting].[AccountReferences]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[accounting].[AccountReferencesGroups]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[accounting].[AccountReferencesRelReferencesGroups]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[accounting].[AutoVoucherFormula]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[accounting].[AutoVoucherIncompleteVouchers]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[accounting].[AutoVoucherLog]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[accounting].[AutoVoucherRowsLink]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[accounting].[CodeAccountHeadGroup]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[accounting].[CodeAutoVoucherViews]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[accounting].[CodeRowDescription]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[accounting].[CodeVoucherExtendType]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[accounting].[CodeVoucherGroups]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[accounting].[Holidays]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[accounting].[MoadianInvoiceDetails]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[accounting].[MoadianInvoiceHeaders]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[accounting].[VoucherAttachments]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[accounting].[VoucherDetailAttachments]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[accounting].[VouchersDetail]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[accounting].[VouchersHead]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[admin].[Attachment]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[admin].[BaseValues]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[admin].[BaseValueTypes]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[admin].[Branches]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[admin].[CorrectionRequests]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[admin].[Employees]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[admin].[HelpAttachment]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[admin].[HelpData]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[admin].[Languages]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[admin].[MenuItems]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[admin].[Permissions]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[admin].[PersonAddress]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[admin].[PersonBankAccounts]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[admin].[PersonFingerprint]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[admin].[PersonPhones]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[admin].[PersonRelAttachments]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[admin].[Persons]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[admin].[Positions]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[admin].[RequiredPermission]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[admin].[RolePermissions]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[admin].[Roles]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[admin].[ShiftInfo]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[admin].[Signers]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[admin].[UnitPositions]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[admin].[Units]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[admin].[UserRoles]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[admin].[Users]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[admin].[UserSetting]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[admin].[ValidationMessages]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[admin].[VerificationCodes]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[bpms].[Activities]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[bpms].[BusinessRuleConditions]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[bpms].[BusinessRules]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[bpms].[Events]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[bpms].[Lanes]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[bpms].[PerformerCondition]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[bpms].[Performers]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[bpms].[Pools]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[bpms].[Processes]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[bpms].[Requests]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[bpms].[RunningWorkflow]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[bpms].[RuntimeActivities]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[bpms].[RuntimeProcess]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[bpms].[RuntimeWorkflow]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[bpms].[RuntimeWorkflowParameter]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[bpms].[ServiceActivities]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[bpms].[Shapes]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[bpms].[TaskComments]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[bpms].[Tasks]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[bpms].[TaskWorkHistory]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[bpms].[Transitions]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[bpms].[TransitionShapes]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[bpms].[UIFormControls]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[bpms].[UIForms]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[bpms].[UIFormVariables]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[bpms].[UIGrid]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[bpms].[UIGridColumns]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[bpms].[Workflows]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[bursary].[_FileAccessRole]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[bursary].[_FileAccessRoleUsers]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[bursary].[BankAccountCardex]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[bursary].[BankAccounts]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[bursary].[BankBranches]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[bursary].[Banks]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[bursary].[ChequeSheets]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[bursary].[FinancialRequestAttachments]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[bursary].[FinancialRequestDetails]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[bursary].[FinancialRequestDocuments]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[bursary].[FinancialRequestPartial]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[bursary].[FinancialRequests]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[bursary].[FinancialRequestVerifiers]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[bursary].[FreightPayList]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[bursary].[FreightPays]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[bursary].[OtherFrieght]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[bursary].[PayCheque]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[bursary].[PersonBankAcounts]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[common].[_CommoditiesCardex]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[common].[BomItems]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[common].[Boms]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[common].[BomValueHeaders]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[common].[BomValues]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[common].[CategoryPropertyMappings]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[common].[CodingTemplateProperties]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[common].[CodingTemplates]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[common].[Commodities]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[common].[CommodityCategories]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[common].[CommodityCategoryMeasures]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[common].[CommodityCategoryProperties]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[common].[CommodityCategoryPropertyItems]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[common].[CommodityMeasures]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[common].[CommodityPropertyValues]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[common].[CompanyInformations]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[common].[CorrectionRequests]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[common].[CountryDivisions]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[common].[CountryDivisionsMain]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[common].[DataBaseMetadata]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[common].[DataDictionary]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[common].[DataDictionaryold]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[common].[DocumentAttachments]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[common].[DocumentHeadExtend]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[common].[DocumentHeadPurchaseOrders]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[common].[DocumentHeads]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[common].[DocumentItems]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[common].[DocumentItemsBom]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[common].[DocumentItemsMeasurValues]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[common].[DocumentNumberingFormats]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[common].[DocumentPayments]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[common].[Documents]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[common].[MeasureUnitConversions]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[common].[MeasureUnits]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[common].[UserCompany]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[common].[UserYear]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[common].[Years]",
+         "ObjectType": 0
+      }
+   ],
+   "UiHint": "SR-EEFATEJARAT1.Eefa",
+   "UseBoolPropertiesWithoutDefaultSql": false,
+   "UseDatabaseNames": true,
+   "UseDbContextSplitting": true,
+   "UseFluentApiOnly": true,
+   "UseHandleBars": true,
+   "UseHierarchyId": false,
+   "UseInflector": false,
+   "UseLegacyPluralizer": true,
+   "UseManyToManyEntity": false,
+   "UseNoConstructor": true,
+   "UseNoDefaultConstructor": false,
+   "UseNoNavigations": false,
+   "UseNoObjectFilter": false,
+   "UseNodaTime": false,
+   "UseNullableReferences": true,
+   "UseSchemaFolders": false,
+   "UseSpatial": true,
+   "UseT4": false
+}

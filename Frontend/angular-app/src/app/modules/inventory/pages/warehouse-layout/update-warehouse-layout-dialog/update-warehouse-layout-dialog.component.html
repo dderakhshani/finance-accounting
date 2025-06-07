@@ -1,0 +1,210 @@
+<mat-dialog (onSubmit)="submit()"
+            (onDelete)="delete()"
+            [showDeleteBtn]="true"
+            [spinner]="spinner">
+
+  <div dialog-header="">ویرایش چیدمان انبار</div>
+
+  <div dialog-content="">
+    <mat-dialog-content class="mx-auto" [formGroup]="form">
+
+      <div class="row">
+
+        <div class="col-md-3">
+          <mat-form-field>
+            <mat-label>عنوان </mat-label>
+            <input formControlName="title" type="text" matInput required>
+          </mat-form-field>
+        </div>
+
+
+        <div class="col-md-2">
+          <mat-form-field>
+            <mat-label>شماره ردیف </mat-label>
+            <input formControlName="orderIndex" type="number" matInput required>
+          </mat-form-field>
+        </div>
+
+        <div class="col-md-2">
+
+          <mat-checkbox color="primary" formControlName="lastLevel" (change)="onRemoveItemlastLevel()">
+            <mat-label>آخرین شاخه از چیدمان است؟</mat-label>
+          </mat-checkbox>
+
+        </div>
+        <!--<div class="col-md-3" *ngIf="form.controls.lastLevel.value">
+          <mat-form-field>
+            <mat-label>ظرفیت جا دهی </mat-label>
+            <input formControlName="capacity" type="number" matInput>
+          </mat-form-field>
+        </div>-->
+        <div class="col-md-2">
+          <mat-checkbox color="primary" formControlName="isDefault">
+            <mat-label>موقعیت پیش فرض؟</mat-label>
+          </mat-checkbox>
+
+        </div>
+        <div class="col-md-6" style="font-size: 12px;">
+
+          <mat-label>نحوه خروج از انبار* </mat-label>
+          <mat-button-toggle-group formControlName="entryMode" style="width: 100%; " required>
+            <mat-button-toggle [value]="0" style="width: 33%;">
+              بدون تنظیم
+            </mat-button-toggle>
+            <mat-button-toggle [value]="1" style="width: 33%;">
+              LIFO
+              <mat-icon>call_split</mat-icon>
+            </mat-button-toggle>
+            <mat-button-toggle [value]="2" style="width: 33%;">
+              FIFO
+              <mat-icon>call_merge</mat-icon>
+            </mat-button-toggle>
+
+          </mat-button-toggle-group>
+
+        </div>
+        <div class="col-md-6" style="font-size: 12px;">
+
+          <mat-label> *ورود و خروج</mat-label>
+          <mat-button-toggle-group formControlName="status" style="width: 100%" required>
+            <mat-button-toggle [value]="0" style="width: 20%;">
+              آزاد
+            </mat-button-toggle>
+            <mat-button-toggle [value]="1" style="width: 20%;">
+              فقط ورودی
+              <mat-icon class="login">login</mat-icon>
+            </mat-button-toggle>
+            <mat-button-toggle [value]="2" style="width: 20%;">
+              فقط خروجی
+              <mat-icon class="logout">logout</mat-icon>
+            </mat-button-toggle>
+            <mat-button-toggle [value]="3" style="width: 20%;">
+              قفل موقت
+              <mat-icon class="lock_clock">lock_clock</mat-icon>
+            </mat-button-toggle>
+            <mat-button-toggle [value]="4" style="width: 20%;">
+              قفل دائم
+              <mat-icon class="lock">lock</mat-icon>
+            </mat-button-toggle>
+          </mat-button-toggle-group>
+
+
+        </div>
+
+
+      </div>
+      <div class="row" *ngIf="form.controls.lastLevel.value ">
+        <div class="col-md-4 m-2">
+          <button mat-raised-button class="btn-add" (click)="addItems()">
+            <span class="mat-button-wrapper">
+
+              <mat-icon role="img" aria-hidden="true" data-mat-icon-type="font">add</mat-icon>
+
+              <span class="me-1">افزودن گروه محصول</span>
+            </span>
+
+          </button>
+        </div>
+
+      </div>
+
+      <mat-card class="mt-2 mb-2" *ngFor="let formItem of _WarhousteCategoryItemsEdit; let i=index">
+        <table class="table">
+          <thead>
+            <tr style="height: 80px;">
+              <th>
+                <!--گروه محصول-->
+                <app-combo-tree [nodes]="CommodityCategories" [DefaultId]="formItem.commodityCategoryId" [isTree]="true" (SelectId)="getCommodityCategoryTitleById($event,i)" [lablelTitleCombo]="'گروه محصول'">
+                </app-combo-tree>
+              </th>
+              <th style="width: 300px;">
+                <button mat-raised-button class="btn-add" (click)="addProperty(formItem.commodityCategoryId,formItem.warehouseLayoutCategoriesId,formItem.warehouseLayoutPropertiesId,i)" Id="BtnAddProperty_+{{i+1}}" [disabled]="formItem.disable  || !(formItem.commodityCategoryId>0) ? 'disabled' : null">
+                  <span class="mat-button-wrapper">
+                    <mat-icon role="img" aria-hidden="true" data-mat-icon-type="font">add</mat-icon>
+                    <span class="me-1">افزودن خصوصیات محصول</span>
+                  </span>
+                </button>
+              </th>
+              <th style="width: 100px;">
+                <button mat-raised-button class="btn-add mt-2" *ngIf="i>0" (click)="removeCategory(i)">
+                  <span class="mat-button-wrapper">
+                    <mat-icon role="img" aria-hidden="true" data-mat-icon-type="font">delete</mat-icon>
+                  </span>
+                </button>
+
+              </th>
+            </tr>
+          </thead>
+          <tbody *ngFor="let item_cat of formItem.items; let j=index">
+            <tr style="height: 80px;">
+              <!--خصوصیات محصول-->
+              <td>
+
+                <app-combo-tree [nodes]="CommodityCategoryPropertes" [DefaultId]="item_cat.categoryPropertyId" [isTree]="false" (SelectId)="getCommodityCategoryPropertesTitleById($event,formItem.warehouseLayoutCategoriesId,item_cat.warehouseLayoutPropertiesId,i,j)" [lablelTitleCombo]="'خصوصیات محصول'">
+                </app-combo-tree>
+
+              </td>
+
+              <td style="width: 300px;">
+
+                <button mat-raised-button class="btn-add" (click)="addPropertyItems(item_cat.categoryPropertyId,item_cat.commodityCategoryId,formItem.warehouseLayoutCategoriesId,i,j)" [disabled]="item_cat.disable  || !(item_cat.categoryPropertyId>0) ? 'disabled' : null">
+                  <span class="mat-button-wrapper">
+
+                    <mat-icon role="img" aria-hidden="true" data-mat-icon-type="font">add</mat-icon>
+
+                    <span class="me-1">افزودن ویژگی محصول</span>
+                  </span>
+
+                </button>
+              </td>
+              <td style="width: 100px;">
+                <button mat-raised-button class="btn-add mt-2" (click)="removeProperty(i,j)">
+                  <span class="mat-button-wrapper">
+                    <mat-icon role="img" aria-hidden="true" data-mat-icon-type="font">delete</mat-icon>
+                  </span>
+                </button>
+
+              </td>
+
+            </tr>
+            <tr style="height: 80px;" *ngFor="let item_per of item_cat?.items; let c=index">
+              <!--جزئیات ویژگی های محصول-->
+              <!-- <template *ngIf="!item_per.disable"> *ngIf="item_per.warehouseLayoutCategoriesId!=undefinded"-->
+              <td>
+
+                <app-combo-tree [nodes]="CommodityCategoryPropertyItems" [DefaultId]="item_per.categoryPropertyItemId" [isTree]="false" (SelectId)="getCommodityCategoryPropertyItemTitleById($event,i,j,c)" [lablelTitleCombo]="'جزئیات ویژگی های محصول'">
+                </app-combo-tree>
+
+
+              </td>
+              <td style="width: 300px;">
+                <mat-form-field *ngIf="item_per.disable">
+                  <mat-label>جزئیات ویژگی های محصول</mat-label>
+                  <input [(ngModel)]="item_per.ValueItem" [ngModelOptions]="{standalone: true}" [ngClass]="{'error':item_per.valid}">
+                </mat-form-field>
+              </td>
+
+              <td style="width: 100px;">
+                <button mat-raised-button class="btn-add mt-2" (click)="removePropertyItems(i,j,c)">
+                  <span class="mat-button-wrapper">
+                    <mat-icon role="img" aria-hidden="true" data-mat-icon-type="font">delete</mat-icon>
+                  </span>
+
+                </button>
+
+              </td>
+              <!-- </template> -->
+            </tr>
+
+          </tbody>
+        </table>
+      </mat-card>
+
+
+
+    </mat-dialog-content>
+  </div>
+
+ <mat-spinner style="top:30%;right:40%;position:absolute;z-index:1000" *ngIf="_notificationService.isLoader"></mat-spinner>
+
+</mat-dialog>

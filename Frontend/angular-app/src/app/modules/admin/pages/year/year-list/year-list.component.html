@@ -1,0 +1,15 @@
+<mat-card class="h-100 d-flex flex-column overflow-auto" style="max-height: inherit; padding: 0!important;">
+
+ <app-action-bar class="p-3" (onEdit)="update()" (onAdd)="add()" (onRefresh)="get()"></app-action-bar>
+  <app-table
+    [tableRows]="years"
+    [tableConfigurations]="tableConfigurations"
+    (rowDoubleClicked)="navigateToYear($event)"
+    (paginationChanged)="get()"
+    (sortChanged)="get()"
+    (filtersChanged)="get()"
+
+  >
+  </app-table>
+</mat-card>
+

@@ -1,0 +1,200 @@
+
+<div class="h-100 d-flex flex-column overflow-auto gap-3" style="max-height: inherit; padding: 0!important;">
+
+    <mat-card>
+        <form [formGroup]="SearchForm">
+            <div class="row">
+                <div class="col-md-2">
+                    <mat-form-field>
+                        <mat-label>از تاریخ </mat-label>
+                        <input tabindex="0" matInput [matDatepicker]="pickerFrom" formControlName="fromDate">
+                        <mat-datepicker-toggle matSuffix [for]="pickerFrom">
+                            <mat-icon matDatepickerToggleIcon>
+                                <img class="mb-3" src="/assets/icons/calendar.svg" alt="">
+                            </mat-icon>
+                        </mat-datepicker-toggle>
+                        <mat-datepicker #pickerFrom></mat-datepicker>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-2">
+                    <mat-form-field>
+                        <mat-label>تا تاریخ </mat-label>
+                        <input tabindex="0" matInput [matDatepicker]="picker" formControlName="toDate">
+                        <mat-datepicker-toggle matSuffix [for]="picker">
+                            <mat-icon matDatepickerToggleIcon>
+                                <img class="mb-3" src="/assets/icons/calendar.svg" alt="">
+                            </mat-icon>
+                        </mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+                </div>
+
+
+                <div class="col-md-4">
+
+                    <app-combo-account-refrence [DefaultId]="SearchForm.controls.creditAccountReferenceId.value"
+                                                (SelectId)="creditReferenceSelect($event)"
+                                                [lablelTitleCombo]="'حساب بستانکار'"
+                                                [accountReferencesGroupsId]="SearchForm.controls.creditAccountReferenceGroupId.value"
+                                                [accountReferencesGroupsCode]="Service.ProviderCodeGroup"
+                                                [isRequired]="false" [tabindex]="2">
+                    </app-combo-account-refrence>
+                </div>
+
+                <div class="col-md-2">
+                    <button mat-raised-button color="primary"  (click)="get()" [disabled]="_notificationService.isLoader" [tabindex]="3" id="Search">
+                        <mat-icon>
+                            search
+                        </mat-icon>
+                        جستجو
+                    </button>
+                    <button mat-stroked-button color="primary" type="button" (click)="ondeleteFilter(SearchForm)" [disabled]="_notificationService.isLoader" [tabindex]="4">
+                        <mat-icon>
+                            delete_forever
+                        </mat-icon>
+                        حذف فیلترها
+                    </button>
+                </div>
+            </div>
+        </form>
+
+    </mat-card>
+
+    <mat-spinner style="top:30%;right:40%;position:absolute;z-index:1000" *ngIf="_notificationService.isLoader"></mat-spinner>
+
+    <div [ngClass]="{'modal-large-table':IslargeSize ,'modal-large-close': !IslargeSize}" class="h-100 overflow-auto p-0">
+
+        <div [ngClass]="{'modal-large-table-content':IslargeSize}">
+
+            <mat-card id="reports-containt">
+
+                <div class="row">
+                    <app-table-filter (GetQuery)="get($event)"
+                                      (onPrint)="print()"
+                                      (IslargeSize)="IslargeSize=$event"
+                                      [data]="Reports_filter"
+                                      (filterTable)="filterTable($event)"
+                                      [IsShowFilter]="true">
+                    </app-table-filter>
+
+                    <div [ngClass]="{'tableFixHead_largSize':IslargeSize ,'tableFixHead': !IslargeSize}" id="report-table-invoice" [appDynamicTableHeight]="marginFromBottom_appDynamicTableHeight" [tableData]="data">
+                        <table class="mas-table" id="mas-table-invoice">
+                            <thead>
+
+                                <tr id="data-filde">
+                                    <th  resizable  class="width-3 ">
+
+                                        ردیف
+                                    </th>
+                                    <th  resizable  accessKey="documentDate" abbr="date">
+                                        تاریخ
+                                    </th>
+
+
+                                    <th  resizable  accessKey="creditReferenceTitle" abbr="string">
+                                        تامین کننده
+                                    </th>
+
+                                    <th  resizable  class="width-8" accessKey="debit" abbr="number">
+                                        بدهکار
+                                    </th>
+
+
+                                    <th  resizable  class="width-8" accessKey="credit" abbr="number">
+                                        بستانکار
+                                    </th>
+
+                                    <th  resizable  accessKey="financialOperationNumber" abbr="string">
+                                        شماره عملیات مالی
+                                    </th>
+                                    <th  resizable  accesskey="commodityTitle" abbr="string">
+                                        کالا
+
+                                    </th>
+
+                                    <th  resizable  accessKey="description" abbr="string">
+                                        شرح
+                                    </th>
+
+                                </tr>
+                            </thead>
+                            <tbody id="tbody">
+
+                                <tr *ngFor="let item of data ;let i=index ">
+                                    <th>
+                                        {{i+1}}
+                                    </th>
+                                    <td accessKey="documentDate">{{Service.toPersianDate(item.documentDate)}}</td>
+
+
+
+                                    <td class="font-12" accessKey="creditReferenceTitle">
+                                        {{item.creditReferenceTitle}}
+                                    </td>
+
+                                    <td accessKey="credit">
+                                        {{item.credit | money}}
+                                    </td>
+
+                                    <td accessKey="debit">
+                                        {{item.debit | money}}
+                                    </td>
+                                    <td accessKey="financialOperationNumber">
+                                        {{item.financialOperationNumber}}
+                                    </td>
+                                    <td class="font-12" accesskey="commodityTitle">
+
+                                        {{item.commodityTitle}}
+                                    </td>
+                                    <td class="font-10" accessKey="description">
+
+                                        {{item.description}}
+
+                                    </td>
+                                </tr>
+
+                            </tbody>
+
+                            <tfoot>
+                                <tr>
+                                    <td>
+                                        {{dataLength}}
+                                    </td>
+
+                                    <td accessKey="documentDate">
+                                    </td>
+
+                                    <td accessKey="creditReferenceTitle">
+                                    </td>
+                                    <td accessKey="credit">{{creditSumAll | money}}</td>
+
+                                    <td accessKey="debit">{{debitSumAll | money}}</td>
+
+                                    <td accessKey="financialOperationNumber">
+                                    </td>
+                                    <td accesskey="commodityTitle">
+
+                                    </td>
+                                    <td accessKey="description">
+                                    </td>
+
+                                </tr>
+                                <tr *ngIf="pageSize<=RowsCount">
+                                    <td colspan="14">
+                                        <app-table-pagging [RowsCount]="RowsCount" [activePage]="currentPage" [pageSize]="pageSize" (ActivePage)="ChangePage($event)" (ExportToALLExcel)="ExportAllToExcel()">
+
+                                        </app-table-pagging>
+                                    </td>
+                                </tr>
+                            </tfoot>
+                        </table>
+
+                    </div>
+                </div>
+
+
+            </mat-card>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,129 @@
+<mat-card class="p-0" *ngIf="form">
+  <!--<app-form-actions [actions]="formActions" (OnRefresh)="get()"></app-form-actions>-->
+  <div style="max-height: 55vh; overflow: auto; ">
+
+
+
+    <app-table [tableConfigurations]="tableConfigurations"
+               [tableRows]="form"
+               (filtersChanged)="get()"
+               (sortChanged)="get()"
+               (paginationChanged)="get()">
+
+    </app-table>
+    <ng-template #txtquantity let-rowFg="row">
+
+        <input type="text"
+               [formControl]="rowFg.get('quantity')"
+               
+               class="form-control font-13">
+    </ng-template>
+
+    <ng-template #txtcommodityTitle let-rowFg="row">
+
+
+        <p class="font-10">
+            {{rowFg.get('commodityTitle').value}}
+
+        </p>
+        <p class="font-10">
+            {{rowFg.get('commodityCode').value}}
+        </p>
+       
+    </ng-template>
+    <ng-template #txtDescription let-rowFg="row">
+
+        <input type="text"
+               [formControl]="rowFg.get('description')"
+               class="form-control font-10">
+
+
+    </ng-template>
+    <ng-template #txtRequesterReferenceTitle let-rowFg="row">
+
+      <p class="font-12">
+        {{rowFg.get('requesterReferenceTitle').value}}
+      </p>
+    </ng-template>
+    <ng-template #txtInvoceNo let-rowFg="row">
+
+      <app-combo-invoice [DefaultId]="rowFg.get('invoiceNo').value"
+                         (SelectId)="invoiceNoSelect($event,rowFg)"
+                         [isRequired]="false"
+                         [commodityId]="rowFg.get('commodityId').value "
+                         [documentDate]="documentDate"
+                         style="text-align:right !important">
+      </app-combo-invoice>
+
+    </ng-template>
+
+
+    <ng-template #dropDownAccountReferences let-rowFg="row">
+     
+        <app-combo-account-refrence [DefaultId]="rowFg.get('creditAccountReferenceId').value"
+                                    (SelectId)="ReferenceSelect($event,rowFg)"
+                                    [isRequired]="false"
+                                    [accountReferencesGroupsId]="rowFg.get('creditAccountReferenceGroupId').value"
+                                    style="text-align:right !important">
+        </app-combo-account-refrence>
+
+
+    </ng-template>
+
+    <ng-template #checkboxWrong let-rowFg="row">
+        <div style="display:inline-block">
+
+            <span class="font-12">{{rowFg.get('mainMeasureTitle').value }}</span>
+
+            <mat-icon *ngIf="rowFg.get('isWrongMeasure').value" mat-icon-button class="btn-ok" (click)="onWrongMeasure(rowFg)">
+                check_box
+            </mat-icon>
+            <mat-icon *ngIf="!rowFg.get('isWrongMeasure').value" mat-icon-button class="btn-color" (click)="onWrongMeasure(rowFg)">
+                check_box_outline_blank
+            </mat-icon>
+        </div>
+        
+
+    </ng-template>
+
+    <ng-template #checkboxSelected let-rowFg="row">
+
+        <div *ngIf="rowFg.get('selected').value">
+            <mat-icon *ngIf="rowFg.get('selected').value" mat-icon-button class="btn-ok">
+                done_all
+            </mat-icon>
+        </div>
+        
+        <div *ngIf="!rowFg.get('selected').value" style="margin-top:12px;">
+            <!--اگر که سند کالا اموال بود کد سریال آن وارد شود.-->
+            <button [ngClass]="{'btn-red':rowFg.get('commoditySerial').value==undefined,'btn-md-amber':rowFg.get('commoditySerial').value!=undefined}" matTooltip="ورود شماره سریال "
+                    (click)="addCommoditySerials(rowFg)"
+                    *ngIf="codeVoucherGroup==Service.EstateTemporaryReceipt">
+                <mat-icon>pin</mat-icon>
+
+            </button>
+            <!--ذخیره نشده-->
+            <mat-icon mat-icon-button class="btn-color">
+                check
+            </mat-icon>
+        </div>
+
+    </ng-template>
+
+    <ng-template #btnDelete let-rowFg="row">
+        <button mat-icon-button matTooltip="حذف" class="btn-color" (click)="onDelete(rowFg)" *ngIf="!rowFg.get('selected').value">
+            <mat-icon>delete</mat-icon>
+        </button>
+        <samp *ngIf="rowFg.get('selected').value">
+            {{rowFg.get('documentNo').value}}
+        </samp>
+    </ng-template>
+    <ng-template #btnSerial let-rowFg="row">
+
+    </ng-template>
+  </div>
+
+</mat-card>
+
+
+

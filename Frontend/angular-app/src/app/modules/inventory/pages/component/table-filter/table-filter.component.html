@@ -1,0 +1,269 @@
+
+<div class="input-group" style=" width: calc(100% - 8px);">
+  <input [(ngModel)]="SearchInput" aria-describedby="basic-addon1" *ngIf="IsShowFilter"
+         autocomplete="false"
+         class="form-control table-input-search"
+         (keyup)="onfilterTable()"
+         placeholder="متن جستجو در جدول" />
+  <div class="input-group-prepend">
+
+    <button class="btn btn-outline-secondary btn-search" (click)="onSearch()" matTooltip="جستجو پیشرفته" *ngIf="IsShowFilter && IsShowFilterPro_btn">
+
+      <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" *ngIf="filterCount>0">
+        {{filterCount}}
+
+      </span>
+      <mat-icon class="font-30">
+        search
+      </mat-icon>
+
+    </button>
+
+    <button class="btn btn-outline-secondary btn-search" (click)="onColumnSettings()" matTooltip="نمایش ستون های انتخابی" *ngIf="IsShowFilter_ColumnSelection">
+      <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-warning" *ngIf="columnsCount>0">
+        {{columnsCount}}
+
+      </span>
+      <mat-icon class="font-30">
+        view_list
+      </mat-icon>
+
+    </button>
+    <button class="btn btn-outline-secondary btn-search" (click)="onVisibleRows()" matTooltip="نمایش سطرهای های انتخابی">
+      <mat-icon class="font-30">
+
+        dehaze
+
+      </mat-icon>
+
+    </button>
+    <button class="btn btn-outline-secondary btn-search" (click)="filter('refresh')" matTooltip="بروز رسانی" *ngIf="IsShowFilter">
+      <mat-icon class="font-30">
+        refresh
+      </mat-icon>
+    </button>
+    <button class="btn btn-outline-secondary btn-search" (click)="print()" matTooltip="چاپ">
+      <mat-icon class="font-30">
+        print
+      </mat-icon>
+
+    </button>
+    <button class="btn btn-outline-secondary btn-search" (click)="exportExcel()" matTooltip="خروجی به اکسل هر صفحه">
+      <mat-icon class="font-30">
+        download
+      </mat-icon>
+
+    </button>
+    <button class="btn btn-outline-secondary btn-search" (click)="onIslargeSize()">
+
+      <mat-icon *ngIf="!largeSize" class="font-30" matTooltip="تمام صفحه">
+        zoom_in
+
+      </mat-icon>
+      <mat-icon *ngIf="largeSize" class="font-30" matTooltip="کوچک کردن">
+        zoom_out
+      </mat-icon>
+
+    </button>
+
+  </div>
+</div>
+
+<!----Filter Model------------------------------------------------------------------------------------------------->
+<div class="filter-modal" [ngClass]="{'filter-modal-open':IsOpenFilterModal ,'filter-modal-close': !IsOpenFilterModal}">
+  <!---------->
+  <!-- Modal content -->
+  <div class="filter-modal-content">
+    
+
+    <div class="row">
+      <div style="display:inline-block">
+        <span class="filter-modal-close-btn">
+          <mat-icon class="font-30" matTooltip="بستن" (click)="IsOpenFilterModal=false">
+            close
+          </mat-icon>
+        </span>
+        <h5 style="text-align:center">اعمال فیلتر جستجو</h5>
+      </div>
+
+    </div>
+
+    <div class="row" *ngFor="let item of SearchQuereis ;let i=index">
+      <div class="col-md-3">
+
+        <mat-form-field>
+          <mat-label>عنوان ستون</mat-label>
+          <mat-select [(ngModel)]="item.propertyName" (selectionChange)="filterComparison(item)">
+
+            <mat-option [value]="item.name" *ngFor="let item of columns">
+              {{item.caption}}
+            </mat-option>
+
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-md-4">
+        <!--Text---------------------------->
+        <mat-form-field *ngIf="item.filterType=='text' || item.filterType=='string'">
+          <mat-label>متن جستجو</mat-label>
+          <input [(ngModel)]="item.values" matInput type="text">
+        </mat-form-field>
+        <!--Date---------------------------->
+        <mat-form-field *ngIf="item.filterType=='date' || item.filterType=='datetime'">
+          <mat-label>تاریخ</mat-label>
+          <input tabindex="6" matInput [matDatepicker]="picker" [(ngModel)]="item.values">
+          <mat-datepicker-toggle matSuffix [for]="picker">
+            <mat-icon matDatepickerToggleIcon>
+              <img class="mb-3" src="/assets/icons/calendar.svg" alt="">
+            </mat-icon>
+          </mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+        <!--number---------------------------->
+        <mat-form-field *ngIf="item.filterType=='number' || item.filterType=='int' || item.filterType=='money' ">
+          <mat-label>متن جستجو</mat-label>
+          <input [(ngModel)]="item.values"
+                 matInput
+                 [options]="{suffix:''}"
+                 currencyMask
+                 type="text">
+        </mat-form-field>
+
+
+      </div>
+      <div class="col-md-3">
+        <mat-form-field>
+          <mat-label>شرایط</mat-label>
+          <mat-select [(ngModel)]="item.comparison" [(value)]="item.comparison">
+            <mat-option [value]="item.value" *ngFor="let item of TableColumnFilterOperands">
+              {{item.title}}
+            </mat-option>
+
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-md-1">
+        <mat-form-field>
+          <mat-label>عملیات</mat-label>
+          <mat-select [(ngModel)]="item.nextOperand" [(value)]="selected">
+            <mat-option [value]="item.value" *ngFor="let item of nextOperand">
+              {{item.title}}
+            </mat-option>
+
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div class="col-md-1">
+
+
+        <button class="btn " (click)="deleteItem(item)" type="button" matTooltip="حذف">
+          <mat-icon class="font-30 btn-red">
+            delete
+          </mat-icon>
+        </button>
+
+
+      </div>
+
+    </div>
+    <hr />
+    <div class="row">
+      <div class="col-md-3 p-2">
+        <button mat-raised-button class="m-1" color="primary" (click)="filter('search')" type="button" matTooltip="تایید شرایط">
+          <mat-icon class="mat-icon-in">
+            save
+          </mat-icon>
+          تایید و جستجو
+        </button>
+      </div>
+      <div class="col-md-5 p-2"></div>
+      <div class="col-md-4 p-2" style="text-align:left">
+        <button mat-raised-button class="m-1" color="primary" (click)="add()" type="button" matTooltip="اضافه کردن شرط دیگر">
+          <mat-icon class="mat-icon-in">
+            add
+          </mat-icon>
+          اضافه کردن فیلتر دیگر
+        </button>
+        <button mat-raised-button class="m-1" color="primary" (click)="delete()" type="button" matTooltip="اضافه کردن شرط دیگر">
+          <mat-icon class="mat-icon-in">
+            delete
+          </mat-icon>
+          حذف همه فیلترها
+        </button>
+      </div>
+
+
+    </div>
+  </div>
+
+</div>
+<!----Filter ColumnModal------------------------------------------------------------------------------------------------->
+<div class="filter-modal b" [ngClass]="{'filter-modal-open':IsOpenColumnModal ,'filter-modal-close': !IsOpenColumnModal}">
+
+  <!-- Modal content -->
+  <div class="filter-modal-content">
+    <div class="row">
+      <div style="display:inline-block">
+        <span class="filter-modal-close-btn">
+          <mat-icon class="font-30" matTooltip="بستن" (click)="IsOpenColumnModal=false">
+            close
+          </mat-icon>
+        </span>
+        <h5 style="text-align:center">انتخاب ستون ها جهت نمایش</h5>
+      </div>
+
+    </div>
+
+    <div class="row" *ngFor="let item of SearchQuereis ;let i=index">
+
+      <table class="info-mas-table">
+        <thead>
+          <tr>
+            <th>
+              عنوان ستون
+            </th>
+            <th>
+              نمایش داده شود؟
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of columns">
+            <td>
+              {{item.caption}}
+            </td>
+            <td>
+              <mat-icon *ngIf="item.visible" mat-icon-button class="btn-color" (click)="item.visible=false">
+                check_box
+              </mat-icon>
+              <mat-icon *ngIf="!item.visible" mat-icon-button class="btn-color" (click)="item.visible=true">
+                check_box_outline_blank
+              </mat-icon>
+
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+
+    </div>
+    <div class="row">
+      <div class="col-md-3 p-2">
+        <button mat-raised-button class="m-1" color="primary" (click)="onVisibleComfirm()" type="button" matTooltip="تایید شرایط">
+          <mat-icon class="mat-icon-in">
+            save
+          </mat-icon>
+          تایید
+        </button>
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+</div>
+
+

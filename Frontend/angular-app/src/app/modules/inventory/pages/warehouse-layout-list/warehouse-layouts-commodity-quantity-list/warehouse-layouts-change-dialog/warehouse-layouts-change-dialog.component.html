@@ -1,0 +1,65 @@
+<mat-dialog (onSubmit)="submit()" [showDeleteBtn]="false">
+
+  <div dialog-header="">تغییر مکان کالا در انبار</div>
+
+  <div dialog-content="">
+    <mat-dialog-content class="mx-auto" [formGroup]="form">
+
+      <div class="row">
+        <div class="col-md-4">
+          <mat-form-field>
+            <mat-label>عنوان کالا </mat-label>
+            <input formControlName="commodityTitle" type="text" matInput disabled>
+          </mat-form-field>
+        </div>
+        <div class="col-md-4">
+          <mat-form-field>
+            <mat-label>کد کالا </mat-label>
+            <input formControlName="commodityCode" type="text" matInput disabled>
+          </mat-form-field>
+        </div>
+        <div class="col-md-4">
+          <mat-form-field>
+            <mat-label>محل کنونی </mat-label>
+            <input formControlName="warehouseLayoutTitle" type="text" matInput disabled>
+          </mat-form-field>
+        </div>
+        
+        <div class="col-md-4">
+          <mat-form-field>
+            <mat-label>تعداد جابجایی</mat-label>
+            <input formControlName="quantity" type="number" matInput disabled>
+          </mat-form-field>
+        </div>
+        <div class="col-md-4">
+
+          <app-combo-search [DefaultId]="form.controls.warehouseLayoutId.value"
+                            (SelectId)="getWarehouseLayoutId($event)"
+                            [isRequired]="true"
+                            [lablelTitleCombo]="'انتخاب محل جایگذاری جدید'"
+                            [nodes]="WarehouseLayouts"
+                            (SearchTerm)="getWarehouseLayout($event)"
+                            [isInternalSearch]="true">
+          </app-combo-search>
+
+          <!--<mat-form-field>
+            <mat-label> انتخاب محل جایگذاری جدید</mat-label>
+            <input (keyup)="getWarehouseLayoutTree()"
+                   formControlName="warehouseLayoutId"
+                   type="text" matInput autocomplete="shahr" [matAutocomplete]="warehouseLayoutAuto" required>
+            <mat-autocomplete autoActiveFirstOption #warehouseLayoutAuto="matAutocomplete"
+                              [displayWith]="getWarehouseLayoutId.bind(this)">
+              <mat-option *ngFor="let item of WarehouseLayouts"
+                          [value]="item.id">
+
+                {{item.title}}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>-->
+        </div>
+      </div>
+    </mat-dialog-content>
+  </div>
+ <mat-spinner style="top:30%;right:40%;position:absolute;z-index:1000" *ngIf="_notificationService.isLoader"></mat-spinner>
+
+</mat-dialog>

@@ -1,0 +1,299 @@
+table {
+  width: 100%;
+}
+.header-table-group{
+  border-right: 1px solid rgba(255,255,255,0.3)!important;
+  text-align: center;
+  color: #ffffff;
+}
+.filter {
+  opacity: 0;
+  transition: all 0.225s;
+  cursor: pointer;
+
+  .mat-icon {
+    transform: scale(.65) !important;
+    margin-top: 3px !important;
+  }
+}
+.filter-active {
+  position: relative;
+  opacity: 1 !important;
+
+  &:after {
+    position: absolute;
+    top: 15%;
+    right: 15%;
+    content: " ";
+    background-color: red;
+    color: white;
+    width: 6px;
+    height: 6px;
+    display: grid;
+    align-items: center;
+    align-content: center;
+    text-align: center;
+    border-radius: 50%;
+
+  }
+}
+
+.sort {
+  opacity: 0;
+  transition: all 0.225s;
+  cursor: pointer;
+  transform: scale(.6) !important;
+  margin-top: 6px !important;
+
+}
+
+.sort-active {
+  opacity: 1 !important;
+  position: relative;
+
+  &:after {
+    position: absolute;
+    top: -15%;
+    left: 0;
+    right: 95%;
+    content: " ";
+    background-color: red;
+    color: white;
+    width: 10px;
+    height: 10px;
+    display: grid;
+    align-items: center;
+    align-content: center;
+    text-align: center;
+    border-radius: 50%;
+
+  }
+}
+
+
+
+th {
+  &:hover {
+    .filter {
+      opacity: 1;
+    }
+
+    .sort {
+      opacity: 1;
+    }
+  }
+}
+
+/* Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) {
+  .topSetting {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.3) !important;
+    background-color: #6d72ed;
+    position: fixed;
+    overflow: hidden;
+    max-width: 54%;
+    z-index: 90;
+    cursor: pointer;
+    display: flex;
+    padding-right: 19px;
+  }
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+  .topSetting {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.3) !important;
+    background-color: #6d72ed;
+    position: fixed;
+    overflow: hidden;
+    max-width: 67%;
+    z-index: 90;
+    cursor: pointer;
+    display: flex;
+    padding-right: 19px;
+  }
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+  .topSetting {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.3) !important;
+    background-color: #6d72ed;
+    position: fixed;
+    overflow: hidden;
+    max-width: 70%;
+    z-index: 90;
+    cursor: pointer;
+    display: flex;
+    padding-right: 19px;
+  }
+}
+@media (min-width: 1000px) {
+  .topSetting {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.3) !important;
+    background-color: #6d72ed;
+    position: fixed;
+    overflow: hidden;
+    max-width: 71%;
+    z-index: 90;
+    cursor: pointer;
+    display: flex;
+    padding-right: 19px;
+  }
+}
+@media (min-width: 1100px) {
+  .topSetting {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.3) !important;
+    background-color: #6d72ed;
+    position: fixed;
+    overflow: hidden;
+    max-width: 80%;
+    z-index: 90;
+    cursor: pointer;
+    display: flex;
+    padding-right: 19px;
+  }
+}
+/* Extra large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+
+  .topSetting {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.3) !important;
+    background-color: #6d72ed;
+    position: fixed;
+    overflow: hidden;
+    max-width: 75%;
+    z-index: 90;
+    cursor: pointer;
+    display: flex;
+    padding-right: 19px;
+  }
+}
+@media (min-width: 1300px) {
+
+  .topSetting {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.3) !important;
+    background-color: #6d72ed;
+    position: fixed;
+    overflow: hidden;
+    max-width: 80%;
+    z-index: 90;
+    cursor: pointer;
+    display: flex;
+    padding-right: 19px;
+  }
+}
+@media (min-width: 1400px) {
+
+  .topSetting {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.3) !important;
+    background-color: #6d72ed;
+    position: fixed;
+    overflow: hidden;
+    max-width: 90%;
+    z-index: 90;
+    cursor: pointer;
+    display: flex;
+    padding-right: 19px;
+  }
+}
+@media (min-width: 1500px) {
+
+  .topSetting {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.3) !important;
+    background-color: #6d72ed;
+    position: fixed;
+    overflow: hidden;
+    max-width: 78%;
+    z-index: 90;
+    cursor: pointer;
+    display: flex;
+    padding-right: 19px;
+  }
+}
+@media (min-width: 1600px) {
+
+  .topSetting {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.3) !important;
+    background-color: #6d72ed;
+    position: fixed;
+    overflow: hidden;
+    max-width: 81%;
+    z-index: 90;
+    cursor: pointer;
+    display: flex;
+    padding-right: 19px;
+  }
+}
+
+@media (min-width: 1900px) {
+
+  .topSetting {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.3) !important;
+    background-color: #6d72ed;
+    position: fixed;
+    overflow: hidden;
+    max-width: 83%;
+    z-index: 90;
+    cursor: pointer;
+    display: flex;
+    padding-right: 19px;
+  }
+}
+@media (min-width: 2000px) {
+
+  .topSetting {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.3) !important;
+    background-color: #6d72ed;
+    position: fixed;
+    overflow: hidden;
+    max-width: 85%;
+    z-index: 90;
+    cursor: pointer;
+    display: flex;
+    padding-right: 19px;
+  }
+}
+@media (min-width: 2100px) {
+
+  .topSetting {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.3) !important;
+    background-color: #6d72ed;
+    position: fixed;
+    overflow: hidden;
+    max-width: 84.5%;
+    z-index: 90;
+    cursor: pointer;
+    display: flex;
+    padding-right: 19px;
+  }
+}
+@media (min-width: 2400px) {
+
+  .topSetting {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.3) !important;
+    background-color: #6d72ed;
+    position: fixed;
+    overflow: hidden;
+    max-width: 87%;
+    z-index: 90;
+    cursor: pointer;
+    display: flex;
+    padding-right: 19px;
+  }
+}
+::ng-deep {
+  .mat-menu-panel.table-filters-menu {
+    max-width: unset !important;
+  }
+}
+
+
+#appTableWrapper::-webkit-scrollbar {
+  width: 10px;
+}
+
+#appTableWrapper::-webkit-scrollbar-thumb {
+  background-color: #6d72ed;
+  border-radius: 5px;
+}

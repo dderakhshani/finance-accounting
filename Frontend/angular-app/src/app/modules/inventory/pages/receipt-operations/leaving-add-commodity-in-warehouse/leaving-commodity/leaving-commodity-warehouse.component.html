@@ -1,0 +1,281 @@
+<div class="h-100 d-flex flex-column overflow-auto" style="max-height: inherit; padding: 0!important;">
+
+  <mat-card>
+    <form [formGroup]="form">
+      <div class="row">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-3">
+                    <mat-form-field tabindex="0">
+                        <mat-label>شماره درخواست خروج</mat-label>
+
+                        <input formControlName="documentNo" matInput type="text" required>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-3">
+
+                    <app-combo-code-voucher-groups [DefaultId]="form.controls.codeVoucherGroupId.value"
+                                                   (SelectId)="codeVoucherGroupSelect($event)"
+                                                   [isRequired]="true"
+                                                   [lablelTitleCombo]="'نوع رسید'"
+                                                   [viewId]="Service.CodeLeaveReceipt" [tabindex]="1">
+                    </app-combo-code-voucher-groups>
+
+                </div>
+                <div class="col-md-3" *ngIf="Service.identityService.doesHavePermission('allowConfirmDocumentIssuance')">
+
+                    <mat-form-field [tabindex]="14">
+                        <mat-label>وضعیت حسابداری</mat-label>
+                        <mat-select formControlName="isDocumentIssuance">
+
+                            <mat-option [value]="false">
+                                ثبت حسابداری نشود
+                            </mat-option>
+                            <mat-option [value]="true">
+                                ثبت حسابداری شود
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-3">
+                    <button mat-raised-button color="primary" type="submit" (click)="get()" [disabled]="_notificationService.isLoader" id="Search" tabindex="3">
+                        <span> جستجو </span>
+                    </button>
+                    <button mat-raised-button color="primary" type="submit" (click)="onSave()" *ngIf="_Request" style="margin-right:7px;" [disabled]="_notificationService.isLoader" id="Save" tabindex="4">
+
+
+                        <span>تایید و ذخیره سازی</span>
+                    </button>
+                </div>
+
+            </div>
+        </div>
+      </div>
+    </form>
+  </mat-card>
+  <mat-card>
+   
+    <!--دریافت کالا از انبار--------------------------------------------->
+    <p *ngIf="!_Request" class="btn-color-16">
+
+      خروج کالا بدون ثبت درخواست خروج یا مرجوعی امکان پذیر نمی باشد.
+    </p>
+    <div class="row line" *ngIf="_Request">
+
+      <div class="col-md-4">
+        <mat-label>تاریخ درخواست</mat-label>
+
+
+        :
+        <label>{{_Request?.documentDate | toPersianDate}}</label>
+      </div>
+
+
+      <div class="col-md-4">
+
+        <mat-label>انبار</mat-label>
+        :
+        <label>{{_Request?.warehouseTitle}}</label>
+      </div>
+      <div class="col-md-4">
+
+        <mat-label>تحویل گیرنده</mat-label>
+        :
+        <label>{{_Request?.debitReferenceTitle}}</label>
+      </div>
+      <div class="col-md-4">
+        <mat-label>شماره درخواست</mat-label>
+        :
+        <label class="btn-link" (click)="navigateToReceiptDetails(_Request?.documentNo,73)">{{_Request?.documentNo}}</label>
+      </div>
+      <div class="col-md-4">
+        <mat-label>شماره حواله</mat-label>
+        :
+        <label class="btn-link" *ngIf="Receipt?.documentNo" (click)="navigateToReceiptDetails(Receipt?.documentNo,44)">{{Receipt?.documentNo}}</label>
+        <label class="btn-link" *ngIf="_Request.invoiceNo"  (click)="navigateToReceiptDetails(_Request?.invoiceNo,44)">{{_Request?.invoiceNo}}</label>
+
+      </div>
+      <div class="col-md-4">
+        <mat-label>نوع رسید</mat-label>
+        :
+        <label>{{_Request?.codeVoucherGroupTitle}}</label>
+      </div>
+      <div class="col-md-4 ">
+
+        <mat-label>برچسب</mat-label>
+        :
+        <label class="font-13" *ngFor="let item of _Request?.tagArray">{{item}} - </label>
+      </div>
+      <div class="col-md-4">
+        <mat-label>توضیح</mat-label>
+        :
+        <label class="font-13">{{_Request?.documentDescription}}</label>
+      </div>
+    </div>
+
+  </mat-card>
+  <!--اطلاعات کالا در انبار------------------------------------------->
+  <mat-card *ngIf="_Request!=undefined">
+
+
+    <div class="header">
+
+      <div style="padding-right:15px;padding-bottom:10px;">
+        <span>
+          اطلاعات کالاها در انبار
+        </span>
+      </div>
+    </div>
+    <div class="sidenav-content">
+      <mat-card *ngFor="let item of _Request?.items">
+
+
+        <div class="row">
+
+          <div class="col-md-4">
+            <label class="label">عنوان کالا</label> :
+            <label class="title">
+
+              <span matTooltip="مشاهده کاردکس کالا" class="btn-link" (click)="navigateToHistory(item?.commodity.id)">
+                {{item?.commodity?.title}}
+              </span>
+
+
+            </label>
+          </div>
+          <div class="col-md-4">
+            <label class="label">کد کالا</label>
+            :
+            <label class="title">
+
+              <span matTooltip="مشاهده کاردکس کالا" class="btn-link" (click)="navigateToHistory(item?.commodity.id)">
+                {{item?.commodity?.code}}
+              </span>
+
+            </label>
+          </div>
+          <div class="col-md-2">
+            <mat-label>تعداد درخواستی</mat-label>
+
+
+            :
+            <label class="title">
+              {{item?.quantity | money}}  {{item?.commodity?.measureTitle}}
+            </label>
+          </div>
+          <div class="col-md-2">
+            <mat-label>تعداد تحویل داده نشده</mat-label>
+
+
+            :
+            <label class="text-danger">
+              {{item?.remainQuantity | money}}  {{item?.commodity?.measureTitle}}
+            </label>
+          </div>
+          
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <table style="width:100%">
+              <thead>
+                  <tr>
+                      <th resizable>
+                          انبار موجود
+                      </th>
+                      <th resizable>
+                          موقعیت
+                      </th>
+                      <th resizable>
+                          موجودی انبار ({{item?.commodity?.measureTitle}})
+                      </th>
+                      <th resizable>
+                          اجازه خروج دارد؟
+                      </th>
+                      <th resizable style="width:150px;">
+                          <mat-label>تعداد تحویلی</mat-label>
+
+
+                      </th>
+                      <th resizable>
+                          شرح
+                      </th>
+                      <th resizable *ngIf="requestCodeVoucherGroupUniqueCode==Service.RequesReceiveAssets && item.remainQuantity>0">
+                          کد سریال کالا
+
+                      </th>
+
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr *ngFor="let loyout of item?.layouts">
+                      <td>
+                          {{loyout.warehouseTitle}}
+                      </td>
+                      <td>
+                          {{loyout.warehouseLayoutTitle}}
+                      </td>
+                      <td>
+                          {{loyout.quantity | money}}
+                      </td>
+                      <td>
+                          <label *ngIf="loyout.allowOutput">بله</label>
+                          <label *ngIf="!loyout.allowOutput">خیر</label>
+                      </td>
+                      <!--اجازه جروج دارد-->
+                      <td *ngIf="loyout.allowOutput" style="padding:5px;">
+
+                          <input [(ngModel)]="loyout.quantityChose" *ngIf="item.remainQuantity>0 && loyout.quantity>0"
+                                 type="text"
+                                 required
+                                 class="form-control"
+                                 placeholder="تعداد"
+                                 mask="separator.9" thousandSeparator=",">
+
+                          <span *ngIf="item.remainQuantity<=0" class="label">
+                              تحویل کامل
+                          </span>
+                          <span *ngIf="loyout.quantity<item.remainQuantity && item.remainQuantity>0" class="label">
+                              کالا موجودی کافی جهت خروج ندارد
+                          </span>
+                      </td>
+                      <td *ngIf="!loyout.allowOutput">
+                          اجازه خروج ندارد
+                      </td>
+                      <td>
+                          <input [(ngModel)]="item.description" *ngIf="item.remainQuantity>0 && loyout.quantity>0"
+                                 type="text"
+                                 class="form-control"
+                                 placeholder="شرح">
+
+                          <span *ngIf="item.remainQuantity<=0">
+                              {{item.description}}
+                          </span>
+
+                      </td>
+                      <td *ngIf="requestCodeVoucherGroupUniqueCode==Service.RequesReceiveAssets && item.remainQuantity>0">
+
+                          <app-combo-search-multiper-items [nodes]="item.assetsSerials"
+                                                           [nodes_filter]="item.assetsSerials"
+                                                           (SelectedList)="assetIdSelect($event,item)"
+                                                           [lablelTitleCombo]="'کد اموال'"
+                                                           [viewDetalis]="false">
+                          </app-combo-search-multiper-items>
+                      </td>
+
+                  </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+
+
+      </mat-card>
+
+    </div>
+
+   <mat-spinner style="top:30%;right:40%;position:absolute;z-index:1000" *ngIf="_notificationService.isLoader"></mat-spinner>
+  </mat-card>
+
+
+</div>

@@ -1,0 +1,241 @@
+<mat-card class="m-2">
+    <div class="row line " *ngIf="form">
+        <div class="col-md-9">
+            <div class="row">
+                <div class="col-md-4" *ngIf="!isImportPurchase && !allowNotEditInvoice">
+
+                    <mat-checkbox [(ngModel)]="isVate" color="primary" (change)="onComputing('unitPrice')">
+
+                    </mat-checkbox>
+                    <mat-label class="font-11">مالیات ارزش افزوده محاسبه شود</mat-label>
+
+                </div>
+                <div class="col-md-4" *ngIf="!allowNotEditInvoice">
+                    <mat-checkbox [(ngModel)]="isNegative" color="primary" (change)="onComputing('unitPrice')">
+
+                    </mat-checkbox>
+                    <mat-label class="font-11">تسهیم کاهشی</mat-label>
+
+                </div>
+                <div class="col-md-4" *ngIf="!isImportPurchase">
+                    <mat-checkbox [(ngModel)]="isFreightChargePaid" color="primary" (change)="onComputing('unitPrice')">
+
+                    </mat-checkbox>
+                    <mat-label class="font-11">هزینه ها به قیمت تمام شده اضافه شود</mat-label>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3" *ngIf="!allowNotEditInvoice">
+            <mat-label>جمع کل قابل پرداخت</mat-label> :
+
+            <mat-label class="text-danger">
+                {{totalItemPrice  | money }}
+
+            </mat-label>
+
+        </div>
+    </div>
+</mat-card>
+<mat-card class="h-95 overflow-auto p-0 m-2" *ngIf="form">
+    <app-table [tableConfigurations]="tableConfigurations"
+               [tableRows]="form"
+               (filtersChanged)="get()"
+               (sortChanged)="get()"
+               (paginationChanged)="get()">
+        <div footerContent *ngIf="!allowNotEditInvoice">
+            <div class="me-auto d-flex flex-row gap-1">
+                <button mat-stroked-button *ngIf="isImportPurchase">
+                    <span>جمع ارزی: </span>
+                    <span style="color: black"> {{sumCurrencyPrice  | money}}</span>
+                </button>
+                <button mat-stroked-button>
+                    <span>جمع مبلغ کل ریالی </span>
+                    <span style="color: black"> {{totalProductionCost | money  }}</span>
+                </button>
+                <button mat-stroked-button>
+                    <span>مبلغ مالیات ارزش افزوده </span>
+                    <span style="color: black">  {{vatDutiesTax | money }}</span>
+                </button>
+                <button mat-stroked-button>
+                    <span>مبلغ تسهیم </span>
+                    <span style="color: black">  {{extraCostCurrency | money }}</span>
+                </button>
+                <button mat-stroked-button>
+                    <span>مبلغ هزینه </span>
+                    <span style="color: black">  {{extraCost | money }}</span>
+                </button>
+                <button mat-stroked-button>
+                    <span>جمع کل قابل پرداخت </span>
+                    <span class="text-danger"> {{totalItemPrice | money }}</span>
+                </button>
+
+
+            </div>
+        </div>
+
+    </app-table>
+    <ng-template #txtUnitPrice let-rowFg="row">
+
+        <input [formControl]="rowFg.get('unitPrice')"
+
+               (input)="onInput($event, 'unitPrice',rowFg)"
+               (paste)="onPaste($event, 'unitPrice', rowFg)"
+               pattern="[0-9]*[.]?[0-9]*"
+               type="text"
+               style="text-align: center; width:99%; margin-top:3px;"
+               class="form-control"
+               mask="separator.9" thousandSeparator=","
+               required />
+
+    </ng-template>
+    <ng-template #txtTotalPrice let-rowFg="row">
+
+        <input [formControl]="rowFg.get('productionCost')"
+
+               (input)="onInput($event, 'productionCost',rowFg)"
+               (paste)="onPaste($event, 'productionCost', rowFg)"
+               pattern="[0-9]*[.]?[0-9]*"
+               type="text"
+               style="text-align: center; width: 99%; margin-top: 3px;"
+               class="form-control"
+               mask="separator.9" thousandSeparator=","
+               required />
+    </ng-template>
+    <ng-template #txtDescription let-rowFg="row">
+
+        <input [formControl]="rowFg.get('description')"
+               type="text"
+               class="form-control font-10" />
+    </ng-template>
+    <ng-template #txtCurrencyPrice let-rowFg="row">
+
+        <input [formControl]="rowFg.get('currencyPrice')"
+               type="text"
+               style="text-align: center; width:99%; margin-top:3px;"
+
+               (input)="onInput($event, 'currencyPrice',rowFg)"
+               (paste)="onPaste($event, 'currencyPrice', rowFg)"
+               pattern="[0-9]*[.]?[0-9]*"
+               
+               class="form-control">
+    </ng-template>
+    <ng-template #txtRatePrice let-rowFg="row">
+
+
+        <span class="font-12">
+            {{rowFg.get('currencyRate').value  | number : '1.0-2' }}
+        </span>
+        <br />
+
+    </ng-template>
+    <ng-template #txtAddCurrencyPrice let-rowFg="row">
+
+
+        <span class="font-12">
+            {{rowFg.get('addCurrencyPrice').value  | number : '1.0-2' }}
+        </span>
+        <br />
+
+    </ng-template>
+    <ng-template #txtCommodity let-rowFg="row">
+        <span class="font-10">
+            {{rowFg.get('commodityTitle').value}}
+        </span>
+        <br />
+        <span class="font-12 btn-link" (click)="navigateToHistory(rowFg)">
+            {{rowFg.get('commodityCode').value}}
+        </span>
+
+
+    </ng-template>
+    <ng-template #txtsumCurrencyPrice let-rowFg="row">
+
+
+        <input [formControl]="rowFg.get('sumCurrencyPrice')"
+               type="text"
+               style="text-align: center; width:99%; margin-top:3px;"
+               mask="separator.9" thousandSeparator=","
+
+               (input)="onInput($event, 'sumCurrencyPrice',rowFg)"
+               (paste)="onPaste($event, 'sumCurrencyPrice', rowFg)"
+               pattern="[0-9]*[.]?[0-9]*"
+               class="form-control">
+
+    </ng-template>
+    <ng-template #buttonEditQuantity let-rowFg="row">
+
+        <input *ngIf="voucherHeadId>0"
+               [formControl]="rowFg.get('quantity')"
+
+               (input)="onInput($event, 'quantity',rowFg)"
+               (paste)="onPaste($event, 'quantity', rowFg)"
+               type="text"
+
+               style="text-align: center; width: 95%; margin-top: 3px;"
+               class="form-control"
+               pattern="[0-9]*[.]?[0-9]*"
+               required />
+        <span class="btn-link" [matMenuTriggerFor]="amenu" *ngIf="voucherHeadId==0">
+            {{rowFg.get('quantity').value}}
+
+        </span>
+        <mat-menu #amenu="matMenu">
+
+            <div *ngIf="Service.identityService.doesHavePermission('AllowEditCommodityCount')" mat-menu-item >
+                <!--اگر سند حسابداری صادر شده باشد-->
+                <!-- اگر سند حسابداری صادر شده نباشد,-->
+                <button mat-menu-item *ngIf="voucherHeadId==0"
+
+                        (click)="updateQuantity(rowFg)">
+                    ویرایش تعداد کالا
+                </button>
+            </div>
+
+            <div mat-menu-item  *ngIf="voucherHeadId==0">
+                <button mat-menu-item
+
+                        (click)="splitQuantity(rowFg)">
+                    تقسیم تعداد کالا
+                </button>
+            </div>
+
+
+        </mat-menu>
+
+    </ng-template>
+    <ng-template #btnDelete let-rowFg="row" let-Index="i">
+
+    </ng-template>
+    <ng-template #buttonBomValue let-rowFg="row">
+
+        <span matTooltip="لیست اقلام سازنده" class="btn-link" (click)="getBomValue(rowFg)" *ngIf="rowFg.get('quantity').value>0 && isImportPurchase == 'false'">
+            <mat-icon>
+                format_list_numbered
+            </mat-icon>
+        </span>
+        <span style="margin-right:5px;" matTooltip="شماره اموال" class="btn-link" (click)="CommoditySerials(rowFg)" *ngIf="rowFg.get('quantity').value>0">
+            <mat-icon>
+                pin
+            </mat-icon>
+        </span>
+        <span style="margin-right:5px;" matTooltip="حذف" class="btn-color" (click)="onDelete(rowFg)" (keyup)="onAdditems($event,'delete')">
+            <mat-icon>delete</mat-icon>
+        </span>
+
+    </ng-template>
+
+    <app-correction-request [receipt]="receipt"></app-correction-request>
+
+</mat-card>
+<ng-template #dropdownCurrency let-rowFg="row">
+    <mat-select required class="form-control font-13"
+                [formControl]="rowFg.get('currencyBaseId')"
+                style="text-align: center; width:95%; margin-top:3px;">
+
+        <mat-option *ngFor="let item of currencyBaseValue" [value]="item.id">{{item.title}}</mat-option>
+    </mat-select>
+</ng-template>
+
+
+

@@ -1,0 +1,10 @@
+<div class="help-sidebar-parent">
+<nav>
+ <app-help-sidebar-item [isToggledHelp]="isToggledHelp"
+                   (helpSidebarItemClick)="helpItemClicked($event)" [helpSidebarItem]="helpBaseNavigation"
+                   (helpCollapseSiblings)="helpCollapseSiblings($event)"
+                   *ngFor="let helpBaseNavigation of helpNavigations">
+
+ </app-help-sidebar-item>
+</nav>
+</div>

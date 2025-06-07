@@ -1,0 +1,55 @@
+[
+  {
+    "FieldName": "Id",
+    "Conditions": [
+      {
+        "Condition": "@Id>0",
+        "Message": {
+          "Key": "IsRequired",
+          "Values": []
+        }
+      }
+    ]
+
+  },
+  {
+    "FieldName": "CommodityCategoryId",
+    "Conditions": [
+      {
+        "Condition": "@CommodityCategoryId>0",
+        "Message": {
+          "Key": "IsRequired",
+          "Values": []
+        }
+      }
+    ]
+
+  },
+  {
+    "FieldName": "Title",
+    "Conditions": [
+      {
+        "Condition": "Validators.StringIsNotEmpty(@Title)",
+        "Message": {
+          "Key": "IsRequired",
+          "Values": []
+        }
+      }
+    ]
+
+  },
+  {
+    "FieldName": "Description",
+    "Conditions": [
+      {
+        "Condition": "Validators.StringIsNotEmpty(@Description)",
+        "Message": {
+          "Key": "IsRequired",
+          "Values": []
+        }
+      }
+    ]
+
+  }
+
+]

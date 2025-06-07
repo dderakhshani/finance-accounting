@@ -1,0 +1,13 @@
+<button mat-raised-button color="primary" type="button" (click)="currentPage=1;get()" [disabled]="_notificationService.isLoader">
+    <mat-icon>
+        search
+    </mat-icon>
+    جستجو
+</button>
+
+<button mat-raised-button color="primary" type="button" (click)="ondeleteFilter()" [disabled]="_notificationService.isLoader">
+    <mat-icon>
+        delete_forever
+    </mat-icon>
+    حذف فیلترها
+</button>

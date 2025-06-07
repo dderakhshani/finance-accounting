@@ -1,0 +1,143 @@
+<mat-dialog (onSubmit)="submit()" [showDeleteBtn]="false">
+  <div dialog-header="">افزودن تیکت</div>
+  <div dialog-content="">
+
+    <div class="d-flex">
+      <div class="col-md-6">
+        <span>ارسال کننده :  </span>
+        <span> {{ user.fullName }}</span>
+      </div>
+      <div class="col-md-6">
+        <span>واحد  :  </span>
+        <span> {{ user.userRoleName }}</span>
+      </div>
+
+    </div>
+    <hr class="mb-0"/>
+    <div class="row p-3" [formGroup]="form" style="width: 40vw;">
+      <div class="col-md-12">
+        <mat-form-field>
+          <mat-label> عنوان</mat-label>
+          <input formControlName="title" type="text" matInput>
+        </mat-form-field>
+      </div>
+
+      <div class="col-md-6">
+        <mat-form-field>
+          <mat-label>موضوع</mat-label>
+          <mat-select formControlName="topicId">
+            <mat-option *ngFor="let topic of ticketTopics" [value]="topic">
+              {{ ticketTopic2LabelMapping[topic] }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div class="col-md-6">
+        <mat-form-field>
+          <mat-label>الویت</mat-label>
+          <mat-select formControlName="priority">
+            <mat-option *ngFor="let priority of ticketPriority" [value]="priority">
+              {{ ticketPriority2LabelMapping[priority] }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-md-6">
+        <mat-form-field>
+          <mat-label>دریافت کننده</mat-label>
+          <mat-select formControlName="roleId" (selectionChange)="getUserRole($event.value)">
+            <mat-option *ngFor="let role of roles" [value]="role.id">
+              {{ role.title }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-md-6">
+        <mat-form-field [class.mat-disabled]="users.length==0">
+          <mat-label>کاربر</mat-label>
+          <mat-select formControlName="receiverUserId">
+            <mat-option *ngFor="let user of users" [value]="user.id">
+              {{ user.fullName }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-md-12">
+        <mat-form-field>
+          <mat-label> توضیحات</mat-label>
+          <textarea formControlName="description" rows="10" cols="100" matInput></textarea>
+        </mat-form-field>
+      </div>
+      <div class="col-md-12">
+
+        <app-uploader class="d-flex justify-content-center" [autoUpload]="true" (filesChange)="files=$event"
+                      (isUploadingChange)="isUploading" [attachmentsModel]="attachmentsModel"
+                      [attachmentIds]="attachmentIds"
+                      [allowFileUpload]="true">
+        </app-uploader>
+      </div>
+      <!-- <div class="col-md-6">
+    <mat-form-field>
+      <mat-label>کد</mat-label>
+      <input formControlName="code" matInput type="text">
+    </mat-form-field>
+  </div>
+
+  <div class="col-md-6">
+    <mat-form-field>
+      <mat-label>قابل تغییر تا تاریخ</mat-label>
+      <input matInput [matDatepicker]="picker" formControlName="lastEditableDate">
+      <mat-datepicker-toggle matSuffix [for]="picker">
+        <mat-icon matDatepickerToggleIcon>
+          <img class="mb-3" src="/assets/icons/calendar.svg" alt="">
+        </mat-icon>
+      </mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+  </div>
+  <div class="col-md-12">
+    <mat-form-field>
+      <mat-label> نام یکتا</mat-label>
+      <input formControlName="uniqueName" type="text" matInput>
+    </mat-form-field>
+  </div>
+  <div class="col-md-12">
+    <mat-form-field>
+      <mat-label> نوع جایگزینی</mat-label>
+      <input formControlName="blankDateFormula" type="text" matInput>
+    </mat-form-field>
+  </div>
+
+  <div class="col-md-12">
+    <mat-form-field>
+      <mat-label>نوع افزونه</mat-label>
+      <mat-select formControlName="extendTypeId">
+        <mat-option *ngFor="let type of codeVoucherExtendTypes" [value]="type.id">
+          {{type.title}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div class="col-md-4">
+    <mat-checkbox color="primary" formControlName="isAuto">
+      <mat-label>اتوماتیک</mat-label>
+    </mat-checkbox>
+  </div>
+
+  <div class="col-md-4">
+    <mat-checkbox color="primary" formControlName="isEditable">
+      <mat-label>قابل ویرایش</mat-label>
+    </mat-checkbox>
+  </div>
+
+  <div class="col-md-4">
+    <mat-checkbox color="primary" formControlName="isActive">
+      <mat-label>فعال</mat-label>
+    </mat-checkbox>
+  </div> -->
+
+
+    </div>
+  </div>
+</mat-dialog>

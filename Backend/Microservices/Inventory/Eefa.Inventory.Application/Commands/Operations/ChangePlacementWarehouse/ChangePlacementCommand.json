@@ -1,0 +1,42 @@
+[
+  {
+    "FieldName": "CommodityId",
+    "Conditions": [
+      {
+        "Condition": "@CommodityId>0",
+        "Message": {
+          "Key": "IsRequired",
+          "Values": []
+        }
+      }
+    ]
+
+  },
+ 
+  {
+    "FieldName": "WarehouseLayoutId",
+    "Conditions": [
+      {
+        "Condition": "@WarehouseLayoutId>0",
+        "Message": {
+          "Key": "IsRequired",
+          "Values": []
+        }
+      }
+    ]
+
+  },
+  {
+    "FieldName": "CurrentWarehouseLayoutId",
+    "Conditions": [
+      {
+        "Condition": "@CurrentWarehouseLayoutId>0",
+        "Message": {
+          "Key": "IsRequired",
+          "Values": []
+        }
+      }
+    ]
+
+  }
+]

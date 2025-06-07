@@ -1,0 +1,40 @@
+@import "/src/assets/scss/variables";
+
+.remove-select {
+  position: relative;
+  z-index: 100;
+  left: 19px;
+  top: -19px;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.remove-select-40 {
+  position: relative;
+  left: 19px;
+  top: -19px;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.height-40 {
+  height: 40px !important;
+}
+
+input:read-only {
+  background-color: #fff;
+  width: 95%;
+}
+
+.overview {
+  ::ng-deep {
+    .mat-form-field-flex {
+      max-height: 50px !important;
+      padding-right: 20px !important;
+    }
+
+    .mat-icon {
+      color: color(primary,400);
+    }
+  }
+}

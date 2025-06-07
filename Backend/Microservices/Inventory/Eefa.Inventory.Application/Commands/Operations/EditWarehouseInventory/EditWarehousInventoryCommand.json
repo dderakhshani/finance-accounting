@@ -1,0 +1,54 @@
+[
+  {
+    "FieldName": "CommodityId",
+    "Conditions": [
+      {
+        "Condition": "@CommodityId>0",
+        "Message": {
+          "Key": "IsRequired",
+          "Values": []
+        }
+      }
+    ]
+
+  },
+  {
+    "FieldName": "Quantity",
+    "Conditions": [
+      {
+        "Condition": "@Quantity !=null",
+        "Message": {
+          "Key": "IsRequired",
+          "Values": []
+        }
+      }
+    ]
+
+  },
+  {
+    "FieldName": "WarehouseLayoutId",
+    "Conditions": [
+      {
+        "Condition": "@WarehouseLayoutId>0",
+        "Message": {
+          "Key": "IsRequired",
+          "Values": []
+        }
+      }
+    ]
+
+  },
+  {
+    "FieldName": "WarehouseId",
+    "Conditions": [
+      {
+        "Condition": "@WarehouseId>0",
+        "Message": {
+          "Key": "IsRequired",
+          "Values": []
+        }
+      }
+    ]
+
+  }
+]

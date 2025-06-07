@@ -1,0 +1,33 @@
+<mat-dialog
+  [showDeleteBtn]="false"
+  (onSubmit)="submit()"
+>
+  <div dialog-header="">
+   ابطال چک
+  </div>
+
+  <div dialog-content=""  [formGroup]="form">
+    <div class="row">
+      <mat-form-field>
+        <mat-label>تاریخ دریافت</mat-label>
+        <input matInput [matDatepicker]="picker1" formControlName="getDate">
+        <mat-datepicker-toggle matSuffix [for]="picker1">
+          <mat-icon matDatepickerToggleIcon>
+            <img class="mb-3" src="/assets/icons/calendar.svg" alt="">
+          </mat-icon>
+        </mat-datepicker-toggle>
+        <mat-datepicker #picker1></mat-datepicker>
+      </mat-form-field>
+    </div>
+    <div class="row" >
+
+      <mat-form-field>
+        <mat-label>توضیحات</mat-label>
+        <textarea formControlName="cancelDescp" type="text" matInput> </textarea>
+      </mat-form-field>
+    </div>
+
+  </div>
+
+
+</mat-dialog>

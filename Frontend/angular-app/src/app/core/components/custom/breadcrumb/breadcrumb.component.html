@@ -1,0 +1,10 @@
+<ul class="breadcrumb mb-0">
+  <ng-container *ngFor="let crumb of breadcrumb; let last = last">
+    <li class="breadcrumb-item"
+        (click)="!disabled && onCrumbClick(crumb)"
+        [class.disabled]="disabled">
+      {{ crumb?.title }}
+    </li>
+    <li class="breadcrumb-separator" *ngIf="!last">›</li>
+  </ng-container>
+</ul>

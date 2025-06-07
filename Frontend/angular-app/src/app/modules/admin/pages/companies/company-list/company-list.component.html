@@ -1,0 +1,14 @@
+<mat-card class="h-100 d-flex flex-column overflow-auto" style="max-height: inherit; padding: 0!important;">
+
+  <app-form-actions [actions]="listActions" (OnEdit)="update()" (OnAdd)="add()" (OnRefresh)="get()" ></app-form-actions>
+
+  <app-table
+    [tableConfigurations]="tableConfigurations"
+    [tableRows]="companies"
+    (rowDoubleClicked)="navigateToCompany($event)"
+    (filtersChanged)="get()"
+    (paginationChanged)="get()"
+    (sortChanged)="get()"
+
+  ></app-table>
+</mat-card>

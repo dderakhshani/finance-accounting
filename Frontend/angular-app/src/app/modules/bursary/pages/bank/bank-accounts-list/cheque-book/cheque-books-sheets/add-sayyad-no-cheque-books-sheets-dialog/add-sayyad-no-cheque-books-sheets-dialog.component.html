@@ -1,0 +1,24 @@
+<mat-dialog
+  [showDeleteBtn]="false"
+  (onSubmit)="submit()"
+>
+  <div dialog-header="">
+   ثبت شماره صیادی
+  </div>
+
+  <div dialog-content=""  [formGroup]="form">
+    <div class="row">
+
+      <mat-form-field>
+        <mat-label>شماره صیادی</mat-label>
+        <input formControlName="sayyadNo" type="text" matInput>
+      </mat-form-field>
+
+
+    </div>
+
+
+  </div>
+
+
+</mat-dialog>

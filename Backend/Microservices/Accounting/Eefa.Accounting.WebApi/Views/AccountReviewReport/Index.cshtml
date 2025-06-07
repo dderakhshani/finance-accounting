@@ -1,0 +1,39 @@
+﻿@using Stimulsoft.Report.Web;
+@using Stimulsoft.Report.Mvc;
+
+@{
+    ViewData["Title"] = "Viewer";
+}
+
+@Html.StiNetCoreViewer(new StiNetCoreViewerOptions
+{
+
+    Server =
+    {
+       RequestTimeout = 6000
+    },
+    Localization = "./Localization/fa.xml",
+    Theme = StiViewerTheme.Office2013WhiteBlue,
+    Appearance = new StiNetCoreViewerOptions.AppearanceOptions
+    {
+        RightToLeft = true,
+        FullScreenMode = true
+    },
+    Toolbar =
+    {
+        DisplayMode = StiToolbarDisplayMode.Separated,
+        ShowResourcesButton=false,
+        ShowBookmarksButton=false,
+        ShowFindButton=false,
+        ShowOpenButton=false,
+        ShowParametersButton=false,
+        ShowViewModeButton=false,
+        ShowFullScreenButton=false,
+        ShowAboutButton=false,
+    },
+    Actions =
+    {
+        GetReport = "GetReport",
+        ViewerEvent = "ViewerEvent"
+    }
+});

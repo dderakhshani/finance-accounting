@@ -1,0 +1,61 @@
+
+<div [matMenuTriggerFor]="menu" [ngClass]="{'disabled' : isDisable,'height-40':lablelTitleCombo==''}">
+
+  <mat-form-field (click)="onfocus()" *ngIf="lablelTitleCombo!=''" style="">
+    <mat-label>{{lablelTitleCombo}}</mat-label>
+    <div>
+        <input matInput [(ngModel)]="title"
+               id="inputTitle"
+               [ngModelOptions]="{standalone: true}"
+               autocomplete="false"
+               readonly
+               [required]="isRequired"
+               [matTooltipPosition]="'above'"
+               matTooltip="{{title}}" />
+    </div>
+  </mat-form-field>
+  <input *ngIf="lablelTitleCombo==''"
+         (click)="onfocus()"
+         [(ngModel)]="title"
+         id="inputTitle"
+         [ngModelOptions]="{standalone: true}"
+         autocomplete="false"
+         readonly
+         [required]="isRequired"
+         class="form-control"
+         placeholder="جستجو و انتخاب کنید" />
+
+  <mat-icon [ngClass]="{'remove-select' : lablelTitleCombo!='','remove-select-40':lablelTitleCombo==''}"
+            *ngIf="title!='' && !isDisable"
+            (click)="onSelectNode(null)"
+            matTooltip="پاک کردن">
+      close
+  </mat-icon>
+  <mat-icon [ngClass]="{'remove-select-40':lablelTitleCombo==''}"
+            *ngIf="title==''&& lablelTitleCombo=='' && !isDisable"
+            (click)="onSelectNode(null)"
+            matTooltip="انتخاب">
+    arrow_drop_down
+  </mat-icon>
+</div>
+
+<mat-menu #menu="matMenu" style="margin-bottom:-33px;">
+    <div style="position: sticky; top: 0; z-index: 1000;">
+        <input  class="search-input"
+                [(ngModel)]="searchTerm"
+                (keyup)="onSearchTerm()"
+                placeholder="جستجو"
+                (click)="$event.stopPropagation()"
+                autofocus
+                id="searchTerm"
+                autocomplete="off" />
+    </div>
+
+    <!--Combo Select-->
+      <mat-option *ngFor="let node of nodes" (click)="onSelectNode(node.id)">
+        <span>{{node.title}}</span>
+      </mat-option>
+
+
+</mat-menu>
+

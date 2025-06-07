@@ -1,0 +1,43 @@
+[
+
+  {
+    "FieldName": "WarehouseId",
+    "Conditions": [
+      {
+        "Condition": "@WarehouseId>0",
+        "Message": {
+          "Key": "WarehouseId",
+          "Values": []
+        }
+      }
+    ]
+
+  },
+  {
+    "FieldName": "UserId",
+    "Conditions": [
+      {
+        "Condition": "@UserId>0",
+        "Message": {
+          "Key": "UserId",
+          "Values": []
+        }
+      }
+    ]
+
+  },
+  
+  {
+    "FieldName": "TableName",
+    "Conditions": [
+      {
+        "Condition": "Validators.StringIsNotEmpty(@TableName)",
+        "Message": {
+          "Key": "IsRequired",
+          "Values": []
+        }
+      }
+    ]
+
+  }
+]

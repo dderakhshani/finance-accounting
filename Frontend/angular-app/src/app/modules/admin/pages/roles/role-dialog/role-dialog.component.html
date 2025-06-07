@@ -1,0 +1,98 @@
+<mat-dialog
+  (onSubmit)="submit()"
+  (onDelete)="delete()"
+  [showDeleteBtn]="pageMode === pageModes.Update">
+
+  <div dialog-header="">نقش</div>
+
+  <div dialog-content="">
+    <div class="row gy-3 " [formGroup]="form">
+      <div class="col-12">
+        <div class="row">
+          <div class="col-md-2">
+            <mat-form-field>
+              <mat-label> عنوان</mat-label>
+              <input formControlName="title" type="text" matInput>
+            </mat-form-field>
+          </div>
+          <div class="col-md-2">
+            <mat-form-field>
+              <mat-label> نام یکتا</mat-label>
+              <input formControlName="uniqueName" type="text" matInput>
+            </mat-form-field>
+          </div>
+          <div class="col-md-3">
+            <mat-form-field>
+              <mat-label> توضیحات</mat-label>
+              <input formControlName="description" type="text" matInput>
+            </mat-form-field>
+          </div>
+        </div>
+
+      </div>
+      <div class="col-6">
+        <mat-card style="height: 50vh">
+          <app-tree
+            height="100%"
+            [useNew]="true"
+            [selectable]="true"
+            (onSelect)="handlePermissionSelection($event)"
+            [rawNodes]="permissions"
+          ></app-tree>
+
+        </mat-card>
+      </div>
+      <div class="col-6">
+        <mat-card style="height: 50vh" class="p-0 d-flex flex-column overflow-auto">
+
+
+          <app-action-bar (onDelete)="removePermissionsFromRole() " >
+            <div  before class="row " style="width: fit-content; margin-left:13vw!important; ">
+              <div class="col">
+                <mat-slide-toggle color='primary'
+                              [checked]="false"
+                              (change)="$event.checked ? this.form.controls['cloneFromRole'].enable() : this.form.controls['cloneFromRole'].disable();form.controls['cloneFromRole'].reset()">
+                  <mat-label class="mat-caption">کپی کردن اتوماتیک سطح دسترسی</mat-label>
+                </mat-slide-toggle>
+              </div>
+              <div class="col">
+                <mat-form-field>
+                  <mat-label> کپی دسترسی از نقش...</mat-label>
+                  <input
+                    autoComplete='nope'
+                    formControlName="cloneFromRole"
+                    type="text" matInput [matAutocomplete]="auto">
+
+                  <mat-autocomplete
+                    (optionSelected)="getPermissionsByRoleId($event.option.value)"
+                    autoActiveFirstOption #auto="matAutocomplete"
+                    [displayWith]="roleDisplayFn.bind(this) ">
+
+
+                    <mat-option
+                      *ngFor="let role of filteredRoles| async"
+                      [value]="role.id">
+                      {{role.title}}
+                    </mat-option>
+                  </mat-autocomplete>
+                </mat-form-field>
+
+              </div>
+
+            </div>
+
+          </app-action-bar>
+
+
+          <app-table
+            height="100%"
+            [tableRows]="rolePermissions"
+            [tableConfigurations]="tableConfigurations">
+
+
+          </app-table>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+</mat-dialog>

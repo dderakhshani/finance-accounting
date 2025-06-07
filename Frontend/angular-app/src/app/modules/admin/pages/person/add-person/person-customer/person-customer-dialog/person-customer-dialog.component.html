@@ -1,0 +1,65 @@
+<mat-dialog
+  (onSubmit)="submit()"
+
+  (onDelete)="delete()"
+  [showSubmitBtn]="pageMode === pageModes.Add || pageMode === pageModes.Update"
+  [showDeleteBtn]="pageMode === pageModes.Delete"
+>
+  <div dialog-header="">{{(pageMode === pageModes.Update) ? 'ویرایش اطلاعات مشتری ' :'اطلاعات مشتری'}}</div>
+
+  <div dialog-content="" style="width: 40vh">
+    <div class="row gy-3 " [formGroup]="form">
+      <div class="col-12">
+        <div class="row">
+          <div class="col-6">
+            <mat-form-field>
+              <mat-label>کد مشتری</mat-label>
+              <input type="text" matInput formControlName="customerCode">
+            </mat-form-field>
+          </div>
+          <div class="col-6">
+            <mat-form-field>
+              <mat-label>گروه تفصیل مشتری</mat-label>
+              <mat-select formControlName="accountReferenceGroupId">
+                <mat-option *ngFor="let accountReferenceGroup of accountReferencesGroups" [value]="accountReferenceGroup.id">
+                  {{accountReferenceGroup.title + ' ' + accountReferenceGroup.code}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+        </div>
+        <div class="row">
+          <div class="col-6">
+            <mat-form-field>
+              <mat-label>گروه قیمتی</mat-label>
+              <mat-select formControlName="customerTypeBaseId">
+                <mat-option *ngFor="let customerType of customerTypes" [value]="customerType.id">
+                  {{customerType.title}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="col-6">
+            <mat-form-field>
+              <mat-label>کارشناس فروش مربوطه</mat-label>
+              <mat-select formControlName="currentAgentId">
+                <mat-option *ngFor="let saleAgent of saleAgents" [value]="saleAgent.id">
+                  {{saleAgent.title}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+<!--        <div class="row">-->
+<!--          <div class="col-12 mt-2">-->
+<!--            <mat-checkbox color="primary" formControlName="isActive"></mat-checkbox>-->
+<!--            <mat-label class=" mb-1 mat-caption"> فعال است</mat-label>-->
+<!--          </div>-->
+<!--        </div>-->
+
+      </div>
+
+    </div>
+  </div>
+</mat-dialog>

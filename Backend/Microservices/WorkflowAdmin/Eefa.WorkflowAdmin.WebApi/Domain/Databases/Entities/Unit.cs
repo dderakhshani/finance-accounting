@@ -1,0 +1,60 @@
+﻿using System.Collections.Generic;
+using Library.Attributes;
+using Library.Interfaces;
+
+namespace Eefa.WorkflowAdmin.WebApi.Domain.Databases.Entities
+{
+    [HasUniqueIndex]
+    public partial class Unit : HierarchicalBaseEntity
+    {
+
+        /// <summary>
+        /// عنوان
+        /// </summary>
+        [UniqueIndex]
+        public string Title { get; set; } = default!;
+
+        /// <summary>
+        /// کد شعبه
+        /// </summary>
+        public int BranchId { get; set; } = default!;
+
+        /// <summary>
+        /// نقش صاحب سند
+        /// </summary>
+         
+
+        /// <summary>
+        /// ایجاد کننده
+        /// </summary>
+         
+
+        /// <summary>
+        /// تاریخ و زمان ایجاد
+        /// </summary>
+         
+
+        /// <summary>
+        /// اصلاح کننده
+        /// </summary>
+         
+
+        /// <summary>
+        /// تاریخ و زمان اصلاح
+        /// </summary>
+         
+
+        /// <summary>
+        /// آیا حذف شده است؟
+        /// </summary>
+        
+
+        public virtual Branch Branch { get; set; } = default!;
+        public virtual User CreatedBy { get; set; } = default!;
+        public virtual User? ModifiedBy { get; set; } = default!;
+        public virtual Role OwnerRole { get; set; } = default!;
+        public virtual Unit? Parent { get; set; } = default!;
+        public virtual ICollection<Unit> InverseParent { get; set; } = default!;
+        public virtual ICollection<UnitPosition> UnitPositions { get; set; } = default!;
+    }
+}

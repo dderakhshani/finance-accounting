@@ -1,0 +1,25 @@
+<div class="h-100 d-flex flex-column gap-3">
+  <app-action-bar [actions]="formActions" (onPrint)="handlePrint()"></app-action-bar>
+  <div class="h-100 overflow-auto d-flex gap-3">
+    <mat-card  style="width: 100%;">
+      <app-tree
+        [useNew]="true"
+        [editable]="identityService.doesHavePermission('AccessToEditAccountHeaders')"
+        [canAdd]="identityService.doesHavePermission('AccessToEditAccountHeaders')"
+        (onAdd)="add($event)"
+        (onEdit)="update($event)"
+        [codeKey]="'fullCode'"
+        height="100%"
+        (onClick)="showAccountHeadInReadMode($event)"
+        [searchableProperties]="['title','code']"
+        [rawNodes]="entities">
+      </app-tree>
+
+    </mat-card>
+    <mat-card style="width: 60%; padding: 0; overflow: hidden" class="d-flex flex-column"
+              *ngIf="showAccountHeadModalInReadMode">
+      <app-account-head-modal style="height: 100%" [accountHead]="selectedAccountHead"
+                              [pageMode]="PageModes.Read"></app-account-head-modal>
+    </mat-card>
+  </div>
+</div>

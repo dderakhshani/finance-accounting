@@ -1,0 +1,293 @@
+<mat-dialog
+  *ngIf="pageMode !== pageModes.Read"
+  (onSubmit)="submit()"
+  (onDelete)="delete()"
+  [showDeleteBtn]="pageMode === pageModes.Update">
+  <div dialog-header></div>
+  <div dialog-content>
+    <div [formGroup]="form" class="d-flex flex-column gap-3">
+      <div class="row">
+        <div class="col-3 mb-auto">
+          <mat-form-field>
+            <mat-label>سطح بالاتر</mat-label>
+            <input matInput type="text" formControlName="parentTitle">
+          </mat-form-field>
+        </div>
+        <div class="col-3 mb-auto">
+          <mat-form-field>
+            <mat-label>کد سطح بالا</mat-label>
+            <input matInput type="text" formControlName="parentCode">
+          </mat-form-field>
+        </div>
+        <div class="col-3 mb-auto">
+          <mat-form-field>
+            <mat-label class="asterix--before">کد</mat-label>
+            <input matInput type="text" formControlName="code">
+          </mat-form-field>
+        </div>
+        <div class="col-3 mb-auto">
+          <mat-form-field>
+            <mat-label class="asterix--before">عنوان</mat-label>
+            <input matInput type="text" formControlName="title">
+          </mat-form-field>
+        </div>
+
+        <div class="col-3">
+          <mat-form-field>
+            <mat-label class="asterix--before">نوع حساب</mat-label>
+            <mat-select formControlName="transferId">
+              <mat-option *ngFor="let type of transferTypes" [value]="type.id">
+                {{type.title}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-3">
+          <mat-form-field>
+            <mat-label class="asterix--before">ماهیت حساب</mat-label>
+            <mat-select formControlName="balanceId">
+              <mat-option *ngFor="let type of balanceTypes" [value]="type.id">
+                {{type.title}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-3">
+          <mat-form-field>
+            <mat-label class="asterix--before">کنترل ماهیت حساب</mat-label>
+            <mat-select formControlName="balanceBaseId">
+              <mat-option *ngFor="let type of balances" [value]="type.id">
+                {{type.title}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-3">
+          <mat-form-field>
+            <mat-label class="asterix--before">نوع ارز</mat-label>
+            <mat-select formControlName="currencyBaseTypeId">
+              <mat-option *ngFor="let type of currencies" [value]="type.id">
+                {{type.title}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-6 mb-auto">
+          <mat-form-field>
+            <mat-label>توضیحات</mat-label>
+            <input matInput type="text" formControlName="description">
+          </mat-form-field>
+        </div>
+        <div class="col-6 mx-auto my-3">
+          <div class="row">
+            <div class="col-6">
+              <mat-checkbox color="primary" formControlName="isActive">
+                <mat-label>فعال است</mat-label>
+              </mat-checkbox>
+            </div>
+            <div class="col-6">
+              <mat-checkbox color="primary"
+                            formControlName="lastLevel">
+                <mat-label>سطح آخر</mat-label>
+              </mat-checkbox>
+            </div>
+          </div>
+
+        </div>
+
+
+      </div>
+      <mat-card *ngIf="form.controls['lastLevel'].value">
+        <div class="row" style="align-content: center; display: flex">
+          <div class="col-3">
+            <mat-checkbox color="primary" formControlName="currencyFlag">
+              <mat-label>ویژگی ارزی</mat-label>
+            </mat-checkbox>
+          </div>
+          <div class="col-3">
+            <mat-checkbox color="primary" formControlName="exchengeFlag">
+              <mat-label>تسعیرپذیر است</mat-label>
+            </mat-checkbox>
+          </div>
+          <div class="col-3">
+            <mat-checkbox color="primary" formControlName="traceFlag">
+              <mat-label>ویژگی پیگیری دارد</mat-label>
+            </mat-checkbox>
+          </div>
+          <div class="col-3">
+            <mat-checkbox color="primary" formControlName="quantityFlag">
+              <mat-label>تعداد دارد</mat-label>
+            </mat-checkbox>
+          </div>
+        </div>
+      </mat-card>
+
+      <mat-card [ngStyle]="{'display':form.controls['lastLevel'].value ? 'block' : 'none'}">
+        <app-action-bar class="p-3" (onDelete)="removeGroups()" (onAdd)="addGroup()">
+          <div before class="d-flex gap-2">
+            <mat-form-field>
+              <mat-label>انتخاب گروه</mat-label>
+              <input type="text"
+                     aria-label="انتخاب گروه"
+                     matInput
+                     [formControl]="newGroupIdFormControl"
+                     [matAutocomplete]="newGroupAuto">
+              <mat-autocomplete autoActiveFirstOption #newGroupAuto="matAutocomplete"
+
+                                [displayWith]="groupDisplayFn.bind(this)">
+                <mat-option
+                  *ngFor="let group of accountReferencesGroups | arrayFilter: newGroupIdFormControl.value : ['title','code'];let i=index"
+                  [value]="group.id">
+                  {{group.code + ' ' + group.title}}
+
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+            <mat-form-field>
+              <mat-label>در سطح</mat-label>
+              <mat-select [formControl]="newGroupLevelFormControl">
+                <mat-option *ngFor="let groupLevel of groupLevels" [value]="groupLevel.id">
+                  {{groupLevel.title}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </app-action-bar>
+
+        <app-table
+          [tableRows]="form.controls['groups'].value"
+          [tableConfigurations]="tableConfigurations"
+        ></app-table>
+      </mat-card>
+    </div>
+  </div>
+</mat-dialog>
+
+
+<div *ngIf="pageMode === pageModes.Read" [formGroup]="form" class="d-flex flex-column h-100 pt-3 gap-3">
+  <div class="row px-3">
+
+    <div class="col-6 mb-auto">
+      <mat-form-field>
+        <mat-label>کد سطح بالا</mat-label>
+        <input matInput type="text" formControlName="parentCode">
+      </mat-form-field>
+    </div>
+    <div class="col-6 mb-auto">
+      <mat-form-field>
+        <mat-label>سطح بالاتر</mat-label>
+        <input matInput type="text" formControlName="parentTitle">
+      </mat-form-field>
+    </div>
+    <div class="col-6 mb-auto">
+      <mat-form-field>
+        <mat-label>کد</mat-label>
+        <input matInput type="text" formControlName="code">
+      </mat-form-field>
+    </div>
+    <div class="col-6 mb-auto">
+      <mat-form-field>
+        <mat-label>عنوان</mat-label>
+        <input matInput type="text" formControlName="title">
+      </mat-form-field>
+    </div>
+
+    <div class="col-6">
+      <mat-form-field>
+        <mat-label>نوع حساب</mat-label>
+        <mat-select formControlName="transferId">
+          <mat-option *ngFor="let type of transferTypes" [value]="type.id">
+            {{type.title}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="col-6">
+      <mat-form-field>
+        <mat-label>ماهیت حساب</mat-label>
+        <mat-select formControlName="balanceId">
+          <mat-option *ngFor="let type of balanceTypes" [value]="type.id">
+            {{type.title}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="col-6">
+      <mat-form-field>
+        <mat-label>کنترل ماهیت حساب</mat-label>
+        <mat-select formControlName="balanceBaseId">
+          <mat-option *ngFor="let type of balances" [value]="type.id">
+            {{type.title}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="col-6">
+      <mat-form-field>
+        <mat-label>نوع ارز</mat-label>
+        <mat-select formControlName="currencyBaseTypeId">
+          <mat-option *ngFor="let type of currencies" [value]="type.id">
+            {{type.title}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="col-12 mb-auto">
+      <mat-form-field>
+        <mat-label>توضیحات</mat-label>
+        <input matInput type="text" formControlName="description">
+      </mat-form-field>
+    </div>
+
+    <div class="col-12 mx-auto">
+      <div class="row">
+        <div class="col-6">
+          <mat-checkbox disabled color="primary" formControlName="isActive">
+            <mat-label>فعال است</mat-label>
+          </mat-checkbox>
+        </div>
+        <div class="col-6">
+          <mat-checkbox disabled color="primary"
+                        formControlName="lastLevel">
+            <mat-label>سطح آخر</mat-label>
+          </mat-checkbox>
+        </div>
+      </div>
+
+    </div>
+
+
+  </div>
+  <div *ngIf="form.controls['lastLevel'].value" class="row px-3" style="align-content: center; display: flex">
+    <div class="col-6">
+      <mat-checkbox color="primary" formControlName="currencyFlag">
+        <mat-label>ویژگی ارزی</mat-label>
+      </mat-checkbox>
+    </div>
+    <div class="col-6">
+      <mat-checkbox color="primary" formControlName="exchengeFlag">
+        <mat-label>تسعیرپذیر است</mat-label>
+      </mat-checkbox>
+    </div>
+    <div class="col-6">
+      <mat-checkbox color="primary" formControlName="traceFlag">
+        <mat-label>ویژگی پیگیری دارد</mat-label>
+      </mat-checkbox>
+    </div>
+    <div class="col-6">
+      <mat-checkbox color="primary" formControlName="quantityFlag">
+        <mat-label>تعداد دارد</mat-label>
+      </mat-checkbox>
+    </div>
+  </div>
+
+  <div class="overflow-auto gap-2" [ngStyle]="{'display':form.controls['lastLevel'].value ? 'block' : 'none'}">
+    <app-table
+      style="height: 100%"
+      [tableRows]="form.controls['groups'].value"
+      [tableConfigurations]="tableConfigurations"
+    ></app-table>
+  </div>
+</div>
+
+

@@ -1,0 +1,64 @@
+trigger:
+  branches:
+      include:
+      - develop
+
+pool:
+  vmImage: 'windows-latest'
+  name: build
+
+variables:
+  IISWebsiteName: 'SinaPlus.Panel'
+
+steps:
+- script: "git config --global http.sslVerify false"
+  displayName: "Configure Git"
+- checkout: self
+  displayName: "Clone repository"
+
+- task: NodeTool@0
+  inputs:
+    versionSpec: '18.18.0'
+- task: Npm@1
+  inputs:
+    command: 'custom'
+    customCommand: 'install -g @angular/cli'
+- task: Npm@1
+  inputs:
+    command: 'custom'
+    customCommand: 'install -f'
+- task: Npm@1
+  inputs:
+    command: 'custom'
+    customCommand: 'run build-stage'
+
+- task: PublishBuildArtifacts@1
+  name: 'PublishBuildArtifacts'
+  displayName: 'Publish build artifacts'
+  inputs:
+    PathtoPublish: 'dist'
+    ArtifactName: 'dist'
+    publishLocation: 'Container'
+- task: IISWebAppManagementOnMachineGroup@0
+  name: 'StopIIS'
+  displayName: 'Stop IIS website'
+  inputs:
+    IISDeploymentType: 'IISWebsite'
+    ActionIISWebsite: 'StopWebsite'
+    StartStopWebsiteName: '${{ variables.IISWebsiteName }}'
+
+- task: IISWebAppDeploymentOnMachineGroup@0
+  name: 'DeployIIS'
+  displayName: 'Deploy IIS Website'
+  inputs:
+    WebSiteName: '${{ variables.IISWebsiteName }}'
+    Package: 'dist'
+    TakeAppOfflineFlag: true
+
+- task: IISWebAppManagementOnMachineGroup@0
+  name: 'StartIIS'
+  displayName: 'Start IIS website'
+  inputs:
+    IISDeploymentType: 'IISWebsite'
+    ActionIISWebsite: 'StartWebsite'
+    StartStopWebsiteName: '${{ variables.IISWebsiteName }}'

@@ -1,0 +1,69 @@
+[
+
+  {
+    "FieldName": "Id",
+    "Conditions": [
+      {
+        "Condition": "@Id>0",
+        "Message": {
+          "Key": "IsRequired",
+          "Values": []
+        }
+      }
+    ]
+
+  },
+  {
+    "FieldName": "CommodityId",
+    "Conditions": [
+      {
+        "Condition": "@CommodityId>0",
+        "Message": {
+          "Key": "IsRequired",
+          "Values": []
+        }
+      }
+    ]
+
+  },
+  {
+    "FieldName": "QuotaGroupsId",
+    "Conditions": [
+      {
+        "Condition": "@QuotaGroupsId>0",
+        "Message": {
+          "Key": "IsRequired",
+          "Values": []
+        }
+      }
+    ]
+
+  },
+  {
+    "FieldName": "CommodityQuota",
+    "Conditions": [
+      {
+        "Condition": "@CommodityQuota>0",
+        "Message": {
+          "Key": "IsRequired",
+          "Values": []
+        }
+      }
+    ]
+
+  },
+  {
+    "FieldName": "QuotaDays",
+    "Conditions": [
+      {
+        "Condition": "@QuotaDays>0",
+        "Message": {
+          "Key": "IsRequired",
+          "Values": []
+        }
+      }
+    ]
+
+  }
+
+]

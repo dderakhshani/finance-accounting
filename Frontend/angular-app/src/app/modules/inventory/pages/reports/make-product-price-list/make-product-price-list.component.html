@@ -1,0 +1,254 @@
+<div class="h-100 d-flex flex-column overflow-auto gap-3" style="max-height: inherit; padding: 0!important;">
+
+    <mat-card>
+        <form [formGroup]="SearchForm">
+            <div class="row">
+                <div class="col-md-4">
+                    <mat-form-field>
+                        <mat-label>از تاریخ </mat-label>
+                        <input tabindex="0" matInput [matDatepicker]="pickerFrom" formControlName="fromDate">
+                        <mat-datepicker-toggle matSuffix [for]="pickerFrom">
+                            <mat-icon matDatepickerToggleIcon>
+                                <img class="mb-3" src="/assets/icons/calendar.svg" alt="">
+                            </mat-icon>
+                        </mat-datepicker-toggle>
+                        <mat-datepicker #pickerFrom></mat-datepicker>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-4">
+                    <mat-form-field>
+                        <mat-label>تا تاریخ </mat-label>
+                        <input tabindex="1" matInput [matDatepicker]="picker" formControlName="toDate">
+                        <mat-datepicker-toggle matSuffix [for]="picker">
+                            <mat-icon matDatepickerToggleIcon>
+                                <img class="mb-3" src="/assets/icons/calendar.svg" alt="">
+                            </mat-icon>
+                        </mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+                </div>
+
+
+                <div class="col-md-4">
+                    <button mat-raised-button color="primary"  (click)="currentPage=1;get()" [disabled]="_notificationService.isLoader" [tabindex]="2" id="Search">
+                        <mat-icon>
+                            search
+                        </mat-icon>
+                        جستجو
+                    </button>
+                    <button mat-stroked-button color="primary" type="button" (click)="ondeleteFilter(SearchForm)" [disabled]="_notificationService.isLoader" [tabindex]="3">
+                        <mat-icon>
+                            delete_forever
+                        </mat-icon>
+                        حذف فیلترها
+                    </button>
+                </div>
+            </div>
+        </form>
+
+    </mat-card>
+
+    <mat-spinner style="top:30%;right:40%;position:absolute;z-index:1000" *ngIf="_notificationService.isLoader"></mat-spinner>
+
+    <div [ngClass]="{'modal-large-table':IslargeSize ,'modal-large-close': !IslargeSize}" class="h-100 overflow-auto p-0">
+
+        <div [ngClass]="{'modal-large-table-content':IslargeSize}">
+
+            <mat-card id="reports-containt">
+
+                <div class="row">
+                    <app-table-filter (GetQuery)="get($event)"
+                                      (onPrint)="print()"
+                                      (IslargeSize)="IslargeSize=$event"
+                                      [data]="Reports_filter"
+                                      (filterTable)="filterTable($event)"
+                                      (isSelectedRows)="selectedRows($event)"
+                                      [IsShowFilter]="true">
+                    </app-table-filter>
+
+                    <div [ngClass]="{'tableFixHead_largSize':IslargeSize ,'tableFixHead': !IslargeSize}" id="report-table-4" [appDynamicTableHeight]="marginFromBottom_appDynamicTableHeight" [tableData]="data">
+                        <table class="mas-table" id="mas-table-4">
+                            <thead>
+
+                                <tr id="data-filde">
+                                    <th  resizable  class="width-3">
+                                        ردیف
+                                    </th>
+
+                                    <th  resizable  class="width-10" accessKey="meterage" abbr="string">
+                                        سایز
+                                    </th>
+                                    <th  resizable  class="width-10" accessKey="thickness" abbr="string">
+                                        ضخامت (میلی‌متر)
+                                    </th>
+                                    <th  resizable  class="width-10" accessKey="size" abbr="number">
+                                        متراژ
+                                    </th>
+
+                                    <th  resizable  class="width-10" accessKey="weight" abbr="date">
+                                        وزن
+                                    </th>
+
+                                    <th  resizable  class="width-11" accessKey="rawMaterial" abbr="number">
+                                        مواد اولیه
+                                        <br />
+                                        کد 80263
+                                    </th>
+                                    <th  resizable  class="width-11" accessKey="salary" abbr="string">
+                                         دستمزد
+                                        <br />
+                                        شروع با کد 801
+                                    </th>
+                                    <th  resizable  class="width-11" accessKey="overload" abbr="number" colspan="2">
+                                        سربار
+
+                                    </th>
+
+
+                                    <th  resizable  class="width-11" accessKey="total" abbr="number">
+                                        جمع
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbody">
+
+                                <tr *ngFor="let item of data ;let i=index ">
+                                    <th>
+                                        {{i+1}}
+                                    </th>
+                                    <td accessKey="size">
+
+                                        {{item.size}}
+
+                                    </td>
+                                    <td accessKey="thickness">
+                                        {{item.thickness}}
+                                    </td>
+                                    <td accessKey="meterage">
+                                        {{item.meterage | money}}
+                                    </td>
+
+
+                                    <td accessKey="weight">
+                                        {{item.weight | money}}
+                                    </td>
+                                    <td accessKey="rawMaterial">
+                                        {{item.rawMaterial | money}}
+                                    </td>
+
+                                    <td accessKey="salary">
+                                        {{item.salary | money}}
+                                    </td>
+
+                                    <td accessKey="overload" >
+                                        {{item.overload | money}}
+                                    </td>
+                                    <td rowspan="35" *ngIf="i==0" style="writing-mode: vertical-lr;height:unset; background-color:#f3e1ed">
+                                        شروع با کد 802 و 83 و 85 به غیر از 80256 و 80257 و 80263
+
+                                    </td>
+                                    <td accessKey="total">
+                                        {{item.total | money}}
+                                    </td>
+
+                                </tr>
+
+                            </tbody>
+                            <tfoot *ngIf="isDisplayFooter" >
+                                <tr>
+                                    <td>
+                                        {{data.length}}
+                                    </td>
+                                    <td accessKey="size"> </td>
+                                    <td accessKey="thickness">
+                                        جمع کل
+                                    </td>
+                                    <td accessKey="meterage">{{MakeProductPrice?.totalMeterage |money}}</td>
+
+                                    <td accessKey="weight">{{MakeProductPrice?.totalWeight |money}}</td>
+                                    <td accessKey="rawMaterial">{{MakeProductPrice?.totalRawMaterial |money}}</td>
+                                    <td accessKey="salary">{{MakeProductPrice?.totalSalary |money}}</td>
+                                    <td accessKey="overload">{{MakeProductPrice?.totalOverload |money}}</td>
+                                    <td></td>
+                                    <td accessKey="total">{{MakeProductPrice?.sumALL |money}}</td>
+
+                                </tr>
+                                <tr *ngIf="Service.PageSize<=RowsCount">
+                                    <td colspan="14">
+                                        <app-table-pagging [RowsCount]="RowsCount" [activePage]="currentPage" [pageSize]="pageSize" (ActivePage)="ChangePage($event)" (ExportToALLExcel)="ExportAllToExcel()">
+
+                                        </app-table-pagging>
+                                    </td>
+                                </tr>
+                            </tfoot>
+                        </table>
+
+                    </div>
+                </div>
+
+
+            </mat-card>
+        </div>
+    </div>
+    <mat-card>
+
+            <div class="row">
+                <div class="col-md-2">
+                    <mat-form-field>
+                        <mat-label>آخرین تاریخ سند </mat-label>
+                        <input tabindex="4" matInput [matDatepicker]="lastDate"  disabled [value]="MakeProductPrice?.lastDate">
+                        <mat-datepicker-toggle matSuffix [for]="lastDate">
+                            <mat-icon matDatepickerToggleIcon>
+                                <img class="mb-3" src="/assets/icons/calendar.svg" alt="">
+                            </mat-icon>
+                        </mat-datepicker-toggle>
+                        <mat-datepicker #lastDate></mat-datepicker>
+                    </mat-form-field>
+                </div>
+
+                <div class="col-md-2">
+
+                    <mat-form-field>
+                        <mat-label>کنترل دستمزد 80160</mat-label>
+                        <input matInput type="text" disabled [value]="MakeProductPrice?.documentControls160 | money">
+                    </mat-form-field>
+                </div>
+                <div class="col-md-2">
+
+                    <mat-form-field>
+                        <mat-label>
+                            کنترل مواد-هزینه های عملیاتی 80296
+
+                        </mat-label>
+                        <input matInput type="text" disabled [value]="MakeProductPrice?.documentControls296 | money">
+                    </mat-form-field>
+                </div>
+                <div class="col-md-2">
+
+                    <mat-form-field>
+                        <mat-label>کنترل سربار- هزینه های عملیاتی 80295</mat-label>
+                        <input matInput type="text" disabled [value]="MakeProductPrice?.documentControls295 | money">
+                    </mat-form-field>
+                </div>
+                <div class="col-md-2">
+                    <label class="mat-label-header">کد سند مکانیزه :</label>
+                    <label class="btn-link" (click)="navigateToVoucher()">{{MakeProductPrice?.voucherNO}}</label>
+                </div>
+                <div class="col-md-2" >
+                    <button mat-raised-button color="primary" type="button" (click)="add()" [disabled]="_notificationService.isLoader" id="Save"  *ngIf="MakeProductPrice?.allowAssumeDocument==true">
+                        <mat-icon>
+                            save
+                        </mat-icon>
+                        صدور سند
+                    </button>
+                    <span class="btn-color font-10" *ngIf="MakeProductPrice?.allowAssumeDocument==false">
+                        تنها یک روز بعد از ثبت تاریخ آخرین سند امکان ثبت سند جدید وجود دارد
+                    </span>
+
+                </div>
+            </div>
+
+
+    </mat-card>
+
+</div>

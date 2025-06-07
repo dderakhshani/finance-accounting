@@ -1,0 +1,91 @@
+
+<mat-dialog
+  (onSubmit)="submit()"
+  (onDelete)="delete()"
+  [showDeleteBtn]="pageMode === pageModes.Update">
+
+<div dialog-header="">منو</div>
+
+<div dialog-content="">
+<div class="row">
+  <mat-dialog-content class="mx-auto" [formGroup]="form">
+
+    <div class="row">
+      <div class="col-md-4">
+        <mat-form-field>
+          <mat-label> عنوان</mat-label>
+          <input formControlName="title" type="text" matInput>
+        </mat-form-field>
+      </div>
+      <div class="col-md-4">
+        <mat-form-field>
+          <mat-label>دسترسی</mat-label>
+
+          <div class="custom-wrapper-example" matAutocompleteOrigin #origin="matAutocompleteOrigin">
+            <input matInput
+                   formControlName="permissionId"
+                   [matAutocomplete]="auto"
+                   [matAutocompleteConnectedTo]="origin">
+          </div>
+
+          <mat-autocomplete #auto="matAutocomplete" [displayWith]="getPermissionTitleById.bind(this)">
+
+            <mat-option *ngFor="let item of permissions | arrayFilter: form.controls['permissionId'].value : ['title'] " [value]="item.id">{{item.title}}</mat-option>
+          </mat-autocomplete>
+
+
+        </mat-form-field>
+
+      </div>
+      <div class="col-md-4">
+        <mat-form-field>
+          <mat-label> ترتیب نمایش</mat-label>
+          <input formControlName="orderIndex" type="text" matInput>
+        </mat-form-field>
+      </div>
+      <div class="col-md-4">
+        <mat-form-field>
+          <mat-label> عنوان نمایشی</mat-label>
+          <input formControlName="pageCaption" type="text" matInput>
+        </mat-form-field>
+      </div>
+      <div class="col-md-4">
+        <mat-form-field>
+          <mat-label> آدرس صفحه</mat-label>
+          <input formControlName="formUrl" type="text" matInput>
+        </mat-form-field>
+      </div>
+
+      <div class="col-md-4">
+        <mat-form-field>
+          <mat-label> آدرس صفحه راهنما</mat-label>
+          <input formControlName="helpUrl" type="text" matInput>
+        </mat-form-field>
+      </div>
+      <div class="col-md-4">
+
+        <mat-checkbox color="primary" formControlName="isActive">
+          <mat-label>فعال است</mat-label>
+        </mat-checkbox>
+
+
+      </div>
+      <div class="col-md-4">
+
+        <div class="uploadfile">
+          <div class="uolodfolecard-details hover-parent">
+            <img mat-card-lg-image class="mx-auto" [src]="form.get('imageUrl')?.value" alt="">
+            <img style="width: 40px; height: 40px;object-fit: contain; position: absolute; right: 0; top: 0; cursor: pointer"
+                 (click)="photoInput.click()" class="hover-child" src="/assets/icons/upload-image.svg" alt="">
+            <input hidden (change)="onPhotoInput($event)" #photoInput type="file" id="photoInput">
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </mat-dialog-content>
+</div>
+</div>
+
+</mat-dialog>

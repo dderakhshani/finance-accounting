@@ -1,0 +1,12 @@
+<mat-card class="h-100 d-flex flex-column overflow-hidden" style="max-height: inherit; padding: 0!important;">
+  <div class="h-100 overflow-auto">
+    <app-table
+      [tableRows]="roles"
+      [tableConfigurations]="tableConfigurations"
+      (paginationChanged)="get()"
+      (filtersChanged)="get()"
+      (sortChanged)="get()"
+      (rowDoubleClicked)="navigateToUser($event)"
+    ></app-table>
+  </div>
+</mat-card>

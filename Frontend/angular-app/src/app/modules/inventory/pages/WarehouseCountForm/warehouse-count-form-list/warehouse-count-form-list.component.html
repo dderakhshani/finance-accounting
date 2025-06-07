@@ -1,0 +1,65 @@
+<mat-card class="h-100 d-flex flex-column">
+<div class="h-100 overflow-auto">
+  <app-table-virtual-scrolling
+    [tableRows]="WarehouseCountForms"
+    [requestsIndex]="requestsIndex"
+    [tableConfigurations]="tableConfigurations"
+    (sortChanged)="get()"
+    (refreshEvent) ="get()"
+    (filtersChanged)="get()"
+    (paginationChanged)="get()"
+    (rowsSelected)="handleRowsSelected($event)"
+    (optionSelectedEvent)="handleOptionSelected($event)"
+    (removeAllFiltersAndSortsEvent)="handleRemoveAllFiltersAndSorts($event)"
+  ></app-table-virtual-scrolling>
+</div>
+<ng-template #rowBtn1 let-row="row" let-column="column">
+  <div class="d-flex justify-content-around align-items-center">
+    <mat-icon class="font-30 detail-icon" (click)="showDetail(row)"  matTooltip="نمایش لیست کالاها و موجودی ">
+      list
+    </mat-icon>
+    <mat-icon  class="font-30 conflict-icon" (click)="showConflict(row)"  matTooltip="نمایش مغایرت ها">
+      rule
+    </mat-icon>
+    <mat-icon class="font-30 detail-icon" (click)="showReport(row)"  matTooltip="گزارش">
+      analytics
+    </mat-icon>
+  </div>
+</ng-template>
+<ng-template #expandRowWithTemplate let-row="row" let-column="column" let-columns="columns">
+    <div >
+      <table  class="expand_table"  *ngIf="row[column.field] && row[column.field].length; else MassERR" >
+         <tbody *ngFor="let r of row[column.field] ; let i = index">
+         <tr class="ExpandRowWithTemplate">
+           <td class="border border-gray-300 " [style]="columns[0].style"></td>
+           <td class="border border-gray-300 " [style]="columns[1].style">{{ i + 1 }}</td>
+           <td class="border border-gray-300 " [style]="columns[2].style">{{ r.formNo }}</td>
+           <td class="border border-gray-300 " [style]="columns[3].style">{{ r.formDate | toPersianDate }}</td>
+           <td class="border border-gray-300 " [style]="columns[4].style">{{ r.warehouseLayoutTitle }}</td>
+           <td class="border border-gray-300 " [style]="columns[5].style">{{ r.counterUserName }}</td>
+           <td class="border border-gray-300 " [style]="columns[6].style">{{ r.confirmerUserName }}</td>
+           <td class="border border-gray-300 " [style]="columns[7].style">{{ r.formStateMessage }}</td>
+           <td class="border border-gray-300 " [style]="columns[8].style">
+
+             <div class="d-flex justify-content-around align-items-center">
+               <mat-icon class="font-30 detail-icon" (click)="showDetail(r)"  matTooltip="نمایش لیست کالاها و موجودی ">
+                 list
+               </mat-icon>
+               <mat-icon  class="font-30 conflict-icon" (click)="showConflict(r)"  matTooltip="نمایش مغایرت ها">
+                 rule
+               </mat-icon>
+             </div>
+
+           </td>
+         </tr>
+         </tbody>
+       </table>
+      <ng-template #MassERR>
+        <p class="py-2 ">
+          فرم زیرمجموعه ای وجود ندارد...
+        </p>
+      </ng-template>
+    </div>
+</ng-template>
+
+</mat-card>

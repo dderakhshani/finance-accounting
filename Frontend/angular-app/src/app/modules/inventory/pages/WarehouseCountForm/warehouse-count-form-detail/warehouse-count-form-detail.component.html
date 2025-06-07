@@ -1,0 +1,79 @@
+<mat-card class="h-100 d-flex flex-column">
+  <div class="row mb-1">
+    <div class="col-md-2">
+      <mat-form-field >
+        <mat-label>شماره فرم</mat-label>
+        <input [(ngModel)]="formNo" matInput type="number" disabled>
+      </mat-form-field>
+    </div>
+    <div class="col-md-2">
+      <mat-form-field>
+        <mat-label>تارخ فرم</mat-label>
+        <input tabindex="0" matInput [matDatepicker]="pickerFrom" [(ngModel)]="formDate" disabled>
+        <mat-datepicker-toggle matSuffix [for]="pickerFrom">
+          <mat-icon matDatepickerToggleIcon>
+            <img class="mb-3" src="/assets/icons/calendar.svg" alt="">
+          </mat-icon>
+        </mat-datepicker-toggle>
+        <mat-datepicker #pickerFrom></mat-datepicker>
+      </mat-form-field>
+    </div>
+    <div class="col-md-2">
+      <mat-form-field >
+        <mat-label>نام انبار</mat-label>
+        <input [(ngModel)]="warehouseLayoutTitle" matInput type="text" disabled>
+      </mat-form-field>
+    </div>
+    <div class="col-md-2">
+      <mat-form-field >
+        <mat-label>وضعیت فرم</mat-label>
+        <input [(ngModel)]="warehouseCountFormStatus" matInput type="text" disabled>
+      </mat-form-field>
+    </div>
+
+    <div class="col-md-2">
+      <mat-form-field >
+        <mat-label>کاربر شمارنده</mat-label>
+        <input [(ngModel)]="countUser" matInput type="text" disabled>
+      </mat-form-field>
+    </div>
+    <div class="col-md-2">
+      <mat-form-field >
+        <mat-label>کاربر تایید کننده</mat-label>
+        <input [(ngModel)]="confirmerUser" matInput type="text" disabled>
+      </mat-form-field>
+    </div>
+
+  </div>
+  <app-action-bar class="p-3" (onAdd)="saveQuantities()" (onSave)="sendForConfirm()" (onSaveAndExit)="confirmForm()" (onList)="getExcelFile()"></app-action-bar>
+  <div class="h-100 overflow-auto">
+    <app-table-virtual-scrolling
+      [tableRows]="WarehouseCountFormDetails"
+      [requestsIndex]="requestsIndex"
+      [tableConfigurations]="tableConfigurations"
+      (sortChanged)="get()"
+      (rowDoubleClicked)="editRows($event)"
+      (refreshEvent)="get()"
+      (filtersChanged)="get()"
+      (paginationChanged)="get()"
+      (optionSelectedEvent)="handleOptionSelected($event)"
+      (removeAllFiltersAndSortsEvent)="handleRemoveAllFiltersAndSorts($event)"
+    ></app-table-virtual-scrolling>
+
+    <ng-template #txtCountQuantity let-row="row" let-column="column">
+      <p class="font-12" *ngIf="!isEditable ">
+        {{ parseFloat(row.countedQuantity)  | customDecimal : column.digitsInfo }}
+      </p>
+      <input *ngIf="isEditable" appOnlyNumber [(ngModel)]="row.countedQuantity" class="form-control"
+             tabindex="row.rowIndex"  (change)="changeQuantity($event , row)" [ngStyle]="getQuantityStyle(row)"  >
+    </ng-template>
+    <ng-template #txtDescription let-row="row"  tabindex="-1">
+      <p class="font-12" *ngIf="!isEditable ">
+        {{ row.description }}
+      </p>
+      <input *ngIf="isEditable"  [(ngModel)]="row.description" class="form-control" [tabIndex]="-1"
+             tabindex="row.rowIndex"  (change)="changeDescription($event , row)"  >
+    </ng-template>
+  </div>
+
+</mat-card>

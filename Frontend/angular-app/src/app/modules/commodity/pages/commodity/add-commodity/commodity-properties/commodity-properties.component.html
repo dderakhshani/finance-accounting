@@ -1,0 +1,75 @@
+
+<div *ngIf="itemType=='int'">
+
+    <mat-form-field>
+        <mat-label>{{property?.title}}</mat-label>
+        <div>
+            <input matInput [(ngModel)]="title"
+                   [ngModelOptions]="{standalone: true}"
+                   autocomplete="false"
+                   type="number"
+                   [required]="isRequired"
+                   [matTooltipPosition]="'above'"
+                   (keyup)="onSelected()"
+                   matTooltip="{{title}}" />
+        </div>
+    </mat-form-field>
+</div>
+<div *ngIf="itemType=='string'">
+    <mat-form-field>
+        <mat-label>{{property?.title}}</mat-label>
+        <div>
+            <input matInput [(ngModel)]="title"
+                   [ngModelOptions]="{standalone: true}"
+                   autocomplete="false"
+                   type="text"
+                   [required]="isRequired"
+                   [matTooltipPosition]="'above'"
+                   (keyup)="onSelected()"
+                   matTooltip="{{title}}" />
+        </div>
+    </mat-form-field>
+</div>
+
+<div *ngIf="itemType=='checkbox'">
+   
+    <mat-checkbox [(ngModel)]="title" color="primary" (change)="onSelected()"></mat-checkbox>
+    <mat-label>{{property?.title}}</mat-label>
+</div>
+<div *ngIf="itemType=='item'" [matMenuTriggerFor]="menu">
+
+    <mat-form-field (click)="onfocus()">
+        <mat-label>{{property?.title}}</mat-label>
+        <div>
+            <input matInput [(ngModel)]="title"
+                   [ngModelOptions]="{standalone: true}"
+                   autocomplete="false"
+                   readonly
+                   [required]="isRequired"
+                   [matTooltipPosition]="'above'"
+                   matTooltip="{{title}}" />
+        </div>
+    </mat-form-field>
+
+    <mat-menu #menu="matMenu" style="margin-bottom:-33px">
+        <div style="position: sticky; top: 0; z-index: 1000;min-width:300px;">
+            <input class="search-input" [(ngModel)]="searchTerm" (keyup)="onSearchTerm()" placeholder="جستجو" (click)="$event.stopPropagation()" autofocus id="searchTerm" autocomplete="off" />
+        </div>
+
+        <!--Combo Select-->
+
+        <mat-option *ngFor="let node of nodes" (click)="onSelectNode(node)">
+
+            <span style="margin-left:10px; font-size:12px;">{{node.code}}</span>🔅<span>{{node.title}}</span>
+
+        </mat-option>
+        <div style="padding:3px;">
+        </div>
+
+    </mat-menu>
+</div>
+
+<div *ngIf="itemType=='multi select'">
+</div>
+
+

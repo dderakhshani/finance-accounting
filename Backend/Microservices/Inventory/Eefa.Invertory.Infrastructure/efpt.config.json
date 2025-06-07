@@ -1,0 +1,159 @@
+﻿{
+   "CodeGenerationMode": 0,
+   "ContextClassName": "InvertoryContext",
+   "ContextNamespace": null,
+   "DefaultDacpacSchema": null,
+   "FilterSchemas": false,
+   "IncludeConnectionString": false,
+   "ModelNamespace": null,
+   "OutputContextPath": null,
+   "OutputPath": "Context",
+   "ProjectRootNamespace": "Eefa.Invertory.Infrastructure",
+   "Schemas": null,
+   "SelectedHandlebarsLanguage": 0,
+   "SelectedToBeGenerated": 1,
+   "Tables": [
+      {
+         "Name": "[admin].[BaseValues]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[admin].[BaseValueTypes]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[common].[BomItems]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[common].[Boms]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[common].[BomValueHeaders]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[common].[BomValues]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[common].[CategoryPropertyMappings]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[common].[Commodities]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[common].[CommodityCategories]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[common].[CommodityCategoryProperties]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[common].[CommodityCategoryPropertyItems]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[common].[CommodityPropertyValues]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[common].[DocumentHeads]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[common].[DocumentItems]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[common].[DocumentNumberingFormats]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[common].[DocumentPayments]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[common].[MeasureUnitConversions]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[common].[MeasureUnits]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[common].[UserCompany]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[common].[UserYear]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[common].[Years]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[inventory].[Stocks]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[inventory].[WarehouseHistories]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[inventory].[WarehouseLayoutProperties]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[inventory].[WarehouseLayoutQuantities]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[inventory].[WarehouseLayouts]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[inventory].[Warehouses]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[logistic].[Drivers]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[logistic].[Freights]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[logistic].[TurnDocuments]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[logistic].[Turns]",
+         "ObjectType": 0
+      }
+   ],
+   "UiHint": "ACC-MIRRIOR.EefaDev",
+   "UseBoolPropertiesWithoutDefaultSql": false,
+   "UseDatabaseNames": true,
+   "UseDbContextSplitting": true,
+   "UseFluentApiOnly": true,
+   "UseHandleBars": true,
+   "UseHierarchyId": false,
+   "UseInflector": true,
+   "UseLegacyPluralizer": true,
+   "UseManyToManyEntity": false,
+   "UseNoConstructor": true,
+   "UseNoDefaultConstructor": false,
+   "UseNoNavigations": false,
+   "UseNoObjectFilter": false,
+   "UseNodaTime": false,
+   "UseNullableReferences": true,
+   "UseSchemaFolders": false,
+   "UseSpatial": false
+}

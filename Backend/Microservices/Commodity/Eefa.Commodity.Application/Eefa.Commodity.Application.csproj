@@ -1,0 +1,117 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+     <TargetFramework>net8.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Core\Eefa.Common\Eefa.Common.csproj" />
+    <ProjectReference Include="..\Eefa.Commodity.Data\Eefa.Commodity.Data.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Commands\BomItem\Create\CreateBomItemCommand.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Commands\BomItem\Delete\DeleteBomItemCommand.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Commands\BomItem\Update\UpdateBomItemCommand.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Commands\BomValueHeader\Create\CreateBomValueHeaderCommand.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Commands\BomValueHeader\Delete\DeleteBomValueHeaderCommand.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Commands\BomValueHeader\Update\UpdateBomValueHeaderCommand.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Commands\BomValue\Create\CreateBomValueCommand.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Commands\BomValue\Delete\DeleteBomValueCommand.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Commands\BomValue\Update\UpdateBomValueCommand.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Commands\Bom\Create\CreateBomCommand.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Commands\Bom\Delete\DeleteBomCommand.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Commands\Bom\Update\UpdateBomCommand.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Commands\CommodityCategoryPropertyItem\Create\CreateCommodityCategoryPropertyItemCommand.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Commands\CommodityCategoryPropertyItem\Delete\DeleteCommodityCategoryPropertyItemCommand.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Commands\CommodityCategoryPropertyItem\Update\UpdateCommodityCategoryPropertyItemCommand.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Commands\CommodityCategoryProperty\Create\CreateCommodityCategoryPropertyCommand.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Commands\CommodityCategoryProperty\Delete\DeleteCommodityCategoryPropertyCommand.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Commands\CommodityCategoryProperty\Update\UpdateCommodityCategoryPropertyCommand.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Commands\CommodityCategory\Create\CreateCommodityCategoryCommand.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Commands\CommodityCategory\Delete\DeleteCommodityCategoryCommand.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Commands\CommodityCategory\Update\UpdateCommodityCategoryCommand.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Commands\CommodityPropertyValue\Create\CreateCommodityPropertyValueCommand.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Commands\CommodityPropertyValue\Delete\DeleteCommodityPropertyValueCommand.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Commands\CommodityPropertyValue\Update\UpdateCommodityPropertyValueCommand.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Commands\Commodity\Create\CreateCommodityCommand.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Commands\Commodity\Delete\DeleteCommodityCommand.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Commands\Commodity\UpdateCommodityNationalId\UpdateCommodityNationalIdCommand.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Commands\Commodity\Update\UpdateCommodityCommand.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Commands\MeasureUnitConversion\Create\CreateMeasureUnitConversionCommand.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Commands\MeasureUnitConversion\Delete\DeleteMeasureUnitConversionCommand.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Commands\MeasureUnitConversion\Update\UpdateMeasureUnitConversionCommand.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Commands\MeasureUnit\Create\CreateMeasureUnitCommand.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Commands\MeasureUnit\Delete\DeleteMeasureUnitCommand.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Commands\MeasureUnit\Update\UpdateMeasureUnitCommand.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>

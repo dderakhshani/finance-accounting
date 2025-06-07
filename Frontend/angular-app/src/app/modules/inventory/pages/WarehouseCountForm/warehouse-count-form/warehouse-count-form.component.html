@@ -1,0 +1,49 @@
+<div class="h-100 d-flex flex-column">
+
+  <mat-card class="radio-group">
+    <mat-radio-group [(ngModel)]="selectedOptionValue"  aria-labelledby="example-radio-group-label"  class="gap-3 d-flex">
+      <mat-radio-button  class="mat-caption" style="width: 50%;" color="primary" value="0">صدور فرم شمارش برای لوکیشن خاص</mat-radio-button>
+      <mat-radio-button  class="mat-caption" style="width: 50%;" color="primary" value="1">صدور فرم شمارش بر اساس ارزش اقلام</mat-radio-button>
+    </mat-radio-group>
+  </mat-card>
+  <div *ngIf="selectedOptionValue==0">
+    <app-warehouse-layout [warehouseCountShow]="true"></app-warehouse-layout>
+  </div>
+  <mat-card *ngIf="selectedOptionValue==1" class="h-100 d-flex flex-column"   >
+    <div class="row">
+      <div class="col-4" style="height: fit-content!important;" mat-menu-item (click)="$event.stopPropagation()">
+        <mat-form-field class="p-0">
+          <mat-label>لطفا انبار مورد نظر را انتخاب نمایید</mat-label>
+          <mat-select (selectionChange)="handleWarehouseChange($event.value)">
+            <mat-option *ngFor="let item of warehouses" [value]="item.id">{{ item.title }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-8">
+        <mat-checkbox class="col-1  me-1 mt-1"  color="primary" (change)="handleZeroSystemQuantity($event)" ><mat-label>نمایش اقلام با موجودی صفر</mat-label></mat-checkbox>
+      </div>
+    </div>
+ <div class="overflow-auto" style="height:calc(100% - 42px )">
+      <app-table-virtual-scrolling
+        [tableRows]="rowData"
+        [requestsIndex]="requestsIndex"
+        [tableConfigurations]="tableConfigurations"
+        (sortChanged)="get()"
+        (refreshEvent)="get()"
+        (filtersChanged)="get()"
+        (paginationChanged)="get()"
+        (rowsSelected)="handelRowsSelected($event)"
+        (optionSelectedEvent)="handleOptionSelected($event)"
+        (removeAllFiltersAndSortsEvent)="handleRemoveAllFiltersAndSorts($event)">
+        <div buttonTopContent  *ngIf="selectedOptionValue==1">
+          <button type="button" (click)="addNewCountForm()" mat-raised-button  class="rotated-button bg-green-500" color="primary">
+            <mat-icon>add</mat-icon>
+            صدور فرم شمارش برای اقلام انتخاب شده
+          </button>
+        </div>
+      </app-table-virtual-scrolling>
+    </div>
+
+  </mat-card>
+</div>
+

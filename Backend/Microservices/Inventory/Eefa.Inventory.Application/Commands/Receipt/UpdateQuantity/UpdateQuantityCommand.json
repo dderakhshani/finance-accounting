@@ -1,0 +1,29 @@
+[
+
+  {
+    "FieldName": "Id",
+    "Conditions": [
+      {
+        "Condition": "@Id>0",
+        "Message": {
+          "Key": "IsRequired",
+          "Values": []
+        }
+      }
+    ]
+
+  },
+  {
+    "FieldName": "Quantity",
+    "Conditions": [
+      {
+        "Condition": "@Quantity>0",
+        "Message": {
+          "Key": "IsRequired",
+          "Values": []
+        }
+      }
+    ]
+
+  }
+]

@@ -1,0 +1,202 @@
+
+<mat-card class="mt-3 mb-3" [formGroup]="form">
+  <app-form-actions [actions]="formActions" (OnEdit)="update()" (OnAdd)="add()" (OnRefresh)="get()"
+  (OnDelete)="delete()"></app-form-actions>
+    <div class="row">
+      <div class="d-flex">
+      <mat-label class="flex-fill">ثبت چک های دریافتی</mat-label>
+      <button  mat-raised-button (click)="add()" color="primary">
+
+        ثبت
+      </button>
+    </div>
+      <div class="m-2 p-2">
+        <!-- Loop Cheques -->
+        <div class="row my-2  cheque-item p-2">
+            <div class="col-12 row">
+
+
+              <div class="col-md-3">
+                <mat-form-field>
+                  <mat-label>نوع چک</mat-label>
+                  <mat-select formControlName="chequeTypeBaseId">
+                    <mat-option *ngFor="let c of chequeTypes" [value]="c.id">
+                      {{ c.title }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+
+              </div>
+
+
+              <div class="col-md-3">
+                <mat-form-field>
+                  <mat-label> سریال چک</mat-label>
+                  <input matInput type="text" formControlName="sheetSeqNumber" required />
+                </mat-form-field>
+              </div>
+
+              <div class="col-md-3">
+                <mat-form-field>
+                  <mat-label>سری چک</mat-label>
+                  <input matInput type="text" formControlName="sheetSeriNumber" required />
+                  <span matSuffix>$&nbsp;</span>
+                </mat-form-field>
+              </div>
+
+              <!-- //TODO:28532 must become to enum -->
+              <div class="col-md-3">
+                <mat-form-field>
+                  <mat-label>کد صیادی</mat-label>
+                  <input matInput type="text" formControlName="sheetUniqueNumber" required />
+                  <span matSuffix>$&nbsp;</span>
+                </mat-form-field>
+              </div>
+
+              <div class="col-md-3">
+                <mat-form-field>
+                  <mat-label>مبلغ</mat-label>
+                  <input matInput type="text" formControlName="totalCost" currencyMask required />
+                </mat-form-field>
+              </div>
+
+              <div class="col-md-3">
+                <mat-form-field>
+                  <mat-label>تاریخ دریافت چک</mat-label>
+                  <input tabindex="3" matInput [matDatepicker]="issueDate" formControlName="issueDate" />
+                  <mat-datepicker-toggle matSuffix [for]="issueDate">
+                    <mat-icon matDatepickerToggleIcon>
+                      <img class="mb-3" src="/assets/icons/calendar.svg" alt="" />
+                    </mat-icon>
+                  </mat-datepicker-toggle>
+                  <mat-datepicker #issueDate></mat-datepicker>
+                </mat-form-field>
+              </div>
+
+              <div class="col-md-3">
+                <mat-form-field>
+                  <mat-label>تاریخ سر رسید</mat-label>
+                  <input tabindex="3" matInput [matDatepicker]="receiptDate" formControlName="receiptDate" />
+                  <mat-datepicker-toggle matSuffix [for]="receiptDate">
+                    <mat-icon matDatepickerToggleIcon>
+                      <img class="mb-3" src="/assets/icons/calendar.svg" alt="" />
+                    </mat-icon>
+                  </mat-datepicker-toggle>
+                  <mat-datepicker #receiptDate></mat-datepicker>
+                </mat-form-field>
+              </div>
+
+              <div class="col-md-3">
+                <mat-form-field>
+                  <mat-label>بانک </mat-label>
+                  <mat-select formControlName="bankId">
+                    <mat-option *ngFor="let b of banks" [value]="b.id">
+                      {{ b.title }}
+                    </mat-option>
+                  </mat-select>
+                  <mat-icon matPrefix>account_balance</mat-icon>
+                </mat-form-field>
+              </div>
+
+              <div class="col-md-3">
+
+                <mat-form-field>
+                  <mat-label>شعبه</mat-label>
+                  <input matInput type="text" formControlName="branchName" required />
+                </mat-form-field>
+              </div>
+
+              <div class="col-md-3">
+                <mat-form-field>
+                  <mat-label>شماره حساب</mat-label>
+                  <input matInput type="text" formControlName="accountNumber" required />
+                </mat-form-field>
+
+              </div>
+
+
+
+              <div class="col-md-6">
+                <mat-form-field>
+                  <mat-label>توضیحات</mat-label>
+                  <input matInput type="text" formControlName="description" required />
+                </mat-form-field>
+
+              </div>
+
+              <div class="col-md-3">
+                <button  mat-raised-button (click)="upload()" color="primary">
+                  اپلود عکس چک
+                </button>
+
+              </div>
+
+
+
+
+
+              <!-- <div class="col-md-3">
+              <mat-form-field>
+                <mat-label> گروه صاحب چک</mat-label>
+                <input formControlName="ownerChequeReferenceGroupId" type="text" matInput [matAutocomplete]="categoryAuto" />
+                <mat-autocomplete autoActiveFirstOption #categoryAuto="matAutocomplete" (optionSelected)="getReferenceAccount($event.option.value)" [displayWith]="ownerChequeGroupsDisplayFn.bind(this)">
+                  <mat-option *ngFor="let item of filterdChequeOwnerGroups" [value]="item.id">
+                    عنوان : {{ item.title }} &nbsp; کد : {{item.code}}
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
+              </div>
+
+              <div class="col-md-3">
+              <mat-form-field>
+                <mat-label> صاحب چک</mat-label>
+                <input formControlName="ownerChequeReferenceId" type="text" (click)="setValueReferences()" matInput [matAutocomplete]="category" />
+                <mat-autocomplete autoActiveFirstOption #category="matAutocomplete"  [displayWith]="ownerChequeReferenceDisplayFn.bind(this)">
+                  <mat-option *ngFor="let item of filterdChequeOwnerReferences" [value]="item.id">
+                    عنوان : {{ item.title }} &nbsp; کد : {{item.code}}
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
+              </div>
+
+
+              <div class="col-md-3">
+              <mat-form-field>
+                <mat-label> گروه دریافت کننده چک</mat-label>
+                <input formControlName="receiveChequeReferenceGroupId" type="text" matInput [matAutocomplete]="categoryReceiveGroupAuto" />
+                <mat-autocomplete autoActiveFirstOption #categoryReceiveGroupAuto="matAutocomplete" (optionSelected)="getReceiveReferenceAccount($event.option.value)" [displayWith]="receiveChequeGroupsDisplayFn.bind(this)">
+                  <mat-option *ngFor="let item of filterdChequeReceiveGroups" [value]="item.id">
+                    عنوان : {{ item.title }} &nbsp; کد : {{item.code}}
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
+              </div>
+
+              <div class="col-md-3">
+              <mat-form-field>
+                <mat-label> دریافت کننده چک</mat-label>
+                <input formControlName="receiveChequeReferenceId" type="text" (click)="setValueReceiveReferences()" matInput [matAutocomplete]="category" />
+                <mat-autocomplete autoActiveFirstOption #category="matAutocomplete"  [displayWith]="receiveChequeReferenceDisplayFn.bind(this)">
+                  <mat-option *ngFor="let item of filterdChequeReceiveReferences" [value]="item.id">
+                    عنوان : {{ item.title }} &nbsp; کد : {{item.code}}
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
+              </div> -->
+
+
+              <div class="col-md-3" *ngIf="form.get('chequeTypeBaseId').value == 28532">
+                <mat-checkbox color="primary" formControlName="approveReceivedChequeSheet">
+                  <mat-label>تایید دریافت چک</mat-label>
+                </mat-checkbox>
+                </div>
+
+            </div>
+
+        </div>
+      </div>
+
+      </div>
+      </mat-card>
+
+      <app-receive-cheque-list [formSetter]="form"></app-receive-cheque-list>

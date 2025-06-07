@@ -1,0 +1,404 @@
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+@use '@angular/material' as mat;
+// Plus imports for other components in your app.
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat.core();
+
+@import "variables";
+
+
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue. Available color palettes: https://material.io/design/color/
+$EefaCeramPanel-primary: mat.define-palette(map-get($palettes,primary));
+$EefaCeramPanel-accent: mat.define-palette(map-get($palettes,accent));
+
+// The warn palette is optional (defaults to red).
+$EefaCeramPanel-warn: mat.define-palette(mat.$red-palette);
+
+// Create the theme object. A theme consists of configurations for individual
+// theming systems such as "color" or "typography".
+$EefaCeramPanel-theme: mat.define-light-theme((
+  color: (
+    primary: $EefaCeramPanel-primary,
+    accent: $EefaCeramPanel-accent,
+    warn: $EefaCeramPanel-warn,
+  )
+));
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+@include mat.all-component-themes($EefaCeramPanel-theme);
+
+
+
+
+$eefaceram-typography-config: mat.define-typography-config(
+  //$font-family:   'Material Icon, Roboto, "Helvetica Neue", sans-serif',
+  $display-4:     mat.define-typography-level(112px, 112px, 300, $letter-spacing: -0.05em),
+  $display-3:     mat.define-typography-level(56px, 56px, 400, $letter-spacing: -0.02em),
+  $display-2:     mat.define-typography-level(46px, 48px, 400, $letter-spacing: -0.005em),
+  $display-1:     mat.define-typography-level(36px, 40px, 400),
+  $headline:      mat.define-typography-level(22px, 32px, 400),
+  $title:         mat.define-typography-level(20px, 32px, 500),
+  $subheading-2:  mat.define-typography-level(20px, 28px, 400),
+  $subheading-1:  mat.define-typography-level(18px, 24px, 400),
+  $body-2:        mat.define-typography-level(12px, 24px, 500),
+  $body-1:        mat.define-typography-level(12px, 20px, 400),
+  $caption:       mat.define-typography-level(12px, 20px, 400),
+  $button:        mat.define-typography-level(12px, 14px, 500),
+    // Line-height must be units-less fraction of the font-size.
+  $input:         mat.define-typography-level(12px, 1.25, 400)
+
+);
+
+@include mat.core($eefaceram-typography-config);
+.currency-input {
+  font-size: 13px;
+  color: color(primary,300) !important;
+}
+.material-icons {
+  font-family: 'Material Icons'!important;
+}
+.mat-form-field {
+  width: 100%!important;
+}
+
+.mat-button-base {
+  border-radius: 1rem !important;
+  padding: 0 1rem !important;
+  line-height: 30px !important;
+  margin-right: 3px !important;
+
+}
+.mat-form-field-label {
+  // add important to make disabled fields black too
+  padding: 0 0 25px 5px;
+  color: black;
+  opacity: 1;
+}
+.mat-input-element:disabled {
+  color: rgba(black,0.8)!important;
+}
+
+.mat-form-field-wrapper {
+  padding: 5px 0;
+}
+
+.mat-error {
+  width: fit-content;
+  background-color: white!important;
+  padding: 1px 5px;
+}
+.mat-drawer-container {
+  background-color: white;
+}
+.mat-calendar-next-button , .mat-calendar-previous-button {
+  width: 40px!important;
+}
+.mat-icon-button {
+  width: 40px!important;
+}
+.mat-icon {
+  transform: scale(0.75)!important;
+}
+
+.failure-snackbar {
+  background-color: color(danger)!important;
+}
+.success-snackbar {
+  background-color: color(success)!important;
+}
+.warning-snackbar {
+  background-color: color(warn) !important;
+}
+
+.mat-outline-card {
+  border: 1px solid color(accent,200);
+  border-radius: 5px;
+  //padding: 0.5rem;
+}
+.mat-card {
+  //padding: 12px!important;
+  box-shadow: 0 0 5px 1px rgb(0 0 0 / 20%)!important;
+  border-radius: 8px!important;
+}
+
+.mat-card-header-text {
+  margin: 0!important;
+}
+.mat-cell,.mat-header-cell,.mat-footer-cell {
+  font-size: 12px !important;
+  padding: 0 3px!important;
+}
+.mat-header-cell, .mat-cell {
+  text-align: center!important;
+  border: 1px solid rgba(black,0.3)!important;
+}
+.mat-footer-cell {
+  border: 1px solid rgba(black,0.3)!important;
+
+}
+.mat-sort-header-container {
+  display: inline-flex!important;
+}
+
+.mat-sort-header-arrow {
+  color: white!important;
+}
+.mat-header-cell {
+  color: rgba(black,.87)!important;
+}
+.mat-header-row {
+  height: 30px!important;
+  background-color: color(primary,500);
+  th {
+    color: color(accent) !important;
+  }
+}
+.mat-row {
+  height: 40px!important;
+  &:nth-of-type(even) {
+    background-color: rgba(color(primary,50),0.75);
+  }
+  //white-space: nowrap;
+  text-overflow: ellipsis;
+  //border: 1px solid rgba(black,0.1);
+}
+.mat-row-highlight {
+  //background-color: rgba(color(primary,200),0.5)!important;
+  background-color: rgb(176 180 255) !important;
+  transition: all 0.3s;
+}
+
+//.mat-table-sticky {
+//  top: -1px!important;
+//}
+
+.mat-paginator-sticky {
+  bottom: 0px;
+  position: sticky;
+  z-index: 10;
+}
+
+.mat-toolbar {
+  background-color: white!important;
+}
+
+.mat-disabled {
+  position: relative;
+  &:after {
+    content: ' ';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: inherit;
+    background-color: white;
+    opacity: 0.3;
+    z-index: 99;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    cursor: not-allowed;
+  }
+}
+
+.cdk-overlay-pane {
+  max-width: 90vw!important;
+  //min-height: 90vh!important;
+}
+
+.cdk-overlay-connected-position-bounding-box {
+  .cdk-overlay-pane {
+    width: unset!important;
+    max-width: unset!important;
+  }
+}
+.mat-paginator-container {
+  //justify-content: flex-start!important;
+  flex-direction: row-reverse;
+}
+.mat-paginator-page-size {
+  align-items: center!important;
+}
+.mat-paginator-page-size-label {
+  white-space: nowrap;
+}
+.mat-table {
+  border-radius: 8px!important;
+  .mat-form-field-outline {
+    background-color: white!important;
+    border-radius: 5px!important;
+
+  }
+  .mat-form-field-appearance-outline.mat-form-field-disabled {
+    .mat-form-field-outline {
+      //display: none;
+      opacity: .5;
+    }
+    .mat-select {
+      //display: none;
+      opacity: .5;
+    }
+  }
+  .mat-form-field-infix {
+    width: 100%!important;
+  }
+  .mat-option {
+    font-size: 12px!important;
+  }
+}
+
+
+.app-header {
+  .mat-form-field-underline {
+    display: none!important;
+  }
+  .mat-form-field-infix {
+    max-width: 100%!important;
+    width: unset!important;
+  }
+}
+//.mat-form-field-infix {
+//  padding: 0.3em 0 .55em 0 !important ;
+//}
+
+
+
+.mat-autocomplete-panel-above {
+  width: unset!important;
+}
+
+.mat-danger-input {
+  .mat-form-field-label {
+    color: color(danger)!important;
+  }
+  .mat-input-element:disabled, .mat-input-element {
+    color: color(danger)!important;
+  }
+}
+
+
+.disable_ripple:hover{
+  background: transparent !important;
+}
+
+
+
+.mat-radio-button {
+  display: block!important;
+}
+
+
+.ng-animating mat-card mat-expansion-panel-header {
+  height: 48px!important;
+}
+.ng-animating mat-card div.mat-expansion-panel-content {
+  height: 0!important;
+  visibility: hidden!important;
+}
+//mat-dialog
+
+.mat-dialog-container{
+  padding: 0 0 0 0!important;
+  height: 100% !important;
+}
+.mat-dialog-title {
+  margin: 0 0 12px!important;
+  height:60px!important;
+  background-color: color(primary)!important;
+  color: color(accent)!important;
+  text-align: right!important;
+  padding: 0 24px!important;
+  display: flex!important;
+  flex-direction: row!important;
+  align-content: center!important;
+  align-items: center!important;
+  span {
+    margin-left: auto;
+  }
+  .mat-icon{
+    //color: black;
+    margin-right: auto;
+    fill: white!important;
+  }
+}
+
+
+.mat-dialog-content {
+  padding: 12px 24px!important;
+  width:100%;
+  margin: 10px 0!important
+
+}
+
+.mat-dialog-actions {
+  display: flex!important;
+  flex-direction: row!important;
+  flex-wrap: unset!important;
+  width: calc(100% - 48px);
+  background-color: rgba(213, 213, 213, 0.25) !important;
+  gap: 0.5rem!important;
+  margin: 12px auto 0!important;
+  padding: 0 24px!important;
+  height:65px!important;
+  & > div:nth-of-type(1) {
+    display: flex!important;
+    flex-direction: row!important;
+    width: 100%;
+  }
+}
+
+
+
+
+button.mat-warn {
+  border-color: color(danger,300)!important;
+}
+
+
+.mat-tab-body-wrapper {
+  height: 100%;
+}
+.mat-tab-body-content {
+  display: flex;
+  flex-direction: column;
+}
+
+//
+//table {
+//  width: 100%;
+//  height: 100%;
+//
+//  display: flex;
+//  flex-direction: column;
+//  align-items: stretch;
+//  align-content: stretch;
+//
+//  table-layout: fixed;
+//}
+//thead {
+//  position: sticky;
+//  top: 0;
+//  z-index: 2;
+//  display: inline-table;
+//}
+//tbody {
+//  display: inline-table;
+//}
+//
+//tfoot {
+//  margin-top: auto;
+//  display: inline-table;
+//}
+
+button {
+  position: relative ; z-index: 0 ;
+  box-shadow: none ;
+}

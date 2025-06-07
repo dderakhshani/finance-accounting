@@ -1,0 +1,33 @@
+<div mat-dialog-title [class]="'bg-' + config.color + '-700'">
+  <h6>{{config.title}}</h6>
+  <mat-icon mat-dialog-close>close</mat-icon>
+</div>
+<mat-dialog-content class="mat-typography">
+  <div class="d-flex ">
+    <ng-container  *ngIf="config.icon!=ConfirmDialogIcons.basic">
+      <mat-icon *ngIf="config.icon==ConfirmDialogIcons.info">info</mat-icon>
+      <mat-icon *ngIf="config.icon==ConfirmDialogIcons.success">done</mat-icon>
+      <mat-icon *ngIf="config.icon==ConfirmDialogIcons.warning"
+                style="color: orangered; font-size: 30px; margin-top: -5px">warning
+      </mat-icon>
+      <mat-icon *ngIf="config.icon==ConfirmDialogIcons.error">dangerous</mat-icon>
+    </ng-container>
+
+        
+
+        <samp style="font-size:15px;" id="Modal_Message" >
+            <!--View Html Message From .ts-->
+        </samp>
+    </div>
+  <br>
+  <span *ngIf="config.description" class="text-red-700">{{ config.description }}</span>
+
+
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button *ngIf="config.actions?.confirm?.show" mat-flat-button [mat-dialog-close]="true"
+          color="primary">{{config.actions?.confirm?.title}}</button>
+  <button *ngIf="config.actions?.cancel?.show" mat-stroked-button mat-dialog-close
+          cdkFocusInitial>{{config.actions?.cancel?.title}}</button>
+
+</mat-dialog-actions>

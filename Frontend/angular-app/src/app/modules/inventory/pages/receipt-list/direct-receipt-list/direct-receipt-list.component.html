@@ -1,0 +1,166 @@
+<div class="h-100 d-flex flex-column overflow-auto gap-3" style="max-height: inherit; padding: 0!important;">
+    <app-form-actions [actions]="listActions" (OnRefresh)="get()">
+        <button mat-raised-button color="primary" (click)="print()" [disabled]="_notificationService.isLoader">
+            <mat-icon>
+                print
+            </mat-icon>
+            چاپ
+        </button>
+        <button mat-raised-button color="primary" type="button" (click)="onDeleteFilter(SearchForm,tableConfigurations)" [disabled]="_notificationService.isLoader">
+            <mat-icon>
+                delete_forever
+            </mat-icon>
+            حذف فیلترها
+        </button>
+    </app-form-actions>
+
+  <mat-card>
+    <form [formGroup]="SearchForm">
+        <div class="row">
+            <div class="col-md-3">
+                <mat-form-field>
+                    <mat-label>از تاریخ رسید</mat-label>
+                    <input tabindex="0" matInput [matDatepicker]="pickerFrom" formControlName="fromDate">
+                    <mat-datepicker-toggle matSuffix [for]="pickerFrom">
+                        <mat-icon matDatepickerToggleIcon>
+                            <img class="mb-3" src="/assets/icons/calendar.svg" alt="">
+                        </mat-icon>
+                    </mat-datepicker-toggle>
+                    <mat-datepicker #pickerFrom></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div class="col-md-3">
+                <mat-form-field>
+                    <mat-label>تا تاریخ رسید</mat-label>
+                    <input tabindex="1" matInput [matDatepicker]="picker" formControlName="toDate">
+                    <mat-datepicker-toggle matSuffix [for]="picker">
+                        <mat-icon matDatepickerToggleIcon>
+                            <img class="mb-3" src="/assets/icons/calendar.svg" alt="">
+                        </mat-icon>
+                    </mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div class="col-md-3">
+                <mat-form-field tabindex="2">
+                    <mat-label>شماره درخواست</mat-label>
+                    <input formControlName="requestNo" matInput type="text">
+                </mat-form-field>
+            </div>
+            <div class="col-md-3">
+                <mat-form-field tabindex="3">
+                    <mat-label>شماره رسید</mat-label>
+                    <input formControlName="documentNo" matInput type="text">
+                </mat-form-field>
+            </div>
+            <div class="col-md-3">
+                <app-combo-search [nodes]="accountReferences"
+                                  (SelectId)="ReferenceSelect($event)"
+                                  [lablelTitleCombo]="'جستجو درخواست دهنده'"
+                                  (SearchTerm)="ReferenceFilter($event)"
+                                  [isInternalSearch]="true"
+                                  [DefaultId]="SearchForm.controls.accountReferencesId.value"
+                                  [isRequired]="false"  [tabindex]="4">
+                </app-combo-search>
+            </div>
+            <div class="col-md-3">
+                <app-combo-warhouse-tree [DefaultId]="SearchForm.controls.warehouseId.value"
+                                         (SelectId)="WarehouseIdSelect($event)"
+                                         [lablelTitleCombo]="'انبار'"
+                                         [isLastLevel]="true"  [tabindex]="5">
+                </app-combo-warhouse-tree>
+            </div>
+            <div class="col-md-3">
+                <mat-form-field tabindex="6">
+                    <mat-label>وضعیت </mat-label>
+                    <mat-select formControlName="documentStateBaseId" >
+                        <mat-option [value]="item.value" *ngFor="let item of ReceiptBaseValue">
+                            {{item.title}}
+                        </mat-option>
+
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+            <div class="col-md-3">
+
+                <mat-checkbox formControlName="isPlacementComplete" tabindex="7"
+                              color="primary">
+                </mat-checkbox>
+                <mat-label>جایگذاری کامل شده ؟</mat-label>
+
+            </div>
+            <div class="col-md-3">
+                <button mat-raised-button color="primary"  (click)="get()" [disabled]="_notificationService.isLoader" tabindex="8">
+                    <mat-icon>
+                        search
+                    </mat-icon>
+                    جستجو
+                </button>
+
+                <button mat-raised-button color="primary" matTooltip="چاپ و تایید رسید موقت توسط کارشناسان" (click)="ConfirmPageTemporaryReceiptALL()" tabindex="9">
+                    <mat-icon>print</mat-icon>
+                    چاپ
+                </button>
+            </div>
+        </div>
+    </form>
+
+  </mat-card>
+
+  <mat-card class="h-100 overflow-auto p-0">
+
+      <app-table [tableConfigurations]="tableConfigurations"
+                 [tableRows]="Receipts"
+                 (rowDoubleClicked)="navigateToReceipt($event)"
+                 (filtersChanged)="get()"
+                 (paginationChanged)="get()"
+                 (sortChanged)="get()"></app-table>
+
+
+      <ng-template #buttonIsPlacementComplete let-element="row">
+
+          <mat-checkbox color="primary" (change)="onIsPlacementComplete(element,$event)" [(ngModel)]="element.isPlacementComplete">
+
+          </mat-checkbox>
+      </ng-template>
+
+      <ng-template #buttonMore let-element="row" style="text-align:center">
+
+          <button mat-icon-button [matMenuTriggerFor]="amenu">
+              <mat-icon>more_vert</mat-icon>
+          </button>
+          <mat-menu #amenu="matMenu">
+              <button mat-menu-item (click)="navigateToReceipt(element)">
+                  <mat-icon>system_update_alt</mat-icon>
+                  مشاهده و جایگذاری
+              </button>
+              <button mat-menu-item (click)="archive(element)" [disabled]="element.viewId==Service.ViewIdRemoveAddWarehouse">
+                  <mat-icon>redo</mat-icon>
+                  بایگانی / حذف
+              </button>
+              <button mat-menu-item (click)="NotConfirm(element)" [disabled]="element.documentStateBaseId!=28700">
+                  <mat-icon>logout</mat-icon>
+                  مرجوعی عدم تایید کارشناس
+              </button>
+              <button mat-menu-item (click)="Edit(element)">
+                  <mat-icon>edit</mat-icon>
+                  ویرایش
+              </button>
+              <button mat-menu-item
+                      matTooltip="ثبت درخواست مرجوعی(برگشت از خرید) کالا"
+                      [matTooltipPosition]="'right'"
+                      class="btn-color"
+                      (click)="navigateToReturnReceipt(element)">
+                  <mat-icon>shopping_cart_checkout</mat-icon>
+                  ثبت در خواست مرجوعی
+              </button>
+          </mat-menu>
+
+      </ng-template>
+
+      <mat-spinner style="top:30%;right:40%;position:absolute;z-index:1000" *ngIf="_notificationService.isLoader"></mat-spinner>
+
+  </mat-card>
+
+</div>

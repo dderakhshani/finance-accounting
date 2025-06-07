@@ -1,0 +1,25 @@
+<mat-form-field appearance="fill">
+  <mat-label>انتخاب برچسب</mat-label>
+  <mat-chip-list #chipList aria-label="Fruit selection">
+
+    <mat-chip *ngFor="let item of documentTags"
+              (removed)="remove(item)">
+      {{item}}
+      <button matChipRemove>
+        <mat-icon>cancel</mat-icon>
+      </button>
+    </mat-chip>
+    <input placeholder="جستجو برچسب "
+           #tagInput
+           formControlName="tags"
+           [matAutocomplete]="auto"
+           [matChipInputFor]="chipList"
+           [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+           (matChipInputTokenEnd)="addTag($event)">
+  </mat-chip-list>
+  <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+    <mat-option *ngFor="let item of filteredTags | async" [value]="item">
+      {{item}}
+    </mat-option>
+  </mat-autocomplete>
+</mat-form-field>

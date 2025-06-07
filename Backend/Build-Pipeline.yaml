@@ -1,0 +1,11 @@
+Trigger :
+-master
+ pool :
+	vmImage: 'ubunto-latest'
+steps:
+	-script: echo hello ,world
+	displayname : 'Run a one-line script '
+	-script:
+		echo Add a multiline script 
+		echo One more 
+	displayName: 'Run a multi line script'

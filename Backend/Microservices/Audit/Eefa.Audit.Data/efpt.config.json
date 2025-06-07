@@ -1,0 +1,124 @@
+﻿{
+   "CodeGenerationMode": 0,
+   "ContextClassName": "AdminUnitOfWork",
+   "ContextNamespace": null,
+   "DefaultDacpacSchema": null,
+   "FilterSchemas": false,
+   "IncludeConnectionString": false,
+   "ModelNamespace": null,
+   "OutputContextPath": null,
+   "OutputPath": "Entities",
+   "ProjectRootNamespace": "Eefa.Admin.Data",
+   "Schemas": null,
+   "SelectedHandlebarsLanguage": 0,
+   "SelectedToBeGenerated": 0,
+   "Tables": [
+      {
+         "Name": "[admin].[BaseValues]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[admin].[BaseValueTypes]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[admin].[Branches]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[admin].[Employees]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[admin].[GeoLocations]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[admin].[Language]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[admin].[MenuItems]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[admin].[PermissionMenu]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[admin].[Permissions]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[admin].[PersonAddress]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[admin].[PersonFingerprint]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[admin].[Persons]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[admin].[Positions]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[admin].[RolePermissions]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[admin].[Roles]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[admin].[ShiftInfo]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[admin].[Signers]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[admin].[UnitPositions]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[admin].[Units]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[admin].[UserRoles]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[admin].[Users]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[admin].[UserSetting]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[admin].[ValidationMessages]",
+         "ObjectType": 0
+      }
+   ],
+   "UiHint": "PROGRAMMING-SRV\\SQL2019.Eefa",
+   "UseBoolPropertiesWithoutDefaultSql": false,
+   "UseDatabaseNames": true,
+   "UseDbContextSplitting": true,
+   "UseFluentApiOnly": true,
+   "UseHandleBars": true,
+   "UseInflector": true,
+   "UseLegacyPluralizer": true,
+   "UseNoConstructor": true,
+   "UseNoNavigations": false,
+   "UseNoObjectFilter": false,
+   "UseNodaTime": false,
+   "UseNullableReferences": true,
+   "UseSchemaFolders": false,
+   "UseSpatial": false
+}

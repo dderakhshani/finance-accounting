@@ -1,0 +1,222 @@
+<div class="h-100 d-flex flex-column  overflow-hidden" style="max-height: inherit; padding: 0!important;position: relative">
+
+  <table class="h-100" >
+    <thead>
+    <th class=" divider-left" resizable>
+      <div class="d-flex flex-row  justify-content-around  overflow-auto">
+        <app-action-bar  #actionBarG class="w-100" (onAdd)="addRowDebit()" (onDelete)="deleteRowDebit()"
+                        (onCustomClick)="handleCustomActions($event)">
+          <p>گیرندگان</p>
+          <div after>
+            <ng-content  select="[bedCurrencyStatus]"></ng-content>
+          </div>
+        </app-action-bar>
+      </div>
+    </th>
+    <th class=" divider-right " resizable>
+      <div class="d-flex flex-row  justify-content-around  overflow-auto">
+        <app-action-bar  #actionBarPayOrders class="w-100"  (onDelete)="deletePayOrder()"
+                        (onCustomClick)="handleCustomActions($event)" >
+          <p>دستور پرداخت </p>
+          <div before>
+            <mat-form-field>
+              <mat-label>لیست دستور پرداخت ها</mat-label>
+              <input
+                type="text"
+                matInput
+                [formControl]="payOrdersFormControl"
+                [matAutocomplete]="payOrdersAuto"
+              />
+              <div matSuffix>
+                <button
+                  (click)="resetPayOrderField()"
+                  aria-label="Clear"
+                  mat-icon-button
+                  type="button"
+                >
+                  <mat-icon>clear</mat-icon>
+                </button>
+              </div>
+
+              <mat-autocomplete
+                autoActiveFirstOption
+                #payOrdersAuto="matAutocomplete"
+                (optionSelected)="handleFieldChange($any($event).option.value)"
+                [displayWith]="documentPayOrdersDisplayFn.bind(this)"
+              >
+                <mat-option
+                  *ngFor="let item of documentPayOrdersList| arrayFilter: payOrdersFormControl?.value
+              : ['payOrderNo', 'bankAccountName', 'payOrderDate']"
+                  [value]="item.id">
+                  <small
+                    matTooltip="{{ item.bankAccountName }}"
+                    matTooltipClass="tooltip-table-select"
+                  >{{ item.bankAccountName | truncate: 50 }}</small>
+                  <small>({{ item.payOrderNo }})</small>
+                  <small> ({{ item.payOrderDate }})</small>
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+          </div>
+        </app-action-bar>
+
+
+
+      </div>
+
+    </th>
+    </thead>
+    <tbody>
+    <td class="divider-left">
+      <div class=" h-100 overflow-auto ">
+        <app-table-virtual-scrolling
+          [tableRows]="rowData"
+          [requestsIndex]="requestsIndex"
+          [tableConfigurations]="tableConfigurations"
+          (sortChanged)="get()"
+          (refreshEvent)="get()"
+          (filtersChanged)="get()"
+          (tableConfigurationsChangeEvent)="handleTableConfigurationsChange($event)"
+          (rowDoubleClicked)="editableSelectRow($event)"
+
+        ></app-table-virtual-scrolling>
+
+        <ng-template #inputAccountHeadId let-row="row" let-column="column">
+          <ng-container *ngIf="row.isEditableRow; else disabledTemplate">
+            <ng-select
+              class="custom-ng-select disable-arrow disable-dropdown disable-clear-all"
+              [notFoundText]="customNoItemsText"
+              [items]="accountHeads$ | async"
+              bindLabel="title"
+              bindValue="id"
+              placeholder="کد حساب"
+              [trackByFn]="trackByFnNgSelect"
+              (change)="onChange($event, { row })"
+              (clear)="onClear({row, column})"
+              [searchFn]="searchWithColumnFn(column)"
+              [(ngModel)]="row[column.field]"
+              [virtualScroll]="true"
+              [ngModelOptions]="{standalone: true}"
+              [disabled]="!row.isEditableAccountHeads"
+              appendTo="body">
+              >
+              <ng-template ng-option-tmp let-item="item">
+                <ng-container *ngIf="getOptionTitleParts(item, column.optionsTitleKey) as titleParts">
+                  <div><small>({{ titleParts.mainTitle }}) </small>
+                    <small *ngIf="titleParts.subTitle" matTooltip="{{titleParts.subTitle}}"
+                           matTooltipClass="tooltip-table-select">{{ " " + titleParts.subTitle }}</small></div>
+                </ng-container>
+              </ng-template>
+            </ng-select>
+          </ng-container>
+          <ng-template #disabledTemplate>
+             <span class="debit-value">
+                   {{accountManagerService.accountHeadDisplayFn( row[column.field] )}}
+             </span>
+          </ng-template>
+        </ng-template>
+        <ng-template #inputReferenceGroupId let-row="row" let-column="column">
+          <ng-container *ngIf="row.isEditableRow; else disabledTemplate">
+            <ng-select
+              class="custom-ng-select disable-arrow disable-dropdown disable-clear-all"
+              [notFoundText]="customNoItemsText"
+              [items]="accountReferenceGroups$| async"
+              bindLabel="title"
+              bindValue="id"
+              placeholder="گروه تفضل"
+              [trackByFn]="trackByFnNgSelect"
+              (change)="onChange($event, {row })"
+              (clear)="onClear({row, column})"
+              [searchFn]="searchWithColumnFn(column)"
+              [virtualScroll]="true"
+              [(ngModel)]="row[column.field]"
+              [ngModelOptions]="{standalone: true}"
+              [disabled]="!row.isEditableAccountReferenceGroups"
+              appendTo="body">
+              >
+              <ng-template ng-option-tmp let-item="item">
+                <ng-container *ngIf="getOptionTitleParts(item, column.optionsTitleKey) as titleParts">
+                  <div><small>({{ titleParts.mainTitle }}) </small>
+                    <small *ngIf="titleParts.subTitle" matTooltip="{{titleParts.subTitle}}"
+                           matTooltipClass="tooltip-table-select">{{ " " + titleParts.subTitle }}</small></div>
+                </ng-container>
+              </ng-template>
+            </ng-select>
+          </ng-container>
+          <ng-template #disabledTemplate>
+             <span class="debit-value">
+                 {{accountManagerService.accountReferenceGroupDisplayFn( row[column.field] )}}
+             </span>
+          </ng-template>
+        </ng-template>
+        <ng-template #inputReferenceId let-row="row" let-column="column">
+          <ng-container *ngIf="row.isEditableRow; else disabledTemplate">
+            <ng-select
+              class="custom-ng-select disable-arrow disable-dropdown disable-clear-all"
+              [notFoundText]="customNoItemsText"
+              [items]="accountReferences$| async"
+              bindLabel="title"
+              bindValue="id"
+              placeholder="تفضل"
+              [trackByFn]="trackByFnNgSelect"
+              (change)="onChange($event, {row })"
+              (clear)="onClear({row, column})"
+              [searchFn]="searchWithColumnFn(column)"
+              [virtualScroll]="true"
+              [(ngModel)]="row[column.field]"
+              [ngModelOptions]="{standalone: true}"
+              [disabled]="!row.isEditableAccountReferences"
+              [class]="'bg-custom-ng-select'"
+              appendTo="body">
+              >
+              <ng-template ng-option-tmp let-item="item">
+                <ng-container *ngIf="getOptionTitleParts(item, column.optionsTitleKey) as titleParts">
+                  <div><small>({{ titleParts.mainTitle }}) </small>
+                    <small *ngIf="titleParts.subTitle" matTooltip="{{titleParts.subTitle}}"
+                           matTooltipClass="tooltip-table-select">{{ " " + titleParts.subTitle }}</small></div>
+                </ng-container>
+              </ng-template>
+            </ng-select>
+          </ng-container>
+          <ng-template #disabledTemplate>
+             <span class="debit-value">
+                    {{accountManagerService.accountReferenceDisplayFn( row[column.field] )}}
+             </span>
+          </ng-template>
+        </ng-template>
+        <ng-template #inputAmount let-row="row" let-column="column">
+          <ng-container *ngIf="row.isEditableRow; else disabledTemplate">
+            <input appOnlyNumber [(ngModel)]="row.amount" class="form-control"
+                   tabindex="row.rowIndex" (change)="changeRow($event , row)"
+                   [disabled]="!row.isEditableAmount"
+            >
+          </ng-container>
+          <ng-template #disabledTemplate>
+             <span class="debit-value">
+                   {{parseFloat(row.amount)  |  customDecimal : column.digitsInfo }}
+             </span>
+          </ng-template>
+
+        </ng-template>
+
+      </div>
+    </td>
+    <td class="divider-right">
+      <div class="  h-100 overflow-auto">
+        <app-table-virtual-scrolling
+          [tableRows]="rowDataPayOrders"
+          [tableConfigurations]="tableConfigurationsPayOrders"
+          (sortChanged)="''"
+          (refreshEvent)="''"
+          (filtersChanged)="''"
+          (paginationChanged)="''"
+
+
+        ></app-table-virtual-scrolling>
+
+      </div>
+    </td>
+    </tbody>
+  </table>
+
+</div>

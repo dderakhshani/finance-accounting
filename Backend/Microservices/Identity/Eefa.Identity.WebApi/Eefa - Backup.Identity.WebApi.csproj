@@ -1,0 +1,54 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+     <TargetFramework>net8.0</TargetFramework>
+  </PropertyGroup>
+
+	<PropertyGroup>
+		<!--<GenerateDocumentationFile>true</GenerateDocumentationFile>-->
+		<NoWarn>1701;1702;1591;1998</NoWarn>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+	  <DocumentationFile>C:\Users\programmer 1\source\repos\EefaCeram.WebServices\Microservices\Identity\Eefa.Identity.WebApi\Eefa.Identity.WebApi.xml</DocumentationFile>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <None Remove="Eefa.Identity.WebApi.xml" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <PackageReference Include="CacheManager.Serialization.Json" Version="1.2.0" />
+	  <PackageReference Include="CacheManager.StackExchange.Redis" Version="1.2.0" />
+	  <PackageReference Include="EFCoreSecondLevelCacheInterceptor" Version="3.2.0" />
+	  <PackageReference Include="Scrutor" Version="3.3.0" />
+	</ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Eefa.Persistence\Eefa.Persistence.csproj" />
+    <ProjectReference Include="..\..\..\Infrastructure\Infrastructure.csproj" />
+    <ProjectReference Include="..\..\ApiGateway\ApiGateway.csproj" />
+    <ProjectReference Include="..\Eefa.Identity.Data\Eefa.Identity.Data.csproj" />
+    <ProjectReference Include="..\Eefa.Identity.Services\Eefa.Identity.Services.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Eefa.Identity.WebApi.xml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
+</Project>

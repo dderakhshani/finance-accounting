@@ -1,0 +1,23 @@
+@import "/src/assets/scss/variables";
+
+
+.mat-icon {
+  color: color(primary,500) !important;
+}
+.mat-icon-in {
+  color: color(accent,500) !important;
+}
+.hidden {
+  visibility: hidden;
+}
+.show {
+  visibility: collapse;
+}
+.filter-modal-open {
+  display: block;
+}
+
+.filter-modal-close {
+  display: none;
+}
+

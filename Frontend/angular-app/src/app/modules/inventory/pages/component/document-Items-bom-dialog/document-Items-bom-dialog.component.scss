@@ -1,0 +1,17 @@
+@import "/src/assets/scss/variables";
+
+
+.btn-warn {
+  color: color(warn,700) !important;
+}
+
+
+.mat-menu-panel {
+  min-height: 35px !important;
+}
+
+::ng-deep {
+  .mat-elevation-z8 {
+    box-shadow: unset;
+  }
+}

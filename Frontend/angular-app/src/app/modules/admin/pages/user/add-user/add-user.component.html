@@ -1,0 +1,104 @@
+<div class="d-flex flex-column h-100">
+
+  <app-action-bar class="p-4" (onSave)="submit()" (onAdd)="reset()" (onList)="navigateToUserList()"></app-action-bar>
+  <div class="row g-2 h-100">
+    <div class="col-6 h-50">
+      <mat-card class="h-100 d-flex flex-column">
+        <form [formGroup]="form" class="row">
+          <div class="col-md-12">
+
+            <mat-form-field>
+              <mat-label>شخص</mat-label>
+              <input matInput type="text" formControlName="personId" [matAutocomplete]="personAuto">
+
+              <mat-autocomplete autoActiveFirstOption
+                                #personAuto="matAutocomplete"
+                                [displayWith]="personDisplayFn.bind(this)">
+                <mat-option *ngFor="let person of persons" [value]="person.id">
+                  {{person.firstName + ' '+ person.lastName + ' ' + person.nationalNumber}}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+          </div>
+          <div class="col-md-4">
+            <mat-form-field>
+              <mat-label>نام کاربری</mat-label>
+              <input matInput type="text" formControlName="username">
+            </mat-form-field>
+          </div>
+          <div class="col-md-4">
+            <mat-form-field>
+              <mat-label>کلمه عبور</mat-label>
+              <input matInput type="password" formControlName="password" autocomplete="new-password">
+            </mat-form-field>
+          </div>
+          <div class="col-md-4">
+            <mat-form-field>
+              <mat-label>تایید کلمه عبور</mat-label>
+              <input matInput type="password" formControlName="confirmPassword" autocomplete="new-password">
+            </mat-form-field>
+          </div>
+          <div class="col-md-4">
+            <mat-form-field>
+              <mat-label>واحد</mat-label>
+              <input matInput type="text" formControlName="unitPositionTitle">
+            </mat-form-field>
+          </div>
+          <div class="col-md-4">
+            <mat-form-field>
+              <mat-label>تعداد دفعات ورود نا موفق</mat-label>
+              <input matInput type="text" formControlName="failedCount">
+            </mat-form-field>
+          </div>
+          <div class="col-md-4">
+            <mat-form-field>
+              <mat-label>آخرین زمان ورود</mat-label>
+              <input matInput [matDatepicker]="employmentDatePicker" formControlName="lastOnlineTime">
+              <mat-datepicker-toggle matSuffix [for]="employmentDatePicker"></mat-datepicker-toggle>
+              <mat-datepicker #employmentDatePicker></mat-datepicker>
+            </mat-form-field>
+          </div>
+          <div class="col-md-4">
+            <mat-form-field>
+              <mat-label>وضعیت حساب کاربری</mat-label>
+              <mat-select
+                (selectionChange)="$event.value ? form.controls['blockedReasonBaseId'].enable() : form.controls['blockedReasonBaseId'].disable(); form.controls['blockedReasonBaseId'].reset(); "
+                formControlName="isBlocked">
+                <mat-option [value]="false">فعال</mat-option>
+                <mat-option [value]="true">غیر فعال</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="col-md-8">
+            <mat-form-field>
+              <mat-label>علت وضعیت حساب کاربری</mat-label>
+              <mat-select formControlName="blockedReasonBaseId">
+                <mat-option *ngFor="let reason of blockReasons" [value]="reason.id">{{reason.title}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </form>
+      </mat-card>
+    </div>
+    <div class="col-6 h-50">
+      <mat-card class="h-100 overflow-auto d-flex flex-column">
+        <h6 class="border-bottom pb-2 pt-2 pe-3">نقش ها</h6>
+        <app-table height="100%" [tableRows]="userRoles" [tableConfigurations]="tableConfigurations"></app-table>
+      </mat-card>
+    </div>
+    <div class="col-12 h-50">
+      <mat-card class="p-0 h-100 overflow-auto">
+        <mat-tab-group class="h-100">
+          <mat-tab label="نقش ها" class="h-100">
+            <app-tree height="100%" (onSelect)="handleRoleSelection($event)" [rawNodes]="roles" [useNew]="true"
+                      [selectable]="true"></app-tree>
+          </mat-tab>
+
+          <mat-tab label="شرکت ها" class="h-100">
+            <app-user-year-list [userYears]="this.form.controls['userAllowedYears']"></app-user-year-list>
+          </mat-tab>
+        </mat-tab-group>
+      </mat-card>
+    </div>
+  </div>
+</div>

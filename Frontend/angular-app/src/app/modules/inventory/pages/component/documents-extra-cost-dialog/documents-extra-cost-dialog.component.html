@@ -1,0 +1,104 @@
+<mat-dialog (onSubmit)="add()"
+            (onClose)="close()"
+            [showDeleteBtn]="false">
+
+    <div dialog-header="">هزینه های خرید</div>
+
+    <div dialog-content="" style="width:1200px !important;">
+
+        <table class="mas-table">
+            <thead>
+                <tr>
+                    <th class="width-15">
+                        کد
+
+                    </th>
+                    <th class="width-15">
+                        مبلغ
+                    </th>
+                    <!-- <th class="width-12">
+                        سرفصل حساب بستانکار
+                    </th>
+                    <th class="width-12">
+                        حساب بستانکار
+                    </th> -->
+                    <th class="width-15">
+                        شماره عملیات مالی
+                    </th>
+                    <th class="width-20">
+                        شرح
+                    </th>
+
+                    <th class="width-4">
+                        <button mat-stroked-button color="primary" type="button" (click)="addItems()">
+                            <mat-icon>
+                                add
+                            </mat-icon>
+                            افزودن
+                        </button>
+                    </th>
+                </tr>
+            </thead>
+            <tbody *ngFor="let item of documentHeadExtraCosts">
+
+
+                <tr *ngIf="!item.isDeleted">
+                    <td>
+                        {{item.documentHeadId}}
+                    </td>
+                    <!-- <td>
+
+                        <app-combo-prehension [DefaultId]="item.barCode"
+                                              (SelectId)="PrehensionFilter($event,item)"
+                                              [lablelTitleCombo]="''"
+                                              (SearchTerm)="getPrehension($event)"
+                                              [isRequired]="true"
+                                              style="text-align:right !important">
+                        </app-combo-prehension>
+
+                    </td> -->
+                    <td>
+                        <input type="text"
+                               [(ngModel)]="item.extraCostAmount"
+                               class="form-control input-val font-13"
+                               required
+                               mask="separator.9" thousandSeparator=","
+                               autocomplete="off" [tabindex]="0">
+
+                    </td>
+                   
+                    <td>
+                        <input type="text"
+                               [(ngModel)]="item.financialOperationNumber"
+                               class="form-control input-val  font-13"
+                               autocomplete="off" [tabindex]="1">
+
+                    </td>
+
+
+                    <td>
+
+                        <input type="text"
+                               [(ngModel)]="item.extraCostDescription"
+                               class="form-control input-val  font-12"
+                               autocomplete="off" [tabindex]="2">
+
+                    </td>
+                    <td>
+                        <button mat-stroked-button color="primary" type="button" (click)="delete(item)">
+                            <mat-icon>
+                                delete
+                            </mat-icon>
+                            حذف
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+
+
+        </table>
+
+    </div>
+
+
+</mat-dialog>

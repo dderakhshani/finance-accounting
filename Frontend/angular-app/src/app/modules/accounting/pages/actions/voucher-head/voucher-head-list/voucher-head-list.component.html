@@ -1,0 +1,51 @@
+<mat-card class="h-100 d-flex flex-column overflow-hidden" style="max-height: inherit; padding: 0!important;">
+<!--  <mat-tab-group class="h-100 d-flex flex-column overflow-hidden" style="max-height: inherit; padding: 0!important;">-->
+<!--    <mat-tab label="اسناد ثبت شده">-->
+
+
+      <app-action-bar class="p-3" (onCustomClick)="handleCustomActions($event)" (onAdd)="add()" (onEdit)="update()"
+        (onRefresh)="get()">
+        <div>
+          <button *ngIf="identityService.doesHavePermission('VoucherHead-Delete')" mat-raised-button class="bg-red-500" style="color: white" (click)="delete()">حذف</button>
+        </div>
+        <div after>
+          <mat-slide-toggle style="transform: scale(0.7)" color="primary" (change)="onlyShowMyVouchers = $event.checked;get()">اسناد من</mat-slide-toggle>
+        </div>
+      </app-action-bar>
+      <div class="h-100 overflow-auto">
+        <app-table [tableConfigurations]="tableConfigurations" [tableRows]="voucherHeads"
+          (rowDoubleClicked)="navigateToVoucherHead($event)" (filtersChanged)="get()" (sortChanged)="get()"
+          (paginationChanged)="get()">
+          <div footerContent>
+            <div class="me-auto d-flex flex-row gap-1">
+              <button mat-stroked-button>
+                <span>جمع بدهکار: </span>
+                <span style="color: black">{{totalDebit | money}}</span>
+              </button>
+              <button mat-stroked-button>
+                <span>جمع بستانکار: </span>
+                <span style="color: black">{{totalCredit | money}}</span>
+              </button>
+              <button mat-stroked-button>
+                <span>مانده : </span>
+                <span dir="ltr"
+                  [ngClass]="((totalDebit - totalCredit) >= 0) ? 'text-red-600' : 'text-green-600' ">{{(totalDebit
+                  - totalCredit) | money}}</span>
+              </button>
+
+            </div>
+
+          </div>
+
+
+        </app-table>
+      </div>
+
+<!--    </mat-tab>-->
+
+<!--    <mat-tab label="اسناد معلق">-->
+<!--      <app-temp-voucher-heads-list></app-temp-voucher-heads-list>-->
+<!--    </mat-tab>-->
+<!--  </mat-tab-group>-->
+
+</mat-card>

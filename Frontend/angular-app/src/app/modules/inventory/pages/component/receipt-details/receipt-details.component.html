@@ -1,0 +1,399 @@
+<mat-spinner style="top:30%;right:40%;position:absolute;z-index:1000;" *ngIf="_notificationService.isLoader"></mat-spinner>
+<app-form-actions [actions]="formActions">
+  <button mat-raised-button color="primary" (click)="print()">
+    <mat-icon>
+      print
+    </mat-icon>
+    چاپ
+  </button>
+
+</app-form-actions>
+<div [formGroup]="form">
+
+  <div class="details">
+    <mat-card class="p-0 " *ngIf="receipt!=undefined">
+
+            <div class="row">
+                <div class="col-md-12" style="width:100%">
+                  <div class="row line">
+                    <div class="col-md-4 " *ngIf="receipt?.codeVoucherGroupTitle">
+                      <mat-label>نوع سند</mat-label>
+                      :
+                      <label>{{receipt?.codeVoucherGroupTitle}}</label>
+                    </div>
+                    <div class="col-md-4 " *ngIf="receipt?.documentStauseBaseValueTitle">
+                      <mat-label>وضعیت</mat-label>
+                      :
+                      <label>{{receipt?.documentStauseBaseValueTitle}}</label>
+                    </div>
+                    <div class="col-md-4 " *ngIf="receipt?.invoiceNo">
+                      <mat-label>شماره صورتحساب </mat-label>
+                      :
+                      <label>{{receipt?.invoiceNo}}</label>
+                    </div>
+                    <div class="col-md-4">
+                      <mat-label>شماره سریال </mat-label>
+                      :
+                      <label>{{receipt?.serialNumber}}</label>
+                    </div>
+                    
+
+                    <div class="col-md-4">
+                      <mat-label>شماره رسید </mat-label>
+                      :
+
+                      <label *ngIf="!Service.identityService.doesHavePermission('ViewDocumentsAccounting') || receipt.isDocumentIssuance!=true">{{receipt?.documentNo}}</label>
+                      <label *ngIf="Service.identityService.doesHavePermission('ViewDocumentsAccounting') && receipt.isDocumentIssuance==true" matTooltip="مشاهده و ویرایش جزئیات ریالی رسید" class="btn-link font-16" (click)="navigateToReceiptRials()">
+                        {{receipt?.documentNo}}
+                      </label>
+                    </div>
+                    <div class="col-md-4">
+                      <mat-label>شماره مالی </mat-label>
+                      :
+                      <label>{{receipt?.documentId}}</label>
+                    </div>
+                    <div class="col-md-4 " *ngIf="receipt?.requestNo">
+                      <mat-label>شماره درخواست </mat-label>
+                      :
+                      <label>{{receipt?.requestNo}}</label>
+                    </div>
+
+                    <div class="col-md-4 " *ngIf="receipt?.documentDate">
+                      <mat-label>تاریخ سند</mat-label>
+                      :
+                      <label>{{receipt?.documentDate | toPersianDate}}</label>
+                    </div>
+                    <div class="col-md-4 " *ngIf="receipt?.invoiceDate">
+                      <mat-label>تاریخ مالی</mat-label>
+                      :
+                      <label>{{receipt?.invoiceDate | toPersianDate}}</label>
+                    </div>
+                    <div class="col-md-4 " *ngIf="receipt?.expireDate">
+                      <mat-label>تاریخ تحویل</mat-label>
+                      :
+                      <label>{{receipt?.expireDate | toPersianDate}}</label>
+
+
+                    </div>
+                    <div class="col-md-4 " *ngIf="receipt?.warehouseTitle">
+                      <mat-label>انبار </mat-label>
+                      :
+                      <label>{{receipt?.warehouseTitle}}</label>
+                    </div>
+
+                    <div class="col-md-4 " *ngIf="receipt?.referenceTitle">
+                      <mat-label> تامین کننده</mat-label>
+                      :
+                      <label>{{receipt?.referenceTitle}}</label>
+                    </div>
+                    <div class="col-md-4 " *ngIf="receipt?.creditAccountHeadTitle">
+                      <mat-label>سرفصل حساب بستانکار</mat-label>
+                      :
+                      <label>{{receipt?.creditAccountHeadTitle}}</label>
+                    </div>
+                    <div class="col-md-4 " *ngIf="receipt?.creditAccountReferenceGroupTitle">
+                      <mat-label>گروه حساب بستانکار</mat-label>
+                      :
+                      <label>{{receipt?.creditAccountReferenceGroupTitle}}</label>
+                    </div>
+                    <div class="col-md-4 " *ngIf="receipt?.creditReferenceTitle">
+                      <mat-label>حساب بستانکار</mat-label>
+                      :
+                      <label>{{receipt?.creditReferenceTitle}}</label>
+                    </div>
+                    <div class="col-md-4 " *ngIf="receipt?.debitAccountHeadTitle">
+                      <mat-label>سرفصل حساب  بدهکار</mat-label>
+                      :
+                      <label>{{receipt?.debitAccountHeadTitle}}</label>
+                    </div>
+
+
+                    <div class="col-md-4 " *ngIf="receipt?.debitAccountReferenceGroupTitle">
+                      <mat-label>گروه حساب بدهکار</mat-label>
+                      :
+                      <label>{{receipt?.debitAccountReferenceGroupTitle}}</label>
+                    </div>
+                    <div class="col-md-4 " *ngIf="receipt?.debitReferenceTitle">
+                      <mat-label>حساب بدهکار</mat-label>
+                      :
+                      <label>{{receipt?.debitReferenceTitle}}</label>
+                    </div>
+
+
+
+                    <div class="col-md-4 " *ngIf="receipt?.voucherNo">
+                      <mat-label>شماره سند مکانیزه</mat-label>
+                      :
+                      <label *ngIf="!Service.identityService.doesHavePermission('ViewDocumentsAccounting')">{{receipt?.voucherNo}}</label>
+                      <label *ngIf="Service.identityService.doesHavePermission('ViewDocumentsAccounting')"
+                             (click)="navigateToVoucher()"
+                             class="btn-link font-16"
+                             matTooltip="مشاهده سند حسابداری">
+                        {{receipt?.voucherNo}}
+                      </label>
+                    </div>
+                    <!------------->
+                    <div class="col-md-4 " *ngIf="receipt?.financialOperationNumber">
+
+                      <mat-label>شماره عملیات مالی</mat-label>
+                      :
+                      <label>{{receipt?.financialOperationNumber}}</label>
+                    </div>
+                    <div class="col-md-4 " *ngIf="receipt?.requesterReferenceTitle">
+                      <mat-label> درخواست دهنده</mat-label>
+                      :
+                      <label>{{receipt?.requesterReferenceTitle}}</label>
+                    </div>
+                    <div class="col-md-4 " *ngIf="receipt?.followUpReferenceTitle">
+                      <mat-label> پیگیری کننده</mat-label>
+                      :
+                      <label>{{receipt?.followUpReferenceTitle}}</label>
+                    </div>
+                    <div class="col-md-4 " *ngIf="receipt?.yearName">
+
+                      <mat-label>سال مالی</mat-label>
+                      :
+                      <label>{{receipt?.yearName}}</label>
+                    </div>
+                    <div class="col-md-4 " *ngIf="receipt?.username">
+
+                      <mat-label>کاربر ایجاد کننده</mat-label>
+                      :
+                      <label>{{receipt?.username}}</label>
+                    </div>
+                    <div class="col-md-4 " *ngIf="receipt?.modifiedAt">
+                      <mat-label>تاریخ ثبت</mat-label>
+                      :
+                      <label>{{receipt?.modifiedAt | toPersianDate}}</label>
+                    </div>
+                    <div class="col-md-4">
+                      <mat-label>ثبت حسابداری شود؟</mat-label>
+
+                      <span *ngIf="receipt.isDocumentIssuance==true">
+                        بله
+                      </span>
+                      <span *ngIf="receipt.isDocumentIssuance!=true">
+                        خیر
+                      </span>
+
+                    </div>
+                    <div class="col-md-12 " *ngIf="receipt?.tagArray">
+
+                      <mat-label>برچسب</mat-label>
+                      :
+                      <label *ngFor="let item of receipt.tagArray">{{item}} - </label>
+                    </div>
+                    <div class="col-md-12 " *ngIf="receipt?.documentDescription">
+
+                      <mat-label>شرح</mat-label>
+                      :
+                      <label>{{receipt?.documentDescription}}</label>
+                    </div>
+                  </div>
+                    <div class="row line" *ngIf="displayPage=='none'">
+                        <div class="col-md-4">
+                            <mat-label>مبلغ مالیات ارزش افزوده</mat-label> :
+
+              <span class="lable">
+                                {{receipt?.vatDutiesTax | number:'4.0-0'}}
+                            </span> <span style="font-size:12px;"> ریال </span>
+            </div>
+            <div class="col-md-4">
+              <mat-label>هزینه اضافه</mat-label> :
+
+              <span class="lable">
+                                {{receipt?.extraCost | number:'4.0-0'}}
+                            </span> <span style="font-size:12px;"> ریال </span>
+            </div>
+
+            <div class="col-md-4">
+              <mat-label>جمع قیمت تمام شده</mat-label> :
+
+              <span class="lable">
+                                {{receipt?.totalProductionCost | number:'4.0-0'}}
+                            </span><span style="font-size:12px;"> ریال </span>
+            </div>
+            <div class="col-md-4">
+              <mat-label>جمع کل قابل پرداخت</mat-label> :
+
+              <span class="text-danger">
+                                {{receipt?.totalItemPrice | number:'4.0-0'}}
+                            </span> <span style="font-size:12px;"> ریال </span>
+
+            </div>
+            <div class="col-md-4">
+              <mat-label>هزینه به جمع کل اضافه شود؟</mat-label> :
+
+              <span *ngIf="receipt.isFreightChargePaid==true">
+                                بله
+                            </span>
+              <span *ngIf="receipt.isFreightChargePaid!=true">
+                                خیر
+                            </span>
+
+            </div>
+
+
+          </div>
+        </div>
+        <div class="col-md-12" *ngIf="attachmentIds.length>0">
+          <app-uploader class="d-flex justify-content-center"
+                        [autoUpload]="true"
+                        (filesChange)="files=$event"
+                        (isUploadingChange)="isUploading"
+                        [attachmentsModel]="attachmentsModel"
+                        [attachmentIds]="attachmentIds"
+                        [allowFileUpload]="false">
+          </app-uploader>
+        </div>
+      </div>
+    </mat-card>
+    <mat-card class="mt-2" *ngIf="receipt?.items">
+      <table class="mas-table" style="width:100%">
+        <thead>
+        <tr>
+          <th>ردیف</th>
+          <th>کد کالا</th>
+          <th>نام کالا </th>
+          <th>واحد کالا</th>
+          <th>تعداد کالا</th>
+          <th>تعداد مانده</th>
+
+          <th *ngIf="displayPage=='none'">
+            قیمت واحد
+          </th>
+          <th *ngIf="displayPage=='none'">
+            قیمت تمام شده
+          </th>
+          <th *ngIf="displayPage=='none'">
+            هزینه حمل
+          </th>
+          <th *ngIf="displayPage=='none'">
+            مبلغ کل ریالی
+          </th>
+          <th>توضیحات</th>
+          <th>
+            اقلام سازنده
+          </th>
+          <th>
+            شماره اموال
+          </th>
+          <th>
+            انبار
+          </th>
+          <th>
+            موقعیت
+          </th>
+          <!-- <th>سابقه</th> -->
+
+        </tr>
+        </thead>
+
+        <tbody *ngFor="let item of receipt?.items ; let i = index" id="Items">
+        <tr [ngClass]="{'background-color' : (documentItemId==item.id || commodityCode==item?.commodity.code)}">
+          <th>
+            <!-- {{item.id}} -->
+            {{i+1}}
+          </th>
+          <td>
+                            <span matTooltip="کارتکس کالا" class="btn-link" (click)="navigateToHistory(item?.commodity.id)">
+                                {{item?.commodity.code}}
+                            </span>
+
+          </td>
+          <td>{{item?.commodity.title}}</td>
+          <td>{{item?.commodity.measureTitle}}</td>
+          <td>{{item.quantity}}</td>
+          <td>{{item.remainQuantity}}</td>
+
+          <td *ngIf="displayPage=='none'">
+            {{item.unitPrice | number:'4.0-0'}}
+          </td>
+          <td *ngIf="displayPage=='none'">
+            {{item.unitPriceWithExtraCost | number:'4.0-0'}}
+          </td>
+          <td *ngIf="displayPage=='none'">
+            {{item.unitPriceWithExtraCost-item.unitPrice | number:'4.0-0'}}
+          </td>
+          <td *ngIf="displayPage=='none'">
+            {{item.totalPrice | number:'4.0-0'}}
+          </td>
+          <td>
+            {{item.description}}
+          </td>
+          <td>
+            <button mat-icon-button matTooltip="لیست اقلام سازنده" class="btn-link" (click)="getBomValue(item)" *ngIf="receipt?.codeVoucherGroupTitle.includes('رسید محصول')">
+              <mat-icon>
+                format_list_numbered
+              </mat-icon>
+
+            </button>
+
+          </td>
+          <td>
+
+                            <span matTooltip="شماره اموال" class="btn-link" (click)="CommoditySerials(item)" *ngIf="receipt?.codeVoucherGroupTitle.includes('اموال')">
+                                <mat-icon>
+                                    pin
+                                </mat-icon>
+                            </span>
+          </td>
+          <td >
+                            <span *ngIf="item.layouts">
+                                {{item.layouts[0]?.warehouseTitle}}
+                            </span>
+
+          </td>
+          <td>
+                            <span *ngIf="item.layouts">
+                                {{item.layouts[0]?.warehouseLayoutTitle}}
+                            </span>
+
+          </td>
+          <!--  <td>
+
+<button mat-icon-button [matMenuTriggerFor]="beforeMenu" matTooltip="سابقه تغییرات">
+<mat-icon class="btn-warn">sticky_note_2</mat-icon>
+</button>
+<mat-menu #beforeMenu="matMenu" style="width:100% !important">
+<app-audit-list [primaryId]="item?.id" [tableName]="'DocumentItemsLog'">
+
+</app-audit-list>
+</mat-menu>
+
+</td> -->
+        </tr>
+        </tbody>
+      </table>
+    </mat-card>
+  </div>
+</div>
+<hr />
+
+<!-- <mat-accordion class="h-100 overflow-auto p-0">
+
+    <mat-expansion-panel (opened)="panelOpenState = true"
+                         (closed)="panelOpenState = false">
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                سابقه تغییرات رسید :  {{receipt?.documentNo}}
+            </mat-panel-title>
+
+        </mat-expansion-panel-header>
+        <app-audit-list [primaryId]="receipt?.id" [tableName]="'DocumentHeadsLog'">
+
+        </app-audit-list>
+    </mat-expansion-panel>
+</mat-accordion> -->
+<app-correction-request [receipt]="receipt"></app-correction-request>
+
+
+
+
+
+
+
+
+
+
+

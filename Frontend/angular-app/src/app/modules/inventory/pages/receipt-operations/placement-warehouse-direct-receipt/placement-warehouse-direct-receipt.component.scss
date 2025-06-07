@@ -1,0 +1,42 @@
+@import "/src/assets/scss/variables";
+.mat-card {
+  padding: 15px !important;
+}
+table tr th {
+  padding-right: 10px;
+}
+table tr td {
+  padding: 5px 10px 5px 5px;
+  height: 40px;
+ 
+}
+mat-label {
+  color: color(primary,500);
+  font-size: 14px;
+}
+.btn-red {
+  color: color(md-red,500);
+}
+.btn-green {
+  color: color(md-green,500);
+}
+.btn-amber {
+  color: color(md-amber,500);
+ 
+}
+.btn-grey {
+  color: color(md-grey,500);
+}
+
+.btn-amber-cg {
+  padding: 4px;
+  border-radius: 3px;
+  border: unset;
+  cursor: pointer;
+}
+.btn-amber-cg:hover {
+  color: color(md-amber,500);
+}
+.mat-elevation-z8 {
+  box-shadow:unset !important;
+}

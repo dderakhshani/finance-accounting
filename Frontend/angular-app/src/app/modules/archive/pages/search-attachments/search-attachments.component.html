@@ -1,0 +1,60 @@
+<div class="h-100 d-flex flex-column overflow-hidden gap-2" style="position: relative">
+  <mat-card class="h-100 p-4 w-100 d-flex flex-column">
+
+    <div class="row pb-4">
+      <div class="col-4">
+        <mat-form-field>
+          <mat-label>جستجو</mat-label>
+          <input [(ngModel)]="searchQuery" matInput type="text" (keydown.enter)="get()">
+        </mat-form-field>
+      </div>
+      <div class="col-1">
+        <button (click)="get()" mat-raised-button color="primary">جستجو</button>
+      </div>
+
+      <div class="col-1 me-auto">
+        <button [disabled]="!isAnyPhotoSelected" (click)="download()" mat-raised-button color="primary">دانلود همه
+        </button>
+      </div>
+
+      <div class="col-6">
+        <mat-paginator
+          [length]="totalItems"
+          [pageSize]="pageSize"
+          [pageIndex]="pageIndex"
+          [pageSizeOptions]="[6, 12, 24, 48, 100]"
+          (page)="onPageChange($event)">
+        </mat-paginator>
+      </div>
+    </div>
+
+
+    <div class="overflow-auto">
+      <mat-divider></mat-divider>
+      <div class="row  p-2 pt-5">
+        <div class="col-2 mb-4" *ngFor="let attachment of attachments">
+          <mat-card class="d-flex flex-column">
+            <img
+              style="width: 100%; height: 200px; object-fit: cover; cursor: pointer; border: 1px solid black; border-radius: 8px"
+              [src]="attachment.url" alt="" (click)="magnifiedAttachment = attachment">
+            <div>
+              <mat-checkbox color="primary" class="pt-2" [(ngModel)]="attachment.isSelected"></mat-checkbox>
+              <mat-label [title]="attachment.title">{{ attachment.title | truncate : 30 }}</mat-label>
+            </div>
+            <div class="mx-auto pt-2">
+              <button class="d-block" mat-raised-button color="primary" class="mr-auto" (click)="download(attachment)">
+                دانلود
+              </button>
+            </div>
+          </mat-card>
+        </div>
+      </div>
+    </div>
+  </mat-card>
+
+
+  <div class="magnified-image" *ngIf="magnifiedAttachment" (click)="onBackgroundClick($event)">
+    <span (click)="magnifiedAttachment = null">X</span>
+    <img [src]="magnifiedAttachment?.url" alt="">
+  </div>
+</div>

@@ -1,0 +1,93 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+     <TargetFramework>net8.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Commands\AccessToWarehouse\Create\CreateAccessToWarehouseCommand.json" />
+    <None Remove="Commands\AccessToWarehouse\Delete\DeleteWarehousCommand.json" />
+    <None Remove="Commands\AccessToWarehouse\Update\UpdateAccessToWarehouseCommand.json" />
+    <None Remove="Commands\DocumentHeadExtraCost\Delete\DeleteDocumentHeadExtraCostCommand.json" />
+    <None Remove="Commands\DocumentHeadExtraCost\Modifiy\DocumentHeadExtraCostCommand.json" />
+    <None Remove="Commands\Operations\LeavingWarhouse\LeaveProductWarehouse\LeaveProductWarehouseCommand.json" />
+    <None Remove="Commands\Receipt\AddDocumentItemsBomQuantity\AddDocumentItemsBomQuantityCommand.json" />
+    <None Remove="Commands\Receipt\CreateProduct\CreateProductCommand.json" />
+    <None Remove="Commands\Receipt\CreateStartDocument\CreateStartDocumentCommand.json" />
+    <None Remove="Commands\Receipt\UpdateDocumentItemsBomQuantity\UpdateDocumentItemsBomQuantityCommand.json" />
+    <None Remove="Commands\Receipt\UpdateQuantity\UpdateQuantityCommand.json" />
+    <None Remove="Commands\Receipt\UpdateStartDocumentItems\UpdateStartDocumentCommand.json" />
+    <None Remove="Commands\Receipt\UpdateWarehouseCardex\UpdateWarehouseCardexCommand.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Commands\AccessToWarehouse\Create\CreateAccessToWarehouseCommand.json" />
+    <EmbeddedResource Include="Commands\AccessToWarehouse\Delete\DeleteWarehousCommand.json" />
+    <EmbeddedResource Include="Commands\AccessToWarehouse\Update\UpdateAccessToWarehouseCommand.json" />
+    <EmbeddedResource Include="Commands\DocumentHeadExtraCost\Modifiy\DocumentHeadExtraCostCommand.json" />
+    <EmbeddedResource Include="Commands\DocumentHeadExtraCost\Delete\DeleteDocumentHeadExtraCostCommand.json" />
+    <EmbeddedResource Include="Commands\Operations\ConvertToMechanizedDocument\ConvertToMechanizedDocumentCommand.json" />
+    <EmbeddedResource Include="Commands\Operations\EditWarehouseInventory\EditWarehousInventoryCommand.json" />
+    <EmbeddedResource Include="Commands\Operations\AddWarehouseInventory\AddWarehouseInventoryCommand.json" />
+    <EmbeddedResource Include="Commands\Operations\ChangePlacementWarehouse\ChangePlacementCommand.json" />
+    <EmbeddedResource Include="Commands\Operations\ConvertToRialsReceipt\ConvertToRialsReceiptCommand.json" />
+    <EmbeddedResource Include="Commands\Operations\LeavingWarhouse\LeaveProductWarehouse\LeaveProductWarehouseCommand.json" />
+    <EmbeddedResource Include="Commands\Operations\LeavingWarhouse\LeavingMaterialWarehouse\UpdateLeavingMaterialWarehouse\UpdateLeavingMaterialWarehouseCommand.json" />
+    <EmbeddedResource Include="Commands\Operations\LeavingWarhouse\LeavingMaterialWarehouse\AddLeavingMaterialWarehouse\AddLeavingMaterialWarehouseCommand.json" />
+    <EmbeddedResource Include="Commands\Operations\LeavingWarhouse\LeaveCommodityWarehouse\LeaveCommodityWarehouseCommand.json" />
+    <EmbeddedResource Include="Commands\Operations\PlacementWarehouseDirectReceipt\PlacementWarehouseDirectReceiptCommand.json" />
+    <EmbeddedResource Include="Commands\Operations\PlacementWarehouse\PlacementWarehouseCommand.json" />
+    <EmbeddedResource Include="Commands\Operations\UpdateStatusDirectReceipt\UpdateStatusDirectReceiptCommand.json" />
+    <EmbeddedResource Include="Commands\PersonsDebitedCommodities\UpdateReturnToWarehouseDebited\UpdateReturnToWarehouseDebitedCommand.json" />
+    <EmbeddedResource Include="Commands\PersonsDebitedCommodities\Update\UpdatePersonsDebitedCommoditiesCommand.json" />
+    <EmbeddedResource Include="Commands\Receipt\CreateProduct\CreateProductCommand.json" />
+    <EmbeddedResource Include="Commands\Receipt\UpdateWarehouseCardex\UpdateWarehouseCardexCommand.json" />
+    <EmbeddedResource Include="Commands\Receipt\UpdateStartDocumentItems\UpdateStartDocumentCommand.json" />
+    <EmbeddedResource Include="Commands\Receipt\CreateStartDocument\CreateStartDocumentCommand.json" />
+    <EmbeddedResource Include="Commands\Receipt\DirectReceipt\Delete\DeleteDirectReceiptCommand.json" />
+    <EmbeddedResource Include="Commands\Receipt\DirectReceipt\Update\UpdateDirectReceiptCommand.json" />
+    <EmbeddedResource Include="Commands\Receipt\Archive\ArchiveReceiptCommand.json" />
+    <EmbeddedResource Include="Commands\Receipt\CreateSingleRow\CreateSingleRowCommand.json" />
+    <EmbeddedResource Include="Commands\Receipt\CreateGroup\CreateReceiptCreateGroupCommand.json" />
+    <EmbeddedResource Include="Commands\Receipt\AddDocumentItemsBomQuantity\AddDocumentItemsBomQuantityCommand.json" />
+    <EmbeddedResource Include="Commands\Receipt\UpdateDocumentItemsBomQuantity\UpdateDocumentItemsBomQuantityCommand.json" />
+    <EmbeddedResource Include="Commands\Receipt\UpdateQuantity\UpdateQuantityCommand.json" />
+    <EmbeddedResource Include="Commands\Receipt\Update\UpdateReceiptCommand.json" />
+    <EmbeddedResource Include="Commands\Assets\Update\UpdateAssetsCommand.json" />
+    <EmbeddedResource Include="Commands\UnitCommodityQuota\Create\CreateUnitCommodityQuotaCommand.json" />
+    <EmbeddedResource Include="Commands\UnitCommodityQuota\Delete\DeleteUnitCommodityQuotaCommand.json" />
+    <EmbeddedResource Include="Commands\UnitCommodityQuota\Update\UpdateUnitCommodityQuotaCommand.json" />
+    <EmbeddedResource Include="Commands\WarehouseLayout\Create\CreateWarehouseLayoutCommand.json" />
+    <EmbeddedResource Include="Commands\WarehouseLayout\Delete\DeleteWarehouseLayoutCommand.json" />
+    <EmbeddedResource Include="Commands\WarehouseLayout\Update\UpdateWarehouseLayoutCommand.json" />
+    <EmbeddedResource Include="Commands\WarehouseLayout\WarehouseLayoutCategorys\Delete\DeleteWarehouseLayoutPropertyCommand.json" />
+    <EmbeddedResource Include="Commands\WarehouseLayout\WarehouseLayoutProperty\Delete\DeleteWarehouseLayoutPropertyCommand.json" />
+    <EmbeddedResource Include="Commands\Warehouse\Create\CreateWarehousCommand.json" />
+    <EmbeddedResource Include="Commands\Warehouse\Delete\DeleteWarehousCommand.json" />
+    <EmbeddedResource Include="Commands\Warehouse\Update\UpdateWarehousCommand.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.1" />
+    <PackageReference Include="Microsoft.Office.Interop.Excel" Version="15.0.4795.1001" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Core\Eefa.Common\Eefa.Common.csproj" />
+    <ProjectReference Include="..\..\..\Core\Eefa.NotificationServices\Eefa.NotificationServices.csproj" />
+    <ProjectReference Include="..\Eefa.Inventory.Domain\Eefa.Inventory.Domain.csproj" />
+    <ProjectReference Include="..\Eefa.Invertory.Infrastructure\Eefa.Invertory.Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Commands\Bom\Create\CreateBomCommand.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Commands\CorrectionRequest\Create\CorrectionRequestCommand.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <ProjectExtensions><VisualStudio><UserProperties commands_4operations_4placementwarehouse_4placementwarehousecommand_1json__JsonSchema="https://docs.gradle.com/enterprise/admin/schema/gradle-enterprise-config-schema-5.json" /></VisualStudio></ProjectExtensions>
+
+</Project>

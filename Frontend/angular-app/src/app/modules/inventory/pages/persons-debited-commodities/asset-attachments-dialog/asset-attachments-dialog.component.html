@@ -1,0 +1,46 @@
+<mat-dialog (onSubmit)="submit()" [showDeleteBtn]="false">
+
+  <div dialog-header="">تصاویر کالا تحویلی به {{form.controls.fullName.value}}</div>
+
+  <div dialog-content="">
+    <mat-dialog-content class="mx-auto" [formGroup]="form">
+
+      <div class="row">
+        <div class="col-md-4">
+          <mat-form-field>
+            <mat-label>عنوان کالا </mat-label>
+            <input formControlName="commodityTitle" type="text" matInput disabled>
+          </mat-form-field>
+        </div>
+        <div class="col-md-4">
+          <mat-form-field>
+            <mat-label>کد کالا </mat-label>
+            <input formControlName="commodityCode" type="text" matInput disabled>
+          </mat-form-field>
+        </div>
+        <div class="col-md-4">
+          <mat-form-field>
+            <mat-label>کاربر  </mat-label>
+            <input formControlName="fullName" type="text" matInput disabled>
+          </mat-form-field>
+        </div>
+       
+
+        <app-uploader class="d-flex justify-content-center"
+                      [autoUpload]="true"
+                      (filesChange)="files=$event"
+                      (isUploadingChange)="isUploading"
+                      [attachmentsModel]="attachmentsModel"
+                      [attachmentIds]="attachmentIds"
+                      [allowFileUpload]="PersonsDebitedCommodity.isActive"
+                      >
+        </app-uploader>
+
+      </div>
+    </mat-dialog-content>
+
+
+  </div>
+
+
+</mat-dialog>

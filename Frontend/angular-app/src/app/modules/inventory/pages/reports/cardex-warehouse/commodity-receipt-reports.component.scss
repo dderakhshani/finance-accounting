@@ -1,0 +1,41 @@
+.input-container {
+  display: flex;
+  align-items: center; /* برای تراز عمودی */
+}
+
+.btn {
+  padding: 0.375rem 0.75rem; /* مقدار padding مشابه Bootstrap */
+  border: 1px solid transparent; /* مرز دکمه */
+  border-radius: 0.25rem; /* گرد شدن گوشه‌ها */
+  cursor: pointer; /* نشانگر ماوس */
+  transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, color 0.15s ease-in-out; /* انیمیشن */
+  font-size:10px;
+}
+
+.btn-primary {
+  background-color: #6d72ed; /* رنگ دکمه اولیه */
+  color: white; /* رنگ متن */
+}
+
+.btn-primary:hover {
+  background-color: #d9cece; /* رنگ پس زمینه در حالت هاور */
+}
+
+.btn-secondary {
+  background-color: #6c757d; /* رنگ دکمه ثانویه */
+  color: white; /* رنگ متن */
+}
+
+.btn-secondary:hover {
+  background-color: #5a6268; /* رنگ پس زمینه در حالت هاور */
+}
+
+.input-container button {
+  margin-right: 2px; /* فاصله بین دکمه‌ها و input */
+}
+
+
+.btn-primary-after-select {
+  background-color: #cd6096 !important; /* رنگ دکمه اولیه */
+  color: white; /* رنگ متن */
+}

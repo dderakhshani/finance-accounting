@@ -1,0 +1,598 @@
+<!--<div class="col-12 topSetting" *ngIf="tableConfigurations?.options?.showTopSettingMenu">-->
+<!--  <button (click)="removeAllFiltersAndSorts()" class="m-1" color="warn" mat-raised-button-->
+<!--          matTooltip="حذف تمامی فیلتر/مرتب سازی">-->
+<!--    <mat-icon>delete_outline</mat-icon>-->
+<!--  </button>-->
+
+<!--  <button mat-raised-button (click)="includeOnlySelectedItems()" class="bg-blue-200 m-1"-->
+<!--          matTooltip="فیلتر ردیف های انتخابی">-->
+<!--    <mat-icon>archive</mat-icon>-->
+
+<!--  </button>-->
+<!--  <button mat-raised-button (click)="excludeSelectedItems()" class="bg-blue-200 m-1" matTooltip="حذف ردیف های انتخابی">-->
+<!--    <mat-icon>remove_circle_outline</mat-icon>-->
+
+<!--  </button>-->
+<!--  <button mat-raised-button (click)="clearExcludedItems(); clearIncludeOnlySelectedItems()" class="bg-blue-200 m-1"-->
+<!--          matTooltip="نمایش همه">-->
+<!--    <mat-icon>list</mat-icon>-->
+
+<!--  </button>-->
+
+<!--</div>-->
+
+<div class="col-12 topSetting " *ngIf="tableConfigurations?.options?.showTopSettingMenu">
+  <div class="d-flex  justify-content-between col-12">
+    <div class=" d-flex ">
+      <button (click)="removeAllFiltersAndSorts()" class="m-1" color="warn" mat-raised-button
+              matTooltip="حذف تمامی فیلتر/مرتب سازی">
+        <mat-icon>delete_outline</mat-icon>
+      </button>
+
+      <button mat-raised-button (click)="includeOnlySelectedItems()" class="bg-blue-200 m-1" matTooltip="فیلتر ردیف های انتخابی">
+        <mat-icon [ngClass]="{'text-red-500': isSelectedList, 'text-black': !isSelectedList}">archive</mat-icon>
+      </button>
+
+      <button mat-raised-button (click)="excludeSelectedItems()" class="bg-blue-200 m-1"
+              matTooltip="حذف ردیف های انتخابی">
+        <mat-icon>remove_circle_outline</mat-icon>
+
+      </button>
+      <button mat-raised-button (click)="clearExcludedItems(); clearIncludeOnlySelectedItems()"
+              class="bg-blue-200 m-1"
+              matTooltip="نمایش همه">
+        <mat-icon>list</mat-icon>
+
+      </button>
+      <!--    -->
+
+    </div>
+    <div class="d-flex justify-content-center align-items-center px-2 ">
+      <ng-content select="[headerBtn_topSetting]"></ng-content>
+    </div>
+  </div>
+</div>
+<!--(scroll)="tableConfigurations?.options?.lazyLoading? onTableScroll($event): ''"-->
+<div [style.height]="height ?? 'unset'" [style.overflow-y]="height ? 'auto' : 'unset'" id="appTableWrapper"
+     style="scroll-behavior: smooth;" [style.margin-top]="tableConfigurations?.options?.showTopSettingMenu?'38px':0"
+     [style.max-height]="tableConfigurations?.options?.showTopSettingMenu?'94%':'unset'"
+>
+  <!--  <button (click)="excludeSelectedItems()">exclude</button>-->
+  <!--  <button (click)="clearExcludedItems()">clear exclude</button>-->
+  <!--  <button (click)="includeOnlySelectedItems()">include</button>-->
+  <!--  <button (click)="clearIncludeOnlySelectedItems()">clear include</button>-->
+  <!--<cdk-virtual-scroll-viewport tvsItemSize="30"-->
+  <!--                             [bufferMultiplier]="2"-->
+  <!--                             style="height: 100%"-->
+  <!--                             >-->
+  <div *ngIf="isLoading"
+       style="z-index:9999;position: absolute;left:0;top:0;bottom: 0; right: 0;background: rgba(0,0,0,0.3);"
+       class="d-flex align-items-center justify-content-center">
+    <mat-spinner></mat-spinner>
+  </div>
+
+  <table #table id="mainTable" matTableResponsive
+         *ngIf="tableConfigurations && tableConfigurations.columns?.length > 0 && !isLoading" mat-table [dataSource]="shownRows"
+         class="mat-elevation-z8" cdkDropListGroup (keyup.escape)="onFormEscapeHandler()">
+    <div *ngIf="tableGroupIds?.length > 2">
+
+      <ng-container *ngFor="let group of tableGroups" [matColumnDef]="group.id">
+        <th mat-header-cell *matHeaderCellDef [attr.colspan]="group.colSpan"
+            style="border-right: 0.5px solid rgba(255,255,255,0.3)!important;">{{group.name}}</th>
+
+      </ng-container>
+    </div>
+
+    <div *ngIf="tableGroupIds?.length > 2">
+      <tr mat-header-row *matHeaderRowDef="tableGroupIds; sticky: true"></tr>
+    </div>
+    <tr mat-header-row *matHeaderRowDef="tableHeaders; sticky: true"
+        style="border-top: 0.5px solid rgba(255,255,255,0.3);border-bottom: 0.5px solid rgba(255,255,255,0.3);"></tr>
+
+    <!--    Items-->
+
+    <ng-container *ngFor="let column of columns;let i = index;" matColumnDef="{{column.name}}">
+
+      <th [style.width]="column.width ?? '1%'"
+          style="border-right: 0.5px solid rgba(255,255,255,0.3)!important;  overflow: hidden; cursor: pointer"
+          mat-header-cell *matHeaderCellDef>
+        <div *ngIf="column.type !== fieldTypes.Select && column.type !== fieldTypes.Index"
+             style="width:fit-content; margin: 0 auto;display: grid; align-items: center; grid-template-columns: 23px 1fr 23px; grid-template-areas: 'sort title filter'">
+
+          <div *ngIf="column.filter && column.type !== TableColumnDataType.Index"
+               style="display: grid; align-content: center">
+            <span class="filter" #menuTrigger="matMenuTrigger" [matMenuTriggerFor]="filterMenu"
+                  [class.filter-active]="column.isFiltered">
+              <mat-icon>filter_alt</mat-icon>
+            </span>
+
+            <mat-menu class="px-3 table-filters-menu" #filterMenu (click)="$event.preventDefault()" tabindex="0">
+              <mat-label (click)="$event.stopPropagation()">
+                {{column.title}}
+              </mat-label>
+              <div class="row" *ngFor="let filter of column.filter.filters; index as filterIndex; let isLast=last">
+                <div class="col-4 p-1" (click)="$event.stopPropagation()">
+                  <mat-form-field>
+                    <mat-select #actualSearchConditions [panelClass]="'mat-elevation-z10'" placeholder=''
+                                [(value)]="filter.actualSearchCondition">
+                      <mat-option *ngFor="let  operand of getColumnFilterOperands(column)"
+                                  [value]="operand.value">{{operand.title}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+
+                <div class="col-4 p-1" (click)="$event.stopPropagation()" #searchInput>
+                  <div *ngIf="filter.filterType === tableColumnFilterTypes.Text && filter.actualSearchCondition">
+                    <mat-form-field>
+                      <input autofocus (keydown.enter)="updateFilters(menuTrigger)" matInput
+                             placeholder="جستجوی {{column.title}}" type="text" [(ngModel)]="filter.searchValue">
+                    </mat-form-field>
+                  </div>
+
+                  <div
+                    *ngIf="filter.filterType === tableColumnFilterTypes.Number && filter.actualSearchCondition && filter.actualSearchCondition != 'between'">
+                    <mat-form-field>
+                      <input autofocus (keydown.enter)="updateFilters(menuTrigger)" matInput
+                             placeholder="{{column.title}}" type="number" [(ngModel)]="filter.searchValue">
+                    </mat-form-field>
+                  </div>
+                  <div
+                    *ngIf="filter.filterType === tableColumnFilterTypes.Number && filter.actualSearchCondition && filter.actualSearchCondition == 'between'">
+                    <mat-form-field>
+                      <input autofocus (keydown.enter)="updateFilters(menuTrigger)" matInput
+                             placeholder="{{column.title}}" type="number" [(ngModel)]="filter.multipleSearchValues[0]">
+                    </mat-form-field>
+                    <mat-form-field>
+                      <input autofocus (keydown.enter)="updateFilters(menuTrigger)" matInput
+                             placeholder="{{column.title}}" type="number" [(ngModel)]="filter.multipleSearchValues[1]">
+                    </mat-form-field>
+                  </div>
+
+                  <div
+                    *ngIf="filter.filterType === tableColumnFilterTypes.Money && filter.actualSearchCondition && filter.actualSearchCondition != 'between'">
+                    <mat-form-field>
+                      <input autofocus (keydown.enter)="updateFilters(menuTrigger)" matInput
+                             placeholder="{{column.title}}" mask="separator.9" thousandSeparator=","
+                             [(ngModel)]="filter.searchValue">
+                    </mat-form-field>
+                  </div>
+                  <div
+                    *ngIf="filter.filterType === tableColumnFilterTypes.Money && filter.actualSearchCondition && filter.actualSearchCondition == 'between'">
+                    <mat-form-field>
+                      <input autofocus (keydown.enter)="updateFilters(menuTrigger)" matInput
+                             placeholder="{{column.title}}" mask="separator.9" thousandSeparator=","
+                             [(ngModel)]="filter.multipleSearchValues[0]">
+                    </mat-form-field>
+                    <mat-form-field>
+                      <input autofocus (keydown.enter)="updateFilters(menuTrigger)" matInput
+                             placeholder="{{column.title}}" mask="separator.9" thousandSeparator=","
+                             [(ngModel)]="filter.multipleSearchValues[1]">
+                    </mat-form-field>
+                  </div>
+
+
+                  <div
+                    *ngIf="filter.filterType === tableColumnFilterTypes.Date && filter.actualSearchCondition && filter.actualSearchCondition != 'between'">
+                    <mat-form-field>
+                      <input autofocus (keydown.enter)="updateFilters(menuTrigger)" matInput
+                             placeholder="از {{column.title}}" [matDatepicker]="columnDatePicker1"
+                             [(ngModel)]="filter.searchValue">
+                      <mat-datepicker-toggle matSuffix [for]="columnDatePicker1">
+                        <mat-icon matDatepickerToggleIcon>
+                          <img class="mb-3" src="/assets/icons/calendar.svg" alt="">
+                        </mat-icon>
+                      </mat-datepicker-toggle>
+                      <mat-datepicker #columnDatePicker1></mat-datepicker>
+                    </mat-form-field>
+                  </div>
+                  <div
+                    *ngIf="filter.filterType === tableColumnFilterTypes.Date && filter.actualSearchCondition && filter.actualSearchCondition == 'between'">
+                    <mat-form-field>
+                      <input autofocus (keydown.enter)="updateFilters(menuTrigger)" matInput
+                             placeholder="از {{column.title}}" [matDatepicker]="columnDatePicker1"
+                             [(ngModel)]="filter.multipleSearchValues[0]">
+                      <mat-datepicker-toggle matSuffix [for]="columnDatePicker1">
+                        <mat-icon matDatepickerToggleIcon>
+                          <img class="mb-3" src="/assets/icons/calendar.svg" alt="">
+                        </mat-icon>
+                      </mat-datepicker-toggle>
+                      <mat-datepicker #columnDatePicker1></mat-datepicker>
+                    </mat-form-field>
+
+                    <mat-form-field>
+                      <input autofocus (keydown.enter)="updateFilters(menuTrigger)" matInput
+                             placeholder="تا {{column.title}}" [matDatepicker]="columnDatePicker2"
+                             [(ngModel)]="filter.multipleSearchValues[1]">
+                      <mat-datepicker-toggle matSuffix [for]="columnDatePicker2">
+                        <mat-icon matDatepickerToggleIcon>
+                          <img class="mb-3" src="/assets/icons/calendar.svg" alt="">
+                        </mat-icon>
+                      </mat-datepicker-toggle>
+                      <mat-datepicker #columnDatePicker2></mat-datepicker>
+                    </mat-form-field>
+
+                  </div>
+                </div>
+
+                <div class="col-2 p-1" (click)="$event.stopPropagation()">
+                  <mat-form-field>
+                    <mat-select [panelClass]="'mat-elevation-z10'" placeholder='' [(value)]="filter.nextOperand">
+                      <mat-option *ngFor="let operand of ['and', 'or']" [value]="operand">{{operand === 'and' ? 'و' :
+                        'یا'}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+                <div *ngIf="column.filter.filters?.length > 1" class="col-1 p-1"
+                     (click)="$event.stopPropagation();column.filter.removeFilter(filterIndex)">
+                  <button mat-icon-button color="primary" style="padding: 0!important;" class="mx-auto">
+                    <mat-icon>delete</mat-icon>
+                  </button>
+                </div>
+                <div *ngIf="isLast" class="col-1 p-0" (click)="$event.stopPropagation();column.filter.addFilter()">
+                  <button mat-icon-button color="primary" style="padding: 0!important;" class="mx-auto">
+                    <mat-icon>add</mat-icon>
+                  </button>
+                </div>
+
+
+              </div>
+
+              <div class="my-1 mx-auto d-flex gap-2">
+                <div>
+                  <button mat-raised-button color="primary" (click)="updateFilters()">فیلتر</button>
+                </div>
+
+                <div class="me-1">
+                  <button mat-raised-button color="warn" (click)="column.filter.setDefaultFilter(); updateFilters()">
+                    حذف
+                  </button>
+                </div>
+              </div>
+            </mat-menu>
+          </div>
+          <div *ngIf="!column.filter" style="width: 7.5px"></div>
+
+
+          <span (click)="handleSort(column)" *ngIf="column.type !== TableColumnDataType.Index"
+                style="white-space: nowrap; display: grid; align-content: center;">
+            {{column.title}}
+          </span>
+
+          <span (click)="handleSort(column)" *ngIf="column.type !== TableColumnDataType.Index">
+            <mat-icon *ngIf="getColumnCurrentSortDirection(column) === 'desc' || !column.isSorted" class="sort"
+                      [class.sort-active]="column.isSorted">north</mat-icon>
+            <mat-icon *ngIf="getColumnCurrentSortDirection(column) === 'asc'" class="sort"
+                      [class.sort-active]="column.isSorted">south</mat-icon>
+          </span>
+        </div>
+
+        <!--        <div *ngIf="column.type === fieldTypes.Select" style="display: inline-flex; align-items: center">-->
+        <!--          <mat-checkbox class="px-2" [formControl]="selectAllControl" color="primary"-->
+        <!--                        (change)="selectAll(column)"></mat-checkbox>-->
+        <!--        </div>-->
+        <div *ngIf="column.type === fieldTypes.Select" style="position: relative; padding-right: 8px">
+          <mat-checkbox [formControl]="selectAllControl" color="primary" (change)="selectAll(column)"></mat-checkbox>
+        </div>
+        <div style="display: flex;align-items: center">
+          <mat-icon *ngIf="column.type === fieldTypes.Index" [matMenuTriggerFor]="settingsMenu"
+                    style="transform: scale(1); cursor: pointer; color: white;margin: auto">
+            settings
+          </mat-icon>
+          <mat-menu #settingsMenu="matMenu">
+            <button mat-menu-item [matMenuTriggerFor]="columnsSettings" (click)="$event.stopPropagation()">
+              <span>تنظیمات ستون ها</span>
+            </button>
+          </mat-menu>
+
+          <mat-menu #columnsSettings="matMenu" (click)="$event.stopPropagation()">
+
+            <button mat-menu-item *ngFor="let column of settingsColumns"
+                    (click)="$event.stopPropagation(); column.tempShowStatus = !column.tempShowStatus">
+              <mat-checkbox #menuItems color="primary" [(ngModel)]="column.tempShowStatus"
+                            (click)="$event.stopPropagation()">
+                {{column.title}}
+              </mat-checkbox>
+
+            </button>
+            <div class="w-100 d-flex align-items-center">
+              <button mat-raised-button class="mx-auto" color="primary" (click)="updateColumnsShowStatus()">اعمال
+              </button>
+            </div>
+          </mat-menu>
+        </div>
+      </th>
+
+      <td mat-cell [style.width]="column.width ?? '1%'" style="overflow: hidden;"
+          [style.background-color]="element.color ?? ''"
+          *matCellDef="let element; let i = index"
+          [title]="column.lineStyle === 'onlyShowFirstLine' ?  (column.displayFn ? (column.displayFn(element.get ? element.get(column.name)?.value : element[column.name])) : element[column.name]) : ''"
+          [ngStyle]="{'overflow': (column.lineStyle === 'onlyShowFirstLine') ?'hidden':'unset', 'white-space': (column.lineStyle === 'onlyShowFirstLine') ? 'nowrap' :'unset', 'text-overflow': (column.lineStyle === 'onlyShowFirstLine') ? 'ellipsis' :'unset', 'max-width': (column.lineStyle === 'onlyShowFirstLine') ?'200px' :'unset'}">
+        <!--      If FormArray is passed in-->
+        <ng-container *ngIf="!this.areRowsSimpleArray" [formGroup]="element">
+          <ng-container>
+            <span *ngIf="column.type === fieldTypes.Index">{{ column.displayFn ? column.displayFn(element) :
+              ((shownRows.indexOf(element) + 1) + (tableConfigurations.pagination.pageIndex *
+                tableConfigurations.pagination.pageSize))}}</span>
+
+            <!--    If CheckBox     -->
+            <mat-checkbox style="padding-right: 8px" color="primary" *ngIf="column.type === fieldTypes.Select"
+                          [formControlName]="getSelectFormControlName(element,column)"
+                          (change)="rowSelected.emit(element)"></mat-checkbox>
+          </ng-container>
+
+          <ng-container *ngIf="element !== tableConfigurations.rowToEdit">
+
+            <span *ngIf="column.type === fieldTypes.Text">{{ column.displayFn ?
+              column.displayFn(element.get(column.name)?.value ?? element) : element.get(column.name)?.value | truncate:column.truncateTextLimit}}</span>
+            <span *ngIf="column.type === fieldTypes.Number">{{ column.displayFn ?
+              column.displayFn(element.get(column.name)?.value ?? element) : element.get(column.name)?.value}}</span>
+            <span *ngIf="column.type === fieldTypes.Money">{{ column.displayFn ?
+              column.displayFn(element.get(column.name)?.value ?? element) : element.get(column.name)?.value |
+                money }}</span>
+            <span *ngIf="column.type === fieldTypes.Date">{{ column.displayFn ?
+              column.displayFn(element.get(column.name)?.value ?? element) : element.get(column.name)?.value |
+                toPersianDate}}</span>
+            <span *ngIf="column.type === fieldTypes.DropDown || column.type === fieldTypes.AutoComplete">{{
+                column.displayFn(element.get(column.name)?.value ?? element | truncate:column.truncateTextLimit)}}</span>
+
+            <mat-checkbox disabled class="px-2" color="primary" *ngIf="column.type === fieldTypes.CheckBox"
+                          [checked]="element.get(column.name)?.value ?? element "></mat-checkbox>
+            <ng-container *ngIf="column.type===fieldTypes.Template">
+
+              <ng-container *ngTemplateOutlet="column.template;context:{ row: element }">
+              </ng-container>
+            </ng-container>
+
+          </ng-container>
+
+
+          <!--      Editable form-->
+          <ng-container *ngIf="element === tableConfigurations.rowToEdit">
+
+            <!--    If Text     -->
+            <mat-form-field class="px-2" *ngIf="column.type === fieldTypes.Text">
+              <input (keydown)="handleFormKeydown($event, column.name);rowUpdated.emit(element)"
+                     style="background-color: white!important;" [formControl]="element.get(column.name)" matInput type="text"
+                     style="text-align: center">
+              <mat-error
+                *ngIf="element.get(column.name)?.errors">{{getControlFirstErrorMessage(element.get(column.name))}}</mat-error>
+            </mat-form-field>
+
+            <!--    If Number     -->
+            <mat-form-field class="px-2" *ngIf="column.type === fieldTypes.Number">
+              <input (keydown)="handleFormKeydown($event, column.name); rowUpdated.emit(element);"
+                     style="background-color: white!important;" [formControl]="element.get(column.name)" matInput
+                     type="number" style="text-align: center">
+              <mat-error
+                *ngIf="element.get(column.name)?.errors">{{getControlFirstErrorMessage(element.get(column.name))}}</mat-error>
+            </mat-form-field>
+
+            <!--    If Money     -->
+            <mat-form-field class="px-2" *ngIf="column.type === fieldTypes.Money">
+              <input (keydown)="handleFormKeydown($event, column.name,true); rowUpdated.emit(element)"
+                     style="background-color: white!important;" [formControl]="element.get(column.name)" matInput type="number"
+                     style="text-align: center" (keyup)="rowUpdated.emit(element)"
+              >
+              <mat-error
+                *ngIf="element.get(column.name)?.errors">{{getControlFirstErrorMessage(element.get(column.name))}}</mat-error>
+            </mat-form-field>
+
+            <!--    If Date     -->
+            <mat-form-field class="px-2" *ngIf="column.type === fieldTypes.Date">
+              <input (keydown)="handleFormKeydown($event, column.name)" matInput [matDatepicker]="picker"
+                     (dateInput)="rowUpdated.emit(element)" [formControl]="element.get(column.name)">
+              <mat-datepicker-toggle matSuffix [for]="picker">
+                <mat-icon matDatepickerToggleIcon>
+                  <img class="mb-3" src="/assets/icons/calendar.svg" alt="">
+                </mat-icon>
+              </mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+            <!--    If CheckBox     -->
+            <mat-checkbox (click)="rowUpdated.emit(element)" class="px-2" color="primary"
+                          *ngIf="column.type === fieldTypes.CheckBox" [formControl]="element.get(column.name)"></mat-checkbox>
+
+            <!--    If DropDown     -->
+            <mat-form-field class="px-2" *ngIf="column.type === fieldTypes.DropDown">
+              <mat-select (keydown)="handleFormKeydown($event, column.name)"
+                          (selectionChange)="rowUpdated.emit(element)" [formControl]="element.get(column.name)">
+                <mat-option *ngFor="let option of column.options"
+                            [value]="column.optionsValueKey ? option[column.optionsValueKey] : option">
+                  {{getOptionTitle(option, column.optionsTitleKey)}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <!--     If Autocomplete   -->
+            <mat-form-field class="px-2" *ngIf="column.type === fieldTypes.AutoComplete">
+              <input type="text" (keydown)="handleFormKeydown($event, column.name)"
+                     (keyup)="column?.filterOptionsFn ? column?.filterOptionsFn(element?.get(column.name)?.value,column) : ''"
+                     [formControl]="element.get(column.name)" matInput [matAutocomplete]="auto">
+              <mat-autocomplete autoActiveFirstOption (optionSelected)="rowUpdated.emit(element)"
+                                #auto="matAutocomplete" [displayWith]="column.displayFn?.bind(this)">
+                <mat-option *ngFor="let option of  column.filteredOptions ? column.filteredOptions : column.options"
+                            [value]="column.optionsValueKey ? option[column.optionsValueKey] : option">
+                  {{getOptionTitle(option, column.optionsTitleKey)}}
+                </mat-option>
+              </mat-autocomplete>
+              <mat-error
+                *ngIf="element.get(column.name)?.errors">{{getControlFirstErrorMessage(element.get(column.name))}}</mat-error>
+            </mat-form-field>
+
+            <ng-container *ngIf="column.type===fieldTypes.Template">
+              <ng-container *ngTemplateOutlet="column.template;context:{ row: element.getRawValue() }">
+              </ng-container>
+            </ng-container>
+          </ng-container>
+        </ng-container>
+
+
+        <!--      If simple array is passed in-->
+        <ng-container *ngIf="areRowsSimpleArray">
+
+          <ng-container>
+            <span *ngIf="column.type === fieldTypes.Index">{{ column.displayFn ? column.displayFn(element) :
+              ((shownRows.indexOf(element) + 1) + (tableConfigurations.pagination.pageIndex *
+                tableConfigurations.pagination.pageSize))}}</span>
+            <mat-checkbox style="padding-right: 8px" color="primary" *ngIf="column.type === fieldTypes.Select"
+                          [checked]="element[column.name]"
+                          (change)="element[column.name] = $event.checked;rowSelected.emit(element)"></mat-checkbox>
+            <span *ngIf="column.type === fieldTypes.Text">{{ column.displayFn ? column.displayFn(element) :
+              element[column.name] | truncate:column.truncateTextLimit}}</span>
+            <span *ngIf="column.type === fieldTypes.Number" dir="ltr">{{ column.displayFn ? column.displayFn(element) :
+              element[column.name]}}</span>
+
+            <span *ngIf="column.type === fieldTypes.Money" dir="ltr">{{ column.displayFn ? (column.displayFn(element) |
+              money) : (element[column.name] | money)}}</span>
+
+            <mat-checkbox color="primary" *ngIf="column.type === fieldTypes.CheckBox" [checked]="element[column.name]"
+                          disabled></mat-checkbox>
+            <span *ngIf="column.type === fieldTypes.Date">{{ column.displayFn ? column.displayFn(element) :
+              (element[column.name] | toPersianDate)}}</span>
+            <span *ngIf="column.type === fieldTypes.DropDown || column.type === fieldTypes.AutoComplete">{{
+                column.displayFn ? column.displayFn(element) : element[column.name] | truncate:column.truncateTextLimit}}</span>
+
+            <div *ngIf="column.type === fieldTypes.Action">
+              <div class="row">
+
+                <div class="col-6">
+                  <button mat-icon-button class=" mx-2">
+                    <mat-icon style="color: rgb(162,162,162)">
+
+                      edit
+                    </mat-icon>
+                  </button>
+                </div>
+                <div class="col-6">
+                  <button mat-icon-button>
+                    <mat-icon style="color: rgb(162,162,162)">
+                      delete
+                    </mat-icon>
+                  </button>
+
+                </div>
+
+              </div>
+            </div>
+
+          </ng-container>
+          <ng-container *ngIf="column.type===fieldTypes.Template">
+            <ng-container *ngTemplateOutlet="column.template;context:{ row: element }">
+            </ng-container>
+          </ng-container>
+        </ng-container>
+
+
+      </td>
+
+      <ng-container *ngIf="tableConfigurations.options.showSumRow">
+
+        <ng-container *ngIf="column.type === fieldTypes.Index">
+          <td mat-footer-cell *matFooterCellDef [style]="{width: column.width}" class="text-accent-500">
+            {{tableConfigurations.options.sumLabel}}
+          </td>
+        </ng-container>
+        <ng-container *ngIf="column.type === fieldTypes.Select">
+          <td mat-footer-cell *matFooterCellDef [style]="{width: column.width}">
+
+          </td>
+        </ng-container>
+
+        <ng-container *ngIf="column.type !== fieldTypes.Index">
+          <td mat-footer-cell *matFooterCellDef [style]="{width: column.width}" class="text-center text-accent-500">
+              <span dir="ltr" *ngIf="column.showSumRow !== false">{{
+                  column.type === fieldTypes.Money || column.sumRowDisplayFn ?
+                    (column.sumRowDisplayFn ? column.sumRowDisplayFn() : (calculateColumnSum(column.name) | money)) : ''
+                }}</span>
+
+          </td>
+        </ng-container>
+
+      </ng-container>
+
+    </ng-container>
+
+
+    <tr mat-row (click)="onRowClick(row)" (dblclick)="onRowDoubleClick(row)"
+        [ngClass]="{'mat-row-highlight': tableConfigurations.highlightedRow === row}"
+        *matRowDef="let row; columns: tableHeaders"></tr>
+
+
+    <!-- Footer -->
+    <ng-container matColumnDef="footer">
+      <td mat-footer-cell *matFooterCellDef [colSpan]="tableHeaders.length" class="border-top">
+        <div class="d-flex flex-row gap-1">
+          <div class="w-100">
+            <mat-paginator *ngIf="tableConfigurations?.options?.usePagination && tableConfigurations?.pagination"
+                           style="margin-left: auto" [length]="tableConfigurations.pagination.totalItems"
+                           [pageSize]="tableConfigurations.pagination.pageSize"
+                           [pageSizeOptions]="tableConfigurations.pagination.pageSizeOptions"
+                           [pageIndex]="tableConfigurations.pagination.pageIndex" (page)="handlePagination($event)"
+                           class="mat-paginator-sticky" showFirstLastButtons="true">
+            </mat-paginator>
+          </div>
+          <div class="d-grid align-items-center">
+            <ng-content select="[footerContent]"></ng-content>
+          </div>
+
+          <div class="d-grid align-items-center">
+            <div class="d-flex flex-row align-items-center mx-auto w-100 gap-3" dir="ltr">
+              <button mat-raised-button color="primary" [matMenuTriggerFor]="exportActions"
+                      *ngIf="tableConfigurations.options.exportOptions.showExportButton">
+                <mat-label> دانلود</mat-label>
+                <mat-icon>save_alt</mat-icon>
+              </button>
+              <mat-menu #exportActions="matMenu">
+                <button mat-menu-item (click)="exportExcel()">Excel</button>
+                <button mat-menu-item (click)="export('pdf')">Pdf</button>
+                <button mat-menu-item (click)="export('word')">Word</button>
+              </mat-menu>
+
+              <button *ngIf="tableConfigurations.options.exportOptions.customExportCallbackFn" mat-raised-button
+                      color="primary" (click)="customExportFunctionHandler()">
+                <mat-label>{{ tableConfigurations.options.exportOptions.customExportButtonTitle}}</mat-label>
+                <mat-icon>save_alt</mat-icon>
+              </button>
+
+              <ng-content select="[footer-actions]">
+
+              </ng-content>
+
+            </div>
+          </div>
+
+        </div>
+
+      </td>
+    </ng-container>
+    <!-- Sum -->
+    <ng-container *ngIf="tableConfigurations.options.showSumRow">
+      <tr mat-footer-row *matFooterRowDef="tableHeaders; sticky: true" class="bg-primary-500"
+          style="margin-top: 5px; height: 30px;"></tr>
+    </ng-container>
+
+    <tr mat-footer-row *matFooterRowDef="['footer']; sticky: true"></tr>
+
+
+    <!--    <ng-container matColumnDef="expandedDetail">-->
+    <!--      <mat-cell *matCellDef="let detail">-->
+    <!--        The symbol for-->
+    <!--      </mat-cell>-->
+    <!--    </ng-container>-->
+    <!--    <mat-row *matRowDef="let row; columns: ['expandedDetail']; when: showLastRow.bind(this)"-->
+    <!--             style="overflow: hidden">-->
+    <!--    </mat-row>-->
+
+
+    <!--    <tr class="mat-row" *matNoDataRow>-->
+    <!--      <td class="mat-cell" [attr.colspan]="tableHeaders.length">-->
+    <!--        No data matching the filter.-->
+    <!--      </td>-->
+    <!--    </tr>-->
+  </table>
+
+
+  <!--</cdk-virtual-scroll-viewport>-->
+</div>

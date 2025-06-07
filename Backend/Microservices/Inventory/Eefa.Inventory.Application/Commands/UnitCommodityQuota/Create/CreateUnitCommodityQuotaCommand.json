@@ -1,0 +1,59 @@
+ //public int CommodityId { get; set; } = default!;
+ //       public int UnitId { get; set; } = default!;
+ //       public float CommodityQuota { get; set; } = default!;
+ //       public int QuotaDays { get; set; } = default!;
+[
+
+  {
+    "FieldName": "CommodityId",
+    "Conditions": [
+      {
+        "Condition": "@CommodityId>0",
+        "Message": {
+          "Key": "IsRequired",
+          "Values": []
+        }
+      }
+    ]
+
+  },
+  {
+    "FieldName": "QuotaGroupsId",
+    "Conditions": [
+      {
+        "Condition": "@QuotaGroupsId>0",
+        "Message": {
+          "Key": "IsRequired",
+          "Values": []
+        }
+      }
+    ]
+
+  },
+  {
+    "FieldName": "CommodityQuota",
+    "Conditions": [
+      {
+        "Condition": "@CommodityQuota>0",
+        "Message": {
+          "Key": "IsRequired",
+          "Values": []
+        }
+      }
+    ]
+
+  },
+  {
+    "FieldName": "QuotaDays",
+    "Conditions": [
+      {
+        "Condition": "@QuotaDays>0",
+        "Message": {
+          "Key": "IsRequired",
+          "Values": []
+        }
+      }
+    ]
+
+  }
+]

@@ -1,0 +1,83 @@
+<mat-card class="p-0" *ngIf="form">
+    <app-form-actions [actions]="formActions" (OnRefresh)="get()"></app-form-actions>
+
+    <app-table [tableConfigurations]="tableConfigurations"
+               [tableRows]="form"
+               (filtersChanged)="get()"
+               (sortChanged)="get()"
+               (paginationChanged)="get()">
+
+    </app-table>
+
+    <ng-template #txtquantity let-rowFg="row">
+
+        <input [formControl]="rowFg.get('quantity')" *ngIf="receipt.documentStauseBaseValue!=Service.CodeDirectReceipt"
+               type="text"
+              
+               class="form-control font-12">
+
+        <button *ngIf="receipt.documentStauseBaseValue==Service.CodeDirectReceipt"
+                matTooltip="ویرایش تعداد کالا"
+                mat-icon-button
+                class="btn-link"
+                (click)="updateQuantity(rowFg)">
+            {{rowFg.get('quantity').value}}
+
+        </button>
+    </ng-template>
+    <ng-template #txtdescription let-rowFg="row">
+        <input [formControl]="rowFg.get('description')" type="text" style="width:97% !important; text-align:center" class="form-control font-12">
+    </ng-template>
+    <ng-template #btnDelete let-rowFg="row">
+        <button mat-icon-button matTooltip="حذف" class="btn-color" (click)="onDelete(rowFg)" *ngIf="EditType ==0">
+            <mat-icon>delete</mat-icon>
+        </button>
+    </ng-template>
+    <ng-template #btnSerial let-rowFg="row">
+        
+        <!--اگر که سند کالا اموال بود کد سریال آن وارد شود.-->
+        <button class="btn-red "
+                matTooltip="ورود شماره سریال "
+                [ngClass]="{'btn-red':rowFg.controls['assets'].value == undefined,'btn-md-amber':rowFg.get('assets').value!=undefined}"
+                (click)="addCommoditySerials(rowFg)"
+                *ngIf="codeVoucherGroup==Service.EstateTemporaryReceipt || codeVoucherGroup==Service.EstateDirectReceipt || codeVoucherGroup==Service.AmountEstateReceipt" >
+            <mat-icon>
+                pin
+            </mat-icon>
+        </button>
+    </ng-template>
+
+    <ng-template #checkboxWrong let-rowFg="row">
+        <mat-icon *ngIf="rowFg.get('isWrongMeasure').value" mat-icon-button class="btn-ok" (click)="onWrongMeasure(rowFg)">
+            check_box
+        </mat-icon>
+        <mat-icon *ngIf="!rowFg.get('isWrongMeasure').value" mat-icon-button class="btn-color" (click)="onWrongMeasure(rowFg)">
+            check_box_outline_blank
+        </mat-icon>
+
+    </ng-template>
+    <ng-template #dropDowncommodities let-rowFg="row">
+        <app-combo-commodity *ngIf="EditType==5"
+                             [DefaultId]="rowFg.get('commodityId').value"
+                             (SelectId)="CommoditySelect($event,rowFg)"
+                             [isRequired]="true"
+                             
+                             style="text-align:right !important">
+        </app-combo-commodity>
+        <span *ngIf="EditType!=5">
+            {{rowFg.get('commodityTitle').value}}
+        </span>
+
+    </ng-template>
+    <ng-template #txtcommodityCode let-rowFg="row">
+       
+        <span matTooltip="کاردکس کالا" class="btn-link" (click)="navigateToHistory(rowFg.get('commodityId').value)">
+            {{rowFg.get('commodityCode').value}}
+        </span>
+
+    </ng-template>
+
+</mat-card>
+
+
+

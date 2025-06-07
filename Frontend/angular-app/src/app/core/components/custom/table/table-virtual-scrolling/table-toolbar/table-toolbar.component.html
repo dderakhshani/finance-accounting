@@ -1,0 +1,145 @@
+<div class ="toolbar-card">
+
+  <button [class.active]="activeButton === 'tableSettings'" class="btn btn-outline-secondary btn-toolbar" (click)="onTableSettings()" matTooltip=" تنظیمات نمایش جدول"
+          *ngIf="toolBar?.showTools?.tableSettings">
+
+    <mat-icon class=" btn-toolbar-icon ">
+      settings
+    </mat-icon>
+
+  </button>
+  <button [class.active]="activeButton === 'printFile'" class="btn btn-outline-secondary btn-toolbar" (click)="printFile()" matTooltip="چاپ، اکسل ، pdf"
+          *ngIf="toolBar?.showTools?.printFile">
+    <mat-icon class="btn-toolbar-icon font-30">
+      print
+    </mat-icon>
+
+  </button>
+  <button [class.active]="activeButton === 'exportExcel'" class="btn btn-outline-secondary btn-toolbar" (click)="exportExcel()" matTooltip="خروجی به اکسل "
+          *ngIf="toolBar?.showTools?.exportExcel">
+    <mat-icon class="btn-toolbar-icon font-30">
+      download
+    </mat-icon>
+
+  </button>
+  <button [class.active]="activeButton === 'refresh'" class="btn btn-outline-secondary btn-toolbar" (click)="refresh()" matTooltip="بروز رسانی"
+          *ngIf="toolBar?.showTools?.refresh"
+  >
+    <mat-icon class="btn-toolbar-icon font-30">
+      refresh
+    </mat-icon>
+  </button>
+  <button [class.active]="activeButton === 'fullScreen'" class="btn btn-outline-secondary btn-toolbar ml-2" (click)="fullScreen()"
+          *ngIf="toolBar?.showTools?.fullScreen">
+
+    <mat-icon *ngIf="!toolBar?.isLargeSize" class="btn-toolbar-icon font-30" matTooltip="تمام صفحه">
+      zoom_in
+
+    </mat-icon>
+    <mat-icon *ngIf="toolBar?.isLargeSize" class="btn-toolbar-icon font-30" matTooltip="کوچک کردن">
+      zoom_out
+    </mat-icon>
+
+  </button>
+  <button [class.active]="activeButton === 'includeOnlySelectedItemsLocal'" class="btn btn-outline-secondary btn-toolbar border-right" (click)="includeOnlySelectedItemsLocal()" matTooltip="افزودن به ردیف های انتخابی"
+          *ngIf="toolBar?.showTools?.includeOnlySelectedItemsLocal">
+    <mat-icon class="btn-toolbar-icon font-30"
+              [matBadge]="countBadgeIncludeOnlySelectedItemsLocal"  matBadgeSize="small" matBadgeColor="warn" [matBadgeHidden]="countBadgeIncludeOnlySelectedItemsLocal === 0"
+    >
+
+      playlist_add
+
+    </mat-icon>
+
+  </button>
+  <button [class.active]="activeButton === 'excludeSelectedItemsLocal'" class="btn btn-outline-secondary btn-toolbar border-right" (click)="excludeSelectedItemsLocal()" matTooltip="حذف از ردیف های انتخابی"
+          [disabled]="countBadgeIncludeOnlySelectedItemsLocal === 0"
+          *ngIf="toolBar?.showTools?.excludeSelectedItemsLocal ">
+    <mat-icon class="btn-toolbar-icon font-30"
+              [matBadge]="countBadgeExcludeSelectedItemsLocal"  matBadgeSize="small" matBadgeColor="warn" [matBadgeHidden]="countBadgeExcludeSelectedItemsLocal === 0">
+      delete_sweep
+
+
+    </mat-icon>
+
+  </button>
+  <button [class.active]="activeButton === 'deleteLocal'" class="btn btn-outline-secondary btn-toolbar" (click)="deleteLocal()" matTooltip="حذف تمام ردیف های انتخابی"
+          *ngIf="toolBar?.showTools?.deleteLocal"
+          [disabled]="countBadgeExcludeSelectedItemsLocal + countBadgeIncludeOnlySelectedItemsLocal === 0"
+  >
+    <mat-icon class="btn-toolbar-icon font-30"
+           >
+      delete_forever
+    </mat-icon>
+  </button>
+  <button [class.active]="activeButton === 'undoLocal'" class="btn btn-outline-secondary btn-toolbar" (click)="undoLocal()" matTooltip="برگشت به مرحله قبل"
+          *ngIf="toolBar?.showTools?.undoLocal"
+          [disabled]="countBadgeUndoLocal === 0"
+  >
+    <mat-icon class="btn-toolbar-icon font-30"
+              [matBadge]="countBadgeUndoLocal"  matBadgeSize="small" matBadgeColor="warn" [matBadgeHidden]="countBadgeUndoLocal === 0">
+      undo
+    </mat-icon>
+  </button>
+  <button [class.active]="activeButton === 'showAll'" class="btn btn-outline-secondary btn-toolbar border-right" (click)="showAll()" matTooltip="نمایش همه"
+          *ngIf="toolBar?.showTools?.showAll">
+    <mat-icon class="btn-toolbar-icon font-30">
+
+      view_list
+
+    </mat-icon>
+
+  </button>
+
+
+  <button [class.active]="activeButton === 'excludeSelectedItemsFilter'" class="btn btn-outline-secondary btn-toolbar" (click)="excludeSelectedItemsFilter()" matTooltip="فیلتر حذف ردیف های انتخابی"
+          *ngIf="toolBar?.showTools?.excludeSelectedItemsFilter">
+    <mat-icon class="btn-toolbar-icon font-30"
+              [matBadge]="countBadgeExcludeSelectedItemsFilter"  matBadgeSize="small" matBadgeColor="warn" [matBadgeHidden]="countBadgeExcludeSelectedItemsFilter === 0"
+    >
+
+      playlist_remove
+
+    </mat-icon>
+
+  </button>
+  <button [class.active]="activeButton === 'restorePreviousFilter'" class="btn btn-outline-secondary btn-toolbar" (click)="restorePreviousFilter()" matTooltip="بازگشت به فیلتر قبلی"
+          *ngIf="toolBar?.showTools?.restorePreviousFilter"
+          [disabled]="countBadgeRestorePreviousFilter=== 0"
+  >
+
+    <mat-icon class="btn-toolbar-icon font-30"
+              [matBadge]="countBadgeRestorePreviousFilter"  matBadgeSize="small" matBadgeColor="warn" [matBadgeHidden]="countBadgeRestorePreviousFilter === 0"
+    >
+
+      history
+
+    </mat-icon>
+
+  </button>
+  <button [class.active]="activeButton === 'removeAllFiltersAndSorts'" class="btn btn-outline-secondary btn-toolbar" (click)="removeAllFiltersAndSorts()" matTooltip="حذف تمامی فیلتر/مرتب سازی"
+          *ngIf="toolBar?.showTools?.removeAllFiltersAndSorts"
+          [disabled]="countBadgeRestorePreviousFilter === 0"
+  >
+
+    <mat-icon class="btn-toolbar-icon font-30"
+              [matBadge]="countBadgeRestorePreviousFilter"  matBadgeSize="small" matBadgeColor="warn" [matBadgeHidden]="countBadgeRestorePreviousFilter === 0"
+    >
+
+      filter_alt_off
+
+    </mat-icon>
+
+  </button>
+
+
+
+
+
+  <div class="active-display">
+    <span class="active-display-massage">
+      {{dataDisplayMode}}
+    </span>
+  </div>
+
+</div>

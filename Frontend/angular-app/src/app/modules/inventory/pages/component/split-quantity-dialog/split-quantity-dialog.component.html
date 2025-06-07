@@ -1,0 +1,65 @@
+<mat-dialog (onSubmit)="submit()"
+            [showDeleteBtn]="false">
+
+    <div dialog-header="">تقسیم تعداد کالا</div>
+
+    <div dialog-content="">
+        <mat-dialog-content class="mx-auto">
+
+
+            <div class="row" [formGroup]="fomDocumentItem">
+
+                <div class="col-md-3">
+                    <mat-form-field>
+                        <mat-label>عنوان کالا </mat-label>
+                        <input formControlName="commodityTitle" type="text" matInput disabled>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-3">
+                    <mat-form-field>
+                        <mat-label>کد کالا </mat-label>
+                        <input formControlName="commodityCode" type="text" matInput disabled>
+                    </mat-form-field>
+                </div>
+
+
+                <div class="col-md-3">
+                    <mat-form-field>
+                        <mat-label>تعداد کالا موجودی انبار </mat-label>
+                        <input formControlName="quantity" type="text" matInput disabled>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-3">
+                    <button mat-raised-button color="primary" (click)="AddItem()" style="margin:15px;">
+                        <mat-icon>
+                            add
+                        </mat-icon>
+                        افزودن تعداد
+                    </button>
+                </div>
+            </div>
+            <hr />
+
+            <div class="row" *ngFor="let item of quantities; let i=index">
+
+                <mat-form-field>
+                    <mat-label>تعداد کالا </mat-label>
+                    <input [(ngModel)]="item.quantity" type="text" matInput [ngModelOptions]="{standalone: true}" (keyup)="CalculateSum()">
+                </mat-form-field>
+
+
+            </div>
+            <div class="row" style="margin-top:15px;">
+                <span class="btn-color">
+                    جمع تعداد : {{total}}
+                </span>
+
+
+            </div>
+
+
+        </mat-dialog-content>
+    </div>
+
+
+</mat-dialog>

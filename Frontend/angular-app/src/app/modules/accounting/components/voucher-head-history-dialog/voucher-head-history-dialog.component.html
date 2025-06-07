@@ -1,0 +1,25 @@
+<mat-dialog
+  [showDeleteBtn]="false"
+  [showSubmitBtn]="false"
+>
+  <div dialog-header>تاریخچه سند</div>
+  <div dialog-content style="min-width: 70vw; min-height: 60vh">
+    <mat-accordion>
+      <mat-expansion-panel class="event" *ngFor="let event of events">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <span class="mat-body-1">{{event.createdAt | toPersianDate : true}}   {{event.createdBy}}</span>
+          </mat-panel-title>
+          <mat-panel-description>
+            {{getEventDescription(event)}}
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <div class="d-flex flex-column gap-1 py-1">
+          <div *ngFor="let subEvent of event.subEvents" class="sub-event">
+            <p class="mat-body-2" style="text-align: right">{{getEventDescription(subEvent)}}</p>
+          </div>
+        </div>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
+</mat-dialog>

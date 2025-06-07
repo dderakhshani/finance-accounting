@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+     <TargetFramework>net8.0</TargetFramework>
+    <AllowUntrustedCertificate>true</AllowUntrustedCertificate>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <NoWarn>$(NoWarn);1591</NoWarn>
+    <LangVersion>preview</LangVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Contract\Eefa.Contract\Eefa.Contract.csproj" />
+    <ProjectReference Include="..\..\..\Eefa.Persistence\Eefa.Persistence.csproj" />
+    <ProjectReference Include="..\..\..\Infrastructure\Library.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Application\" />
+    <Folder Include="Domain\Databases\SqlServer\_AuditConfigurations\" />
+    <Folder Include="Infrastructure\" />
+  </ItemGroup>
+
+</Project>

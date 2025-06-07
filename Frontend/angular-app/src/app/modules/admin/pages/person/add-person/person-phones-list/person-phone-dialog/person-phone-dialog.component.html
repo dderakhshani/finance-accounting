@@ -1,0 +1,39 @@
+<mat-dialog
+  (onSubmit)="submit()"
+  (onDelete)="delete()"
+  [showDeleteBtn]="pageMode === pageModes.Update"
+>
+
+  <div dialog-header="">شماره تماس</div>
+  <div dialog-content="">
+
+    <div class="row" [formGroup]="form">
+      <div class="col-md-4">
+        <mat-form-field >
+          <mat-label>عنوان</mat-label>
+          <mat-select formControlName="phoneTypeBaseId">
+            <mat-option *ngFor="let phoneType of phoneTypes" [value]="phoneType.id">
+              {{phoneType.title}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-md-4">
+        <mat-form-field >
+          <mat-label>شماره</mat-label>
+          <input formControlName="phoneNumber" matInput type="text">
+        </mat-form-field>
+      </div>
+      <div class="col-md-4">
+        <mat-form-field >
+          <mat-label>توضیحات</mat-label>
+          <input formControlName="description" matInput type="text">
+        </mat-form-field>
+      </div>
+      <div class="col-md-4">
+          <mat-checkbox color="primary" formControlName="isDefault"></mat-checkbox>
+          <mat-label>پیش فرض</mat-label>
+      </div>
+    </div>
+  </div>
+</mat-dialog>

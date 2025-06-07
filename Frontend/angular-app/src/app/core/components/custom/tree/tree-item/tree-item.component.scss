@@ -1,0 +1,218 @@
+@import "../../../../../../assets/scss/variables";
+
+:host {
+  width: fit-content;
+
+  .tree-node {
+    position: relative;
+
+    .tree-node-wrapper {
+      position: relative;
+      width: fit-content;
+      height: auto;
+      float: right;
+      text-align: center;
+      display: grid;
+      grid-template-columns: auto 1fr;
+
+      .tree-card {
+        cursor: pointer;
+        width: 250px;
+        height: fit-content;
+        box-shadow: 0 2px 5px 1px rgba(black, 0.1);
+        border-radius: 5px;
+        position: relative;
+        margin: .25rem auto;
+        border: .2px solid rgba(black, 0.1);
+        background-color: white;
+
+        &:hover {
+          .actions-wrapper {
+            .action-edit {
+              opacity: 1;
+            }
+          }
+        }
+
+        .pointer {
+          content: '';
+          height: 1px;
+          width: 10px;
+          position: absolute;
+          left: -10px;
+          bottom: calc(50%);
+          background-color: rgba(black, 0.5);
+          //border-bottom: 1px solid rgba(black,0.1);
+          pointer-events: none;
+          z-index: 0;
+        }
+
+
+        .tree-card-details {
+          padding: 7.5px 1rem 7.5px 1rem;
+          display: flex;
+          flex-direction: column;
+          width: 100%;
+          height: 100%;
+          border-radius: inherit;
+          text-align: right;
+          align-content: flex-start;
+
+          h5 {
+            font-size: calc(0.2vw + 8px);
+            margin: 0;
+            color: color(primary);
+            width: fit-content;
+            transition: color 0.3s;
+            text-align: right;
+          }
+
+          .code {
+            //margin: auto 0 auto auto;
+          }
+
+          .title {
+            margin-right: 0;
+            margin-left: auto;
+            white-space: nowrap;
+            max-width: 210px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+          }
+        }
+        .actions-wrapper {
+          height: 100%;
+          width: 2rem;
+          position: absolute;
+          left: 0.25rem;
+          top: 0;
+          //opacity: 0;
+          z-index: 10;
+          display: flex;
+          align-content: center;
+          transition: all 0.3s;
+
+          .action-edit {
+            width: 15px;
+            height: 15px;
+            object-fit: cover;
+            margin: auto;
+            opacity: 0;
+            transition: all 0.3s;
+
+          }
+
+          .action-select {
+            margin: auto;
+          }
+        }
+      }
+
+      .active-card {
+        .tree-card-details {
+          background-color: color(primary);
+
+          h5 {
+            color: white;
+          }
+        }
+
+        .actions-wrapper {
+          color: white;
+        }
+      }
+
+      .child-nodes {
+        width: 200px;
+        margin-top: 1.6rem;
+        //padding-top: 1rem;
+        margin-right: 9px;
+        padding-right: 1rem;
+        padding-bottom: 1rem;
+        display: grid;
+        position: absolute;
+        right: calc(100%);
+        top: 0;
+        z-index: 99;
+
+
+        .add-node-card {
+          cursor: pointer;
+          width: 200px;
+          height: fit-content;
+          //box-shadow: 0 2px 3px 1px rgba(black,0.1);
+          border-radius: 5px;
+          position: relative;
+          margin: .5rem auto;
+          border: 2px dashed rgba(black, 0.5);
+          -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
+          filter: grayscale(100%);
+          transition: 0.3s all;
+
+          &:hover {
+            -webkit-filter: grayscale(0); /* Safari 6.0 - 9.0 */
+            filter: grayscale(0);
+            border: 2px dashed color(primary);
+          }
+
+          .add-card-detail {
+            padding: 5px 1rem 5px 1rem;
+            display: flex;
+            gap: .5rem;
+            flex-direction: row;
+            width: 100%;
+            height: 100%;
+            border-radius: inherit;
+            text-align: right;
+
+            img {
+              width: 20px;
+              height: 20px;
+              object-fit: cover;
+              margin: auto;
+            }
+          }
+
+        }
+
+        &:before {
+          content: '';
+          height: calc(100% - 40px);
+          width: 0;
+          border-right: solid 1px rgba(black, 0.5);
+          border-radius: 5px 0 0 5px;
+          position: absolute;
+          right: 0;
+          top: 0;
+          z-index: -1;
+        }
+
+        .tree-card {
+          &:after {
+            content: '';
+            height: 1px;
+            width: 10px;
+            border-radius: 5px 0 0 5px;
+            position: absolute;
+            right: -1rem;
+            top: 50%;
+            background-color: rgba(black, 0.5);
+            z-index: -1;
+          }
+
+        }
+      }
+    }
+  }
+
+  .is-searching {
+    .tree-node-wrapper {
+      display: flex;
+      .child-nodes {
+        position: relative;
+        right: 0;
+      }
+
+    }
+  }
+}

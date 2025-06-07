@@ -1,0 +1,137 @@
+<div *ngIf="form">
+
+
+  <mat-card class="mt-1">
+    <div class="row line" style="position:sticky;bottom :0;">
+
+      <div class="col-md-3 ">
+
+        <mat-checkbox [(ngModel)]="isVate" color="primary" (change)="Computing()">
+
+        </mat-checkbox>
+        <mat-label>مالیات ارزش افزوده محاسبه شود</mat-label>
+
+      </div>
+
+      <div class="col-md-3 ">
+        <mat-label>مبلغ مالیات ارزش افزوده</mat-label> :
+
+        <span class="lable">
+         
+          {{Service.onCurrency(vatDutiesTax)}}
+        </span>
+      </div>
+
+      <div class="col-md-3">
+        <mat-label>جمع قیمت تمام شده</mat-label> :
+
+        <span class="lable">
+          {{Service.onCurrency(totalProductionCost)}}
+          
+        </span>
+      </div>
+      <div class="col-md-3">
+        <mat-label>جمع کل قابل پرداخت</mat-label> :
+
+        <mat-label class="text-danger">
+         
+          {{Service.onCurrency(totalItemPrice)}}
+        </mat-label>
+
+      </div>
+    </div>
+  </mat-card>
+
+  <div style="max-height: 500px; overflow: auto; ">
+    <app-table [tableConfigurations]="tableConfigurations"
+               [tableRows]="form"
+               (filtersChanged)="get()"
+               (sortChanged)="get()"
+               (paginationChanged)="get()">
+
+    </app-table>
+    <ng-template #dropDowncommodities let-rowFg="row">
+
+        <app-combo-commodity [DefaultId]="rowFg.get('commodityId').value"
+                             (SelectId)="CommoditySelect($event,rowFg)"
+                             [isRequired]="true"
+                             style="text-align:right !important"
+                             [warehouseId]="warehouseId">
+
+        </app-combo-commodity>
+    </ng-template>
+
+
+
+
+    <!--input-->
+    <ng-template #txtquantity let-rowFg="row">
+        <input type="text"
+               [formControl]="rowFg.get('quantity')"
+               (keyup)="onComputing('quantity',$event)"
+               class="form-control"
+               [options]="{suffix:''}"
+               currencyMask
+               required
+               style="text-align: center; width: 95%; margin-top: 3px;">
+    </ng-template>
+
+    <ng-template #txtUnitPrice let-rowFg="row">
+      <input [formControl]="rowFg.get('unitPrice')"
+             (keyup)="onComputing('unitPrice',$event)"
+             type="text"
+             style="text-align: center; width: 95%; margin-top: 3px; "
+             class="form-control"
+             currencyMask
+             required>
+    </ng-template>
+
+    <ng-template #txtTotalPrice let-rowFg="row">
+      <input [formControl]="rowFg.get('productionCost')"
+             (keyup)="onComputing('productionCost',$event)"
+             type="text"
+             style="text-align: center; width: 95%; margin-top: 3px;"
+             class="form-control"
+             currencyMask
+             required>
+    </ng-template>
+
+
+    <ng-template #dropdownCurrency let-rowFg="row">
+      <mat-select required class="form-control" style="width:250px;"
+                  [formControl]="rowFg.get('currencyBaseId')"
+                  [disabled]="'disabled'">
+        <mat-option *ngFor="let item of currencyBaseValue" [value]="item.id">{{item.title}}</mat-option>
+      </mat-select>
+    </ng-template>
+    <!--/input-->
+    <!--button-->
+    <ng-template #checkboxWrong let-rowFg="row">
+      <mat-icon *ngIf="rowFg.get('isWrongMeasure').value" mat-icon-button class="btn-ok" (click)="onWrongMeasure(rowFg)">
+        check_box
+      </mat-icon>
+      <mat-icon *ngIf="!rowFg.get('isWrongMeasure').value" mat-icon-button class="btn-color" (click)="onWrongMeasure(rowFg)">
+        check_box_outline_blank
+      </mat-icon>
+
+    </ng-template>
+    <ng-template #btnDelete let-rowFg="row" let-Index="i">
+      <button mat-icon-button matTooltip="حذف" class="btn-color" (click)="onDelete(rowFg)" (keyup)="onAdditems()">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </ng-template>
+    <!--/button-->
+  </div>
+
+
+
+
+
+
+
+
+</div>
+
+
+
+

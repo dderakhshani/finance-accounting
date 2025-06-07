@@ -1,0 +1,18 @@
+{
+  "Properties": [
+ 
+    {
+      "Title": "Id",
+      "Expressions": [
+        {
+          "Query": "x => (x.Id != null)",
+          "Message": {
+            "Key": "ThereIsExistValue",
+            "Values": []
+          }
+        }
+      ]
+    } 
+  ]
+}
+

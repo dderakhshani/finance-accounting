@@ -1,0 +1,23 @@
+{
+  "profiles": {
+
+    "Eefa.ApiGateway.WebApi": {
+      "applicationUrl": "http://0.0.0.0:81",
+      "commandName": "Project",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "launchUrl": "swagger"
+    }
+  },
+  "iisSettings": {
+    "windowsAuthentication": false,
+    "anonymousAuthentication": true,
+    "iisExpress": {
+      "applicationUrl": "http://localhost:10486/",
+      "sslPort": 44392
+    }
+  }
+}
+
+

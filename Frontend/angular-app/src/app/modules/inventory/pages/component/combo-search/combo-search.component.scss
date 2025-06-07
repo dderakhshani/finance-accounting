@@ -1,0 +1,145 @@
+@import "/src/assets/scss/variables";
+.btn-tree{
+
+    background: unset;
+    border: unset;
+    display:inherit;
+    // margin-top: 5px;
+
+  }
+  .btn-tree-node:hover{
+    background-color:color(primary,50);
+    cursor: pointer;
+
+  }
+  .btn-tree-node{
+   padding-top: 7px;
+   padding-bottom: 5px;
+   width: 100%;
+
+  }
+::ng-deep {
+    .mat-drawer-inner-container {
+
+    max-width: 100% !important;
+    min-width: 250px !important;
+    height: 100% !important;
+    overflow: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+
+}
+.mat-menu-content{
+  padding-top: 8px !important;
+  padding-bottom: 0px !important;
+}
+.mat-tree-node .mat-nested-tree-node {
+  font-weight: 400;
+  font-size: 14px;
+  padding-left: 15px;
+
+}
+.mat-tree-node {
+   min-height: 25px;
+   border-bottom: solid 1px color(primary,50) !important;
+}
+// .mat-tree-node:hover {
+//   background-color:color(primary,50);
+// }
+
+  }
+::ng-deep {
+  .mat-menu-panel {
+    min-width: unset !important;
+    max-width: unset !important;
+    width: 100% !important;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+    max-height: 50vh; // calc(100vh - 48px);
+    border-radius: 4px;
+    outline: 0;
+    min-height: 35px !important;
+    margin-bottom: -10px;
+  }
+}
+.mat-menu-trigger {
+  height: 66px !important;
+}
+.mat-input-element{
+  padding-right: 20px;
+  width:100%;
+  max-width: 100%;
+
+}
+.search-input{
+  margin-right: 10px;
+  margin-left: 10px;
+  background-image:url('/assets/icons/search.svg') ;
+  background-position: right;
+  background-repeat: no-repeat;
+  width: 95%;
+  border: solid 1px color(primary,50);
+  border-radius: 3px;
+  padding: 8px;
+  padding-right: 25px;
+  font-size: 12px;
+}
+.search-input:focus {
+  outline: none;
+  border: solid 1px color(primary,500);
+}
+
+.mat-icon{
+    color: color(primary,500) !important;
+
+}
+.mat-input-element {
+  padding-right: 20px;
+  width: 100%;
+  max-width: 100%;
+
+
+}
+.remove-select {
+  position: relative;
+
+  left: -3px;
+  top: -40px;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.expand {
+  margin-right: 10px;
+  margin-left: 5px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+.mat-option{
+font-size: 15px;
+}
+.disabled {
+  pointer-events: none;
+  opacity: .5;
+}
+.form-control {
+  font-size: 13px;
+  padding: 5px;
+  margin-top: 5px;
+  height: 35px;
+  padding-right: 20px;
+}
+.remove-select-40 {
+  position: relative;
+  
+  left: -3px;
+  top: -28px;
+  font-size: 20px;
+  cursor: pointer;
+}
+.height-40 {
+  height: 40px !important;
+}
+input:read-only {
+  
+  width: 95%;
+}

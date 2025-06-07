@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+     <TargetFramework>net8.0</TargetFramework>
+    <LangVersion>preview</LangVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Databases\SqlServer\Configurations\**" />
+    <EmbeddedResource Remove="Databases\SqlServer\Configurations\**" />
+    <None Remove="Databases\SqlServer\Configurations\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Core\Eefa.Persistence\Eefa.Persistence.csproj" />
+    <ProjectReference Include="..\..\..\Core\Library\Library.csproj" />
+  </ItemGroup>
+
+</Project>

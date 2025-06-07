@@ -1,0 +1,65 @@
+<mat-card class="p-0" *ngIf="form">
+
+
+    <app-table [tableConfigurations]="tableConfigurations"
+               [tableRows]="form"
+               (filtersChanged)="get()"
+               (sortChanged)="get()"
+               (paginationChanged)="get()">
+
+    </app-table>
+    <ng-template #txtquantity let-rowFg="row">
+        <input type="text"
+               [formControl]="rowFg.get('quantity')"
+               class="form-control"
+               required
+               style="width:100% !important; text-align:center"
+               mask="separator.9" thousandSeparator=","
+               (keyup)="onAdditems($event,'quantity')">
+    </ng-template>
+    <ng-template #txtDescription let-rowFg="row">
+
+        <input [formControl]="rowFg.get('description')"
+               type="text"
+               class="form-control font-10" />
+    </ng-template>
+
+    <ng-template #dropDowncommodities let-rowFg="row">
+        <app-combo-commodity [DefaultId]="rowFg.get('commodityId').value"
+                             (SelectId)="CommoditySelect($event,rowFg)"
+                             [isRequired]="true"
+                             [warehouseId]="warehouseId"
+                             [isOnlyFilterByWarehouse]="false"
+                             style="text-align:right !important">
+        </app-combo-commodity>
+    </ng-template>
+
+    <ng-template #checkboxWrong let-rowFg="row">
+        <mat-icon *ngIf="rowFg.get('isWrongMeasure').value" mat-icon-button class="btn-ok" (click)="onWrongMeasure(rowFg)">
+            check_box
+        </mat-icon>
+        <mat-icon *ngIf="!rowFg.get('isWrongMeasure').value" mat-icon-button class="btn-color" (click)="onWrongMeasure(rowFg)">
+            check_box_outline_blank
+        </mat-icon>
+    </ng-template>
+
+    <ng-template #btnDelete let-rowFg="row" let-Index="i">
+        <button mat-icon-button matTooltip="حذف" class="btn-color" (click)="onDelete(rowFg)" (keyup)="onAdditems($event,'delete')">
+            <mat-icon>delete</mat-icon>
+        </button>
+    </ng-template>
+
+
+    <!--Dosnt used-->
+    <ng-template #checkboxSelected let-rowFg="row">
+        <mat-icon *ngIf="rowFg.get('selected').value" mat-icon-button class="btn-ok">
+            done_all
+        </mat-icon>
+        <mat-icon *ngIf="!rowFg.get('selected').value" mat-icon-button class="btn-color">
+            check
+        </mat-icon>
+    </ng-template>
+</mat-card>
+
+
+

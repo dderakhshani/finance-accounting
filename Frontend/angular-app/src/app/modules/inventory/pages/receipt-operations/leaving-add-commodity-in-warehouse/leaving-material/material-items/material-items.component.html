@@ -1,0 +1,129 @@
+<mat-card class="p-0" *ngIf="form">
+
+
+    <app-table [tableConfigurations]="tableConfigurations"
+               [tableRows]="form"
+               (filtersChanged)="get()"
+               (sortChanged)="get()"
+               (paginationChanged)="get()">
+
+    </app-table>
+    <ng-template #txtquantity let-rowFg="row">
+       
+        <span *ngIf="onNotAllowExit(rowFg)">
+            موجودی کافی برای خروج از انبار وجود ندارد
+        </span>
+        <input type="text"
+               *ngIf="onAllowExit(rowFg)"
+               [formControl]="rowFg.get('quantity')"
+               class="form-control"
+               required
+               style="width:100% !important; text-align:center"
+               mask="separator.9" thousandSeparator=","
+               (keyup)="onAdditems($event,'quantity')">
+    </ng-template>
+
+    <ng-template #buttonStack let-rowFg="row">
+
+        <!-- <a matTooltip="مشاهده استاک انبار" class="btn-link" (click)="navigateToHistory(rowFg.get('commodityId').value)">
+
+        </a> -->
+        {{rowFg.get('commodityCode').value}}
+
+    </ng-template>
+
+
+    <ng-template #dropDowncommodities let-rowFg="row">
+
+        <app-combo-commodity [DefaultId]="rowFg.get('commodityId').value"
+                             (SelectId)="CommoditySelect($event,rowFg)"
+                             [isRequired]="true"
+                             [warehouseId]="warehouseId"
+                             [isOnlyFilterByWarehouse]="false"
+                             style="text-align:right !important">
+        </app-combo-commodity>
+
+
+
+    </ng-template>
+    <ng-template #dropDownBoms let-rowFg="row">
+
+        <div style="display:flex">
+            <app-combo-commodity-boms [DefaultId]="rowFg.get('bomValueHeaderId').value"
+                                      (SelectId)="CommodityBomsSelect($event,rowFg)"
+                                      [isRequired]="false"
+                                      [commodityId]="rowFg.get('commodityId').value"
+                                      style="text-align:right !important; width:90% !important;"
+                                      *ngIf="codeVoucherGroup==Service.ProductReceiptWarehouse">
+            </app-combo-commodity-boms>
+            <button matTooltip="ایجاد فرمول ساخت" class="btn-link btn  btn-search " (click)="openAddBoms(rowFg)">
+                <mat-icon class="font-30">
+                    add_box
+                </mat-icon>
+
+            </button>
+        </div>
+
+    </ng-template>
+
+    <ng-template #checkboxWrong let-rowFg="row">
+        <mat-icon *ngIf="rowFg.get('isWrongMeasure').value" mat-icon-button class="btn-ok" (click)="onWrongMeasure(rowFg)">
+            check_box
+        </mat-icon>
+        <mat-icon *ngIf="!rowFg.get('isWrongMeasure').value" mat-icon-button class="btn-color" (click)="onWrongMeasure(rowFg)">
+            check_box_outline_blank
+        </mat-icon>
+
+    </ng-template>
+
+    <ng-template #btnDelete let-rowFg="row" let-Index="i">
+        <button mat-icon-button matTooltip="حذف" class="btn-color" (click)="onDelete(rowFg)" (keyup)="onAdditems($event,'delete')">
+            <mat-icon>delete</mat-icon>
+        </button>
+    </ng-template>
+
+    <ng-template #txtdescription let-rowFg="row">
+        <input
+        [formControl]="rowFg.get('description')"
+        type="text"
+        style="width:97% !important; text-align:center"
+        class="form-control font-12"
+        >
+    </ng-template>
+
+    <ng-template #buttonBomValue let-rowFg="row">
+
+        <button mat-icon-button matTooltip="لیست اقلام سازنده" class="btn-link" (click)="getBomValue(rowFg)" *ngIf="codeVoucherGroup==Service.ProductReceiptWarehouse">
+            <mat-icon>
+                format_list_numbered
+            </mat-icon>
+
+        </button>
+
+    </ng-template>
+</mat-card>
+
+
+<!----Add Bom Modal------------------------------------------------------------------------------------------------->
+<div class="filter-modal" [ngClass]="{'filter-modal-open':IsOpenModal ,'filter-modal-close': !IsOpenModal}" *ngIf="BomcommodityId.controls!=undefined">
+
+    <!-- Modal content -->
+    <div class="filter-modal-content">
+        <div class="row">
+            <div style="display:inline-block">
+                <span class="filter-modal-close-btn">
+                    <mat-icon class="font-30" matTooltip="بستن" (click)="close()">
+                        close
+                    </mat-icon>
+                </span>
+                <h5 style="text-align:center">افزودن فرمول ساخت</h5>
+            </div>
+
+        </div>
+
+        <app-bom-headers-headers [commodityId]="BomcommodityId?.controls?.commodityId.value">
+
+        </app-bom-headers-headers>
+    </div>
+
+</div>

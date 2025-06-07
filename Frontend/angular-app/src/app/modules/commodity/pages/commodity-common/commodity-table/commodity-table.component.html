@@ -1,0 +1,46 @@
+<app-table [tableRows]="commodities"
+           [tableConfigurations]="tableConfigurations"
+           (paginationChanged)="get()"
+           (filtersChanged)="get()"
+           (sortChanged)="get()"
+           (rowClicked)="updateCommodityList()"
+           (rowDoubleClicked)="navigateToCommodity($event,'Edit')"
+           style="width:100%">
+</app-table>
+<ng-template #buttonBoms let-element="row">
+
+    <span class="txt-danger" matTooltip="تعداد فرمول ساخت">{{element.bomsCount}}</span>
+
+</ng-template>
+
+<ng-template #txtTitle let-element="row">
+
+    <p class="font-10">{{element.title}}</p>
+
+</ng-template>
+<ng-template #txtCode let-element="row">
+
+    <span style="font-size:10px;">{{element.code}}</span>
+
+</ng-template>
+<ng-template #buttonCopy let-element="row">
+
+    <button mat-icon-button matTooltip="کپی از کالا" [matTooltipPosition]="'right'" class="btn-color" (click)="navigateToCommodity(element,'Copy')">
+        <mat-icon>content_copy</mat-icon>
+
+    </button>
+</ng-template>
+<ng-template #buttonEdit let-element="row">
+
+    <button mat-icon-button matTooltip="ویرایش کالا" [matTooltipPosition]="'right'" class="btn-color" (click)="navigateToCommodity(element,'Edit')">
+        <mat-icon>edit</mat-icon>
+
+    </button>
+</ng-template>
+<ng-template #buttonDelete let-element="row">
+
+    <button mat-icon-button matTooltip="حذف کالا" [matTooltipPosition]="'right'" class="btn-color" (click)="delete(element)">
+        <mat-icon>delete</mat-icon>
+
+    </button>
+</ng-template>

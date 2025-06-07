@@ -1,0 +1,37 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+<PropertyGroup>
+     <TargetFramework>net8.0</TargetFramework>
+    <NoWarn>$(NoWarn);1591</NoWarn>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <LangVersion>preview</LangVersion>
+    <StartupObject></StartupObject>
+  </PropertyGroup>
+
+
+
+  <ItemGroup>
+    <Compile Remove="Controllers\DocumentHeadController.cs" />
+    <Compile Remove="Controllers\_FinancialRequestController.cs" />
+  </ItemGroup>
+
+ 
+	  <ItemGroup>
+		  <PackageReference Include="NLog" Version="5.0.4" />
+		  <PackageReference Include="NLog.Extensions.Logging" Version="5.0.4" />
+		  <PackageReference Include="NLog.Web.AspNetCore" Version="5.1.4" />
+	  </ItemGroup>
+ 
+
+  <ItemGroup>
+    
+    <ProjectReference Include="..\..\..\Core\SharedCode\SharedCode.csproj" />
+    
+    <ProjectReference Include="..\Eefa.Bursary.Application\Eefa.Bursary.Application.csproj" />
+    <ProjectReference Include="..\Eefa.Bursary.Infrastructure\Eefa.Bursary.Infrastructure.csproj" />
+  </ItemGroup>
+  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+		<Exec Command="copy ..\..\..\Core\SharedCode\appsettings-shared.json $(OutDir)\appsettings-shared.json /Y&#xD;&#xA;copy ..\..\..\Core\SharedCode\appsettings-shared.json $(ProjectDir)\appsettings-shared.json /Y" />
+		<Exec Command="copy ..\..\..\Core\SharedCode\appsettings-shared.Development.json $(OutDir)\appsettings-shared.Development.json /Y&#xD;&#xA;copy ..\..\..\Core\SharedCode\appsettings-shared.Development.json $(ProjectDir)\appsettings-shared.Development.json /Y" />
+  </Target>
+</Project>

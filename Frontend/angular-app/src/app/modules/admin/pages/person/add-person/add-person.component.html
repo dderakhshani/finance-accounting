@@ -1,0 +1,364 @@
+<div class="d-flex flex-column h-100 gap-3" style="max-height: inherit">
+
+  <app-action-bar (onSave)="submit()" (onAdd)="reset()" (onList)="navigateToPersonList()"
+                  (onCustomClick)="handleCustomAction($event)"></app-action-bar>
+
+  <mat-card>
+    <form [formGroup]="form">
+      <div class="row">
+
+
+        <div class="col-12" *ngIf="form.controls['legalBaseId'].value !== legalBaseValueId">
+          <div class="row">
+            <div class="col-10">
+
+              <div class="row">
+                <div class="col-3">
+                  <mat-form-field>
+                    <mat-label>کد ملی/ کد اتباع</mat-label>
+                    <input tabindex="1" formControlName="nationalNumber" type="text" matInput>
+                  </mat-form-field>
+                </div>
+                <div class="col-3">
+                  <mat-form-field>
+                    <mat-label> کد اقتصادی/ کد مشارکت مدنی</mat-label>
+                    <input tabindex="4" formControlName="economicCode" type="text" matInput>
+                  </mat-form-field>
+                </div>
+                <!--                <div class="col-3">-->
+                <!--                  <mat-form-field>-->
+                <!--                    <mat-label> نام</mat-label>-->
+                <!--                    <input tabindex="2" formControlName="firstName" type="text" matInput>-->
+                <!--                  </mat-form-field>-->
+                <!--                </div>-->
+                <div class="col-3">
+                  <mat-form-field>
+                    <mat-label> نام و نام خانوادگی</mat-label>
+                    <input tabindex="3" formControlName="lastName" type="text" matInput>
+                  </mat-form-field>
+                </div>
+                <div class="col-3" *ngIf="displayMode !== 'sales'">
+                  <mat-form-field>
+                    <mat-label> نام پدر</mat-label>
+                    <input tabindex="4" formControlName="fatherName" type="text" matInput>
+                  </mat-form-field>
+                </div>
+
+
+                <div class="col-3" *ngIf="displayMode !== 'sales'">
+                  <mat-form-field>
+                    <mat-label>تاریخ تولد</mat-label>
+                    <input tabindex="5" matInput [matDatepicker]="picker" formControlName="birthDate">
+                    <mat-datepicker-toggle matSuffix [for]="picker">
+                      <mat-icon matDatepickerToggleIcon>
+                        <img class="mb-3" src="/assets/icons/calendar.svg" alt="">
+                      </mat-icon>
+                    </mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                  </mat-form-field>
+                </div>
+                <div class="col-3" *ngIf="displayMode !== 'sales'">
+                  <mat-form-field>
+                    <mat-label> شماره شناسنامه</mat-label>
+                    <input tabindex="6" formControlName="identityNumber" type="text" matInput>
+                  </mat-form-field>
+                </div>
+                <div class="col-3" *ngIf="displayMode !== 'sales'">
+                  <mat-form-field>
+                    <mat-label> کد بیمه</mat-label>
+                    <input tabindex="7" formControlName="insuranceNumber" type="text" matInput>
+                  </mat-form-field>
+                </div>
+                <div class="col-3">
+                  <mat-form-field>
+                    <mat-label> شهر</mat-label>
+                    <input tabindex="8"
+                           formControlName="birthPlaceCountryDivisionId"
+                           type="text" matInput autocomplete="shahr" [matAutocomplete]="cityAuto">
+                    <mat-autocomplete autoActiveFirstOption #cityAuto="matAutocomplete"
+                                      [displayWith]="countryDivisionDisplayFn.bind(this)">
+                      <mat-option
+                        *ngFor="let city of countryDivisions | arrayFilter : form.controls['birthPlaceCountryDivisionId'].value : ['ostanTitle','shahrestanTitle']"
+                        [value]="city.id">
+
+                        {{[city.ostanTitle, city.shahrestanTitle].join(', ')}}
+                      </mat-option>
+                    </mat-autocomplete>
+                  </mat-form-field>
+                </div>
+
+
+                <div class="col-3" *ngIf="displayMode !== 'sales'">
+                  <mat-form-field>
+                    <mat-label> ایمیل</mat-label>
+                    <input tabindex="9" formControlName="email" type="email" matInput autocomplete="email">
+                  </mat-form-field>
+                </div>
+                <div class="col-3">
+                  <mat-form-field>
+                    <mat-label> کد تفصیل</mat-label>
+                    <input tabindex="10" formControlName="accountReferenceCode" type="text" matInput>
+                  </mat-form-field>
+                </div>
+                <div class="col-3">
+                  <mat-form-field>
+                    <mat-label>گروه تفصیل شناور</mat-label>
+                    <input tabindex="11"
+                           formControlName="accountReferenceGroupId"
+                           type="text" matInput autocomplete="accountReferenceGroup" [matAutocomplete]="groupAuto">
+                    <mat-autocomplete autoActiveFirstOption #groupAuto="matAutocomplete"
+                                      [displayWith]="accountReferenceGroupDisplayFn.bind(this)">
+                      <mat-option
+                        *ngFor="let group of accountReferencesGroups | arrayFilter : form.controls['accountReferenceGroupId'].value : ['code','title']"
+                        [value]="group.id">
+                        {{group.code + " " + group.title}}
+                      </mat-option>
+                    </mat-autocomplete>
+                  </mat-form-field>
+
+
+                </div>
+                <div class="col-3">
+                  <mat-form-field>
+                    <mat-label> کد کارگاه</mat-label>
+                    <input tabindex="7" formControlName="workshopCode" type="text" matInput>
+                  </mat-form-field>
+                </div>
+
+              </div>
+
+            </div>
+            <div class="col-2 mb-auto">
+              <div class="row  ps-2">
+                <div class="col-12 p-0">
+                  <mat-form-field>
+                    <mat-label class="d-block mb-1 mat-caption"> نوع شخص</mat-label>
+                    <mat-select formControlName="legalBaseId">
+                      <mat-option *ngFor="let legal of personLegals" [value]="legal.id">
+                        {{legal.title}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+
+                <div style="border-radius: 5px" class="col-12 border py-1 px-2 mb-3 mt-1">
+                  <mat-label class="d-block mb-1 mat-caption"> جنسیت</mat-label>
+                  <mat-radio-group
+                    tabindex="13"
+                    class="gap-4 d-flex"
+                    aria-labelledby="example-radio-group-label"
+                    formControlName="genderBaseId">
+                    <mat-radio-button class="mat-caption" style="width: 50%;" color="primary"
+                                      [checked]="form.controls['genderBaseId'].value === gender.id"
+                                      *ngFor="let gender of genders" [value]="gender.id">
+                      {{gender.title}}
+                    </mat-radio-button>
+                  </mat-radio-group>
+                </div>
+                <div style="border-radius: 5px" class="col-12 border py-2 px-3">
+                  <mat-checkbox color="primary" formControlName="taxIncluded"></mat-checkbox>
+                  <mat-label tabindex="16" class=" mb-1 mat-caption"> مشمول مالیات ارزش افزوده</mat-label>
+                </div>
+              </div>
+            </div>
+            <!--            <div class="col-1 mx-auto position-relative hover-parent">-->
+            <!--              <img-->
+            <!--                style="object-fit: cover;box-shadow: 0 0 5px 1px rgba(132,132,132,0.27);border-radius: 50%; width: 130px; height: 130px"-->
+            <!--                mat-card-lg-image class="mx-auto" [src]="form.get('photoUrl')?.value ?? defaultPhotoUrl" alt="">-->
+            <!--              <img-->
+            <!--                style="width: 40px; height: 40px;object-fit: contain; position: absolute; right: 0; top: 0; cursor: pointer"-->
+            <!--                (click)="photoInput.click()" class="hover-child" src="/assets/icons/upload-image.svg" alt="">-->
+            <!--              <input hidden (change)="onPhotoInput($event)" #photoInput type="file" id="photoInput">-->
+            <!--            </div>-->
+
+          </div>
+        </div>
+        <div class="col-12" *ngIf="form.controls['legalBaseId'].value === legalBaseValueId">
+          <div class="row">
+            <div class="col-10">
+              <div class="row">
+
+                <div class="col-4">
+                  <mat-form-field>
+                    <mat-label>شناسه ملی</mat-label>
+                    <input tabindex="1" formControlName="nationalNumber" type="text" matInput>
+                  </mat-form-field>
+                </div>
+                <div class="col-4">
+                  <mat-form-field>
+                    <mat-label> نام شرکت</mat-label>
+                    <input tabindex="2" formControlName="lastName" type="text" matInput>
+                  </mat-form-field>
+                </div>
+                <div class="col-4">
+                  <mat-form-field>
+                    <mat-label> نام مدیر عامل</mat-label>
+                    <input tabindex="3" formControlName="fatherName" type="text" matInput>
+                  </mat-form-field>
+                </div>
+
+
+                <div class="col-4">
+                  <mat-form-field>
+                    <mat-label> کد اقتصادی/ کد مشارکت مدنی</mat-label>
+                    <input tabindex="4" formControlName="economicCode" type="text" matInput>
+                  </mat-form-field>
+                </div>
+
+                <div class="col-4">
+                  <mat-form-field>
+                    <mat-label> شهر</mat-label>
+                    <input tabindex="5"
+                           formControlName="birthPlaceCountryDivisionId"
+                           type="text" matInput autocomplete="shahr" [matAutocomplete]="cityAuto">
+                    <mat-autocomplete autoActiveFirstOption #cityAuto="matAutocomplete"
+                                      [displayWith]="countryDivisionDisplayFn.bind(this)">
+                      <mat-option
+                        *ngFor="let city of countryDivisions | arrayFilter : form.controls['birthPlaceCountryDivisionId'].value : ['ostanTitle','shahrestanTitle']"
+                        [value]="city.id">
+
+                        {{[city.ostanTitle, city.shahrestanTitle].join(', ')}}
+                      </mat-option>
+                    </mat-autocomplete>
+                  </mat-form-field>
+                </div>
+                <div class="col-4" *ngIf="displayMode !== 'sales'">
+                  <mat-form-field>
+                    <mat-label> ایمیل</mat-label>
+                    <input tabindex="6" formControlName="email" type="email" matInput autocomplete="email">
+                  </mat-form-field>
+                </div>
+
+
+                <div class="col-4">
+                  <mat-form-field>
+                    <mat-label> کد تفصیل</mat-label>
+                    <input tabindex="7" formControlName="accountReferenceCode" type="text" matInput>
+                  </mat-form-field>
+                </div>
+                <div class="col-4">
+                  <mat-form-field>
+                    <mat-label>گروه تفصیل شناور</mat-label>
+                    <input tabindex="11"
+                           formControlName="accountReferenceGroupId"
+                           type="text" matInput autocomplete="accountReferenceGroup" [matAutocomplete]="groupAuto">
+                    <mat-autocomplete autoActiveFirstOption #groupAuto="matAutocomplete"
+                                      [displayWith]="accountReferenceGroupDisplayFn.bind(this)">
+                      <mat-option
+                        *ngFor="let group of accountReferencesGroups | arrayFilter : form.controls['accountReferenceGroupId'].value : ['code','title']"
+                        [value]="group.id">
+                        {{group.code + " " + group.title}}
+                      </mat-option>
+                    </mat-autocomplete>
+                  </mat-form-field>
+                </div>
+                <div class="col-4">
+                  <mat-form-field>
+                    <mat-label> کد کارگاه</mat-label>
+                    <input tabindex="7" formControlName="workshopCode" type="text" matInput>
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+            <div class="col-2 mb-auto">
+              <div class="row ps-2">
+                <div style="border-radius: 5px" class="col-12 p-0">
+                  <mat-form-field>
+                    <mat-label class="d-block mb-1 mat-caption"> نوع شخص</mat-label>
+                        <mat-select formControlName="legalBaseId">
+                      <mat-option *ngFor="let legal of personLegals" [value]="legal.id">
+                        {{legal.title}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+                <div style="border-radius: 5px" class="col-12 border  py-1 px-2 mb-3 mt-1">
+                  <mat-label class="d-block mb-1 mat-caption"> ماهیت</mat-label>
+                  <mat-radio-group
+                    tabindex="11"
+                    class="gap-4 d-flex"
+                    aria-labelledby="example-radio-group-label"
+                    formControlName="governmentalBaseId">
+                    <mat-radio-button class="mat-caption" style="width: 50%;" color="primary"
+                                      [checked]="form.controls['governmentalBaseId'].value === governmental.id"
+                                      *ngFor="let governmental of personGovernmental" [value]="governmental.id">
+                      {{governmental.title}}
+                    </mat-radio-button>
+                  </mat-radio-group>
+                </div>
+
+                <div style="border-radius: 5px" class="col-12 border py-3 px-3">
+                  <mat-checkbox color="primary" formControlName="taxIncluded"></mat-checkbox>
+                  <mat-label tabindex="16" class=" mb-1 mat-caption"> مشمول مالیات ارزش افزوده</mat-label>
+                </div>
+              </div>
+            </div>
+            <!--            <div class="col-1 mx-auto position-relative hover-parent">-->
+            <!--              <img-->
+            <!--                style="object-fit: cover;box-shadow: 0 0 5px 1px rgba(132,132,132,0.27);border-radius: 50%; width: 130px; height: 130px"-->
+            <!--                mat-card-lg-image class="mx-auto" [src]="form.get('photoUrl')?.value ?? defaultPhotoUrl" alt="">-->
+            <!--              <img-->
+            <!--                style="width: 40px; height: 40px;object-fit: contain; position: absolute; right: 0; top: 0; cursor: pointer"-->
+            <!--                (click)="photoInput.click()" class="hover-child" src="/assets/icons/upload-image.svg" alt="">-->
+            <!--              <input hidden (change)="onPhotoInput($event)" #photoInput type="file" id="photoInput">-->
+            <!--            </div>-->
+
+          </div>
+
+        </div>
+      </div>
+    </form>
+
+  </mat-card>
+  <mat-card class="p-0 w-100 mx-auto h-100" [class.mat-disabled]="!this.form.get('id')?.value" *ngIf="form">
+    <mat-tab-group>
+      <mat-tab label="آدرس ها">
+        <app-person-addresses-list [form]="form.controls['personAddressList']"
+                                   [personId]="form.controls['id']?.value"></app-person-addresses-list>
+      </mat-tab>
+      <mat-tab label="شماره های تماس">
+        <app-person-phones-list
+          [form]="form.controls['personPhonesList']"
+          [personId]="form.controls['id']?.value"></app-person-phones-list>
+      </mat-tab>
+
+      <mat-tab label="حساب های بانکی" *ngIf="displayMode !== 'sales'">
+        <app-person-bank-accounts-list
+          [form]="form.controls['personBankAccountsList']"
+          [personId]="form.controls['id']?.value"></app-person-bank-accounts-list>
+      </mat-tab>
+
+      <mat-tab label="اطلاعات مشتری" *ngIf="identityService.doesHavePermission('CreateCustomer')">
+        <app-person-customer
+          *ngIf="form.controls['id']?.value"
+          [personId]="form.controls['id']?.value"></app-person-customer>
+      </mat-tab>
+
+      <mat-tab label="اطلاعات کارمندان">
+        <app-person-employee #personEmployee *ngIf="form?.controls['id']?.value" [personId]="form?.controls['id']?.value"
+        ></app-person-employee>
+      </mat-tab>
+
+      <mat-tab label="امضاء" *ngIf="displayMode !== 'sales'">
+        <div style="height: 35vh" class="p-5">
+          <mat-card class="col-4 mx-auto">
+            <div class="row">
+              <div (click)="signatureInput.click()" style="width: fit-content; cursor: pointer"
+                   class="col-6 mx-auto align-items-center d-flex">
+                <img style="object-fit: contain; border-radius: inherit" mat-card-lg-image class="mx-auto"
+                     [src]="form.get('signatureUrl')?.value" alt="">
+              </div>
+              <div (click)="signatureInput.click()" class="col-6 align-items-center d-flex flex-column"
+                   style="cursor:pointer;">
+                <img style="width: 30px" class="mx-3" src="/assets/icons/upload-image.svg" alt="">
+                <h5 mat-card-subtitle class="mt-1">بارگذازی امضا</h5>
+              </div>
+            </div>
+            <input hidden (change)="onSignatureInput($event)" #signatureInput type="file" id="signatureInput">
+          </mat-card>
+        </div>
+      </mat-tab>
+
+    </mat-tab-group>
+  </mat-card>
+</div>

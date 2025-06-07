@@ -1,0 +1,40 @@
+<mat-card class="d-flex flex-column h-100 gap-3" [formGroup]="form">
+  <div class="row">
+    <div class="col-12" >
+      <div class="col-6">
+        <mat-form-field>
+          <mat-label> سال مالی سند اختتامیه  </mat-label>
+          <mat-select formControlName="yearId">
+            <mat-option *ngFor="let year of years" [value]="year.id">
+              {{year.yearName}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+<div class="col-6">
+
+  <mat-form-field>
+    <mat-label> شماره سند اختتامیه</mat-label>
+    <input matInput type="" formControlName="voucherNo" />
+  </mat-form-field>
+  
+</div>
+</div>
+ 
+  </div>
+  <span class="col-12 mat-caption text-primary-500">
+ 
+  سال مالی برنامه شما باید در سال مالی جاری باشد
+
+ <br>
+  در صورت وجود سند افتتاحیه در سال مالی جاری ، سند مربوطه حذف و با سند جدید جایگزین می شود
+
+ 
+     </span>
+
+  
+  <button class="col-3" mat-flat-button (click)="add()" color="primary" >صدور سند افتتاحیه</button>
+
+
+</mat-card>
+

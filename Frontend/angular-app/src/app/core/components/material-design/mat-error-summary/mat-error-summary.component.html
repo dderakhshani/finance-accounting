@@ -1,0 +1,7 @@
+<div *ngIf="isNotValid" class="mat-error-summary">
+  <mat-error *ngFor="let error of errors">
+    <span *ngIf="errors.indexOf(error) === 0" >
+      {{error}}
+    </span>
+  </mat-error>
+</div>

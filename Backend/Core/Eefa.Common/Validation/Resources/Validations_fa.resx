@@ -1,0 +1,249 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Authorization" xml:space="preserve">
+    <value>باید مجوز داشته باشید </value>
+  </data>
+  <data name="Between" xml:space="preserve">
+    <value>باید بیشتر از [1] وکمتر از [2] باشد</value>
+  </data>
+  <data name="CanNotCreateForFuture" xml:space="preserve">
+    <value>ثبت سند به تاریخ آینده امکان پذیر نیست </value>
+  </data>
+  <data name="CanNotCreateUnbalancedVoucher" xml:space="preserve">
+    <value>ثبت سند غیر موازنه  امکان پذیر نیست </value>
+  </data>
+  <data name="CodeVoucherGroupId" xml:space="preserve">
+    <value>نوع سند</value>
+  </data>
+  <data name="CommodityId" xml:space="preserve">
+    <value>شناسه کالا</value>
+  </data>
+  <data name="CreditAccountHeadId" xml:space="preserve">
+    <value>سرفصل حساب بستانکار</value>
+  </data>
+  <data name="CreditAccountReferenceGroupId" xml:space="preserve">
+    <value>گروه حساب بستانکار</value>
+  </data>
+  <data name="CreditAccountReferenceId" xml:space="preserve">
+    <value>حساب بستانکار</value>
+  </data>
+  <data name="DebitAccountHeadId" xml:space="preserve">
+    <value>سرفصل  حساب بدهکار</value>
+  </data>
+  <data name="DebitAccountReferenceGroupId" xml:space="preserve">
+    <value>گروه بدهکار</value>
+  </data>
+  <data name="DebitAccountReferenceId" xml:space="preserve">
+    <value>حساب بدهکار</value>
+  </data>
+  <data name="DocumentDate" xml:space="preserve">
+    <value>تاریخ سند</value>
+  </data>
+  <data name="DocumentHeadId" xml:space="preserve">
+    <value>شناسه سند</value>
+  </data>
+  <data name="Greater than" xml:space="preserve">
+    <value>باید بیشتر از [1] باشد</value>
+  </data>
+  <data name="Id" xml:space="preserve">
+    <value>شناسه جدول خالی است</value>
+  </data>
+  <data name="InCurrentYearInUse" xml:space="preserve">
+    <value>در سال جاری در حال استفاده میباشد</value>
+  </data>
+  <data name="InUse" xml:space="preserve">
+    <value>این آیتم درحال استفاده است </value>
+  </data>
+  <data name="InvalidFromat" xml:space="preserve">
+    <value>تستتتتتتتتتتت</value>
+  </data>
+  <data name="InvoiceNo" xml:space="preserve">
+    <value>شماره صورتحساب</value>
+  </data>
+  <data name="IsNotValidCodeLevel" xml:space="preserve">
+    <value>کد سطح حساب صحیح نمیباشد</value>
+  </data>
+  <data name="IsNotValidValue" xml:space="preserve">
+    <value>مقدار  [1] قابل پذیرش نیست</value>
+  </data>
+  <data name="IsRequired" xml:space="preserve">
+    <value>ورود این مقدار الزامی است </value>
+  </data>
+  <data name="LessThan" xml:space="preserve">
+    <value>مقدار باید کمتر از [1] باشد</value>
+  </data>
+  <data name="Login" xml:space="preserve">
+    <value>ابتدا باید وارد سیستم شوید </value>
+  </data>
+  <data name="MobileValidation" xml:space="preserve">
+    <value>شماره موبایل نامعتبر است</value>
+  </data>
+  <data name="NotExist" xml:space="preserve">
+    <value>این مقدار در دیتابیس وجود ندارد </value>
+  </data>
+  <data name="Number" xml:space="preserve">
+    <value>ورودی باید عدد باشد  </value>
+  </data>
+  <data name="ParentCodeNotValid" xml:space="preserve">
+    <value>ارقام کد با ارقام والد همخوانی ندارد </value>
+  </data>
+  <data name="Permission" xml:space="preserve">
+    <value>باید مجوز دسترسی داشته باشید </value>
+  </data>
+  <data name="Quantity" xml:space="preserve">
+    <value>تعداد کالا</value>
+  </data>
+  <data name="RelationBetween" xml:space="preserve">
+    <value>از این داده در رابطه بین [1] و [2] استفاده شده است </value>
+  </data>
+  <data name="SpecialLenght" xml:space="preserve">
+    <value>تعداد کاراکتر ها باید [1] باشد</value>
+  </data>
+  <data name="TrueOrFalse" xml:space="preserve">
+    <value>این آیتم فقط میتواتند درست یا نادرست باشد </value>
+  </data>
+  <data name="UniqueName" xml:space="preserve">
+    <value>این نام قبلا استفاده شده است </value>
+  </data>
+  <data name="UnitPrice" xml:space="preserve">
+    <value>قیمت واحد</value>
+  </data>
+  <data name="UpdateImpossible" xml:space="preserve">
+    <value>به روز رسانی غیر ممکن است</value>
+  </data>
+  <data name="VoucherAndDateCompatible" xml:space="preserve">
+    <value>تاریخ و شماره سند مطابقت ندارد </value>
+  </data>
+  <data name="VoucherGroupNotActive" xml:space="preserve">
+    <value>این گروه سند فعال نیست </value>
+  </data>
+  <data name="VoucherInHolidayNotAllowed" xml:space="preserve">
+    <value>ثبت سند در روز تعطیل مجاز نیست </value>
+  </data>
+  <data name="VoucherInHolidayNotAllowed1" xml:space="preserve">
+    <value>ثبت سند در روز تعطیل مجاز نیست </value>
+  </data>
+  <data name="WarehouseId" xml:space="preserve">
+    <value>انبار</value>
+  </data>
+  <data name="YearNotAccessible" xml:space="preserve">
+    <value>سال مالی قابل دسترس نیست </value>
+  </data>
+</root>

@@ -1,0 +1,10 @@
+  <div class="form-action-wrapper">
+    <button mat-flat-button [color]="action.color"  [class.disabled-form-action]="action.disabled" *ngFor="let  action of actions"   (click)="clickHandler(action)">
+      <!--    <img *ngIf="action.id !== '#Select'" [src]="action.imageUrl" alt="" >-->
+      <img *ngIf="action.id !== '#Select' && !action.fontTitle" [src]="action.imageUrl" alt="" >
+      <mat-icon *ngIf="action.id !== '#Select' && action.fontTitle">{{action.fontTitle}}</mat-icon>
+
+      <span class="me-1">{{action.title}}</span>
+    </button>
+    <ng-content></ng-content>
+  </div>

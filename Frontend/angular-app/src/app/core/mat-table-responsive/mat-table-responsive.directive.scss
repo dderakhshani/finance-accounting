@@ -1,0 +1,265 @@
+$td-side-border-color: #e4e7ec;
+$td-border-radius: 8px;
+
+.mat-table.card-view {
+    background: none;
+    border-collapse: separate;
+    border-spacing: 0 15px;
+    padding-left: 10px;
+    padding-right: 10px;
+    background: white;
+
+    .mat-form-field-wrapper {
+        padding-bottom: 0 !important;
+    }
+
+    .mat-header-row {
+        display: none;
+        flex-wrap: wrap;
+        height: auto;
+        position: sticky;
+        top: 0;
+        z-index: 2;
+
+        th.mat-header-cell {
+            display: flex;
+            flex: 1;
+            align-items: center;
+            padding: 1rem 0.5rem;
+            justify-content: space-around;
+
+            &>.mat-sort-header-container {
+                padding-left: 15px; // padding is used to center the header table cells, due to the width of the sort icon
+            }
+
+            &:not([mat-sort-header]),
+            &.mat-sort-header-disabled,
+            &.mat-column-actions,
+            &.mat-column-cp-action {
+                display: none;
+            }
+        }
+
+        th .mat-sort-header-content {
+            &:before {
+                content: "Sort:";
+                margin-right: 5px;
+                color: #000;
+            }
+        }
+    }
+
+
+    td.mat-cell:first-of-type {
+        padding: 10px !important;
+    }
+
+    tbody {
+        display: flex;
+        gap: 10px;
+        padding: 10px;
+    }
+
+    .mat-row {
+        width: 25%;
+        height: auto;
+        border-radius: $td-border-radius;
+        box-shadow: 0 2px 1px -2px #0003, 0 1px 1px #00000024, 0 2px 4px #0000001f;
+
+        td {
+            background: #fff;
+            border-left: solid 1px $td-side-border-color;
+            border-right: solid 1px $td-side-border-color;
+            padding: 10px !important;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+        }
+
+        td:first-child {
+            border-top: solid 5px rgb(28, 98, 155);
+            border-top-left-radius: $td-border-radius;
+            border-top-right-radius: $td-border-radius;
+        }
+
+        td:last-child {
+            border-bottom-left-radius: $td-border-radius;
+            border-bottom-right-radius: $td-border-radius;
+            border-bottom: solid 1px $td-side-border-color;
+        }
+
+        td.mat-cell:not(.mat-column-actions, .mat-column-cp-action) {
+            display: grid;
+            grid-template-columns: 50% 50%;
+            padding: 0.5rem;
+            text-align: left;
+            word-break: break-word;
+
+            &>* {
+                grid-column: 2;
+            }
+
+            &:before {
+                content: attr(data-column-name);
+                text-align: left;
+                font-weight: bold;
+            }
+        }
+
+        td.mat-column-actions,
+        td.mat-column-cp-action {
+            display: flex;
+            justify-content: center;
+            padding: 0 0.5rem;
+
+            &>button {
+                margin: 0.5rem 0;
+            }
+        }
+    }
+
+    .mat-row:nth-child(even) {
+        background-color: #f6f8fb;
+    }
+
+    .mat-row:nth-child(odd) {
+        background-color: #eff2f7;
+    }
+}
+
+@media (max-width: 768px) {
+    $td-side-border-color: #e4e7ec;
+    $td-border-radius: 8px;
+
+    .mat-table[mattableresponsive] {
+        background: none;
+        border-collapse: separate;
+        border-spacing: 0 15px;
+        padding-left: 10px;
+        padding-right: 10px;
+        background: white;
+
+        .mat-form-field-wrapper {
+            padding-bottom: 0 !important;
+        }
+
+
+
+        .mat-header-row {
+            display: none;
+            flex-wrap: wrap;
+            height: auto;
+            position: sticky;
+            top: 0;
+            z-index: 2;
+
+            th.mat-header-cell {
+                display: flex;
+                flex: 1;
+                align-items: center;
+                padding: 1rem 0.5rem;
+                justify-content: space-around;
+
+                &>.mat-sort-header-container {
+                    padding-left: 15px; // padding is used to center the header table cells, due to the width of the sort icon
+                }
+
+                &:not([mat-sort-header]),
+                &.mat-sort-header-disabled,
+                &.mat-column-actions,
+                &.mat-column-cp-action {
+                    display: none;
+                }
+            }
+
+            th .mat-sort-header-content {
+                &:before {
+                    content: "Sort:";
+                    margin-right: 5px;
+                    color: #000;
+                }
+            }
+        }
+
+        .filter-header {
+            height: 56px;
+            display: block;
+
+            th {
+                display: table-cell;
+            }
+        }
+
+        td.mat-cell:first-of-type {
+            padding: 10px !important;
+        }
+
+        .mat-row {
+            height: auto;
+            border-radius: $td-border-radius;
+            box-shadow: 0 2px 1px -2px #0003, 0 1px 1px #00000024, 0 2px 4px #0000001f;
+
+            td {
+                background: #fff;
+                border-left: solid 1px $td-side-border-color;
+                border-right: solid 1px $td-side-border-color;
+                padding: 10px !important;
+                border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+            }
+
+            td:first-child {
+                border-top: solid 5px rgb(28, 98, 155);
+                border-top-left-radius: $td-border-radius;
+                border-top-right-radius: $td-border-radius;
+            }
+
+            td:last-child {
+                border-bottom-left-radius: $td-border-radius;
+                border-bottom-right-radius: $td-border-radius;
+                border-bottom: solid 1px $td-side-border-color;
+            }
+
+            td.mat-cell:not(.mat-column-actions, .mat-column-cp-action) {
+                display: grid;
+                grid-template-columns: 50% 50%;
+                padding: 0.5rem;
+                text-align: left;
+                word-break: break-word;
+
+                &>* {
+                    grid-column: 2;
+                }
+
+                &:before {
+                    content: attr(data-column-name);
+                    text-align: left;
+                    font-weight: bold;
+                }
+            }
+
+            td.mat-column-actions,
+            td.mat-column-cp-action {
+                display: flex;
+                justify-content: center;
+                padding: 0 0.5rem;
+
+                &>button {
+                    margin: 0.5rem 0;
+                }
+            }
+        }
+
+        .mat-row:nth-child(even) {
+            background-color: #f6f8fb;
+        }
+
+        .mat-row:nth-child(odd) {
+            background-color: #eff2f7;
+        }
+    }
+
+    .mat-card,
+    .mat-expansion-panel {
+        .mat-table[matTableResponsive] {
+            border: 0.5rem solid #fafafa;
+        }
+    }
+}

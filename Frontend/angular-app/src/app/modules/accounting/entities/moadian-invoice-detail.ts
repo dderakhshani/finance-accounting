@@ -1,0 +1,34 @@
+export class MoadianInvoiceDetail {
+  public id: number | undefined = undefined;
+  public invoiceHeaderId: number | undefined = undefined;
+  public sstid: string | undefined = undefined;
+  public sstt: string | undefined = undefined;
+  public mu: string | undefined = undefined;
+  public am: number | undefined = undefined;
+  public fee: number | undefined = undefined;
+  public cfee: number | undefined = undefined;
+  public cut: string | undefined = undefined;
+  public exr: number | undefined = undefined;
+  public prdis: number | undefined = undefined;
+  public dis: number | undefined = undefined;
+  public adis: number | undefined = undefined;
+  public vra: number | undefined = undefined;
+  public vam: number | undefined = undefined;
+  public odt: string | undefined = undefined;
+  public odr: number | undefined = undefined;
+  public odam: number | undefined = undefined;
+  public olt: string | undefined = undefined;
+  public olr: number | undefined = undefined;
+  public olam: number | undefined = undefined;
+  public consfee: number | undefined = undefined;
+  public spro: number | undefined = undefined;
+  public bros: number | undefined = undefined;
+  public tcpbs: number | undefined = undefined;
+  public cop: number | undefined = undefined;
+  public vop: number | undefined = undefined;
+  public bsrn: string | undefined = undefined;
+  public tsstam: number | undefined = undefined;
+  public nw: number | undefined = undefined;
+  public sscv: number | undefined = undefined;
+  public ssrv: number | undefined = undefined;
+}

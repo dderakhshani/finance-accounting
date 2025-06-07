@@ -1,0 +1,82 @@
+
+<div class="h-100 d-flex flex-column overflow-auto gap-3" style="max-height: inherit; padding: 0!important;">
+  <app-form-actions [actions]="listActions" (OnRefresh)="get()"> </app-form-actions>
+  <mat-card>
+    <div class="row">
+      <div class="col-md-6">
+
+        <mat-button-toggle-group [(ngModel)]="InvoiceAllStatusCode" style="width: 100%;">
+          <mat-button-toggle *ngFor="let item of InvoiceAllStatus" [value]="item.id" style="width: 25%;" (click)="get(item.id)">
+            {{item.title}}
+          </mat-button-toggle>
+
+        </mat-button-toggle-group>
+      </div>
+
+      <div class="col-md-6">
+        <form [formGroup]="SearchForm">
+          <div class="row">
+            <div class="col-md-4">
+              <mat-form-field>
+                <mat-label>از تاریخ سند</mat-label>
+                <input tabindex="6" matInput [matDatepicker]="pickerFrom" formControlName="fromDate">
+                <mat-datepicker-toggle matSuffix [for]="pickerFrom">
+                  <mat-icon matDatepickerToggleIcon>
+                    <img class="mb-3" src="/assets/icons/calendar.svg" alt="">
+                  </mat-icon>
+                </mat-datepicker-toggle>
+                <mat-datepicker #pickerFrom></mat-datepicker>
+              </mat-form-field>
+            </div>
+            <div class="col-md-4">
+              <mat-form-field>
+                <mat-label>تا تاریخ سند</mat-label>
+                <input tabindex="6" matInput [matDatepicker]="picker" formControlName="toDate">
+                <mat-datepicker-toggle matSuffix [for]="picker">
+                  <mat-icon matDatepickerToggleIcon>
+                    <img class="mb-3" src="/assets/icons/calendar.svg" alt="">
+                  </mat-icon>
+                </mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+              </mat-form-field>
+            </div>
+
+
+            <div class="col-md-4">
+                <button mat-raised-button color="primary" matTooltip="جستجو" (click)="get(InvoiceAllStatusCode)" [disabled]="_notificationService.isLoader">
+                    <mat-icon>search</mat-icon>
+                    جستجو
+                </button>
+                <button mat-stroked-button color="primary" type="button" (click)="onDeleteFilter(SearchForm,tableConfigurations)" [disabled]="_notificationService.isLoader">
+                    <mat-icon>
+                        delete_forever
+                    </mat-icon>
+                    حذف فیلترها
+                </button>
+            </div>
+
+          </div>
+        </form>
+
+      </div>
+    </div>
+  </mat-card>
+  <mat-card class="h-100 overflow-auto p-0">
+    <app-table [tableConfigurations]="tableConfigurations"
+               [tableRows]="Invoices"
+               (rowDoubleClicked)="navigateToInvoice($event)"
+               (filtersChanged)="get()"
+               (paginationChanged)="get()"
+               (sortChanged)="get()"></app-table>
+
+
+    <ng-template #buttonVisibility let-element="row">
+
+        <button mat-icon-button [matTooltipPosition]="'right'" matTooltip="مشاهده جزئیات" class="btn-color" (click)="navigateToInvoice(element)">
+            <mat-icon>visibility</mat-icon>
+        </button>
+    </ng-template>
+
+    <mat-spinner style="top:30%;right:40%;position:absolute;z-index:1000" *ngIf="_notificationService.isLoader"></mat-spinner>
+  </mat-card>
+</div>

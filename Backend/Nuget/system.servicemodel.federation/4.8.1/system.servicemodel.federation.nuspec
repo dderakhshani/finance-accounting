@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
+  <metadata>
+    <id>System.ServiceModel.Federation</id>
+    <version>4.8.1</version>
+    <authors>Microsoft</authors>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <license type="expression">MIT</license>
+    <licenseUrl>https://licenses.nuget.org/MIT</licenseUrl>
+    <icon>Icon.png</icon>
+    <projectUrl>https://github.com/dotnet/wcf</projectUrl>
+    <description>Package Description</description>
+    <copyright>© Microsoft Corporation. All rights reserved.</copyright>
+    <serviceable>true</serviceable>
+    <repository type="git" url="https://github.com/dotnet/wcf" commit="28826bfe129e9c0255e355ccc685c1d1be046e13" />
+    <dependencies>
+      <group targetFramework=".NETStandard2.0">
+        <dependency id="System.ServiceModel.Http" version="4.8.1" exclude="Build,Analyzers" />
+        <dependency id="System.ServiceModel.Primitives" version="4.8.1" exclude="Build,Analyzers" />
+        <dependency id="System.ServiceModel.Security" version="4.8.1" exclude="Build,Analyzers" />
+        <dependency id="Microsoft.IdentityModel.Protocols.WsTrust" version="6.8.0" exclude="Build,Analyzers" />
+      </group>
+    </dependencies>
+  </metadata>
+</package>

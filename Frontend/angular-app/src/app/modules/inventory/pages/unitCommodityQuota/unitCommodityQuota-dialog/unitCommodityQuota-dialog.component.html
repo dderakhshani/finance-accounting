@@ -1,0 +1,52 @@
+<mat-dialog
+  (onSubmit)="submit()"
+  (onDelete)="delete()"
+  [showDeleteBtn]="pageMode === pageModes.Update"
+>
+
+<div dialog-header="">میزان سهمیه مصرف کالا در واحد ها</div>
+
+<div dialog-content="">
+  <mat-dialog-content class="mx-auto" [formGroup]="form">
+
+    <div class="row">
+      <div class="col-md-6">
+        <app-combo-commodity [DefaultId]="form.controls.commodityId.value"
+                                    (SelectId)="getCommodityById($event)"
+                                    [lablelTitleCombo]="'کالا'"
+                                    [isRequired]="true"
+                                   
+                             >
+        </app-combo-commodity>
+
+      </div>
+      <div class="col-md-6">
+       
+
+        <app-combo-search  [nodes]="QuotaGroups" [DefaultId]="form.controls.quotaGroupsId.value" (SelectId)="QuotaGroupselect($event)" [lablelTitleCombo]="'گروه سهمیه'" [isInternalSearch]="false">
+
+        </app-combo-search>
+
+      </div>
+      <div class="col-md-6">
+        <mat-form-field>
+          <mat-label>میزان سهمیه </mat-label>
+          <input formControlName="commodityQuota" type="number" matInput required>
+        </mat-form-field>
+      </div>
+      <div class="col-md-6">
+        <mat-form-field>
+          <mat-label>تعداد روز </mat-label>
+          <input formControlName="quotaDays" type="number" matInput required>
+        </mat-form-field>
+      </div>
+
+      
+
+
+    </div>
+  </mat-dialog-content>
+</div>
+
+
+</mat-dialog>

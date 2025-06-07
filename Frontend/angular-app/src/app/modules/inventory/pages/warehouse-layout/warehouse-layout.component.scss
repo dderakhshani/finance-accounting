@@ -1,0 +1,414 @@
+@import "/src/assets/scss/variables";
+$Min-width-card: 170px;
+.sidenav-container {
+    width: 100%;
+    height: 100vh;
+    border: 1px solid  color(primary,50);
+    margin-top: 5px;
+    border-radius: 5px;
+    background-color: color(primary,50);
+
+  }
+
+
+  .pa-sidenav {
+
+    padding: 5px;
+  }
+
+
+    .mat-drawer-inner-container {
+
+    max-width: 100% !important;
+    min-width: 250px !important;
+    height: 100% !important;
+    overflow: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+
+
+
+}
+.mat-tree-node .mat-nested-tree-node {
+  font-weight: 400;
+  font-size: 14px;
+  padding-left: 15px;
+
+}
+.mat-tree-node {
+   min-height: 30px;
+   border-bottom: solid 1px color(primary,50) !important;
+}
+
+    .tree-header{
+      padding-top: 10px;
+      padding-bottom: 5px;
+      border-bottom: solid 1px color(primary,50) !important;
+      color: color(primary,500);
+    }
+
+  .header{
+    // padding:10px;
+    border-bottom: solid 1px color(primary,50) !important;
+    color: color(primary,500);
+    background: color(accent,100);
+     height: 45px;
+  }
+  .header-details{
+    display: inline-block;
+    color: color(primary,500);
+    padding-right: 5px;
+    padding-top: 7px;
+  }
+  .btn-close{
+
+    width: 30px;
+    height: 24px;
+    background: color(accent,100);
+    color: color(primary,500);
+    cursor:pointer;
+
+
+  }
+  .float-right{
+     float: right;
+
+
+  }
+  .float-left{
+     float: left;
+  }
+  .grid-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content:flex-start;// space-around;
+    align-items: stretch;
+    padding-right: 5px;
+    width: 100%;
+  }
+  .grid-container-row {
+
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content:flex-start;
+    align-items: stretch;
+    padding-right: 5px;
+  }
+  .grid-container-stream {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content:flex-start;
+    align-items: stretch;
+    padding-right: 5px;
+  }
+
+  .grid-item {
+    transition: box-shadow .3s;
+    border: solid 1px color(primary,200) !important;
+    border-radius: 5px;
+    min-width: $Min-width-card;
+    margin: 5px;
+    background-color: color(accent,100);
+    font-size: 13px;
+    position:relative;
+
+
+
+
+  }
+  .grid-item:hover {
+    box-shadow: 0 0 11px rgba(17, 16, 16, 0.616);
+}
+  .grid-item-status{
+    padding: 15px 10px 10px 3px !important;
+    font-size: 14px;
+    height: 40px;
+  }
+
+  /*.grid-item:nth-child(2) {
+    background:color(md-green,50)!important;
+  }*/
+.grid-item-child {
+  background: color(md-green,50) !important;
+}
+.btn-card {
+  transition: background-color .3s;
+  border: solid 1px color(primary,50) !important;
+  border-radius: 5px;
+  min-width: $Min-width-card;
+  margin: 5px;
+  background-color: color(accent,100);
+  font-size: 13px;
+  cursor: pointer;
+  cursor: pointer;
+  justify-content: center;
+  text-align: center;
+  padding-right: 15px !important;
+  line-height: 2;
+  background: transparent !important;
+  border: dashed 1px color(primary,200) !important;
+
+  .mat-icon-add {
+    padding-right: 45px;
+    font-size: 50px;
+    text-align: center;
+    justify-content: center;
+    padding-top: 35px;
+    color: color(primary,100) !important;
+  }
+}
+  .btn-card:hover{
+
+    background-color:#e7e7fa!important;;
+
+  }
+  .labels {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+    font-size: 10px;
+    padding-left: 3px;
+    padding-right: 5px;
+  }
+  .progress {
+    height: 8px;
+  }
+  .progress-bar {
+    background: color(md-green,200);
+  // background: -webkit-linear-gradient(left, #ec4015 0%,#a2f282 100%); /* Chrome10-25,Safari5.1-6 */
+  }
+  //-------------Add new item in first level in grid
+  .add-node-card
+  {
+    cursor: pointer;
+    width: 95%;
+
+    height: 45px;
+    border-radius: 5px;
+    position: relative;
+    border: 2px dashed color(primary,100);
+    align-items: center;
+    justify-content: center;
+     display: flex;
+     flex-direction: row;
+    padding-right: 15px;
+
+
+
+
+  }
+    .add-card-detail{
+    padding: 5px 1rem 5px 1rem;
+
+    grid-gap: 0.5rem;
+    gap: 0.5rem;
+    flex-direction: row;
+    width: 100%;
+    height: 100%;
+    border-radius: inherit;
+    text-align: center;
+    text-decoration: none;
+
+    }
+
+    //------------------------------------
+    ul{
+      margin-bottom: unset;
+     li{
+      display: inline-block;
+
+
+      color: color(accent,100);
+      p{
+        font-size: 12px !important;
+      }
+    }
+  }
+    .arrow-pointer {
+      min-width: 100px;
+      max-width: 100%;
+      height: 30px;
+      background: color(primary,300);
+      position: relative;
+      font-size: 12px;
+      padding-right: 15px;
+      cursor: pointer;
+
+
+      &:before {
+        content: '';
+        position: absolute;
+        right: 0; bottom: 0; width: 0; height: 0;
+        border-right: 15px solid color(primary,200);;
+        border-top: 15px solid transparent;
+        border-bottom: 15px solid transparent;
+      }
+
+      &:after  {
+        content: '';
+        position: absolute;
+        left: -15px;
+        bottom: 0;
+        width: 0;
+        height: 0;
+        border-right: 15px solid color(primary,300);;
+        border-top: 15px solid transparent;
+        border-bottom: 15px solid transparent;
+      }
+    }
+    //--------------------------------------
+
+    @import "/src/assets/scss/variables";
+
+
+      .mat-icon{
+        color: color(primary,500) !important;
+      }
+      .mat-raised-button {
+        box-shadow:unset !important;
+
+      }
+    .btn-add:hover{
+      background-color: color(primary,100);
+    }
+    .lock{
+      color:color(md-red,500)!important;
+    }
+    .lock_clock {
+      color:color(md-red,A700)!important;
+    }
+    .login{
+      color:color(success,500)!important;
+    }
+    .logout{
+      color:color(md-amber,500)!important;
+
+    }
+
+    .search-input{
+
+      margin-top: 5px;
+      margin-left: 3px;
+
+      background-image:url('/assets/icons/search.svg') ;
+      background-position: right;
+      background-repeat: no-repeat;
+      width: 200px;
+      border: solid 1px color(primary,50);
+      border-radius: 3px;
+      padding: 8px;
+      padding-right: 25px;
+      font-size: 12px;
+    }
+    .search-input:focus {outline:none;}
+
+    .view-grid{
+      display: inline-block;padding-top: 10px; margin-left: 5px;
+
+      .mat-icon{
+
+        font-size: 30px;
+        margin-left: 5px;
+        cursor: pointer;
+      }
+
+    }
+    .grid-icon{
+      color:color(primary,200) !important;
+
+    }
+    .show-status{
+      float: left !important;
+      margin-top: -5px !important;
+
+
+    }
+    .show-capacity{
+      float: right !important;
+      margin-top: -5px !important;
+      background-color: color(primary,50) !important;
+      border-radius: 50%;
+      padding: 5px;
+      min-width: 30px;
+      height: 30px;
+      text-align: center;
+      vertical-align: middle;
+
+
+
+
+    }
+
+.title{
+  text-align: center;
+  padding: 10px;
+
+}
+.div-edit{
+  height: 30px;
+  padding-left: 10px;
+  padding-right: 10px;
+  display: inline-block;
+  width: 100%;
+  position:absolute;
+  bottom:0;
+}
+.show-details{
+  float: right !important;
+  margin-top: 5px !important;
+  color:color(primary,200) !important;
+  cursor: pointer!important;
+  font-size: 10px;
+}
+.btn-edit{
+  float: left !important;
+  margin-top: -5px !important;
+  color:color(primary,300) !important;
+  cursor: pointer !important;
+  font-size: 35px;
+
+}
+.btn-edit:hover{
+  color: color(primary,600) !important;
+}
+
+.categoreis {
+  display: flex;
+  justify-content: center;
+  width: $Min-width-card;
+  flex-wrap: wrap;
+  align-content: space-between;
+  margin-bottom: 20px;
+}
+.categoreis > div {
+  width: 100%;
+  margin: 5px;
+  text-align: center;
+  font-size: 12px;
+  color: color(md-grey,500) !important;
+
+}
+.progress {
+  height: 8px;
+}
+
+.progress-bar-green {
+  background: color(success,500);
+}
+
+.progress-bar-yellow {
+  background: color(warn,500);
+}
+
+.progress-bar-orang {
+  background: color(md-amber,500);
+}
+
+.progress-bar-red {
+  background: color(md-red,500);
+}
+.backbground-lastlevel {
+  background-image: linear-gradient(45deg, #ffffff 40%, #a4a5ab 40%, #a4a5ab 50%, #ffffff 50%, #ffffff 90%, #a4a5ab 90%, #a4a5ab 100%);
+  background-size: 7.07px 7.07px;
+}

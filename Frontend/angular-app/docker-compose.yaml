@@ -1,0 +1,19 @@
+version: '3.4'
+
+services:
+
+  EefaCeram.AdminPanel:
+    image: eefaceram/adminpanel:${TAG:-1.0.0-release}
+    container_name: EefaCeram.AdminPanel
+    hostname: EefaCeram.AdminPanel
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+
+    networks:
+      - EefaCeram
+    restart: always
+
+networks:
+  EefaCeram:
+    external: true

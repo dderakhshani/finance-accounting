@@ -1,0 +1,127 @@
+
+<mat-drawer-container class="example-container" [formGroup]="form">
+  <mat-drawer class="side-bar" mode="side" opened>
+    <div class="d-flex flex-column h-100">
+      <div class="header p-2">
+        <div class="d-flex">
+        <h1 class="nav-title flex-fill">اطلاعات رسید </h1>
+        <app-counter-date-time  *ngIf="form.get('voucherHeadId')?.value != null" [startTime]="form.get('documentDate')?.value"></app-counter-date-time>
+      </div>
+
+         <mat-label class="chips-number" *ngIf="form.get('voucherHeadId')?.value != null">شماره سند حسابداری : {{form.get('voucherHeadCode')?.value}}</mat-label>
+      </div>
+
+      <mat-divider>
+
+      </mat-divider>
+
+
+      <div class="p-2">
+        <mat-form-field>
+          <mat-label> نوع عملیات</mat-label>
+          <input matInput type="text" value="عملیات دریافت" disabled="true" />
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label> شماره رسید</mat-label>
+          <input matInput type="" value="165104" disabled="true" formControlName="documentNo" />
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label> گروه سند </mat-label>
+          <input formControlName="codeVoucherGroupId" type="text" matInput [matAutocomplete]="categoryAuto" />
+          <mat-autocomplete autoActiveFirstOption #categoryAuto="matAutocomplete" [displayWith]="codeVoucherDisplayFn.bind(this)">
+            <mat-option *ngFor="let item of filteredCodeVoucherGroups" [value]="item.id">
+              عنوان : {{ item.title }} &nbsp; کد : {{item.code}}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>تاریخ رسید</mat-label>
+          <input tabindex="3" matInput [matDatepicker]="documentDate" formControlName="documentDate" />
+          <mat-datepicker-toggle  matSuffix [for]="documentDate">
+            <mat-icon matDatepickerToggleIcon>
+              <img class="mb-3" src="/assets/icons/calendar.svg" alt="" />
+            </mat-icon>
+          </mat-datepicker-toggle>
+          <mat-datepicker #documentDate></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label> شرح سند حسابداری</mat-label>
+          <textarea matInput formControlName="description" required></textarea>
+          <button (click)="fillDescription()">
+            <mat-icon color="primary">list</mat-icon>
+          </button>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>تکرار</mat-label>
+          <input matInput type="text" value="تعداد تکرار" formControlName="repeatNo" />
+        </mat-form-field>
+
+<!-- 
+        <mat-checkbox color="primary" formControlName="isBursaryDocument">
+          <mat-label>ثبت سند آنی</mat-label>
+        </mat-checkbox> -->
+
+
+
+
+      </div>
+
+      <div class="flex-fill"></div>
+      <!-- <mat-label> مجموع دریافتی : </mat-label> <mat-label>{{totalAmount}}</mat-label> -->
+      <button class="m-2 btn btn-info"  mat-raised-button (click)="addAttachments()" >
+        افزودن مستندات
+      </button>
+      <button class="mx-2" mat-raised-button (click)="submit()" color="primary">
+        ثبت
+      </button>
+    </div>
+  </mat-drawer>
+
+  <mat-drawer-content style="background-color: #f2f3fe">
+
+    <div class="header p-2 d-flex bg-white">
+
+       <h5 class="flex-fill nav-title" style="font-size: small;">({{lastReceiptInfo?.amount | number: '2.'}}) {{lastReceiptInfo?.creditAccountReferenceTitle}} ({{lastReceiptInfo?.createName}})</h5>  
+ 
+      <h3 class="flex-fill nav-title">جمع مبالغ : {{getFinancialRequestDetailsSum()}}</h3>
+
+      <button mat-flat-button type="button" (click)="addReceipt()" color="primary">
+        <mat-icon>add</mat-icon>
+        افزودن
+      </button>
+
+    </div>
+    <mat-divider></mat-divider>
+
+    <div class="p-2">
+      <app-customer-receipt-article class="m-2" *ngFor="let receipt of form?.controls['financialRequestDetails']?.controls ;let i = index"
+          [form]="receipt"
+          [index]="i"
+          [pageMode]="pageMode"
+          [documentTypes]="documentTypes"
+          [currencyTypes]="currencyTypes"
+          [referenceTypes]="referenceTypes"
+          [chequeTypes]="chequeTypes"
+          [finantialReferenceTypes]="finantialReferenceTypes"
+          [chequeSheets]="chequeSheets"
+          [banks]="banks"
+          (removeItem)="removeItem($event)">
+
+      </app-customer-receipt-article>
+    </div>
+
+
+  </mat-drawer-content>
+
+
+
+
+
+</mat-drawer-container>
+
+

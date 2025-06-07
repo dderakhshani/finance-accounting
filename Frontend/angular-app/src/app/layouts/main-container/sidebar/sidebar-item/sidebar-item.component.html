@@ -1,0 +1,47 @@
+<!--<div class="line" *ngIf="sidebarItem.showChildren" [ngStyle]="{'right':subLevelCounter > 0 ? subLevelCounter * 15 + 30 + 'px' : '30px'}"></div>-->
+<div class="app-sidebar-item"
+     [class.app-sidebar-item-minimized]="isToggled"
+     [dir]="this.rtl ? 'rtl' : 'ltr' "
+     [ngClass]="{
+          'active-sidebar-item' : sidebarItem.showChildren,
+           'sub-sidebar-item': subLevelCounter > 0,
+           'rtl':rtl,
+             'sub-level-1': subLevelCounter === 1,
+           'sub-level-2': subLevelCounter === 2,
+           'sub-level-3': subLevelCounter >= 3
+           }"
+     (click)="toggleSidebarItem(sidebarItem)"
+     matTooltip="{{sidebarItem.title}}"
+     [matTooltipDisabled]="!isToggled">
+  <!--  <img *ngIf="sidebarItem.imageUrl" [class.toggle-hover-effect]="isToggled" class="nav-logo"-->
+  <!--       [src]="sidebarItem.imageUrl" alt="">-->
+  <!--  <span *ngIf="!sidebarItem.imageUrl" class="nav-logo"> &nbsp; </span>-->
+  <img *ngIf="!sidebarItem.parentId" src="{{sidebarItem.imageUrl}}">
+  <h2
+    [ngStyle]="{'padding-right': subLevelCounter > 0 ?  subLevelCounter * 15 + 35 +'px' : '15px'}">
+    {{sidebarItem.title}}
+  </h2>
+  <svg
+    *ngIf="sidebarItem.children && sidebarItem.children.length > 0"
+
+    fill="none" viewBox="-2 -4 24 24" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMinYMin"
+    class="jam jam-triangle-f">
+    <path d='M12.547 1.621l6.095 9.794A3 3 0 0 1 16.095 16H3.905a3 3 0 0 1-2.547-4.585L7.453 1.62a3 3 0 0 1 5.094 0z'/>
+  </svg>
+</div>
+<div
+  class="app-sidebar-item-children"
+  [class.app-sidebar-item-children-show]="sidebarItem.showChildren"
+  [class.app-sidebar-item-children-hide]="!sidebarItem.showChildren || isToggled"
+>
+  <app-sidebar-item
+    [isToggled]="isToggled"
+    [subLevelCounter]="subLevelCounter+1"
+    [isSubSidebar]="true"
+    [sidebarItem]="subSidebarItem"
+    *ngFor="let subSidebarItem of sidebarItem.children"
+    (sidebarItemClick)="toggleSidebarItem($event)"
+    (collapseSiblings)="collapseAllChildsExceptActiveItem($event)">
+
+  </app-sidebar-item>
+</div>

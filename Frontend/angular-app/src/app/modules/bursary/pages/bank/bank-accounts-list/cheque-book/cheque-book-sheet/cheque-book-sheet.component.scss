@@ -1,0 +1,21 @@
+.card-detail{
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  padding: 10px 20px;
+  border: 1px solid #e5e5e5;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+  border-radius:3px;
+  margin-bottom: 3px;
+  p{
+    font-size: 14px;
+    font-family: "IranYekanBold" !important;
+    text-align: right;
+    span {
+      display: contents;
+      font-weight: bold;
+      color: #212122;
+    }
+
+  }
+}

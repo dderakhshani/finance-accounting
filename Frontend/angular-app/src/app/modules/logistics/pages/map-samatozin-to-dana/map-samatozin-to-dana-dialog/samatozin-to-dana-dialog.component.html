@@ -1,0 +1,40 @@
+<mat-dialog
+  (onSubmit)="submit()"
+  (onDelete)="delete()"
+  [showDeleteBtn]="pageMode === pageModes.Update"
+>
+
+<div dialog-header="">همسان سازی کد ها</div>
+
+<div dialog-content="">
+  <mat-dialog-content class="mx-auto" [formGroup]="form">
+
+    <div class="row">
+        <div class="col-md-6">
+
+            <app-combo-search   [nodes]="prehensions"
+                                [DefaultId]="form.controls.samaTozinTitle.value"
+                                (SelectItem)="getPrehensionById($event)"
+                                [lablelTitleCombo]="'عنوان تامین کننده در سما توزین'"
+                                [isInternalSearch]="true"
+            >
+
+            </app-combo-search>
+        </div>
+      <div class="col-md-6">
+
+
+          <app-combo-account-refrence [DefaultId]="form.controls.accountReferenceId.value"
+                                      (SelectId)="referenceSelect($event)"
+                                      [lablelTitleCombo]="'حساب تفصیل شناور'">
+          </app-combo-account-refrence>
+
+      </div>
+
+
+    </div>
+  </mat-dialog-content>
+</div>
+
+
+</mat-dialog>

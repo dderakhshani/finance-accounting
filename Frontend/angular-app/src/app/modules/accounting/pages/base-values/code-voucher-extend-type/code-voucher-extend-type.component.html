@@ -1,0 +1,18 @@
+<mat-card class="h-100 d-flex flex-column overflow-auto" style="max-height: inherit; padding: 0!important;">
+
+
+  <app-action-bar  class="p-3" (onDelete)="delete()" (onAdd)="add()" (onEdit)="update()" (onRefresh)="get()"></app-action-bar>
+
+  <app-table [tableConfigurations]="tableConfigurations"
+             [tableRows]="entities"
+             (rowDoubleClicked)="update($event)"
+             (filtersChanged)="get()"
+             (sortChanged)="get()"
+             (paginationChanged)="get()"
+  ></app-table>
+</mat-card>
+
+
+
+
+

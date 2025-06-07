@@ -1,0 +1,51 @@
+
+<div class="h-100 d-flex flex-column overflow-auto gap-3" style="max-height: inherit; padding: 0!important;">
+
+    <app-form-actions [actions]="listActions" (OnRefresh)="get()">
+        <button mat-raised-button color="primary" (click)="print()" [disabled]="_notificationService.isLoader">
+            <mat-icon>
+                print
+            </mat-icon>
+            چاپ
+        </button>
+    </app-form-actions>
+
+
+    <mat-card class="h-100 overflow-auto p-0">
+
+
+        <app-table [tableConfigurations]="tableConfigurations"
+                   [tableRows]="Receipts"
+                   (rowDoubleClicked)="navigateToArchive($event)"
+                   (filtersChanged)="get()"
+                   (paginationChanged)="get()"
+                   (sortChanged)="get()">
+            <div footerContent>
+                <div class="me-auto d-flex flex-row gap-1">
+                    <button mat-stroked-button>
+                        <span>تعداد درخواستی: </span>
+                        <span style="color: black">{{totalQuantity}}</span>
+                    </button>
+                    <button mat-stroked-button>
+                        <span>جمع ورودی: </span>
+                        <span style="color: black">{{totalInput}}</span>
+                    </button>
+                    <button mat-stroked-button>
+                        <span>مانده: </span>
+                        <span style="color: black">{{totalQuantity-totalInput}}</span>
+                    </button>
+
+                </div>
+            </div>
+        </app-table>
+
+        <ng-template #buttonVisibility let-element="row">
+
+            <button mat-icon-button matTooltip="مشاهده جزئیات" class="btn-color" (click)="navigateToArchive(element)">
+                <mat-icon>visibility</mat-icon>
+            </button>
+        </ng-template>
+
+        <mat-spinner style="top:30%;right:40%;position:absolute;z-index:1000" *ngIf="_notificationService.isLoader"></mat-spinner>
+    </mat-card>
+</div>

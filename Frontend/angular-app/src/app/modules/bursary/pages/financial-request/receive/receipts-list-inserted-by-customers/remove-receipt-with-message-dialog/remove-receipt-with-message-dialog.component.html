@@ -1,0 +1,11 @@
+ <div [formGroup]="form" class="m-3">
+  <mat-form-field>
+    <mat-label> دلیل ابطال رسید</mat-label>
+    <textarea matInput formControlName="description" required></textarea>
+  </mat-form-field>
+
+  <button class="mx-2"  mat-raised-button (click)="removeReceipt()" color="primary">
+    ثبت
+  </button>
+
+ </div>

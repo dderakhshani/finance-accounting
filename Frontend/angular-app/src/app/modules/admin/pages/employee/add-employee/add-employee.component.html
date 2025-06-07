@@ -1,0 +1,124 @@
+
+<app-action-bar class="p-3" (onAdd)="reset()" (onSave)="submit()" (onList)="navigateToEmployeeList()"></app-action-bar>
+<mat-card class="col-md-12">
+
+  <form [formGroup]="form"  class="row">
+    <div class="col-md-8">
+      <div class="row">
+        <div class="col-md-9">
+            <mat-form-field >
+              <mat-label>شخص</mat-label>
+              <input matInput type="text" formControlName="personId" [matAutocomplete]="auto">
+
+              <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" [displayWith]="getPersonNameById.bind(this)">
+                <table style="width: 100%" mat-table [dataSource]="persons | arrayFilter : form.controls['personId'].value : ['firstName','lastName','nationalNumber']">
+
+                  <ng-container matColumnDef="name">
+                    <th mat-header-cell *matHeaderCellDef> نام </th>
+                    <td mat-cell *matCellDef="let element"> {{[element.firstName,element.lastName].join(' ')}} </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="select">
+                    <th mat-header-cell *matHeaderCellDef></th>
+                    <td mat-cell *matCellDef="let element" style="position: absolute;width: 100%;right: 0; left: 0; z-index: 10">
+                      <mat-option  style="position: absolute;width: 100%;right: 0; left: 0; z-index: 10;" [value]="element.id"></mat-option>
+                    </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="nationalNumber">
+                    <th mat-header-cell *matHeaderCellDef> کد ملی </th>
+                    <td mat-cell *matCellDef="let element">{{element.nationalNumber}}</td>
+                  </ng-container>
+
+
+
+                  <tr mat-header-row *matHeaderRowDef="['select','name','nationalNumber']">hi</tr>
+                  <tr mat-row *matRowDef="let row; columns: ['select','name','nationalNumber'];"></tr>
+                </table>
+
+              </mat-autocomplete>
+
+            </mat-form-field>
+
+          </div>
+        <div class="col-md-3">
+          <mat-form-field >
+            <mat-label>کد تفصیل</mat-label>
+            <input matInput type="text" formControlName="accountReferenceCode">
+          </mat-form-field>
+        </div>
+        <div class="col-md-3">
+          <mat-form-field >
+            <mat-label>کد کارمندی</mat-label>
+            <input matInput type="text" formControlName="employeeCode">
+          </mat-form-field>
+        </div>
+        <div class="col-md-3">
+          <mat-form-field >
+            <mat-label>شعبه</mat-label>
+            <mat-select (selectionChange)="handleEmployeeUnitPositionAndUnitAndBranchSelection()"  formControlName="branchId">
+              <mat-option *ngFor="let branch of filteredBranches" [value]="branch.id">
+                {{branch.title}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-md-3">
+          <mat-form-field >
+            <mat-label>واحد</mat-label>
+            <mat-select (selectionChange)="handleEmployeeUnitPositionAndUnitAndBranchSelection()"  formControlName="unitId">
+              <mat-option *ngFor="let unit of filteredUnits" [value]="unit.id">
+                {{unit.title}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-md-3">
+          <mat-form-field >
+            <mat-label>جایگاه شغلی</mat-label>
+            <mat-select (selectionChange)="handleEmployeeUnitPositionAndUnitAndBranchSelection()" formControlName="unitPositionId">
+              <mat-option *ngFor="let unitPosition of filteredUnitPositions" [value]="unitPosition.id">
+                {{unitPosition.positionTitle}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div  class="col-md-3">
+          <mat-form-field >
+            <mat-label>تاریخ استخدام</mat-label>
+            <input matInput [matDatepicker]="employmentDatePicker" formControlName="employmentDate">
+            <mat-datepicker-toggle matSuffix [for]="employmentDatePicker">
+              <mat-icon matDatepickerToggleIcon>
+                <img class="mb-3" src="/assets/icons/calendar.svg" alt="">
+              </mat-icon>
+            </mat-datepicker-toggle>
+            <mat-datepicker #employmentDatePicker></mat-datepicker>
+          </mat-form-field>
+        </div>
+        <div  class="col-md-3">
+          <mat-form-field >
+            <mat-label>تاریخ ترک کار</mat-label>
+            <input matInput [matDatepicker]="leaveDatePicker" formControlName="leaveDate">
+            <mat-datepicker-toggle matSuffix [for]="leaveDatePicker">
+              <mat-icon matDatepickerToggleIcon>
+                <img class="mb-3" src="/assets/icons/calendar.svg" alt="">
+              </mat-icon>
+            </mat-datepicker-toggle>
+            <mat-datepicker #leaveDatePicker></mat-datepicker>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+
+    </div>
+  </form>
+</mat-card>
+
+
+
+
+
+
+

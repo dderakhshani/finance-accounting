@@ -1,0 +1,53 @@
+<mat-dialog
+  (onSubmit)="submit()"
+  
+  [showDeleteBtn]="false"
+>
+
+<div dialog-header="">تغییر شماره سریال است</div>
+
+<div dialog-content="">
+  <mat-dialog-content class="mx-auto" [formGroup]="form">
+
+      <div class="row">
+          <div class="col-md-4">
+              <mat-form-field>
+                  <mat-label>عنوان کالا </mat-label>
+                  <input formControlName="commodityTitle" type="text" matInput disabled>
+              </mat-form-field>
+          </div>
+          <div class="col-md-4">
+              <mat-form-field>
+                  <mat-label>کد کالا </mat-label>
+                  <input formControlName="commodityCode" type="text" matInput disabled>
+              </mat-form-field>
+          </div>
+          <div class="col-md-4">
+              <mat-form-field>
+                  <mat-label>کاربر فعلی </mat-label>
+                  <input formControlName="fullName" type="text" matInput disabled>
+              </mat-form-field>
+          </div>
+          <div class="col-md-4">
+              <mat-form-field>
+                  <mat-label>شماره سریال فعلی </mat-label>
+                  <input formControlName="assetSerial" type="text" matInput disabled>
+              </mat-form-field>
+          </div>
+          <div class="col-md-8">
+
+              <app-combo-search 
+                                [isInternalSearch]="false"
+                                [nodes]="assetsSerials"
+                                (SelectId)="assetIdSelect($event)"
+                                [lablelTitleCombo]="'شماره سریال جدید'"
+                                [isRequired]="true" [tabindex]="0">
+              </app-combo-search>
+          </div>
+
+      </div>
+  </mat-dialog-content>
+</div>
+
+
+</mat-dialog>

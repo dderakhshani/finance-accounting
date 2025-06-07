@@ -1,0 +1,21 @@
+<mat-card class="h-100 d-flex flex-column overflow-auto" style="max-height: inherit; padding: 0!important;">
+  <div *ngIf="isLoading"
+       style="z-index:9999;position: absolute;left:0;top:0;bottom: 0; right: 0;background: rgba(0,0,0,0.3);"
+       class="d-flex align-items-center justify-content-center">
+    <mat-spinner></mat-spinner>
+  </div>
+
+  <app-action-bar class="p-3" (onRefresh)="get()" (onAdd)="add()"
+                  (onEdit)="update()" (onDelete)="delete()"></app-action-bar>
+  <div class="h-100 overflow-auto">
+
+    <app-table
+      [tableRows]="helps"
+      [tableConfigurations]="tableConfigurations"
+      (rowDoubleClicked)="navigateToHelpEditor($event)"
+      (filtersChanged)="get()"
+      (sortChanged)="get()"
+      (paginationChanged)="get()"
+    ></app-table>
+  </div>
+</mat-card>

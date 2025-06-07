@@ -1,0 +1,233 @@
+
+<div class="h-100 d-flex flex-column overflow-auto" style="max-height: inherit; padding: 0!important;">
+    <app-form-actions [actions]="formActions">
+        <button mat-raised-button color="primary" (click)="print()" >
+            <mat-icon>
+                print
+            </mat-icon>
+            چاپ
+        </button>
+
+    </app-form-actions>
+    <mat-card class="m-2" *ngIf="receipt!=undefined">
+
+        <div class="row line">
+            <div class="col-md-4 ">
+                <mat-label>نوع سند</mat-label>
+                :
+                <label>{{receipt?.codeVoucherGroupTitle}}</label>
+            </div>
+            <div class="col-md-4 ">
+                <mat-label>تاریخ مالی</mat-label>
+                :
+                <label>{{receipt?.invoiceDate | toPersianDate}}</label>
+            </div>
+            <div class="col-md-4">
+                <mat-label>شماره مالی </mat-label>
+                :
+                <label class="btn-link" (click)="navigateToRialReceipt()" matTooltip="ویرایش">{{receipt?.documentId}}</label>
+            </div>
+            <div class="col-md-4" *ngIf="receipt.documentStauseBaseValue!=44 || receipt.documentStauseBaseValue!=54">
+                <mat-label>شماره صورتحساب </mat-label>
+                :
+                <label>{{receipt?.invoiceNo}}</label>
+            </div>
+
+            <div class="col-md-4 ">
+                <mat-label>سرفصل حساب بستانکار</mat-label>
+                :
+                <label>{{receipt?.creditAccountHeadTitle}}</label>
+            </div>
+            <div class="col-md-4 ">
+                <mat-label>گروه حساب بستانکار</mat-label>
+                :
+                <label>{{receipt?.creditAccountReferenceGroupTitle}}</label>
+            </div>
+            <div class="col-md-4 ">
+                <mat-label>حساب بستانکار</mat-label>
+                :
+                <label>{{receipt?.creditReferenceTitle}}</label>
+            </div>
+            <div class="col-md-4 ">
+                <mat-label>سرفصل حساب  بدهکار</mat-label>
+                :
+                <label>{{receipt?.debitAccountHeadTitle}}</label>
+            </div>
+
+
+            <div class="col-md-4 ">
+                <mat-label>گروه حساب بدهکار</mat-label>
+                :
+                <label>{{receipt?.debitAccountReferenceGroupTitle}}</label>
+            </div>
+            <div class="col-md-4 ">
+                <mat-label>حساب بدهکار</mat-label>
+                :
+                <label>{{receipt?.debitReferenceTitle}}</label>
+            </div>
+            <div class="col-md-4 ">
+                <mat-label>انبار تحویل گیرنده</mat-label>
+                :
+                <label>{{receipt?.warehouseTitle}}</label>
+            </div>
+
+            <div class="col-md-4 ">
+                <mat-label>شماره سند مکانیزه</mat-label>
+                :
+                <label (click)="navigateToVoucher()" class="btn-link font-16" matTooltip="مشاهده سند حسابداری">{{receipt?.voucherNo}}</label>
+            </div>
+            <!------------->
+            <div class="col-md-4 ">
+
+                <mat-label>شماره عملیات مالی</mat-label>
+                :
+                <label>{{receipt?.financialOperationNumber}}</label>
+            </div>
+
+            <div class="col-md-4 ">
+
+                <mat-label>برچسب</mat-label>
+                :
+                <label *ngFor="let item of receipt.tagArray">{{item}} - </label>
+            </div>
+            <div class="col-md-8 ">
+
+                <mat-label>شرح</mat-label>
+                :
+                <label>{{receipt?.documentDescription}}</label>
+            </div>
+
+        </div>
+        <div class="row line">
+
+            <div class="col-md-4">
+                <mat-label>هزینه به جمع کل اضافه شود؟</mat-label> :
+
+                <span class="lable" *ngIf="receipt.isFreightChargePaid">
+                    بله
+                </span>
+                <span *ngIf="receipt.isFreightChargePaid!=true"> خیر </span>
+
+
+
+            </div>
+            <div class="col-md-4">
+                <mat-label>مبلغ مالیات ارزش افزوده</mat-label> :
+
+                <span class="lable">
+                    {{receipt?.vatDutiesTax | number:'1.0-0'}}
+                </span> <span style="font-size:12px;"> ریال </span>
+            </div>
+            <div class="col-md-4">
+                <mat-label>هزینه اضافی</mat-label> :
+
+                <span class="lable">
+                    {{receipt?.extraCost | number:'1.0-0'}}
+                </span> <span style="font-size:12px;"> ریال </span>
+            </div>
+            <div class="col-md-4">
+                <mat-label>جمع قیمت تمام شده</mat-label> :
+
+                <span class="lable">
+                    {{receipt?.totalProductionCost | number:'1.0-0'}}
+                </span><span style="font-size:12px;"> ریال </span>
+            </div>
+
+            <div class="col-md-4">
+                <mat-label>جمع کل قابل پرداخت</mat-label> :
+
+                <span class="text-danger">
+                    {{receipt?.totalItemPrice | number:'1.0-0'}}
+                </span> <span style="font-size:12px;"> ریال </span>
+
+            </div>
+
+
+        </div>
+
+    </mat-card>
+
+    <div class="col-md-12 mt-2">
+        <mat-card class="mt-2" *ngIf="receipt?.items">
+            <table class="mas-table">
+                <thead>
+                    <tr>
+                        <th class="width-3">ردیف</th>
+                        <th *ngIf="receipt.documentStauseBaseValue==43 || receipt.documentStauseBaseValue==53">شماره رسید</th>
+                        <th *ngIf="receipt.documentStauseBaseValue==44 || receipt.documentStauseBaseValue==54">شماره حواله</th>
+
+                        <th>کد کالا</th>
+                        <th>نام کالا </th>
+                        <th>واحد کالا</th>
+                        <th>تعداد کالا</th>
+                        <th>
+                            قیمت واحد
+                        </th>
+                        <th>
+                            مبلغ کل ریالی
+                        </th>
+                        <th>
+                            مواد سازنده
+                        </th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr *ngFor="let item of receipt?.items ; let i = index" id="Items">
+                        <th>
+                            {{i+1}}
+                        </th>
+
+                        <td>
+                            <span matTooltip="جزئیات سند" class="btn-link" (click)="navigateToRecive(item)">
+                                {{item.documentNo}}
+                            </span>
+                        </td>
+
+                        <td>
+                            <span matTooltip="کارتکس کالا" class="btn-link" (click)="navigateToHistory(item?.commodity.id)">
+                                {{item?.commodity.tadbirCode}}
+                            </span>
+                        </td>
+                        <td>{{item?.commodity.title}}</td>
+                        <td>{{item?.commodity.measureTitle}}</td>
+                        <td>{{item.quantity}}</td>
+
+                        <td>
+                            {{item.unitPrice | number:'1.0-0'}}
+                        </td>
+                        <td>
+                            {{item.totalPrice | number:'1.0-0'}}
+                        </td>
+                        <td>
+                            <button mat-icon-button matTooltip="لیست اقلام سازنده" class="btn-link" (click)="getBomValue(item)" *ngIf="receipt?.codeVoucherGroupTitle.includes('رسید محصول')">
+                                <mat-icon>
+                                    format_list_numbered
+                                </mat-icon>
+
+                            </button>
+
+                        </td>
+                    </tr>
+
+                    <tr style="background-color:#c1c3c6">
+                        <td colspan="7"></td>
+                        <td>
+                            {{receipt?.totalProductionCost | number:'1.0-0'}}
+                        </td>
+                        <td></td>
+
+                    </tr>
+                </tbody>
+            </table>
+        </mat-card>
+
+
+
+    </div>
+
+
+
+
+</div>
+

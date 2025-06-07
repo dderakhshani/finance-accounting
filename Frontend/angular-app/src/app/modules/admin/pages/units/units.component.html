@@ -1,0 +1,16 @@
+
+
+  <mat-card class="h-100 ">
+  <app-tree
+
+    [canAdd]="true"
+    [editable]="true"
+    [useNew]="true"
+    [rawNodes]="units"
+
+    (onClick)="handleUnitClick($event)"
+    (onAdd)="add($event)"
+    (onEdit)="update($event)"
+  ></app-tree>
+</mat-card>
+

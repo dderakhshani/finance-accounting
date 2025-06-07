@@ -1,0 +1,27 @@
+<div mat-dialog-title *ngIf="showHeader">
+    <ng-content select="[dialog-header]"></ng-content>
+    <mat-icon mat-dialog-close="">close</mat-icon>
+</div>
+
+<div mat-dialog-content *ngIf="showContent">
+    <ng-content select="[dialog-content]"></ng-content>
+</div>
+
+<div mat-dialog-actions *ngIf="showActions">
+
+    <button mat-raised-button *ngIf="showSubmitBtn" (click)="onSubmit.emit()" color="primary">
+        <mat-icon style="transform: scale(.75)" color="accent" class="ms-1">save</mat-icon>
+        <span>{{submitBtnTitle}}</span>
+    </button>
+    <ng-content select="[dialog-actions]"></ng-content>
+
+    <button mat-stroked-button class="me-auto" *ngIf="showDeleteBtn" (click)="onDelete.emit()" color="warn">
+        <mat-icon style="transform: scale(.75)" color="warn" class="ms-1"> delete</mat-icon>
+        <span>{{deleteBtnTitle}}</span>
+    </button>
+
+    <div style="position: absolute; top :40% ;right: 45%;z-index: 1010;">
+        <mat-spinner *ngIf="spinner"></mat-spinner>
+    </div>
+
+</div>

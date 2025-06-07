@@ -1,0 +1,17 @@
+[
+
+  {
+    "FieldName": "WarehouseId",
+    "Conditions": [
+      {
+        "Condition": "@WarehouseId>0",
+        "Message": {
+          "Key": "IsRequired",
+          "Values": []
+        }
+      }
+    ]
+
+  }
+
+]

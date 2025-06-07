@@ -1,0 +1,17 @@
+.radio-group{
+  height: 75px;
+  margin-bottom:5px;
+}
+.radio-group-body{
+  height: calc(100% - 65px);
+
+}
+.mat-radio-button ~ .mat-radio-button {
+  margin-left: 16px;
+}
+
+.col-md-2{
+  button{
+    display: none !important;
+  }
+}

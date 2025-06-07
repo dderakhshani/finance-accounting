@@ -1,0 +1,221 @@
+<div class="d-flex flex-column h-100 gap-3" style="max-height: inherit" >
+  <app-action-bar (onSave)="submit()" (onAdd)="reset()"></app-action-bar>
+
+  <mat-card [formGroup]="form">
+    <mat-card-header>
+      <mat-label>اطلاعات حساب</mat-label>
+      <mat-checkbox (change)="handleCodeGeneration($event.checked)" class="me-auto" color="primary"
+                    formControlName="generateAccountCode" *ngIf="pageMode === pageModes.Add">
+        <mat-label>
+          تولید اتوماتیک کد حساب
+        </mat-label>
+      </mat-checkbox>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="row">
+        <div class="col-4">
+          <mat-form-field>
+            <mat-label>عنوان حساب</mat-label>
+            <input type="text" matInput formControlName="title">
+          </mat-form-field>
+        </div>
+
+        <div class="col-2">
+          <mat-form-field>
+            <mat-label>کد حساب</mat-label>
+            <input type="text" matInput formControlName="code">
+          </mat-form-field>
+        </div>
+        <div class="col-2" *ngIf="form.controls['generateAccountCode']?.value === true">
+          <mat-form-field>
+            <mat-label>گروه کد حساب</mat-label>
+            <mat-select formControlName="accountReferenceTypeBaseId">
+              <mat-option *ngFor="let accountReferenceType of accountReferenceTypes" [value]="accountReferenceType.id">
+                {{accountReferenceType.value + ' ' + accountReferenceType.title}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+
+    </mat-card-content>
+  </mat-card>
+
+
+  <mat-card [formGroup]="personForm" *ngIf="this.form.controls['id']?.value">
+    <mat-card-header>
+      <mat-label> اطلاعات {{isPersonLegal == undefined ? 'شخص / شرکت' : (isPersonLegal ? 'شرکت' : 'شخص')}}</mat-label>
+      <button class="me-auto" mat-raised-button color="primary" *ngIf="!personForm.controls['id']?.value && personForm.controls['personTypeId']?.value && !showPersonPrompt" (click)="clearPerson()">ویرایش ماهیت حساب</button>
+    </mat-card-header>
+    <mat-card-content>
+      <div *ngIf="showPersonPrompt" class="col-3 mx-auto d-flex flex-column">
+        <span class="text-center">برای وارد کردن اطلاعات شخص / شرکت ماهیت حساب را انتخاب کنید.</span>
+
+        <mat-form-field>
+          <mat-label>ماهیت حساب</mat-label>
+          <mat-select formControlName="personTypeId">
+            <mat-option *ngFor="let personType of personTypes" [value]="personType.id">
+              {{personType.title}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <button style="width: fit-content" class="mx-auto" (click)="handlePersonTypeSelection()" mat-raised-button color="primary">
+          <mat-icon>done</mat-icon>
+          <span>تایید</span>
+        </button>
+
+      </div>
+
+      <div *ngIf="!showPersonPrompt && isPersonLegal">
+
+        <div class="row">
+          <div class="col-2">
+            <mat-form-field>
+              <mat-label>نام شرکت</mat-label>
+              <input tabindex="2" formControlName="lastName" type="text" matInput>
+            </mat-form-field>
+          </div>
+          <div class="col-2">
+            <mat-form-field>
+              <mat-label>کد ملی</mat-label>
+              <input tabindex="1" formControlName="nationalNumber" type="text" matInput>
+            </mat-form-field>
+          </div>
+          <div class="col-2">
+            <mat-form-field>
+              <mat-label>کد اقتصادی</mat-label>
+              <input tabindex="1" formControlName="economicCode" type="text" matInput>
+            </mat-form-field>
+          </div>
+          <div class="col-2">
+            <mat-form-field>
+              <mat-label>شماره ثبت</mat-label>
+              <input tabindex="1" formControlName="identityNumber" type="text" matInput>
+            </mat-form-field>
+          </div>
+          <div class="col-2">
+            <mat-form-field>
+              <mat-label>تاریخ ثبت</mat-label>
+              <input tabindex="6" matInput [matDatepicker]="picker" formControlName="birthDate">
+              <mat-datepicker-toggle matSuffix [for]="picker">
+                <mat-icon matDatepickerToggleIcon>
+                  <img class="mb-3" src="/assets/icons/calendar.svg" alt="">
+                </mat-icon>
+              </mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+          </div>
+          <div class="col-2">
+            <mat-form-field>
+              <mat-label> کد کارگاه</mat-label>
+              <input tabindex="7" formControlName="insuranceNumber" type="text" matInput>
+            </mat-form-field>
+          </div>
+
+          <div class="col-2">
+            <mat-form-field>
+              <mat-label> ایمیل</mat-label>
+              <input tabindex="8" formControlName="email" type="email" matInput autocomplete="email">
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="!showPersonPrompt && !isPersonLegal">
+
+        <div class="row">
+          <div class="col-2">
+            <mat-form-field>
+              <mat-label>کد ملی</mat-label>
+              <input tabindex="1" formControlName="nationalNumber" type="text" matInput>
+            </mat-form-field>
+          </div>
+          <div class="col-2">
+            <mat-form-field>
+              <mat-label>شماره شناسنامه</mat-label>
+              <input tabindex="1" formControlName="identityNumber" type="text" matInput>
+            </mat-form-field>
+          </div>
+          <div class="col-2">
+            <mat-form-field>
+              <mat-label>تاریخ تولد</mat-label>
+              <input tabindex="6" matInput [matDatepicker]="picker" formControlName="birthDate">
+              <mat-datepicker-toggle matSuffix [for]="picker">
+                <mat-icon matDatepickerToggleIcon>
+                  <img class="mb-3" src="/assets/icons/calendar.svg" alt="">
+                </mat-icon>
+              </mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+          </div>
+          <div class="col-2">
+            <mat-form-field>
+              <mat-label> نام</mat-label>
+              <input tabindex="2" formControlName="firstName" type="text" matInput>
+            </mat-form-field>
+          </div>
+          <div class="col-2">
+            <mat-form-field>
+              <mat-label> نام خانوادگی</mat-label>
+              <input tabindex="3" formControlName="lastName" type="text" matInput>
+            </mat-form-field>
+          </div>
+          <div class="col-2">
+            <mat-form-field>
+              <mat-label> نام پدر</mat-label>
+              <input tabindex="3" formControlName="fatherName" type="text" matInput>
+            </mat-form-field>
+          </div>
+          <div class="col-2">
+            <mat-form-field>
+              <mat-label> کد بیمه</mat-label>
+              <input tabindex="7" formControlName="insuranceNumber" type="text" matInput>
+            </mat-form-field>
+          </div>
+
+          <div class="col-2">
+            <mat-form-field>
+              <mat-label> ایمیل</mat-label>
+              <input tabindex="8" formControlName="email" type="email" matInput autocomplete="email">
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+
+    </mat-card-content>
+  </mat-card>
+
+
+  <div class="row h-100">
+    <div class="col-6 h-100">
+      <mat-card class="p-0 w-100 mx-auto h-100">
+        <mat-tab-group>
+          <mat-tab label="آدرس ها">
+            <app-person-addresses-list [form]="form.controls['personAddressList']"
+                                       [personId]="form.controls['id']?.value"></app-person-addresses-list>
+          </mat-tab>
+          <mat-tab label="اطلاعات تماس">
+            <app-person-phones-list
+              [form]="form.controls['personPhonesList']"
+              [personId]="form.controls['id']?.value"></app-person-phones-list>
+          </mat-tab>
+          <mat-tab label="حساب های بانکی">
+            <app-person-phones-list
+              [form]="form.controls['personPhonesList']"
+              [personId]="form.controls['id']?.value"></app-person-phones-list>
+          </mat-tab>
+        </mat-tab-group>
+      </mat-card>
+    </div>
+    <div class="col-6 h-100">
+      <mat-card class="p-0 w-100 mx-auto h-100">
+        <mat-tab-group>
+          <mat-tab label=" اطلاعات کارمندی">
+          </mat-tab>
+
+          <mat-tab label="اطلاعات مشتری">
+          </mat-tab>
+        </mat-tab-group>
+      </mat-card>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,247 @@
+
+
+<div class="h-100 d-flex flex-column overflow-auto gap-3" style="max-height: inherit; padding: 0!important;">
+    <app-form-actions [actions]="listActions" (OnEdit)="update()" (OnAdd)="add()" (OnRefresh)="get()">
+        <button mat-raised-button color="primary" (click)="print()" [disabled]="_notificationService.isLoader">
+            <mat-icon>
+                print
+            </mat-icon>
+            چاپ
+        </button>
+        <button mat-raised-button color="primary" type="button" (click)="onDeleteFilter(SearchForm,tableConfigurations)" [disabled]="_notificationService.isLoader">
+            <mat-icon>
+                delete_forever
+            </mat-icon>
+            حذف فیلترها
+        </button>
+    </app-form-actions>
+
+
+  <mat-card *ngIf="accountReferences">
+    <form [formGroup]="SearchForm">
+        <div class="row">
+            <div class="col-md-3">
+                <mat-form-field>
+                    <mat-label>از تاریخ رسید</mat-label>
+                    <input tabindex="0" matInput [matDatepicker]="pickerFrom" formControlName="fromDate" >
+                    <mat-datepicker-toggle matSuffix [for]="pickerFrom">
+                        <mat-icon matDatepickerToggleIcon>
+                            <img class="mb-3" src="/assets/icons/calendar.svg" alt="">
+                        </mat-icon>
+                    </mat-datepicker-toggle>
+                    <mat-datepicker #pickerFrom></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div class="col-md-3">
+                <mat-form-field>
+                    <mat-label>تا تاریخ رسید</mat-label>
+                    <input tabindex="1" matInput [matDatepicker]="picker" formControlName="toDate">
+                    <mat-datepicker-toggle matSuffix [for]="picker">
+                        <mat-icon matDatepickerToggleIcon>
+                            <img class="mb-3" src="/assets/icons/calendar.svg" alt="">
+                        </mat-icon>
+                    </mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div class="col-md-3">
+                <app-combo-code-voucher-groups [DefaultId]="SearchForm.controls.codeVoucherGroupId.value"
+                                               (SelectId)="codeVoucherGroupSelect($event)"
+                                               [isRequired]="false"
+                                               [lablelTitleCombo]="'نوع رسید'"
+                                               [viewId]="Service.CodeTemporaryReceipt" tabindex="2" [tabindex]="2">
+                </app-combo-code-voucher-groups>
+
+            </div>
+            <div class="col-md-3">
+                <app-combo-warhouse-tree [DefaultId]="SearchForm.controls.warehouseId.value"
+                                         (SelectId)="WarehouseIdSelect($event)"
+                                         [lablelTitleCombo]="'انبار تحویل گیرنده'"
+                                         [isLastLevel]="true" tabindex="3" [tabindex]="3">
+                </app-combo-warhouse-tree>
+            </div>
+
+
+            <div class="col-md-3">
+                <mat-form-field tabindex ="4">
+                    <mat-label>شماره درخواست خرید</mat-label>
+                    <input formControlName="requestNo" matInput type="text">
+                    </mat-form-field>
+</div>
+
+            <div class="col-md-3">
+                <mat-form-field tabindex="5">
+                    <mat-label>شماره صورتحساب</mat-label>
+                    <input formControlName="invoiceNo" matInput type="text">
+                </mat-form-field>
+            </div>
+            <div class="col-md-3">
+                <app-combo-search [nodes]="accountReferences"
+                                  (SelectId)="ReferenceSelect($event)"
+                                  [lablelTitleCombo]="'جستجو درخواست دهنده'"
+                                  (SearchTerm)="ReferenceFilter($event)"
+                                  [isInternalSearch]="true"
+                                  [DefaultId]="SearchForm.controls.accountReferencesId.value"
+                                  [isRequired]="false" tabindex="6" [tabindex]="6">
+                </app-combo-search>
+            </div>
+
+            <div class="col-md-3">
+                <button mat-raised-button color="primary" matTooltip="جستجو رسیدهای موقت" (click)="onSearch()" [disabled]="_notificationService.isLoader" tabindex="7">
+                    <mat-icon>search</mat-icon>
+                    جستجو
+                </button>
+                
+
+                <button mat-raised-button color="primary" matTooltip="چاپ و تایید رسید موقت توسط کارشناسان" (click)="ConfirmPageTemporaryReceiptALL()" tabindex="8">
+                    <mat-icon>print</mat-icon>
+                    چاپ
+                </button>
+
+                <button mat-raised-button color="primary" [matMenuTriggerFor]="beforeMenu" matTooltip="تبدیل رسید موقت به مستقیم" tabindex="9">
+                    <mat-icon>add_task</mat-icon>
+                    تغییر وضعیت
+                </button>
+                <mat-menu #beforeMenu="matMenu" xPosition="before">
+
+                    <button mat-menu-item *ngFor="let item of ReceiptBaseValue" [TooltipPosition]="'left'" matTooltip="تبدیل به رسید مستقیم در حالت {{item.title}}" (click)="update_Status_all(item.value)" tabindex="10">
+
+                        {{item.title}}
+                    </button>
+                </mat-menu>
+            </div>
+
+
+        </div>
+    </form>
+  </mat-card>
+
+
+
+  <mat-card class="h-100 overflow-auto p-0">
+      <app-table [tableConfigurations]="tableConfigurations"
+                 [tableRows]="Receipts"
+                 (rowDoubleClicked)="Edit($event)"
+                 (filtersChanged)="get()"
+                 (paginationChanged)="get()"
+                 (sortChanged)="get()">
+
+      </app-table>
+      <ng-template #txtcommodityTitle let-element="row">
+
+          <p class="font-12">
+              {{element.commodityTitle}}
+          </p>
+      </ng-template>
+      <ng-template #txtcommodityCode let-element="row">
+
+          <p class="font-12">
+              {{element.commodityCode}}
+
+          </p>
+      </ng-template>
+      <ng-template #txtRequesterReferenceTitle let-element="row">
+
+          <p class="font-12">
+              {{element.requesterReferenceTitle}}
+
+          </p>
+      </ng-template>
+      <ng-template #txtReferenceTitle let-element="row">
+
+          <p class="font-12">
+              {{element.creditReferenceTitle}}
+
+          </p>
+      </ng-template>
+      <ng-template #txtDesctiption let-element="row">
+
+          <p class="font-10">
+              {{element.documentDescription}}
+
+          </p>
+      </ng-template>
+
+      <ng-template #buttonEstate let-element="row">
+          <div *ngIf="element.codeVoucherGroupId==2288" style="margin-top:12px;">
+              <!--اگر که رسید کالا اموال بود کد سریال آن وارد شود.-->
+              <button [ngClass]="{'btn-red':element.assetsCount==0,'btn-md-amber':element.assetsCount>0}" matTooltip="ورود شماره سریال "
+                      (click)="Edit(element)">
+
+                  <mat-icon>pin</mat-icon>
+
+              </button>
+
+          </div>
+      </ng-template>
+
+      <ng-template #buttonConvert let-element="row">
+          <div *ngIf="element.isAllowedInputOrOutputCommodity!=false">
+              <button mat-icon-button [matMenuTriggerFor]="beforeMenu" matTooltip="تبدیل به رسید مستقیم در حالت">
+                  <mat-icon class="btn-color">add_task</mat-icon>
+              </button>
+              <mat-menu #beforeMenu="matMenu" xPosition="before">
+
+                  <button mat-menu-item *ngFor="let item of ReceiptBaseValue" [TooltipPosition]="right" matTooltip="تبدیل به رسید مستقیم در حالت {{item.title}}" (click)="update_Status(element,item.value)">
+
+                      {{item.title}}
+                  </button>
+              </mat-menu>
+          </div>
+          <div *ngIf="element.isAllowedInputOrOutputCommodity==false">
+              <span>
+                  <mat-icon style="color:red">block</mat-icon>
+                  
+              </span>
+          </div>
+
+      </ng-template>
+
+      <ng-template #buttonTagArray let-element="row">
+          <button mat-icon-button [matMenuTriggerFor]="beforeMenu" matTooltip="برچسب ها" *ngIf="element.tagClass">
+              <mat-icon class="btn-warn">sticky_note_2</mat-icon>
+          </button>
+          <mat-menu #beforeMenu="matMenu">
+              <ol>
+                  <li *ngFor="let item of element.tagClass" style="padding-right:10px;">
+                      ✔  {{item.key}}
+                  </li>
+              </ol>
+          </mat-menu>
+      </ng-template>
+
+
+      <ng-template #buttonMore let-element="row" style="text-align:center">
+
+          <button mat-icon-button [matMenuTriggerFor]="amenu">
+              <mat-icon>more_vert</mat-icon>
+          </button>
+          <mat-menu #amenu="matMenu">
+              <button mat-menu-item (click)="Edit(element)">
+                  <mat-icon>edit</mat-icon>
+                  ویرایش
+              </button>
+              <button mat-menu-item (click)="archive(element)">
+                  <mat-icon>redo</mat-icon>
+                  بایگانی / حذف
+              </button>
+              <button mat-menu-item (click)="NotConfirm(element)">
+                  <mat-icon>logout</mat-icon>
+                  مرجوعی
+              </button>
+              <button mat-menu-item
+                      [matTooltipPosition]="'right'"
+                      (click)="ConfirmPageTemporaryReceipt(element)">
+                  <mat-icon [ngClass]="{'btn-success': element.printCount>0}" matBadge="{{element.printCount}}">print</mat-icon>
+                  چاپ
+              </button>
+
+          </mat-menu>
+
+      </ng-template>
+
+      <mat-spinner style="top:30%;right:40%;position:absolute;z-index:1000" *ngIf="_notificationService.isLoader"></mat-spinner>
+
+  </mat-card>
+
+</div>

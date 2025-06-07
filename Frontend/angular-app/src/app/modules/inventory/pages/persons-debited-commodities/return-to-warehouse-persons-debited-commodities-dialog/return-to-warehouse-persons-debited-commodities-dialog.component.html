@@ -1,0 +1,64 @@
+<mat-dialog
+  (onSubmit)="submit()"
+  
+  [showDeleteBtn]="false"
+>
+
+<div dialog-header="">برگشت ( کالا / داغی) به انبار</div>
+
+<div dialog-content="">
+  <mat-dialog-content class="mx-auto" [formGroup]="form">
+
+      <div class="row">
+          <div class="col-md-4">
+              <mat-form-field>
+                  <mat-label>عنوان کالا </mat-label>
+                  <input formControlName="commodityTitle" type="text" matInput disabled>
+              </mat-form-field>
+          </div>
+          <div class="col-md-4">
+              <mat-form-field>
+                  <mat-label>کد کالا </mat-label>
+                  <input formControlName="commodityCode" type="text" matInput disabled>
+              </mat-form-field>
+          </div>
+          <div class="col-md-4">
+              <mat-form-field>
+                  <mat-label>کاربر فعلی </mat-label>
+                  <input formControlName="fullName" type="text" matInput disabled>
+              </mat-form-field>
+          </div>
+          <div class="col-md-6">
+              <mat-form-field>
+                  <mat-label>تاریخ</mat-label>
+                  <input tabindex="0" matInput [matDatepicker]="pickerFrom" formControlName="createDate">
+                  <mat-datepicker-toggle matSuffix [for]="pickerFrom">
+                      <mat-icon matDatepickerToggleIcon>
+                          <img class="mb-3" src="/assets/icons/calendar.svg" alt="">
+                      </mat-icon>
+                  </mat-datepicker-toggle>
+                  <mat-datepicker #pickerFrom></mat-datepicker>
+              </mat-form-field>
+          </div>
+          <div class="col-md-6">
+
+
+              <app-combo-warhouse-tree [DefaultId]="form.controls.warehouseId.value"
+                                       (SelectId)="WarehouseIdSelect($event)"
+                                       [isRequired]="true"
+                                       [lablelTitleCombo]="'نبار تحویل گیرنده'"
+                                       [isLastLevel]="true" [tabindex]="1">
+              </app-combo-warhouse-tree>
+          </div>
+          <div class="col-md-12">
+              <mat-form-field>
+                  <mat-label>شرح </mat-label>
+                  <input formControlName="description" type="text" matInput>
+              </mat-form-field>
+          </div>
+      </div>
+  </mat-dialog-content>
+</div>
+
+
+</mat-dialog>

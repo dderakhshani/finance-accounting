@@ -1,0 +1,52 @@
+.help-container{
+  width: 89vw !important;
+  height: 90vh !important;
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  grid-template-rows: 70px 1fr;
+
+  .help-header{
+    grid-column: 1 / 3;
+    grid-row: 1 / 1;
+
+    box-shadow: 0 -2px 6px 3px rgba(black,0.3);
+    display: flex;
+    gap: 1rem;
+    padding: 0 1rem;
+    .menu-tree {
+      display: flex;
+      gap: .5rem;
+      align-items: center;
+      h6 {
+        display: flex;
+        gap: .25rem;
+        align-items: center;
+      }
+    }
+    .search-bar {
+      margin-right: auto;
+      width: 31.5%;
+    }
+  }
+
+  .help-content {
+    grid-column: 2 / 3;
+    grid-row: 2 / 3;
+    height: 100%;
+    padding: 0;
+    max-height: 100%;
+    overflow: auto;
+    p {
+      font-size: 17px;
+    }
+    img {
+      border-radius: 1rem;
+    }
+  }
+
+  .help-sidebar{
+    grid-column: 1 / 2;
+    grid-row: 2 / 3;
+  }
+}
+

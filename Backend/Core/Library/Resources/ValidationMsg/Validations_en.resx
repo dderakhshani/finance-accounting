@@ -1,0 +1,312 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AdjustmentGroupNotActive" xml:space="preserve">
+    <value>Adjustment group not active</value>
+  </data>
+  <data name="AdjustmentGroupNotExists" xml:space="preserve">
+    <value>Adjustment group not exists</value>
+  </data>
+  <data name="AdjustmentVoucehExists" xml:space="preserve">
+    <value>Adjustment voucher exists</value>
+  </data>
+  <data name="AllVouchersMustBeBalanced" xml:space="preserve">
+    <value>All vouchers must be balanced</value>
+  </data>
+  <data name="AllVouchersMustBePermanented" xml:space="preserve">
+    <value>All vouchers must be permanented</value>
+  </data>
+  <data name="AlreadyLoggedInException" xml:space="preserve">
+    <value>Already logged in exception</value>
+  </data>
+  <data name="Authorization" xml:space="preserve">
+    <value>Authorization required</value>
+  </data>
+  <data name="AuthorizationException" xml:space="preserve">
+    <value>Authorization exception</value>
+  </data>
+  <data name="BadRequestException" xml:space="preserve">
+    <value>Request exception is bad</value>
+  </data>
+  <data name="BalancingVoucherIsAlreadyExists" xml:space="preserve">
+    <value>Balancing voucher is already exists</value>
+  </data>
+  <data name="Between" xml:space="preserve">
+    <value>Must be more than [1] and less than [2]</value>
+  </data>
+  <data name="CanNotCreateForFuture" xml:space="preserve">
+    <value>Can not create voucher for future</value>
+  </data>
+  <data name="CanNotCreateUnbalancedVoucher" xml:space="preserve">
+    <value>Can not create unbalanced voucher</value>
+  </data>
+  <data name="CloseGroupNotActive" xml:space="preserve">
+    <value>Close group voucher  not active</value>
+  </data>
+  <data name="CloseGroupNotExists" xml:space="preserve">
+    <value>Close group voucher not exists</value>
+  </data>
+  <data name="CloseVoucehExists" xml:space="preserve">
+    <value>Close voucher exists</value>
+  </data>
+  <data name="CloseVoucherIsAlreadyExists" xml:space="preserve">
+    <value>Close voucher is already exists</value>
+  </data>
+  <data name="DateInvalid" xml:space="preserve">
+    <value>The selected date must be before today's date</value>
+  </data>
+  <data name="Duplicate" xml:space="preserve">
+    <value>Data is duplicated</value>
+  </data>
+  <data name="EndVoucehExists" xml:space="preserve">
+    <value>End voucher exists</value>
+  </data>
+  <data name="EndVoucherGroupNotActive" xml:space="preserve">
+    <value>End group voucher  not active</value>
+  </data>
+  <data name="EndVoucherGroupNotExists" xml:space="preserve">
+    <value>End group voucher exists</value>
+  </data>
+  <data name="EndVoucherIsAlreadyExists" xml:space="preserve">
+    <value>End voucher is already exists</value>
+  </data>
+  <data name="FirstMustBeGraterThanSecond" xml:space="preserve">
+    <value>Item [1] must be grater than item [2]</value>
+  </data>
+  <data name="Greater than" xml:space="preserve">
+    <value>Must be more than [1]</value>
+  </data>
+  <data name="InCurrentYearInUse" xml:space="preserve">
+    <value>This item is in use in current year</value>
+  </data>
+  <data name="InUse" xml:space="preserve">
+    <value>This item is in use</value>
+  </data>
+  <data name="InvalidConfirmPassword" xml:space="preserve">
+    <value>Password is invalid</value>
+  </data>
+  <data name="InvalidFromat" xml:space="preserve">
+    <value>Format is invalid</value>
+  </data>
+  <data name="InvalidToken" xml:space="preserve">
+    <value>InvalidToken</value>
+  </data>
+  <data name="IsNotValidCodeLevel" xml:space="preserve">
+    <value>Level code is not valid</value>
+  </data>
+  <data name="IsNotValidEmail" xml:space="preserve">
+    <value>Is not valid email</value>
+  </data>
+  <data name="IsNotValidValue" xml:space="preserve">
+    <value>Value [1] is not valid</value>
+  </data>
+  <data name="IsRequired" xml:space="preserve">
+    <value>You must fill this field</value>
+  </data>
+  <data name="LessThan" xml:space="preserve">
+    <value>Must be less than [1]</value>
+  </data>
+  <data name="Login" xml:space="preserve">
+    <value>Must be logged in</value>
+  </data>
+  <data name="MobileValidation" xml:space="preserve">
+    <value>Mobile number is not valid</value>
+  </data>
+  <data name="MustBeSelected" xml:space="preserve">
+    <value>An option must be selected</value>
+  </data>
+  <data name="NoResult" xml:space="preserve">
+    <value>No result</value>
+  </data>
+  <data name="NotAllowedDate" xml:space="preserve">
+    <value>Not allowed date </value>
+  </data>
+  <data name="NotExist" xml:space="preserve">
+    <value>Item is not exist</value>
+  </data>
+  <data name="NotFound" xml:space="preserve">
+    <value>Exception not found</value>
+  </data>
+  <data name="Number" xml:space="preserve">
+    <value>Must be number</value>
+  </data>
+  <data name="ParentCodeNotValid" xml:space="preserve">
+    <value>Code not mach with parent code</value>
+  </data>
+  <data name="PassworHasExpired" xml:space="preserve">
+    <value>Passwor has expired</value>
+  </data>
+  <data name="Permission" xml:space="preserve">
+    <value>Permission required</value>
+  </data>
+  <data name="RefreshTokenHasBeenChanged" xml:space="preserve">
+    <value>Refresh token has been changed</value>
+  </data>
+  <data name="RefreshTokenHasBeenExpired" xml:space="preserve">
+    <value>Refresh token has been expired</value>
+  </data>
+  <data name="RefreshTokenHasNotExpiredYet" xml:space="preserve">
+    <value>Refresh token has not expired yet</value>
+  </data>
+  <data name="RelationBetween" xml:space="preserve">
+    <value>Relation between [1] and [2]</value>
+  </data>
+  <data name="SpecialLenght" xml:space="preserve">
+    <value>Number of caracters must be [1]</value>
+  </data>
+  <data name="StartGroupNotActive" xml:space="preserve">
+    <value>Start Group voucher  not active</value>
+  </data>
+  <data name="StartVoucehExists" xml:space="preserve">
+    <value>Start voucher exists</value>
+  </data>
+  <data name="System.Exception" xml:space="preserve">
+    <value>System exception</value>
+  </data>
+  <data name="TrueOrFalse" xml:space="preserve">
+    <value>The item can be true or false</value>
+  </data>
+  <data name="UnbalancedVoucherRegisteration" xml:space="preserve">
+    <value>Voucher registeration is unbalanced</value>
+  </data>
+  <data name="UnHandledError" xml:space="preserve">
+    <value>System error occured, please contact to support team</value>
+  </data>
+  <data name="UniqueName" xml:space="preserve">
+    <value>The name must be unique</value>
+  </data>
+  <data name="UpdateImpossible" xml:space="preserve">
+    <value>Update impossible</value>
+  </data>
+  <data name="UsernameOrPasswordIncorrect" xml:space="preserve">
+    <value>Username or password incorrect</value>
+  </data>
+  <data name="VoucherAndDateCompatible" xml:space="preserve">
+    <value>Voucher and date compatible</value>
+  </data>
+  <data name="VoucherGroupNotActive" xml:space="preserve">
+    <value>Voucher group not active</value>
+  </data>
+  <data name="VoucherInHolidayNotAllowed" xml:space="preserve">
+    <value>Voucher in holiday not allowed</value>
+  </data>
+  <data name="YearNotAccessible" xml:space="preserve">
+    <value>Year not accessible</value>
+  </data>
+</root>

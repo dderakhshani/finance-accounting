@@ -1,0 +1,39 @@
+<mat-dialog
+  (onSubmit)="submit()"
+  (onDelete)="delete()"
+  [showDeleteBtn]="pageMode === pageModes.Update"
+>
+
+  <div dialog-header="">حساب بانکی</div>
+  <div dialog-content="">
+
+    <div class="row" [formGroup]="form">
+      <div class="col-md-4">
+        <mat-form-field >
+          <mat-label>نوع حساب</mat-label>
+          <mat-select formControlName="accountTypeBaseId">
+            <mat-option *ngFor="let accountType of accountTypes" [value]="accountType.id">
+              {{accountType.title}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-md-4">
+        <mat-form-field >
+          <mat-label>شماره حساب</mat-label>
+          <input formControlName="accountNumber" matInput type="text">
+        </mat-form-field>
+      </div>
+      <div class="col-md-4">
+        <mat-form-field >
+          <mat-label>توضیحات</mat-label>
+          <input formControlName="description" matInput type="text">
+        </mat-form-field>
+      </div>
+      <div class="col-md-4">
+          <mat-checkbox color="primary" formControlName="isDefault"></mat-checkbox>
+          <mat-label>پیش فرض</mat-label>
+      </div>
+    </div>
+  </div>
+</mat-dialog>

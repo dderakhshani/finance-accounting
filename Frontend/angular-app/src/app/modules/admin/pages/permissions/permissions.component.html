@@ -1,0 +1,11 @@
+<mat-card class="h-100 d-flex flex-column">
+<app-tree
+  [editable]="true"
+  [canAdd]="true"
+  [useNew]="true"
+  (onAdd)="add($event)"
+  (onEdit)="update($event)"
+  height="100%"
+  [rawNodes]="permissions">
+</app-tree>
+</mat-card>

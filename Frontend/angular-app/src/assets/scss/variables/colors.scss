@@ -1,0 +1,916 @@
+$palettes: (
+  primary: (
+    20 : #fafbff,
+    50 : #edeefd,
+    100 : #d3d5fa,
+    200 : #b6b9f6,
+    300 : #999cf2,
+    400 : #8387f0,
+    500 : #6d72ed,
+    600 : #656aeb,
+    700 : #5a5fe8,
+    800 : #5055e5,
+    900 : #3e42e0,
+    A100 : #ffffff,
+    A200 : #fcfcff,
+    A400 : #c9caff,
+    A700 : #afb1ff,
+
+    contrast:(
+      100: white,
+      500: white,
+      700: white,
+    )
+  ),
+  accent: (
+    100:white,
+    500:white,
+    700:white,
+    contrast:(
+
+      50:#f4f4fe,
+      100:#ced0f9,
+      200:#aeb0f5,
+      300:#8e91f1,
+      400:#7e82ef,
+      500:#6d72ed,
+      600:#4d52e9,
+      700:#3b40cb,
+      800:#2f33b9,
+      900:#282d98,
+
+    )
+  ),
+  warn: (
+    100: #ffff5f,
+    500: #ffbf1c,
+    700: #c8b600,
+    contrast: (
+      100: white,
+      500: white,
+      700: white,
+    )
+  ),
+  purple: (
+    100: #d0b8db,
+    500: #7e5a91,
+    700: #511270,
+    contrast: (
+      100: white,
+      500: white,
+      700: white,
+    )
+  ),
+  danger: (
+    100: #ff6d64,
+    300: #e75959,
+    500: #D53939,
+    700: #9c0012,
+    contrast: (
+      100: white,
+      500: white,
+      700: white,
+    )
+  ),
+  success: (
+    100: #78ff70,
+    500: #1cac2f,
+    700: #00a200,
+    contrast: (
+      100: white,
+      500: white,
+      700: white,
+    )
+  ),
+  md-blue: (
+    50 : #e7f0fe,
+    100 : #c4dafc,
+    200 : #9dc1fb,
+    300 : #76a8f9,
+    400 : #5895f7,
+    500 : #3b82f6,
+    600 : #357af5,
+    700 : #2d6ff3,
+    800 : #2665f2,
+    900 : #1952ef,
+    A100 : #ffffff,
+    A200 : #eef2ff,
+    A400 : #bbcbff,
+    A700 : #a1b8ff,
+    contrast: (
+      50 : #000000,
+      100 : #000000,
+      200 : #000000,
+      300 : #000000,
+      400 : #000000,
+      500 : #ffffff,
+      600 : #ffffff,
+      700 : #ffffff,
+      800 : #ffffff,
+      900 : #ffffff,
+      A100 : #000000,
+      A200 : #000000,
+      A400 : #000000,
+      A700 : #000000,
+    )
+  ),
+  md-red: (
+    50 : #fde9e9,
+    100 : #fac7c7,
+    200 : #f7a2a2,
+    300 : #f47c7c,
+    400 : #f16060,
+    500 : #ef4444,
+    600 : #ed3e3e,
+    700 : #eb3535,
+    800 : #e82d2d,
+    900 : #e41f1f,
+    A100 : #ffffff,
+    A200 : #ffe7e7,
+    A400 : #ffb4b4,
+    A700 : #ff9b9b,
+    contrast: (
+      50 : #000000,
+      100 : #000000,
+      200 : #000000,
+      300 : #000000,
+      400 : #000000,
+      500 : #ffffff,
+      600 : #ffffff,
+      700 : #ffffff,
+      800 : #ffffff,
+      900 : #ffffff,
+      A100 : #000000,
+      A200 : #000000,
+      A400 : #000000,
+      A700 : #000000,
+    )
+  ),
+  md-amber: (
+    50 : #fef3e2,
+    100 : #fce2b6,
+    200 : #facf85,
+    300 : #f8bb54,
+    400 : #f7ad30,
+    500 : #f59e0b,
+    600 : #f4960a,
+    700 : #f28c08,
+    800 : #f08206,
+    900 : #ee7003,
+    A100 : #ffffff,
+    A200 : #ffeee1,
+    A400 : #ffd0ae,
+    A700 : #ffc195,
+    contrast: (
+      50 : #000000,
+      100 : #000000,
+      200 : #000000,
+      300 : #000000,
+      400 : #000000,
+      500 : #000000,
+      600 : #000000,
+      700 : #000000,
+      800 : #000000,
+      900 : #000000,
+      A100 : #000000,
+      A200 : #000000,
+      A400 : #000000,
+      A700 : #000000,
+    )
+  ),
+  md-green: (
+
+    20 : #f8fff8,
+    30 :#f0f9f0,
+    50 : #e4f8ec,
+    100 : #bdeecf,
+    200 : #91e2af,
+    300 : #64d68e,
+    400 : #43ce76,
+    500 : #22c55e,
+    600 : #1ebf56,
+    700 : #19b84c,
+    800 : #14b042,
+    900 : #0ca331,
+    A100 : #d1ffda,
+    A200 : #9effb2,
+    A400 : #6bff89,
+    A700 : #51ff75,
+    contrast: (
+      50 : #000000,
+      100 : #000000,
+      200 : #000000,
+      300 : #000000,
+      400 : #000000,
+      500 : #000000,
+      600 : #000000,
+      700 : #ffffff,
+      800 : #ffffff,
+      900 : #ffffff,
+      A100 : #000000,
+      A200 : #000000,
+      A400 : #000000,
+      A700 : #000000,
+    )
+  ),
+  md-grey: (
+    50 : #f0f0f0,
+    100 : #d9d9d9,
+    200 : #c0c0c0,
+    300 : #a6a6a6,
+    400 : #939393,
+    500 : #808080,
+    600 : #787878,
+    700 : #6d6d6d,
+    800 : #636363,
+    900 : #505050,
+    A100 : #f8c0c0,
+    A200 : #f39292,
+    A400 : #ff5353,
+    A700 : #ff3a3a,
+    contrast: (
+      50 : #000000,
+      100 : #000000,
+      200 : #000000,
+      300 : #000000,
+      400 : #000000,
+      500 : #000000,
+      600 : #ffffff,
+      700 : #ffffff,
+      800 : #ffffff,
+      900 : #ffffff,
+      A100 : #000000,
+      A200 : #000000,
+      A400 : #000000,
+      A700 : #ffffff,
+    )
+  )
+);
+
+@function color($palette, $tone: 500) {
+  $selected-palette: map-get($palettes, $palette);
+  @if $selected-palette != null {
+    $colorToBeReturned: map-get($selected-palette, $tone);
+    @return $colorToBeReturned;
+  } @else {
+    @return null;
+  }
+}
+
+
+// Primary
+.text-primary-50 {
+  color: color(primary,50) !important;
+}
+.text-primary-100 {
+  color: color(primary,100) !important;
+}
+.text-primary-200 {
+  color: color(primary,200) !important;
+}
+.text-primary-300 {
+  color: color(primary,300) !important;
+}
+.text-primary-400 {
+  color: color(primary,400) !important;
+}
+.text-primary-500 {
+  color: color(primary,500) !important;
+}
+.text-primary-600 {
+  color: color(primary,600) !important;
+}
+.text-primary-700 {
+  color: color(primary,700) !important;
+}
+.text-primary-800 {
+  color: color(primary,800) !important;
+}
+.text-primary-900 {
+  color: color(primary,900) !important;
+}
+.text-primary-A100 {
+  color: color(primary,A100) !important;
+}
+.text-primary-A200 {
+  color: color(primary,A200) !important;
+}
+.text-primary-A400 {
+  color: color(primary,A400) !important;
+}
+.text-primary-A700 {
+  color: color(primary,A700) !important;
+}
+
+// Accent
+
+.text-accent-50 {
+  color: color(accent,50) !important;
+}
+.text-accent-100 {
+  color: color(accent,100) !important;
+}
+.text-accent-200 {
+  color: color(accent,200) !important;
+}
+.text-accent-300 {
+  color: color(accent,300) !important;
+}
+.text-accent-400 {
+  color: color(accent,400) !important;
+}
+.text-accent-500 {
+  color: color(accent,500) !important;
+}
+.text-accent-600 {
+  color: color(accent,600) !important;
+}
+.text-accent-700 {
+  color: color(accent,700) !important;
+}
+.text-accent-800 {
+  color: color(accent,800) !important;
+}
+.text-accent-900 {
+  color: color(accent,900) !important;
+}
+.text-accent-A100 {
+  color: color(accent,A100) !important;
+}
+.text-accent-A200 {
+  color: color(accent,A200) !important;
+}
+.text-accent-A400 {
+  color: color(accent,A400) !important;
+}
+.text-accent-A700 {
+  color: color(accent,A700) !important;
+}
+
+
+// Blue
+.text-blue-50 {
+  color: color(md-blue,50) !important;
+}
+.text-blue-100 {
+  color: color(md-blue,100) !important;
+}
+.text-blue-200 {
+  color: color(md-blue,200) !important;
+}
+.text-blue-300 {
+  color: color(md-blue,300) !important;
+}
+.text-blue-400 {
+  color: color(md-blue,400) !important;
+}
+.text-blue-500 {
+  color: color(md-blue,500) !important;
+}
+.text-blue-600 {
+  color: color(md-blue,600) !important;
+}
+.text-blue-700 {
+  color: color(md-blue,700) !important;
+}
+.text-blue-800 {
+  color: color(md-blue,800) !important;
+}
+.text-blue-900 {
+  color: color(md-blue,900) !important;
+}
+.text-blue-A100 {
+  color: color(md-blue,A100) !important;
+}
+.text-blue-A200 {
+  color: color(md-blue,A200) !important;
+}
+.text-blue-A400 {
+  color: color(md-blue,A400) !important;
+}
+.text-blue-A700 {
+  color: color(md-blue,A700) !important;
+}
+
+
+// Red
+
+
+.text-red-50 {
+  color: color(md-red,50) !important;
+}
+.text-red-100 {
+  color: color(md-red,100) !important;
+}
+.text-red-200 {
+  color: color(md-red,200) !important;
+}
+.text-red-300 {
+  color: color(md-red,300) !important;
+}
+.text-red-400 {
+  color: color(md-red,400) !important;
+}
+.text-red-500 {
+  color: color(md-red,500) !important;
+}
+.text-red-600 {
+  color: color(md-red,600) !important;
+}
+.text-red-700 {
+  color: color(md-red,700) !important;
+}
+.text-red-800 {
+  color: color(md-red,800) !important;
+}
+.text-red-900 {
+  color: color(md-red,900) !important;
+}
+.text-red-A100 {
+  color: color(md-red,A100) !important;
+}
+.text-red-A200 {
+  color: color(md-red,A200) !important;
+}
+.text-red-A400 {
+  color: color(md-red,A400) !important;
+}
+.text-red-A700 {
+  color: color(md-red,A700) !important;
+}
+
+
+// Amber
+
+
+.text-amber-50 {
+  color: color(md-amber,50) !important;
+}
+.text-amber-100 {
+  color: color(md-amber,100) !important;
+}
+.text-amber-200 {
+  color: color(md-amber,200) !important;
+}
+.text-amber-300 {
+  color: color(md-amber,300) !important;
+}
+.text-amber-400 {
+  color: color(md-amber,400) !important;
+}
+.text-amber-500 {
+  color: color(md-amber,500) !important;
+}
+.text-amber-600 {
+  color: color(md-amber,600) !important;
+}
+.text-amber-700 {
+  color: color(md-amber,700) !important;
+}
+.text-amber-800 {
+  color: color(md-amber,800) !important;
+}
+.text-amber-900 {
+  color: color(md-amber,900) !important;
+}
+.text-amber-A100 {
+  color: color(md-amber,A100) !important;
+}
+.text-amber-A200 {
+  color: color(md-amber,A200) !important;
+}
+.text-amber-A400 {
+  color: color(md-amber,A400) !important;
+}
+.text-amber-A700 {
+  color: color(md-amber,A700) !important;
+}
+
+
+// Green
+
+
+.text-green-50 {
+  color: color(md-green,50) !important;
+}
+.text-green-100 {
+  color: color(md-green,100) !important;
+}
+.text-green-200 {
+  color: color(md-green,200) !important;
+}
+.text-green-300 {
+  color: color(md-green,300) !important;
+}
+.text-green-400 {
+  color: color(md-green,400) !important;
+}
+.text-green-500 {
+  color: color(md-green,500) !important;
+}
+.text-green-600 {
+  color: color(md-green,600) !important;
+}
+.text-green-700 {
+  color: color(md-green,700) !important;
+}
+.text-green-800 {
+  color: color(md-green,800) !important;
+}
+.text-green-900 {
+  color: color(md-green,900) !important;
+}
+.text-green-A100 {
+  color: color(md-green,A100) !important;
+}
+.text-green-A200 {
+  color: color(md-green,A200) !important;
+}
+.text-green-A400 {
+  color: color(md-green,A400) !important;
+}
+.text-green-A700 {
+  color: color(md-green,A700) !important;
+}
+
+// Grey
+
+
+.text-grey-50 {
+  color: color(md-grey,50) !important;
+}
+.text-grey-100 {
+  color: color(md-grey,100) !important;
+}
+.text-grey-200 {
+  color: color(md-grey,200) !important;
+}
+.text-grey-300 {
+  color: color(md-grey,300) !important;
+}
+.text-grey-400 {
+  color: color(md-grey,400) !important;
+}
+.text-grey-500 {
+  color: color(md-grey,500) !important;
+}
+.text-grey-600 {
+  color: color(md-grey,600) !important;
+}
+.text-grey-700 {
+  color: color(md-grey,700) !important;
+}
+.text-grey-800 {
+  color: color(md-grey,800) !important;
+}
+.text-grey-900 {
+  color: color(md-grey,900) !important;
+}
+.text-grey-A100 {
+  color: color(md-grey,A100) !important;
+}
+.text-grey-A200 {
+  color: color(md-grey,A200) !important;
+}
+.text-grey-A400 {
+  color: color(md-grey,A400) !important;
+}
+.text-grey-A700 {
+  color: color(md-grey,A700) !important;
+}
+
+///////////// BACKGROUND
+
+
+// Primary
+.bg-primary-50 {
+  background-color: color(primary,50) !important;
+}
+.bg-primary-100 {
+  background-color: color(primary,100) !important;
+}
+.bg-primary-200 {
+  background-color: color(primary,200) !important;
+}
+.bg-primary-300 {
+  background-color: color(primary,300) !important;
+}
+.bg-primary-400 {
+  background-color: color(primary,400) !important;
+}
+.bg-primary-500 {
+  background-color: color(primary,500) !important;
+}
+.bg-primary-600 {
+  background-color: color(primary,600) !important;
+}
+.bg-primary-700 {
+  background-color: color(primary,700) !important;
+}
+.bg-primary-800 {
+  background-color: color(primary,800) !important;
+}
+.bg-primary-900 {
+  background-color: color(primary,900) !important;
+}
+.bg-primary-A100 {
+  background-color: color(primary,A100) !important;
+}
+.bg-primary-A200 {
+  background-color: color(primary,A200) !important;
+}
+.bg-primary-A400 {
+  background-color: color(primary,A400) !important;
+}
+.bg-primary-A700 {
+  background-color: color(primary,A700) !important;
+}
+
+// Accent
+
+.bg-accent-50 {
+  background-color: color(accent,50) !important;
+}
+.bg-accent-100 {
+  background-color: color(accent,100) !important;
+}
+.bg-accent-200 {
+  background-color: color(accent,200) !important;
+}
+.bg-accent-300 {
+  background-color: color(accent,300) !important;
+}
+.bg-accent-400 {
+  background-color: color(accent,400) !important;
+}
+.bg-accent-500 {
+  background-color: color(accent,500) !important;
+}
+.bg-accent-600 {
+  background-color: color(accent,600) !important;
+}
+.bg-accent-700 {
+  background-color: color(accent,700) !important;
+}
+.bg-accent-800 {
+  background-color: color(accent,800) !important;
+}
+.bg-accent-900 {
+  background-color: color(accent,900) !important;
+}
+.bg-accent-A100 {
+  background-color: color(accent,A100) !important;
+}
+.bg-accent-A200 {
+  background-color: color(accent,A200) !important;
+}
+.bg-accent-A400 {
+  background-color: color(accent,A400) !important;
+}
+.bg-accent-A700 {
+  background-color: color(accent,A700) !important;
+}
+
+
+// Blue
+.bg-blue-50 {
+  background-color: color(md-blue,50) !important;
+}
+.bg-blue-100 {
+  background-color: color(md-blue,100) !important;
+}
+.bg-blue-200 {
+  background-color: color(md-blue,200) !important;
+}
+.bg-blue-300 {
+  background-color: color(md-blue,300) !important;
+}
+.bg-blue-400 {
+  background-color: color(md-blue,400) !important;
+}
+.bg-blue-500 {
+  background-color: color(md-blue,500) !important;
+}
+.bg-blue-600 {
+  background-color: color(md-blue,600) !important;
+}
+.bg-blue-700 {
+  background-color: color(md-blue,700) !important;
+}
+.bg-blue-800 {
+  background-color: color(md-blue,800) !important;
+}
+.bg-blue-900 {
+  background-color: color(md-blue,900) !important;
+}
+.bg-blue-A100 {
+  background-color: color(md-blue,A100) !important;
+}
+.bg-blue-A200 {
+  background-color: color(md-blue,A200) !important;
+}
+.bg-blue-A400 {
+  background-color: color(md-blue,A400) !important;
+}
+.bg-blue-A700 {
+  background-color: color(md-blue,A700) !important;
+}
+
+
+// Red
+
+
+.bg-red-50 {
+  background-color: color(md-red,50) !important;
+}
+.bg-red-100 {
+  background-color: color(md-red,100) !important;
+}
+.bg-red-200 {
+  background-color: color(md-red,200) !important;
+}
+.bg-red-300 {
+  background-color: color(md-red,300) !important;
+}
+.bg-red-400 {
+  background-color: color(md-red,400) !important;
+}
+.bg-red-500 {
+  background-color: color(md-red,500) !important;
+}
+.bg-red-600 {
+  background-color: color(md-red,600) !important;
+}
+.bg-red-700 {
+  background-color: color(md-red,700) !important;
+}
+.bg-red-800 {
+  background-color: color(md-red,800) !important;
+}
+.bg-red-900 {
+  background-color: color(md-red,900) !important;
+}
+.bg-red-A100 {
+  background-color: color(md-red,A100) !important;
+}
+.bg-red-A200 {
+  background-color: color(md-red,A200) !important;
+}
+.bg-red-A400 {
+  background-color: color(md-red,A400) !important;
+}
+.bg-red-A700 {
+  background-color: color(md-red,A700) !important;
+}
+
+
+// Amber
+
+
+.bg-amber-50 {
+  background-color: color(md-amber,50) !important;
+}
+.bg-amber-100 {
+  background-color: color(md-amber,100) !important;
+}
+.bg-amber-200 {
+  background-color: color(md-amber,200) !important;
+}
+.bg-amber-300 {
+  background-color: color(md-amber,300) !important;
+}
+.bg-amber-400 {
+  background-color: color(md-amber,400) !important;
+}
+.bg-amber-500 {
+  background-color: color(md-amber,500) !important;
+}
+.bg-amber-600 {
+  background-color: color(md-amber,600) !important;
+}
+.bg-amber-700 {
+  background-color: color(md-amber,700) !important;
+}
+.bg-amber-800 {
+  background-color: color(md-amber,800) !important;
+}
+.bg-amber-900 {
+  background-color: color(md-amber,900) !important;
+}
+.bg-amber-A100 {
+  background-color: color(md-amber,A100) !important;
+}
+.bg-amber-A200 {
+  background-color: color(md-amber,A200) !important;
+}
+.bg-amber-A400 {
+  background-color: color(md-amber,A400) !important;
+}
+.bg-amber-A700 {
+  background-color: color(md-amber,A700) !important;
+}
+
+
+// Green
+
+
+.bg-green-50 {
+  background-color: color(md-green,50) !important;
+}
+.bg-green-100 {
+  background-color: color(md-green,100) !important;
+}
+.bg-green-200 {
+  background-color: color(md-green,200) !important;
+}
+.bg-green-300 {
+  background-color: color(md-green,300) !important;
+}
+.bg-green-400 {
+  background-color: color(md-green,400) !important;
+}
+.bg-green-500 {
+  background-color: color(md-green,500) !important;
+}
+.bg-green-600 {
+  background-color: color(md-green,600) !important;
+}
+.bg-green-700 {
+  background-color: color(md-green,700) !important;
+}
+.bg-green-800 {
+  background-color: color(md-green,800) !important;
+}
+.bg-green-900 {
+  background-color: color(md-green,900) !important;
+}
+.bg-green-A100 {
+  background-color: color(md-green,A100) !important;
+}
+.bg-green-A200 {
+  background-color: color(md-green,A200) !important;
+}
+.bg-green-A400 {
+  background-color: color(md-green,A400) !important;
+}
+.bg-green-A700 {
+  background-color: color(md-green,A700) !important;
+}
+
+
+// Grey
+
+
+.bg-grey-50 {
+  background-color: color(md-grey,50) !important;
+}
+.bg-grey-100 {
+  background-color: color(md-grey,100) !important;
+}
+.bg-grey-200 {
+  background-color: color(md-grey,200) !important;
+}
+.bg-grey-300 {
+  background-color: color(md-grey,300) !important;
+}
+.bg-grey-400 {
+  background-color: color(md-grey,400) !important;
+}
+.bg-grey-500 {
+  background-color: color(md-grey,500) !important;
+}
+.bg-grey-600 {
+  background-color: color(md-grey,600) !important;
+}
+.bg-grey-700 {
+  background-color: color(md-grey,700) !important;
+}
+.bg-grey-800 {
+  background-color: color(md-grey,800) !important;
+}
+.bg-grey-900 {
+  background-color: color(md-grey,900) !important;
+}
+.bg-grey-A100 {
+  background-color: color(md-grey,A100) !important;
+}
+.bg-grey-A200 {
+  background-color: color(md-grey,A200) !important;
+}
+.bg-grey-A400 {
+  background-color: color(md-grey,A400) !important;
+}
+.bg-grey-A700 {
+  background-color: color(md-grey,A700) !important;
+}
+
+$bg-color: #6d72ed;
+$table-toolbar-bg: linear-gradient(90deg,$bg-color 25%, #a646ebad 100%);
+
+
+//$table-toolbar-bg: linear-gradient(
+//    135deg,
+//    $bg-color 0%,
+//    #8a2be2 50%,
+//    #fe2691 100%
+//);

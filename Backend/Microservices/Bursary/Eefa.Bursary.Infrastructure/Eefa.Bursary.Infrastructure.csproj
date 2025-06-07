@@ -1,0 +1,36 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+     <TargetFramework>net8.0</TargetFramework>
+  </PropertyGroup>
+ 
+
+  <ItemGroup>
+    <Compile Remove="_EntityConfigurations\**" />
+    <EmbeddedResource Remove="_EntityConfigurations\**" />
+    <None Remove="_EntityConfigurations\**" />
+  </ItemGroup>
+ 
+
+  <ItemGroup>
+    <Compile Remove="BackgroundTasks\BackgroundUserAccessor.cs" />
+    <Compile Remove="BackgroundTasks\RabbitMQPublisher.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.1">
+		
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+	  <ProjectReference Include="..\..\..\Core\SharedCode\SharedCode.csproj" />
+	  <ProjectReference Include="..\Eefa.Bursary.Application\Eefa.Bursary.Application.csproj" />
+    <ProjectReference Include="..\Eefa.Bursary.Domain\Eefa.Bursary.Domain.csproj" />
+  </ItemGroup>
+
+</Project>

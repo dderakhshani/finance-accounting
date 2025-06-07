@@ -1,0 +1,64 @@
+<mat-dialog (onSubmit)="submit()"
+            (onDelete)="delete()"
+            [showDeleteBtn]="pageMode === pageModes.Update">
+
+    <div dialog-header="">مشخصات انبار</div>
+
+    <div dialog-content="" style="height:500px" [formGroup]="form">
+
+
+        <div class="row">
+
+            <div class="col-md-3">
+                <mat-form-field>
+                    <mat-label>عنوان </mat-label>
+                    <input formControlName="title" type="text" matInput required>
+                </mat-form-field>
+            </div>
+            <div class="col-md-3">
+                <mat-form-field>
+                    <mat-label>ترتیب نمایش </mat-label>
+                    <input formControlName="sort" type="text" matInput required>
+                </mat-form-field>
+            </div>
+            <div class="col-md-3">
+
+                <app-combo-account-head-tree [DefaultId]="form.controls.accountHeadId.value"
+                                             (SelectId)="accountHeadIdSelect($event)"
+                                             [isRequired]="true"
+                                             [lablelTitleCombo]="'سرفصل حساب'"
+                                             [isLastLevel]="true">
+                </app-combo-account-head-tree>
+
+            </div>
+
+            <div class="col-md-3">
+                <mat-checkbox color="primary" formControlName="isActive">
+                    <mat-label>فعال است</mat-label>
+                </mat-checkbox>
+            </div>
+
+        </div>
+        <div class="row">
+
+
+            <div class="col-md-6">
+                <app-combo-search-multiper-items [nodes]="filterReceiptNodes"
+                                                 [nodes_filter]="ApiCallService.ReceiptStatus"
+                                                 [listItems]="filterReceiptAllStatus"
+                                                 (SelectedList)="getReceiptAllStatusList($event)"
+                                                 [lablelTitleCombo]="'سندهای مرتبط'">
+                </app-combo-search-multiper-items>
+            </div>
+            <div class="col-md-6">
+                <app-combo-search-multiper-items [nodes]="CommodityCategories"
+                                                 [listItems]="filterCommodityCategories"
+                                                 (SelectedList)="getCommodityCategoryList($event)"
+                                                 [lablelTitleCombo]="'گروه محصولات'">
+                </app-combo-search-multiper-items>
+            </div>
+        </div>
+    </div>
+
+
+</mat-dialog>

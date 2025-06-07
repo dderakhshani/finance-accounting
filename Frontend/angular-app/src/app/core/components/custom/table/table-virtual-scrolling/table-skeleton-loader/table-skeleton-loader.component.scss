@@ -1,0 +1,37 @@
+tbody{
+  &:nth-of-type(even) {
+    background-color: #edeefd;
+  }
+  tr:hover {
+    background-color: #ccc;
+  }
+}
+.skeleton-row {
+  height: 40px;
+
+}
+
+.skeleton-cell {
+  position: relative;
+  overflow: hidden;
+  padding: 6px;
+}
+
+.skeleton-box {
+  width: 100% !important;
+  //height: 100% !important;
+  background: linear-gradient(90deg, #e0e0e0 25%, #f0f0f0 50%, #e0e0e0 75%);
+  background-size: 200% 100%;
+  animation: skeleton-loading 1.5s infinite;
+  border-radius: 4px;
+}
+
+
+@keyframes skeleton-loading {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}

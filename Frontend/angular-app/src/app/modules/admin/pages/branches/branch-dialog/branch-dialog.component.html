@@ -1,0 +1,24 @@
+
+<mat-dialog
+  (onSubmit)="submit()"
+  (onDelete)="delete()"
+  [showDeleteBtn]="pageMode === pageModes.Update"
+>
+
+  <div dialog-header="">شعبه</div>
+
+
+  <div dialog-content="" style="width:30vw" >
+    <div  [formGroup]="form">
+      <div class="col-md-12">
+        <mat-form-field  >
+          <mat-label> عنوان </mat-label>
+          <input formControlName="title" type="text" matInput>
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+
+
+</mat-dialog>
+

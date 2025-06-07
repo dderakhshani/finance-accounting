@@ -1,0 +1,11 @@
+@import "/src/assets/scss/variables";
+
+
+.btn-color {
+  color: color(md-grey,500) !important;
+}
+::ng-deep {
+  .mat-elevation-z8 {
+    box-shadow: unset;
+  }
+}

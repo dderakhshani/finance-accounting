@@ -1,0 +1,44 @@
+<mat-dialog
+  (onSubmit)="submit()"
+  
+  [showDeleteBtn]="false"
+>
+
+<div dialog-header="">ویرایش تعداد کالا</div>
+
+<div dialog-content="">
+  <mat-dialog-content class="mx-auto" [formGroup]="form">
+
+      <div class="alert alert-info" *ngIf="fomDocumentItem.controls.hasPermissionEditQuantity.value==false">
+          ویرایش تعداد کالاهای این سند تنها از روی فهرست جابه جایی کالا امکان پذیر می باشد.
+      </div>
+      <div class="row">
+         
+          <div class="col-md-4">
+              <mat-form-field>
+                  <mat-label>عنوان کالا </mat-label>
+                  <input formControlName="commodityTitle" type="text" matInput disabled>
+              </mat-form-field>
+          </div>
+          <div class="col-md-4">
+              <mat-form-field>
+                  <mat-label>کد کالا </mat-label>
+                  <input formControlName="commodityCode" type="text" matInput disabled>
+              </mat-form-field>
+          </div>
+
+
+          <div class="col-md-4">
+              <mat-form-field>
+                  <mat-label>تعداد کالا </mat-label>
+                  <input formControlName="quantity" type="text" matInput required [tabindex]="0">
+              </mat-form-field>
+          </div>
+
+
+      </div>
+  </mat-dialog-content>
+</div>
+
+
+</mat-dialog>

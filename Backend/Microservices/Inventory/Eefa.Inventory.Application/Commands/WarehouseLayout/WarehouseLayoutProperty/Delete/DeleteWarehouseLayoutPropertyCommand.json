@@ -1,0 +1,30 @@
+[
+
+  {
+    "FieldName": "categoryPropertyId",
+    "Conditions": [
+      {
+        "Condition": "@categoryPropertyId>0",
+        "Message": {
+          "Key": "IsRequired",
+          "Values": []
+        }
+      }
+    ]
+
+  },
+  {
+    "FieldName": "warehouseLayoutPropertiesId",
+    "Conditions": [
+      {
+        "Condition": "@warehouseLayoutPropertiesId>0",
+        "Message": {
+          "Key": "IsRequired",
+          "Values": []
+        }
+      }
+    ]
+
+  }
+
+]

@@ -1,0 +1,6 @@
+<mat-card>
+  <app-form-actions [actions]="formActions" (OnRefresh)="get()" (OnEdit)="update()" (OnDelete)="delete()"></app-form-actions>
+  <app-table
+    (rowDoubleClicked)="update($event)"
+    [tableRows]="chequesForm" [tableConfigurations]="tableConfigurations"></app-table>
+</mat-card>

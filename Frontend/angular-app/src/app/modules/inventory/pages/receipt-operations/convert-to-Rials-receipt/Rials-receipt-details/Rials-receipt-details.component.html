@@ -1,0 +1,278 @@
+
+<div  class="h-100 d-flex flex-column overflow-auto gap-3" style="max-height: inherit; padding: 0!important;" *ngIf="form">
+
+    <app-form-actions [actions]="formActions" (OnSave)="submit()" (OnAdd)="reset()" (OnRefresh)="initialize()">
+        <button mat-raised-button color="primary" (click)="print()" [disabled]="_notificationService.isLoader" *ngIf="!allowNotEditInvoice">
+            <mat-icon>
+                print
+            </mat-icon>
+            چاپ
+        </button>
+        <button mat-raised-button color="primary" (click)="exportexcel()" [disabled]="_notificationService.isLoader">
+            <mat-icon>
+                download
+            </mat-icon>
+            خروجی به اکسل
+        </button>
+
+        <button mat-raised-button color="primary" (click)="openDocumentHeadExtraCostDialog()" [disabled]="_notificationService.isLoader">
+            <mat-icon>
+                shopping_bag
+            </mat-icon>
+            هزینه ها
+        </button>
+        <button mat-raised-button (click)="calculationType=100" [disabled]="_notificationService.isLoader" [ngClass]="{'color-red' : calculationType==100}">
+            <mat-icon>
+                calculate
+            </mat-icon>
+            محاسبات سیستمی انجام شود
+        </button>
+        <button mat-raised-button (click)="calculationType=101" [disabled]="_notificationService.isLoader" [ngClass]="{'color-red' : calculationType==101}">
+            <mat-icon>
+                functions
+            </mat-icon>
+            محاسبات دستی انجام شود
+        </button>
+
+    </app-form-actions>
+
+    <div [formGroup]="form" >
+
+        <mat-card *ngIf="receipt!=undefined" class=" m-2">
+            <div class="row">
+                <div class="col-md-8">
+                    <mat-card-header>
+                        <mat-card-title>
+                            <label class="mat-label-header">نوع سند</label>
+                            :
+                            <label>{{receipt?.codeVoucherGroupTitle}}</label>
+                            <samp class="btn-color">  {{title}} </samp>
+
+                        </mat-card-title>
+
+
+                    </mat-card-header>
+                </div>
+                <div class="col-md-2" *ngIf="receipt?.voucherHeadId">
+                    <div style="float:left">
+                        <label class="mat-label-header">کد سند مکانیزه :</label>
+                        <label class="btn-link" (click)="navigateToVoucher()">{{receipt?.voucherNo}}</label>
+                    </div>
+
+
+                </div>
+                <div class="col-md-2">
+
+                    <div style="float:left">
+                        <label class="mat-label-header">فایل خزانه داری :</label>
+                        <label class="btn-link" (click)="filesByPaymentNumber()">{{receipt?.financialOperationNumber}}</label>
+                    </div>
+
+                </div>
+            </div>
+
+
+            <div class="row line">
+
+                <div class="col-md-9">
+
+                    <div class="row">
+
+                        <div class="col-md-3 form-group">
+
+                            <app-combo-account-head-tree [DefaultId]="form.controls.debitAccountHeadId.value"
+                                                         (SelectId)="debitAccountHeadIdSelect($event)"
+                                                         [isRequired]="true"
+                                                         [lablelTitleCombo]="'سرفصل حساب بدهکار'"
+                                                         [isLastLevel]="true"
+                                                         [isDisable]="allowNotEditInvoice"
+                                                         [tabindex]="0">
+                            </app-combo-account-head-tree>
+
+                        </div>
+                        <div class="col-md-3 form-group" *ngIf="form.controls.debitAccountReferenceId.value!=-1">
+
+                            <app-combo-account-refrence [DefaultId]="form.controls.debitAccountReferenceId.value"
+                                                        [accountHeadId]="form.controls.debitAccountHeadId.value"
+                                                        (SelectId)="debitReferenceSelect($event)"
+                                                        [lablelTitleCombo]="'حساب بدهکار'"
+                                                        [isDisable]="allowNotEditInvoice"
+                                                        [accountReferencesGroupsId]="form.controls.debitAccountReferenceGroupId.value"
+                                                        [tabindex]="1">
+                            </app-combo-account-refrence>
+
+                        </div>
+
+                        <div class="col-md-3 form-group">
+
+                            <app-combo-account-head-tree [DefaultId]="form.controls.creditAccountHeadId.value"
+                                                         (SelectId)="creditAccountHeadIdSelect($event)"
+                                                         [isRequired]="true"
+                                                         [lablelTitleCombo]="'سرفصل حساب بستانکار'"
+                                                         [isDisable]="allowNotEditInvoice"
+                                                         [isLastLevel]="true"
+                                                         [tabindex]="2">
+                            </app-combo-account-head-tree>
+
+                        </div>
+                        <div class="col-md-3 form-group" *ngIf="form.controls.creditAccountReferenceId.value!=-1">
+
+                            <app-combo-account-refrence [DefaultId]="form.controls.creditAccountReferenceId.value"
+                                                        [accountHeadId]="form.controls.creditAccountHeadId.value"
+                                                        (SelectId)="creditReferenceSelect($event)"
+                                                        [lablelTitleCombo]="'حساب بستانکار'"
+                                                        [isDisable]="allowNotEditInvoice"
+                                                        [accountReferencesGroupsId]="form.controls.creditAccountReferenceGroupId.value" [tabindex]="3">
+                            </app-combo-account-refrence>
+
+                        </div>
+                        <div class="col-md-3">
+                            <mat-form-field>
+                                <mat-label>تاریخ مالی</mat-label>
+                                <input tabindex="4" matInput [matDatepicker]="picker" formControlName="invoiceDate" required>
+                                <mat-datepicker-toggle matSuffix [for]="picker">
+                                    <mat-icon matDatepickerToggleIcon>
+                                        <img class="mb-3" src="/assets/icons/calendar.svg" alt="">
+                                    </mat-icon>
+                                </mat-datepicker-toggle>
+                                <mat-datepicker #picker></mat-datepicker>
+                            </mat-form-field>
+                        </div>
+
+                        <!----------------------------------------------------------->
+
+                        <div class="col-md-3">
+                            <mat-form-field>
+                                <mat-label>هزینه اضافه</mat-label>
+                                <input matInput type="text" formControlName="extraCost" (change)="onAddExteraCost()" mask="separator.9" thousandSeparator="," disabled>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-md-3 form-group" *ngIf="isImportPurchase=='false'">
+
+                            <app-combo-account-head-tree [DefaultId]="form.controls.extraCostAccountHeadId.value"
+                                                         (SelectId)="extraCostAccountHeadIdSelect($event)"
+                                                         [isRequired]="false"
+                                                         [lablelTitleCombo]="'سرفصل حساب هزینه اضافی'"
+                                                         [isDisable]="allowNotEditInvoice"
+                                                         [isLastLevel]="true" [tabindex]="5">
+                            </app-combo-account-head-tree>
+
+                        </div>
+                        <div class="col-md-3 form-group" *ngIf="isImportPurchase=='false'">
+
+                            <app-combo-account-refrence [DefaultId]="form.controls.extraCostAccountReferenceId.value"
+                                                        (SelectId)="extraCostAccountReferenceSelect($event)"
+                                                        [lablelTitleCombo]="'حساب هزینه اضافی'"
+                                                        [isRequired]="false"
+                                                        [isDisable]="allowNotEditInvoice"
+                                                        [accountReferencesGroupsId]="form.controls.extraCostAccountReferenceGroupId.value" [tabindex]="6">
+                            </app-combo-account-refrence>
+
+                        </div>
+                        <!--در حالتی دیده شود که فقط در یک آیدی خواص باز شده باشد-->
+                        <div class="col-md-3" *ngIf="isImportPurchase=='false' && isSingleReceipt==0">
+
+                            <app-combo-invoice [DefaultId]="form.controls.invoiceNo.value"
+                                               (SelectId)="invoiceNoSelect($event)"
+                                               [lablelTitleCombo]="'شماره صورتحساب '"
+                                               [isRequired]="true"
+                                               [invoiceId]="form.controls.id.value"
+                                               [isDisable]="allowNotEditInvoice"
+                                               [refrenceId]="form.controls.creditAccountReferenceId.value" [tabindex]="7">
+                            </app-combo-invoice>
+
+                        </div>
+                        <div class="col-md-3" *ngIf="isImportPurchase=='true' && isSingleReceipt==0">
+
+                            <mat-form-field tabindex="8">
+                                <mat-label>شماره پرونده</mat-label>
+                                <input matInput type="text" formControlName="invoiceNo" required>
+                            </mat-form-field>
+
+                        </div>
+                        <div class="col-md-3">
+                            <app-combo-Sina_FinancialOperationNumber [DefaultId]="form.controls.financialOperationNumber.value"
+                                                                     (SelectId)="financialOperationNumberSelect($event)"
+                                                                     [lablelTitleCombo]="'شماره عملیات مالی'"
+                                                                     [isRequired]="false"
+                                                                     [isDisable]="allowNotEditInvoice" [tabindex]="9">
+                            </app-combo-Sina_FinancialOperationNumber>
+
+                        </div>
+
+                        <div class="col-md-3">
+                            <app-combo-tag [documentTags]="documentTags" (SelectTags)="TagSelect($event)" [tabindex]="10">
+                            </app-combo-tag>
+                        </div>
+                        <div class="col-md-6">
+                            <mat-form-field tabindex="9">
+                                <mat-label>شرح</mat-label>
+                                <input matInput type="text" formControlName="documentDescription" [tabindex]="11">
+                            </mat-form-field>
+
+                        </div>
+
+                        <div class="col-md-3">
+                            <mat-form-field tabindex="12">
+                                <mat-label>شماره قبض </mat-label>
+                                <input matInput type="text" formControlName="scaleBill">
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-3" *ngIf="isImportPurchase=='true'">
+                            <mat-form-field tabindex="13">
+                                <mat-label>جمع هزینه های ریالی</mat-label>
+                                <input matInput type="text" formControlName="extraCostRialTemp" mask="separator.9" thousandSeparator="," (keyup)="ImportPurchaseComputeCostRate()">
+                            </mat-form-field>
+                            <mat-icon (click)="OpenCostDetailList()" class="btn btn-link debit-details-icon">list</mat-icon>
+                        </div>
+
+                        <div class="col-md-3">
+
+                            <mat-form-field *ngIf="isImportPurchase=='true'" tabindex="14">
+                                <mat-label>جمع هزینه های ارزی</mat-label>
+
+                                <input matInput type="text" formControlName="extraCostCurrency" mask="separator.9" thousandSeparator="," (keyup)="ImportPurchaseComputeCostRate()">
+                            </mat-form-field>
+
+                            <mat-form-field *ngIf="isImportPurchase=='false'" tabindex="15">
+
+                                <mat-label>مبلغ  تسهیم</mat-label>
+                                <input matInput type="text" formControlName="extraCostCurrency" mask="separator.9" thousandSeparator="," (keyup)="ImportPurchaseComputeCostRial()">
+                            </mat-form-field>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="col-md-3">
+
+                    <app-uploader class="d-flex justify-content-center"
+                                  [autoUpload]="true"
+                                  (filesChange)="files=$event"
+                                  (isUploadingChange)="isUploading"
+                                  [attachmentsModel]="attachmentsModel"
+                                  [attachmentIds]="attachmentIds"
+                                  [allowFileUpload]="true">
+                    </app-uploader>
+                </div>
+            </div>
+
+        </mat-card>
+       
+
+        <app-Rials-receipt-items [formSetter]="form?.controls['receiptDocumentItems']"
+                                 [receipt]="receipt"
+                                 (getData)="initialize()"
+                                 [calculationType]="calculationType"
+                                 [extraCostRialTemp]="form.controls.extraCostRialTemp.value"
+                                 [extraCostCurrency]="form.controls.extraCostCurrency.value">
+
+        </app-Rials-receipt-items>
+            <mat-spinner style="top:30%;right:40%;position:absolute;z-index:1000" *ngIf="_notificationService.isLoader"></mat-spinner>
+        </div>
+
+  
+</div>
+

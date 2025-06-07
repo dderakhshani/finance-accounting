@@ -1,0 +1,22 @@
+<mat-dialog (onSubmit)="submit()" [showDeleteBtn]="false">
+    <div dialog-header="">پیام خصوصی</div>
+    <div dialog-content="">
+
+
+        <div class="row p-3" [formGroup]="form" style="width: 40vw;" *ngIf="checkForwardAccess()">
+           
+            <div class="col-md-12">
+                <mat-form-field>
+                    <mat-label> توضیحات</mat-label>
+                    <textarea formControlName="message" rows="10" cols="100" matInput></textarea>
+                </mat-form-field>
+            </div>
+
+        </div>
+        <mat-card class="h-100 d-flex flex-column overflow-hidden" style="max-height: inherit; padding: 0!important;">
+            <div class="h-100 overflow-auto">
+                <app-table [tableConfigurations]="tableConfigurations" [tableRows]="privateMessageModels"></app-table>
+            </div>
+        </mat-card>
+    </div>
+</mat-dialog>

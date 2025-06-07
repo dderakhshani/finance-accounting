@@ -1,0 +1,30 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+     <TargetFramework>net8.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="appsettings-shared.Development.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="appsettings-shared.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="NLog" Version="5.0.4" />
+		<PackageReference Include="NLog.Extensions.Logging" Version="5.0.4" />
+		<PackageReference Include="NLog.Web.AspNetCore" Version="5.1.4" />
+	</ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Eefa.Common\Eefa.Common.csproj" />
+  </ItemGroup>
+
+</Project>

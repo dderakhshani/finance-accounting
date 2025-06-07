@@ -1,0 +1,33 @@
+
+
+<mat-accordion>
+
+    <mat-expansion-panel (opened)="panelOpenState = true"
+                         (closed)="panelOpenState = false">
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                درخواست های تغییرات در سند حسابداری
+            </mat-panel-title>
+
+        </mat-expansion-panel-header>
+        <table class="info-mas-table">
+            <thead>
+                <tr>
+                    <th>تاریخ درخواست</th>
+                    <th>تاریخ آخرین پاسخ</th>
+                    <th>پاسخ</th>
+                    <th>وضعیت</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of receipt?.correctionRequest">
+                    <td>{{item.createdAt | date}}</td>
+                    <td>{{item.modifiedAt | date}}</td>
+                    <td>{{item.verifierDescription}}</td>
+                    <td>{{item.statusTitle}}</td>
+                </tr>
+            </tbody>
+        </table>
+
+    </mat-expansion-panel>
+</mat-accordion>

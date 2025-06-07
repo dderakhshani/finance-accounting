@@ -1,0 +1,26 @@
+{
+  "Properties": [
+    {
+      "Title": "",
+      "Expressions": [
+        {
+          "Query": "",
+          "Message": {
+            "Key": "",
+            "Values": ["", ""]
+          }
+        }
+      ],
+      "Functions": [
+        {
+          "Name": "",
+          "Params": [""],
+          "Message": {
+            "Key": "",
+            "Values": ["", ""]
+          }
+        }
+      ]
+    }
+  ]
+}

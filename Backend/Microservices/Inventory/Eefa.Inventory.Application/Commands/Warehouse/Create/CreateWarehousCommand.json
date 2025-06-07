@@ -1,0 +1,17 @@
+
+[
+  
+  {
+    "FieldName": "Title",
+    "Conditions": [
+      {
+        "Condition": "Validators.StringIsNotEmpty(@Title)",
+        "Message": {
+          "Key": "IsRequired",
+          "Values": []
+        }
+      }
+    ]
+
+  }
+]

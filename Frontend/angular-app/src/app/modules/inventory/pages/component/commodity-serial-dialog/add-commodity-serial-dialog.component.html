@@ -1,0 +1,103 @@
+<mat-dialog (onSubmit)="submit()" [showDeleteBtn]="false" [showSubmitBtn]="false">
+
+    <div dialog-header="" style="font-size:15px;">{{ReceiptItem.commodityTitle}} ({{ReceiptItem.commodityCode}})</div>
+
+    <div dialog-content="">
+        <mat-dialog-content class="mx-auto">
+
+
+            <div class="row">
+                <div class="col-md-4">
+                    <mat-form-field [tabindex]="0">
+                        <mat-label>تعداد </mat-label>
+                        <input [(ngModel)]="ReceiptItem.quantity" type="number" matInput>
+                    </mat-form-field>
+                </div>
+
+                <div class="col-md-4">
+                    <app-combo-tree [DefaultId]="assets.assetGroupId"
+                                    (SelectId)="assetGroupIdSelect($event)"
+                                    [isRequired]="true"
+                                    [lablelTitleCombo]="'گروه اموال'"
+                                    [nodes]="commodityCategoreis" [tabindex]="1">
+                    </app-combo-tree>
+                </div>
+                <div class="col-md-4">
+                    <app-combo-search [DefaultId]="assets.depreciationTypeBaseId"
+                                      [isInternalSearch]="false"
+                                      [nodes]="depreciationTypeBaseValue"
+                                      (SelectId)="depreciationSelect($event)"
+                                      [lablelTitleCombo]="'روش محاسبه استهلاک'"
+                                      [isRequired]="true" [tabindex]="2">
+                    </app-combo-search>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <mat-form-field [tabindex]="3">
+                        <mat-label>پیشوند شروع شماره سریال اموال </mat-label>
+                        <input [(ngModel)]="assets.prefix" type="text" matInput>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-4 text-danger ">
+                    <mat-form-field [tabindex]="4">
+                        <mat-label>عدد شروع شماره سریال اموال </mat-label>
+                        <input [(ngModel)]="assets.startWithNumber" type="number" matInput>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-4" [tabindex]="5">
+                    <button mat-raised-button color="primary" matTooltip=" تولید خودکار شماره اموال ها به صورت سیستمی " (click)="CreateCode()">
+                        <mat-icon>
+                            repeat_one
+                        </mat-icon>
+                        تولید خودکار شماره سریال
+                    </button>
+                </div>
+
+            </div>
+            <hr />
+            <button mat-raised-button color="primary" (click)="print()" [tabindex]="6">
+                <mat-icon>
+                    print
+                </mat-icon>
+                چاپ
+            </button>
+            <button mat-raised-button color="primary" (click)="add()" [tabindex]="7">
+                <mat-icon>
+                    save
+                </mat-icon>
+                ذخیره سازی
+            </button>
+
+            <div class="row mt-2">
+                <div class="row" *ngFor="let item of AssetsSerials ; let i = index">
+                    <div class="col-md-1">
+                        {{i+1}}
+                    </div>
+                    <div class="col-md-2">
+                        <mat-form-field>
+                            <mat-label>شماره اموال </mat-label>
+                            <input [(ngModel)]="item.serial" type="text" matInput required [tabindex]="8">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-2">
+                        <mat-form-field>
+                            <mat-label>شماره سریال خود کالا </mat-label>
+                            <input [(ngModel)]="item.commoditySerial" type="text" matInput [tabindex]="9">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-7">
+                        <mat-form-field>
+                            <mat-label>توضیحات </mat-label>
+                            <input [(ngModel)]="item.description" type="text" matInput [tabindex]="10">
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+
+
+        </mat-dialog-content>
+    </div>
+
+
+</mat-dialog>

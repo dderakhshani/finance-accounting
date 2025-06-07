@@ -1,0 +1,16 @@
+
+  <app-table [tableConfigurations]="tableConfigurations"
+             [tableRows]="SpAudits"
+             (filtersChanged)="get()"
+             (paginationChanged)="get()"
+             (sortChanged)="get()"
+             style="width:100%"
+             >
+
+  </app-table>
+
+  <mat-spinner style="top:30%;right:40%;position:absolute;z-index:1000" *ngIf="_notificationService.isLoader"></mat-spinner>
+
+
+
+

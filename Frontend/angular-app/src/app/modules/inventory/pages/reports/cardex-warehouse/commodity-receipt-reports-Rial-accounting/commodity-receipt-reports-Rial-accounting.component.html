@@ -1,0 +1,310 @@
+
+<div class="h-100 d-flex flex-column overflow-auto gap-3" style="max-height: inherit; padding: 0!important;">
+    <mat-spinner style="top:30%;right:40%;position:absolute;z-index:1000" *ngIf="_notificationService.isLoader"></mat-spinner>
+    <mat-card>
+        <form [formGroup]="SearchForm">
+            <div class="row">
+                <div class="col-md-2">
+                    <mat-form-field>
+                        <mat-label>از تاریخ رسید</mat-label>
+                        <input tabindex="0" matInput [matDatepicker]="pickerFrom" formControlName="fromDate">
+                        <mat-datepicker-toggle matSuffix [for]="pickerFrom">
+                            <mat-icon matDatepickerToggleIcon>
+                                <img class="mb-3" src="/assets/icons/calendar.svg" alt="">
+                            </mat-icon>
+                        </mat-datepicker-toggle>
+                        <mat-datepicker #pickerFrom></mat-datepicker>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-2">
+                    <mat-form-field>
+                        <mat-label>تا تاریخ رسید</mat-label>
+                        <input tabindex="1" matInput [matDatepicker]="picker" formControlName="toDate">
+                        <mat-datepicker-toggle matSuffix [for]="picker">
+                            <mat-icon matDatepickerToggleIcon>
+                                <img class="mb-3" src="/assets/icons/calendar.svg" alt="">
+                            </mat-icon>
+                        </mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+                </div>
+
+
+                <div class="col-md-2">
+                    <app-combo-warhouse-tree [DefaultId]="SearchForm.controls.warehouseId.value"
+                                             (SelectId)="WarehouseIdSelect($event)"
+                                             [lablelTitleCombo]="'انبار'"
+                                             [isLastLevel]="true" [tabindex]="2">
+                    </app-combo-warhouse-tree>
+                </div>
+                <div class="col-md-2">
+                    <app-combo-commodity [DefaultId]="SearchForm.controls.commodityId.value"
+                                         (SelectId)="getCommodityById($event)"
+                                         [lablelTitleCombo]="'کالا'"
+                                         [warehouseId]="SearchForm.controls.warehouseId.value"
+                                         [isOnlyFilterByWarehouse]="true"
+                                         [isRequired]="false" [tabindex]="3">
+                    </app-combo-commodity>
+                </div>
+
+                <div class="col-md-2">
+                    <mat-form-field>
+                        <mat-label>شماره رسید</mat-label>
+                        <input formControlName="documentNo" matInput type="text">
+                    </mat-form-field>
+                </div>
+                <div class="col-md-2">
+                    <button mat-raised-button color="primary" type="button" (click)="currentPage=1;get()" [disabled]="_notificationService.isLoader" tabindex="4" id="Search">
+                        <mat-icon>
+                            search
+                        </mat-icon>
+                        جستجو
+                    </button>
+                    <button mat-stroked-button color="primary" type="button" (click)="ondeleteFilter(SearchForm)" [disabled]="_notificationService.isLoader" tabindex="5">
+                        <mat-icon>
+                            delete_forever
+                        </mat-icon>
+                        حذف فیلترها
+                    </button>
+                </div>
+            </div>
+        </form>
+
+    </mat-card>
+
+    <mat-spinner style="top:30%;right:40%;position:absolute;z-index:1000" *ngIf="_notificationService.isLoader"></mat-spinner>
+
+    <div [ngClass]="{'modal-large-table':IslargeSize ,'modal-large-close': !IslargeSize}" class="h-100 overflow-auto p-0">
+
+        <div [ngClass]="{'modal-large-table-content':IslargeSize}">
+
+            <mat-card id="reports-containt">
+
+                <div class="row">
+                    <app-table-filter (GetQuery)="onGet($event)"
+                                      (onPrint)="print()"
+                                      (IslargeSize)="IslargeSize=$event"
+                                      [data]="Reports_filter"
+                                      (filterTable)="filterTable($event)"
+                                      (isSelectedRows)="selectedRows($event)"
+                                      [IsShowFilter]="true">
+                    </app-table-filter>
+
+                    <div [ngClass]="{'tableFixHead_largSize':IslargeSize ,'tableFixHead': !IslargeSize}" [appDynamicTableHeight]="marginFromBottom_appDynamicTableHeight" [tableData]="data">
+                        <table class="mas-table">
+                            <thead>
+                                <tr>
+                                    <td colspan="8"></td>
+                                    <td colspan="3" class="width-18">
+                                        وارده
+                                    </td>
+                                    <td colspan="3" class="width-18">
+                                        صادره
+                                    </td>
+                                    <td colspan="3" class="width-18">
+                                        موجودی انتهای دوره
+                                    </td>
+                                </tr>
+                                <tr>
+
+
+                                  <th resizable class="width-3">
+                                    ردیف
+                                  </th>
+                                  <th resizable class="width-10" accessKey="commodityCode" abbr="string">
+                                    کد کالا
+                                  </th>
+                                  <th resizable class="width-10" accessKey="commodityTitle" abbr="string">
+                                    نام کالا
+                                  </th>
+
+                                  <th resizable class="width-10" accessKey="codeVoucherGroupTitle" abbr="string">
+                                    شرح
+                                  </th>
+                                  <th resizable class="width-5" accessKey="documentStauseBaseValue" abbr="string">
+                                    ریالی شده؟
+                                  </th>
+                                  <th resizable class="width-5" accessKey="serialNumber" abbr="number">
+                                    سریال
+                                  </th>
+                                  <th resizable class="width-5" accessKey="documentNo" abbr="number">
+                                    شماره رسید
+                                  </th>
+                                  <th resizable class="width-5" accessKey="documentDate" abbr="date">
+                                    تاریخ رسید
+                                  </th>
+                                  <th resizable class="width-5" accessKey="current_Enter_Quantity" abbr="number">
+                                    مقدار وارده
+                                  </th>
+                                  <th resizable class="width-8" accessKey="current_Enter_ItemUnitPrice" abbr="number">
+                                    مبلغ واحد وارده
+                                  </th>
+                                  <th resizable class="width-8" accessKey="current_Enter_TotalItemPrice" abbr="number">
+                                    مبلغ کل وارده
+                                  </th>
+
+                                  <th resizable class="width-5" accessKey="current_Exit_Quantity" abbr="number">
+                                    مقدار صادره
+                                  </th>
+                                  <th resizable class="width-8" accessKey="current_Exit_ItemUnitPrice" abbr="number">
+                                    مبلغ واحد صادره
+                                  </th>
+                                  <th resizable class="width-8" accessKey="current_Exit_TotalItemPrice" abbr="number">
+                                    مبلغ کل صادره
+                                  </th>
+
+                                  <th resizable class="width-5" accessKey="postfix_Quantity" abbr="number">
+                                    مقدار نهایی
+                                  </th>
+                                  <th resizable class="width-8" accessKey="postfix_ItemUnitPrice" abbr="number">
+                                    مبلغ واحد نهایی
+                                  </th>
+                                  <th resizable class="width-8" accessKey="postfix_TotalItemPrice" abbr="number">
+                                    مبلغ نهایی
+                                  </th>
+
+
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                              <tr *ngFor="let item of data ;let i=index ">
+                                <th>
+                                  {{i+1}}
+                                </th>
+                                <td class="font-12" accessKey="commodityCode">
+                                  {{item.commodityCode}}
+
+                                </td>
+                                <td class="font-12" accessKey="commodityTitle" (dblclick)="CopyInCommodity(item)">
+
+                                  {{item.commodityTitle}}
+                                </td>
+
+                                <td class="font-10" accessKey="codeVoucherGroupTitle">
+                                  {{item.codeVoucherGroupTitle}}
+                                </td>
+                                <td class="width-5" accessKey="documentStauseBaseValue">
+                                  <samp *ngIf="item.documentStauseBaseValue==33" class="text-danger">
+                                    خیر
+                                  </samp>
+                                  <samp *ngIf="item.documentStauseBaseValue!=33">
+                                    بله
+                                  </samp>
+                                </td>
+                                <td accessKey="serialNumber">
+                                  {{item.serialNumber}}
+                                </td>
+                                <td class="font-12" accessKey="documentNo">
+                                  <span matTooltip="جزئیات رسید" class="btn-link" (click)="navigateToRecive(item)">
+                                    {{item.documentNo}}
+                                  </span>
+
+                                </td>
+                                <td class="font-12" accessKey="documentDate">
+                                  {{Service.toPersianDate(item.documentDate)}}
+                                </td>
+
+                                <td accessKey="current_Enter_Quantity" class="font-13" matTooltip="{{item.current_Enter_Quantity}}">
+                                  {{item.current_Enter_Quantity | number : '1.0-0'}}
+                                </td>
+                                <td accessKey="current_Enter_ItemUnitPrice" class="font-13" matTooltip="{{item.current_Enter_ItemUnitPrice}}">
+                                  {{item.current_Enter_ItemUnitPrice | number : '1.0-0'}}
+                                </td>
+                                <td accessKey="current_Enter_TotalItemPrice" class="font-13" matTooltip="{{item.current_Enter_TotalItemPrice}}">
+                                  {{item.current_Enter_TotalItemPrice | number : '1.0-0'}}
+                                </td>
+
+                                <td accessKey="current_Exit_Quantity" class="font-13" matTooltip="{{item.current_Exit_Quantity}}">
+                                  {{item.current_Exit_Quantity | number : '1.0-0'}}
+                                </td>
+                                <td accessKey="current_Exit_ItemUnitPrice" class="font-13" matTooltip="{{item.current_Exit_ItemUnitPrice}}">
+                                  {{item.current_Exit_ItemUnitPrice | number : '1.0-0'}}
+                                </td>
+                                <td accessKey="current_Exit_TotalItemPrice" class="font-13" matTooltip="{{item.current_Exit_TotalItemPrice}}">
+                                  {{item.current_Exit_TotalItemPrice | number : '1.0-0'}}
+                                </td>
+
+                                <td accessKey="postfix_Quantity" class="font-13" matTooltip="{{item.postfix_Quantity}}">
+                                  {{item.postfix_Quantity | number : '1.0-0'}}
+                                </td>
+                                <td accessKey="postfix_ItemUnitPrice" class="font-13" abbr="number" matTooltip="{{item.postfix_ItemUnitPrice}}">
+                                  {{item.postfix_ItemUnitPrice | number : '1.0-0'}}
+                                </td>
+                                <td accessKey="postfix_TotalItemPrice" class="font-13" matTooltip="{{item.postfix_Quantity*item.postfix_ItemUnitPrice}}">
+                                  {{item.postfix_Quantity*item.postfix_ItemUnitPrice | number : '1.0-0'}}
+
+                                </td>
+                              </tr>
+
+                            </tbody>
+                            <tfoot>
+
+                              <tr>
+                                <td>
+                                  {{dataLength}}
+                                </td>
+                                <td accessKey="commodityCode">
+                                </td>
+                                <td accessKey="commodityTitle">
+                                </td>
+
+                                <td accessKey="codeVoucherGroupTitle">
+                                  جمع کل صفحات
+                                </td>
+                                <td class="width-5" accessKey="documentStauseBaseValue">
+                                </td>
+                                <td accessKey="serialNumber">
+                                </td>
+                                <td accessKey="documentNo">
+                                </td>
+                                <td accessKey="documentDate">
+                                </td>
+
+                                <td accessKey="current_Enter_Quantity" class="font-13" matTooltip="{{current_Enter_Quantity}}">
+                                  {{current_Enter_Quantity | number : '1.0-0'}}
+                                </td>
+                                <td accessKey="current_Enter_ItemUnitPrice">
+                                </td>
+                                <td accessKey="current_Enter_TotalItemPrice" class="font-13" matTooltip="{{current_Enter_TotalItemPrice}}">
+                                  {{current_Enter_TotalItemPrice | number : '1.0-0'}}
+                                </td>
+
+                                <td accessKey="current_Exit_Quantity" class="font-13" matTooltip="{{current_Exit_Quantity}}">
+                                  {{current_Exit_Quantity | number : '1.0-0'}}
+                                </td>
+                                <td accessKey="current_Exit_ItemUnitPrice">
+                                </td>
+                                <td accessKey="current_Exit_TotalItemPrice" class="font-13" matTooltip="{{current_Exit_TotalItemPrice}}">
+                                  {{current_Exit_TotalItemPrice | number : '1.0-0'}}
+                                </td>
+
+                                <td accessKey="postfix_Quantity" class="font-13">
+                                  {{postfix_Quantity | number : '1.0-0'}}
+                                </td>
+                                <td accessKey="postfix_ItemUnitPrice" class="font-13">
+                                </td>
+                                <td accessKey="postfix_TotalItemPrice" matTooltip="{{postfix_TotalItemPrice}}">
+                                  {{postfix_TotalItemPrice | number : '1.0-0'}}
+                                </td>
+
+                              </tr>
+                                <tr *ngIf="pageSize<=RowsCount">
+                                    <td colspan="20">
+                                        <app-table-pagging [RowsCount]="RowsCount" [activePage]="currentPage" [pageSize]="pageSize"  (ActivePage)="ChangePage($event)" (ExportToALLExcel)="ExportAllToExcel()">
+
+                                        </app-table-pagging>
+                                    </td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+
+
+            </mat-card>
+        </div>
+    </div>
+</div>
+
+

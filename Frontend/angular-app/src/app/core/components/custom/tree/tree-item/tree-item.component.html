@@ -1,0 +1,60 @@
+<div>
+  <div class="tree-node" [class.is-searching]="isSearching">
+    <div class="tree-node-wrapper" *ngIf="node">
+      <div class="tree-card" [class.active-card]="node._expanded">
+        <div class="tree-card-details" (click)="onClick.emit(node)">
+          <h5 class="code" *ngIf="node[codeKey]">{{ node[codeKey] }} </h5>
+          <h5 [class.py-1]="!node[codeKey]" class="title" [title]="node[titleKey]">{{ node[titleKey] }}</h5>
+        </div>
+
+        <div class="actions-wrapper">
+          <img
+            (click)="onEdit.emit(node)"
+            *ngIf="editable"
+            class="action-edit" src="/assets/icons/edit-tree.svg" alt="">
+          <mat-checkbox
+            (click)="onSelect.emit(node)"
+            color="primary" *ngIf="selectable"
+            (change)="node._selected = $event.checked"
+            [(ngModel)]="node._selected"
+            class="action-select"></mat-checkbox>
+        </div>
+        <div class="pointer" *ngIf="node._expanded"></div>
+      </div>
+      <div class="child-nodes" *ngIf="node._expanded">
+
+        <app-tree-item
+
+          *ngFor="let child of node[childrenKey]"
+          [node]="child"
+
+          [idKey]="idKey"
+          [parentKey]="parentKey"
+          [childrenKey]="childrenKey"
+          [levelCodeKey]="levelCodeKey"
+          [titleKey]="titleKey"
+          [codeKey]="codeKey"
+          [currentLevel]="currentLevel + 1"
+          [restrictedLevel]="restrictedLevel"
+          [editable]="editable"
+          [selectable]="selectable"
+          [canAdd]="canAdd"
+          (onClick)="onClick.emit($event)"
+          (onEdit)="onEdit.emit($event)"
+          (onAdd)="onAdd.emit($event)"
+          (onSelect)="onSelect.emit($event)"
+          [isSearching]="isSearching"
+        ></app-tree-item>
+        <ng-container *ngIf="currentLevel !== restrictedLevel && canAdd">
+          <div class="add-node-card py-1 " (click)="onAdd.emit(node)">
+            <div class="add-card-detail">
+              <img src="/assets/icons/add-tree.svg" alt="">
+            </div>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+
+</div>
+

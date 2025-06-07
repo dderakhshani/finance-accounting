@@ -1,0 +1,69 @@
+<mat-dialog (onSubmit)="submit()" [showDeleteBtn]="false">
+
+  <div dialog-header="" style="font-size:15px;">ویرایش کالا اموال</div>
+
+  <div dialog-content="">
+    <mat-dialog-content class="mx-auto" [formGroup]="form">
+
+
+      <div class="row">
+
+        <div class="col-md-4">
+            <mat-form-field [tabindex]="0">
+                <mat-label>عنوان کالا</mat-label>
+                <input formControlName="commodityTitle" type="text" matInput disabled>
+            </mat-form-field>
+        </div>
+        <div class="col-md-4">
+            <app-combo-tree [DefaultId]="form.controls.assetGroupId.value"
+                            (SelectId)="assetGroupIdSelect($event)"
+                            [isRequired]="true"
+                            [lablelTitleCombo]="'گروه اموال'"
+                            [nodes]="commodityCategoreis" [tabindex]="1">
+            </app-combo-tree>
+        </div>
+        <div class="col-md-4">
+            <app-combo-search [DefaultId]="form.controls.depreciationTypeBaseId.value"
+                              [isInternalSearch]="false"
+                              [nodes]="depreciationTypeBaseValue"
+                              (SelectId)="depreciationSelect($event)"
+                              [lablelTitleCombo]="'روش محاسبه استهلاک'"
+                              [isRequired]="true" [tabindex]="2">
+            </app-combo-search>
+        </div>
+
+        <div class="col-md-4">
+            <mat-form-field [tabindex]="3">
+                <mat-label>شماره اموال</mat-label>
+                <input formControlName="assetSerial" type="text" matInput>
+            </mat-form-field>
+        </div>
+        <div class="col-md-4">
+            <mat-form-field [tabindex]="4">
+                <mat-label>شماره سریال خود کالا </mat-label>
+                <input formControlName="commoditySerial" type="number" matInput>
+            </mat-form-field>
+        </div>
+
+        <div class="col-md-4">
+            <mat-checkbox color="primary" formControlName="isActive" [tabindex]="5">
+                <mat-label>فعال است</mat-label>
+            </mat-checkbox>
+
+        </div>
+        <div class="col-md-12">
+            <mat-form-field [tabindex]="6">
+                <mat-label>توضیحات </mat-label>
+                <input formControlName="description" type="text" matInput>
+            </mat-form-field>
+        </div>
+
+      </div>
+
+
+
+    </mat-dialog-content>
+  </div>
+
+
+</mat-dialog>

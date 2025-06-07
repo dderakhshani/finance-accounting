@@ -1,0 +1,145 @@
+<mat-dialog (onSubmit)="submit()" [showDeleteBtn]="false">
+    <div dialog-header="">مواد سازنده</div>
+
+
+    <div dialog-content="">
+
+        <div class="row">
+            <button class="btn-add mt-2" (click)="add()" *ngIf="!allowViewPrice && !isReadOnly" matTooltip="افزودن کالا جدید">
+
+                <mat-icon role="img" aria-hidden="true" data-mat-icon-type="font">add</mat-icon>
+
+            </button>
+            <div id="report-table-bom-item">
+                <table class="mas-table" id="mas-table-bom-item">
+                    <thead>
+                        <tr id="data-filde">
+                            <th style="width:4%">
+                                ردیف
+                            </th>
+                            <th class="width-20" accessKey="commodityTitle" abbr="string">
+                                کالا
+                            </th>
+                            <th class="width-20" accessKey="commodityCode" abbr="string">
+                                کد کالا
+                            </th>
+                            <th class="width-10">
+                                واحد کالا
+                            </th>
+                            <th class="width-20" accessKey="quantity" abbr="number">
+                                میزان مصرف
+                            </th>
+                            <th class="width-15" accessKey="unitPrice" abbr="number" *ngIf="allowViewPrice">
+                                قیمت واحد خرید هر کالا
+                            </th>
+                            <th class="width-15" accessKey="productionCost" abbr="number" *ngIf="allowViewPrice">
+                               قیمت کل مصرف
+                            </th>
+
+                        </tr>
+
+                    </thead>
+                    <tbody *ngFor="let item of ReceiptItems ;let i=index ">
+                        <tr *ngIf="item.id>0">
+                            <th>
+                                {{i+1}}
+
+                            </th>
+                            <td class="font-12">
+                                {{item.commodityTitle}}
+
+                            </td>
+                            <td class="font-12">
+                                {{item.commodityCode}}
+                            </td>
+                            <td class="font-12">
+                                {{item.measureTitle}}
+                            </td>
+                            <td>
+                                <input type="text"
+                                       [(ngModel)]="item.quantity"
+                                       class="form-control"
+                                       required
+                                       (keyup)="oncalculate(item)"
+                                       *ngIf="!isReadOnly"
+                                       autocomplete="off" [tabindex]="0">
+                                <span *ngIf="isReadOnly">
+                                    {{item.quantity}}
+                                </span>
+
+                            </td>
+                            <td *ngIf="allowViewPrice">
+                                {{item.unitPrice | money}}
+                            </td>
+                            <td *ngIf="allowViewPrice">
+                                {{item.productionCost | money}}
+                            </td>
+                        </tr>
+                        <tr *ngIf="item.id==0">
+                            <th>
+                                <button class="btn btn-add text-danger" (click)="delete(i)" matTooltip="حذف">
+
+                                    <mat-icon role="img" aria-hidden="true" data-mat-icon-type="font">delete</mat-icon>
+
+                                </button>
+
+                            </th>
+                            <td colspan="2">
+                                <app-combo-commodity [DefaultId]="item.commodityId"
+                                                     (SelectId)="getCommodityById($event,item)"
+                                                     [isConsumable]="false"
+                                                     [isAsset]="false"
+                                                     style="text-align:right !important;width:100%"
+                                                     [isRequired]="true" [tabindex]="1">
+                                </app-combo-commodity>
+                            </td>
+
+
+                            <td>
+                                {{item.measureTitle}}
+                            </td>
+                            <td>
+                                <input type="text"
+                                       [(ngModel)]="item.quantity"
+                                       class="form-control"
+                                       required
+                                       (keyup)="oncalculate(item)"
+                                       autocomplete="off"
+                                       *ngIf="!isReadOnly" [tabindex]="2">
+                                <span *ngIf="isReadOnly">
+                                    {{item.quantity}}
+                                </span>
+                            </td>
+                            <td *ngIf="allowViewPrice">
+                                {{item.unitPrice | money}}
+                            </td>
+                            <td *ngIf="allowViewPrice">
+                                {{item.productionCost | money}}
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+                    <tfoot>
+
+                        <tr>
+                            <td>
+                                {{ReceiptItems.length}}
+                            </td>
+
+
+                            <td colspan="3"><b>جمع کل</b></td>
+                            <td>{{totalQuantity}}</td>
+                            <td *ngIf="allowViewPrice">{{totalItemUnitPrice |money}}</td>
+                            <td *ngIf="allowViewPrice">{{sumAll |money}}</td>
+
+
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</mat-dialog>
+

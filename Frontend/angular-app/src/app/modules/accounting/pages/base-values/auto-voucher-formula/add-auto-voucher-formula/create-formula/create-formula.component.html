@@ -1,0 +1,48 @@
+  <div class="col-3">
+    <button mat-raised-button (click)="generateNewRowFormula()" class="bg-blue-200 m-1" matTooltip="افزودن بارامتر جدید">
+      <mat-icon>add_circle_outline</mat-icon>
+    </button>
+  </div>
+  <div *ngFor="let form of formulaArray.controls index as i">
+    <div [formGroup]="form">
+      <div class="row">
+        <mat-icon style="color: darkred" (click)="removeRawFormula(i)">remove_circle_outline</mat-icon>
+        <div class="col-3">
+          <mat-form-field>
+            <mat-label>نام property</mat-label>
+            <mat-select formControlName="property">
+              <mat-option *ngFor="let propertyName of propertyNameList" [value]="propertyName.title">
+                {{ propertyName.persianName + ' - ' + propertyName.title }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-3">
+          <mat-form-field>
+            <mat-label> شرح بارامتر</mat-label>
+            <input type="text" matInput formControlName="formula">
+          </mat-form-field>
+        </div>
+        <div class="col-2">
+          <mat-form-field>
+            <mat-label>بارامتر</mat-label>
+            <input type="text" matInput formControlName="param">
+          </mat-form-field>
+        </div>
+<div class="col-1">
+  <button mat-raised-button (click)="addParameter(form)" class="bg-blue-200 m-1" matTooltip="افزودن">
+    <mat-icon >add_circle_outline</mat-icon>
+  </button>
+</div>
+        <div class="col-2">
+        <div class="col-12">
+          <mat-chip *ngFor="let param of form.controls['parameters']?.controls index as i"> {{param.value}}
+            <mat-icon style="color: darkred" (click)="removeParam(form,i)">remove_circle_outline</mat-icon>
+          </mat-chip>
+        </div>
+      </div>
+      </div>
+      <mat-divider></mat-divider>
+    </div>
+  </div>
+

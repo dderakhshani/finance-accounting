@@ -1,0 +1,69 @@
+<div class="h-100 d-flex flex-column gap-3">
+  <mat-card>
+
+    <div class="row">
+      <div class="col-4">
+        <app-combo-tree [nodes]="commodityCategories" (SelectId)="commodityCategorySelectionHandler($event)"
+                        lablelTitleCombo="انتخاب دسته بندی کالا" [isRequired]="true">
+        </app-combo-tree>
+
+      </div>
+
+
+      <div class="col-8">
+        <mat-chip-list>
+          <ng-container *ngFor="let chip of commodityCategoryChips; let i = index">
+            <mat-chip (click)="commodityCategorySelectionHandler(chip.id)">
+              {{chip.title}}
+            </mat-chip>
+            <mat-icon *ngIf="i !== (commodityCategoryChips.length - 1)">keyboard_arrow_left</mat-icon>
+          </ng-container>
+        </mat-chip-list>
+      </div>
+    </div>
+
+  </mat-card>
+
+  <mat-card class="h-100 overflow-auto" style="padding: 0!important; overflow:auto;" [class.mat-disabled]="!canAddCategoryProperty" >
+      <mat-card-content>
+          <mat-tab-group>
+              <mat-tab class="h-100 d-flex flex-column"
+                       [label]="this.form.value ? commodityCategoryDisplayFn(this.form?.value) : 'دسته بندی کالا انتخاب نشده'">
+                  <app-action-bar class="p-3" (onAdd)="add()"></app-action-bar>
+                  <app-table [tableRows]="commodityCategoryProperties"
+                             [tableConfigurations]="tableConfigurations"
+                             (paginationChanged)="get()"
+                             (rowDoubleClicked)="update($event)"
+                             height="100%">
+
+                  </app-table>
+              </mat-tab>
+             <!--  <mat-tab label="خصوصیات های ارث برده شده">
+                  <mat-accordion *ngIf="commodityCategoryProperties.length">
+                      <ng-container *ngFor="let category of commodityCategoryChips; let last = last; let i = index">
+                          <mat-expansion-panel *ngIf="!last"
+                                               [expanded]="i === (commodityCategoryChips.length - 1)">
+                              <mat-expansion-panel-header>
+                                  <mat-panel-title>
+                                      {{category.title}}
+                                  </mat-panel-title>
+                              </mat-expansion-panel-header>
+                              <app-table [tableRows]="getInheritedPropertiesByCategoryId(category.id)"
+                                         [tableConfigurations]="inheritedCategoryPropertiesTableConfigurations"
+                                         (paginationChanged)="get()"
+                                         (rowDoubleClicked)="update($event)"
+                                         height="100%">
+                              </app-table>
+                          </mat-expansion-panel>
+                      </ng-container>
+
+                  </mat-accordion>
+
+              </mat-tab> -->
+
+          </mat-tab-group>
+
+      </mat-card-content>
+  </mat-card>
+</div>
+<mat-spinner style="top:30%;right:40%;position:absolute;z-index:1000" *ngIf="_notificationService.isLoader"></mat-spinner>

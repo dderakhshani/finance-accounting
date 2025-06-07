@@ -1,0 +1,86 @@
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+
+#nullable disable
+
+namespace Eefa.Accounting.Data.Entities.Configurations
+{
+    public partial class CommodityCategoryPropertyConfiguration : IEntityTypeConfiguration<CommodityCategoryProperty>
+    {
+        public void Configure(EntityTypeBuilder<CommodityCategoryProperty> entity)
+        {
+            entity.ToTable("CommodityCategoryProperty", "common");
+
+            entity.Property(e => e.Id).HasComment("کد");
+
+            entity.Property(e => e.CategoryId).HasComment("کد گروه");
+
+            entity.Property(e => e.CreatedAt)
+                .HasDefaultValueSql("(getdate())")
+                .HasComment("تاریخ و زمان ایجاد");
+
+            entity.Property(e => e.CreatedById).HasComment("ایجاد کننده");
+
+            entity.Property(e => e.IsDeleted).HasComment("آیا حذف شده است؟");
+
+            entity.Property(e => e.LevelCode)
+                .IsRequired()
+                .HasMaxLength(50)
+                .HasComment("کد سطح");
+
+            entity.Property(e => e.MeasureId).HasComment("واحد اندازه گیری");
+
+            entity.Property(e => e.ModifiedAt)
+                .HasDefaultValueSql("(getdate())")
+                .HasComment("تاریخ و زمان اصلاح");
+
+            entity.Property(e => e.ModifiedById).HasComment("اصلاح کننده");
+
+            entity.Property(e => e.OrderIndex).HasComment("ترتیب نمایش");
+
+            entity.Property(e => e.OwnerRoleId).HasComment("نقش صاحب سند");
+
+            entity.Property(e => e.ParentId).HasComment("کد والد");
+
+            entity.Property(e => e.PropertyRule)
+                .HasMaxLength(50)
+                .HasComment("قوانین حاکم بر مولفه");
+
+            entity.Property(e => e.Title)
+                .IsRequired()
+                .HasMaxLength(50)
+                .HasComment("عنوان");
+
+            entity.Property(e => e.UniqueName)
+                .IsRequired()
+                .HasMaxLength(50)
+                .HasComment("نام اختصاصی");
+
+            entity.HasOne(d => d.CreatedBy)
+                .WithMany(p => p.CommodityCategoryPropertyCreatedBies)
+                .HasForeignKey(d => d.CreatedById)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_CommodityCategoryProperty_Users");
+
+            entity.HasOne(d => d.Measure)
+                .WithMany(p => p.CommodityCategoryProperties)
+                .HasForeignKey(d => d.MeasureId)
+                .HasConstraintName("FK_CommodityCategoryProperty_BaseValues");
+
+            entity.HasOne(d => d.ModifiedBy)
+                .WithMany(p => p.CommodityCategoryPropertyModifiedBies)
+                .HasForeignKey(d => d.ModifiedById)
+                .HasConstraintName("FK_CommodityCategoryProperty_Users1");
+
+            entity.HasOne(d => d.OwnerRole)
+                .WithMany(p => p.CommodityCategoryProperties)
+                .HasForeignKey(d => d.OwnerRoleId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_CommodityCategoryProperty_Roles");
+
+            OnConfigurePartial(entity);
+        }
+
+        partial void OnConfigurePartial(EntityTypeBuilder<CommodityCategoryProperty> entity);
+    }
+}

@@ -1,0 +1,94 @@
+[
+
+  {
+    "FieldName": "InvoiceNo",
+    "Conditions": [
+      {
+        "Condition": "Validators.StringIsNotEmpty(@InvoiceNo)",
+        "Message": {
+          "Key": "IsRequired",
+          "Values": []
+        }
+      }
+    ]
+
+  },
+  {
+    "FieldName": "DebitAccountHeadId",
+    "Conditions": [
+      {
+        "Condition": "@DebitAccountHeadId>0",
+        "Message": {
+          "Key": "IsRequired",
+          "Values": []
+        }
+      }
+    ]
+
+  },
+  {
+    "FieldName": "DebitAccountReferenceId",
+    "Conditions": [
+      {
+        "Condition": "@DebitAccountReferenceId>0",
+        "Message": {
+          "Key": "IsRequired",
+          "Values": []
+        }
+      }
+    ]
+
+  },
+  {
+    "FieldName": "DebitAccountReferenceGroupId",
+    "Conditions": [
+      {
+        "Condition": "@DebitAccountReferenceGroupId>0",
+        "Message": {
+          "Key": "IsRequired",
+          "Values": []
+        }
+      }
+    ]
+
+  },
+  {
+    "FieldName": "CreditAccountHeadId",
+    "Conditions": [
+      {
+        "Condition": "@CreditAccountHeadId>0",
+        "Message": {
+          "Key": "IsRequired",
+          "Values": []
+        }
+      }
+    ]
+
+  },
+  {
+    "FieldName": "CreditAccountReferenceId",
+    "Conditions": [
+      {
+        "Condition": "@CreditAccountReferenceId>0",
+        "Message": {
+          "Key": "IsRequired",
+          "Values": []
+        }
+      }
+    ]
+
+  },
+  {
+    "FieldName": "CreditAccountReferenceGroupId",
+    "Conditions": [
+      {
+        "Condition": "@CreditAccountReferenceGroupId>0",
+        "Message": {
+          "Key": "IsRequired",
+          "Values": []
+        }
+      }
+    ]
+
+  }
+]

@@ -1,0 +1,170 @@
+<div class="p-0" *ngIf="receipt!=undefined">
+    <mat-expansion-panel (opened)="panelOpenState = true"
+                         (closed)="panelOpenState = false">
+        <mat-expansion-panel-header style="margin-top:10px;margin-bottom:10px;">
+            <mat-panel-title style="white-space: nowrap; display: grid;align-content: center">
+                جایگذاری کالا در انبار
+            </mat-panel-title>
+            <mat-panel-description>
+                <div style="width: 100%">
+                    <div class="row mt-2">
+
+                        <div class="col-md-3">
+
+                            <mat-label>شماره رسید </mat-label>
+                            :
+                            <label>{{receipt.documentNo}}</label>
+                        </div>
+                        <div class="col-md-3">
+                            <mat-label>شماره درخواست خرید </mat-label>
+                            :
+                            <label>{{receipt.requestNo}}</label>
+                        </div>
+                        <div class="col-md-3">
+                            <mat-label>انبار تحویل گیرنده</mat-label>
+                            :
+                            <label>{{receipt.warehouseTitle}}</label>
+                        </div>
+                        <div class="col-md-3">
+
+                            <app-combo-warhouse-tree [DefaultId]="receipt.warehouseId"
+                                                     (SelectId)="WarehouseIdSelect($event)"
+                                                     [isRequired]="true"
+                                                     [lablelTitleCombo]="'انتخاب انبار جایگذاری'"
+                                                     [isLastLevel]="true">
+                            </app-combo-warhouse-tree>
+
+                        </div>
+
+                    </div>
+                </div>
+            </mat-panel-description>
+        </mat-expansion-panel-header>
+        <div class="col-md-12 mt-2" style="line-height:3;">
+            <div class="row">
+                <div class="col-md-3">
+                    <mat-label>تاریخ سند</mat-label>
+                    :
+                    <label>{{receipt.documentDate | toPersianDate}}</label>
+                </div>
+
+                <div class="col-md-3">
+                    <mat-label>تاریخ انقضا</mat-label>
+                    :
+                    <label class="label">{{receipt.expireDate | toPersianDate}}</label>
+
+
+                </div>
+                <div class="col-md-6">
+                    <mat-label> تامین کننده</mat-label>
+                    :
+                    <label>{{receipt.referenceTitle}}</label>
+                </div>
+                <div class="col-md-6">
+
+                    <mat-label>شرح</mat-label>
+                    :
+                    <label>{{receipt.documentDescription}}</label>
+                </div>
+            </div>
+
+        </div>
+    </mat-expansion-panel>
+
+</div>
+
+<mat-card class="mt-2" *ngIf="receipt?.items">
+    <table class="mat-table cdk-table mat-elevation-z8 ng-star-inserted" style="width:100%;text-align:center;">
+        <thead style="font-size:14px;">
+            <tr class="mat-header-row cdk-header-row ng-star-inserted">
+                <th  resizable >کد کالا</th>
+                <th  resizable >نام کالا </th>
+                <th  resizable >واحد کالا</th>
+                <th  resizable >واحد تحویل گرفته  شده</th>
+                <th  resizable >تعداد تحویل گرفته شده </th>
+                <th  resizable >تعداد جایگذاری</th>
+                <th  resizable >
+                    سوابق
+                </th>
+                <th  resizable >محل نگهداری پیشنهادی در انبار</th>
+                <th  resizable >عملیات</th>
+
+            </tr>
+        </thead>
+
+        <tbody *ngFor="let item of receipt?.items " id="Items">
+            <tr>
+                <td>{{item?.commodity.tadbirCode}}</td>
+                <td>{{item?.commodity.title}}</td>
+                <td>{{item?.commodity.measureTitle}}</td>
+
+                <td>{{item.documentMeasureTitle}}</td>
+                <td matTooltip="تعداد واحد دریافتی : ">{{item.quantity}}</td>
+                <td>{{item.quantityUsed}}</td>
+                <!--سوابق-->
+                <td>
+                    <table style="font-size: 10px; height:10px !important; width:100%">
+                        <tr *ngFor="let his of item?.warehouseHistories ">
+                            <td style="font-size: 10px; height:10px !important;">
+                                <button (click)="onChoseWarhouseLayout(item,his.warehouseLayoutId)" class="btn-amber-cg btn-green">
+                                    {{his.warehouseLayoutTitle}}
+
+                                </button>
+                            </td>
+                            <td style="font-size: 10px; height:10px !important;">{{his.quantity}}</td>
+                            <td style="font-size: 10px; height:10px !important;">{{his.modeTitle}}</td>
+
+                        </tr>
+                    </table>
+                </td>
+                <!--محل نگهداری پیشنهادی در انبار-->
+                <td>
+
+                    <span *ngIf="item?.warehouseLayoutQuantity?.warehouseLayoutTitle!=undefinded">
+                        {{item?.warehouseLayoutQuantity?.warehouseLayoutTitle}}
+                    </span>
+
+                    <span *ngIf="item?.warehouseLayoutQuantity?.warehouseLayoutTitle==undefinded && !receipt.isPlacementComplete">
+                        هیچ محلی یافت نشد
+                    </span>
+
+
+                </td>
+                <td *ngIf="item?.warehouseLayoutQuantity?.warehouseLayoutTitle==undefinded && item.quantityChose>0">
+                    <button mat-stroked-button color="md-red" (click)="onChoseWarhouseLayout(item,item.warehouseLayoutId)" class="btn-red">
+                        <span>
+                            انتخاب محل جایگذاری
+                        </span>
+                    </button>
+                </td>
+                <!--عملیات-->
+                <td *ngIf="item?.warehouseLayoutQuantity?.warehouseLayoutTitle!=undefinded && item.quantityChose>0">
+
+                    <button mat-stroked-button class="btn-grey" (click)="onChoseWarhouseLayout(item,item.warehouseLayoutQuantity.warehouseLayoutId)" matTooltip="تغییر و انتخاب محل جدید جایگذاری">
+                        <mat-icon>
+                            edit
+                        </mat-icon>
+
+                    </button>
+
+                    <button mat-stroked-button class="btn-grey" (click)="onChose(item,item.warehouseLayoutQuantity.warehouseLayoutId)" matTooltip="تایید و ثبت محل جایگذاری پیشنهادی">
+                        <mat-icon>
+                            done
+                        </mat-icon>
+                    </button>
+                </td>
+
+            </tr>
+        </tbody>
+    </table>
+</mat-card>
+
+<app-direct-warhouse-layout *ngIf="receipt?.items" [warhoseId]="warehouseId" [commodityId]="CommodityId" [receiptItem]="ReceiptItem" [warehouseLayoutId]="warehouseLayoutId" [isComplited]="receipt.isPlacementComplete" (SelectWarhouseLayout)="SelectWarhouseLayout($event)">
+
+</app-direct-warhouse-layout>
+<mat-spinner style="top:30%;right:40%;position:absolute;z-index:1000" *ngIf="_notificationService.isLoader"></mat-spinner>
+
+
+
+
+

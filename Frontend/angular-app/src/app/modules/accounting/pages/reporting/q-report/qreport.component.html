@@ -1,0 +1,280 @@
+<div class="h-100 d-flex flex-column overflow-auto" style="max-height: inherit; padding: 0!important;">
+
+
+  <!-- <app-accounting-report-template fetchOnInit="true" (rowDoubleClicked)="handleRowDoubleClick($event)" (printRialEmitter)="printRial($event)"
+     (downloadRialExcelEmitter)="downloadRialExcel()"
+      [shouldCreateFormFromRequest]="false" [form]="form" [request]="request" *ngIf="request" [columns]="columns" (onShowCurrencyRelatedFields)="showCurrencyFieldsStatus = $event">
+
+    </app-accounting-report-template> -->
+
+
+  <mat-card class="h-100 d-flex flex-column overflow-hidden" style="max-height: inherit; padding: 0!important;">
+    <div *ngIf="isLoading"
+      style="z-index:9999;position: absolute;left:0;top:0;bottom: 0; right: 0;background: rgba(0,0,0,0.3);"
+      class="d-flex align-items-center justify-content-center">
+      <mat-spinner></mat-spinner>
+    </div>
+
+    <mat-tab-group [(selectedIndex)]="selectedTabIndex" class="h-100 d-flex flex-column">
+      <mat-tab class="h-100 d-flex flex-column" tabindex="0" label="گزارش" [formGroup]="form">
+        <div class="w-100 p-3">
+          <div class="row w-100 p-0 m-0 ">
+            <div class="card col-12 p-0">
+              <div class="card-header d-flex flex-row gap-3">
+                <div>فیلتر</div>
+
+                <div class="d-flex flex-row gap-4">
+                  <span *ngIf="form.controls['accountHeadIds'].value.length>0" class="witch-filter">در حساب ها:
+                    <span *ngFor="let accountHeadId of form.controls['accountHeadIds'].value | slice:0:4; let i = index"
+                      class="filter">
+                      <span *ngIf="i>2">
+                        و {{form.controls['accountHeadIds'].value.length-3}} فیلتر دیگر
+                      </span>
+                      <span *ngIf="3>i">
+                        {{accountHeadDisplayFn(accountHeadId)}}،
+                      </span>
+                    </span>
+
+
+
+                  </span>
+                  <span *ngIf="form.controls['referenceGroupIds'].value.length>0" class="witch-filter">در گروه تفصیل ها:
+                    <span
+                      *ngFor="let accountReferencesGroupId of form.controls['referenceGroupIds'].value | slice:0:4; let i = index"
+                      class="filter">
+                      <span *ngIf="i>2">
+                        و {{form.controls['referenceGroupIds'].value.length-3}} فیلتر دیگر
+                      </span>
+                      <span *ngIf="3>i">
+                        {{accountReferencesGroupDisplayFn(accountReferencesGroupId)}}،
+                      </span>
+                    </span>
+                  </span>
+                  <span *ngIf="form.controls['referenceIds'].value.length>0" class="witch-filter">در تفصیل ها:
+                    <span
+                      *ngFor="let accountReferenceId of form.controls['referenceIds'].value | slice:0:4; let i = index"
+                      class="filter">
+                      <span *ngIf="i>2">
+                        و {{form.controls['referenceIds'].value.length-3}} فیلتر دیگر
+                      </span>
+                      <span *ngIf="3>i">
+                        {{accountReferenceDisplayFn(accountReferenceId)}}،
+                      </span>
+                    </span>
+                  </span>
+                  <span *ngIf="selectedCodeVoucherGroups.length>0" class="witch-filter">در نوع سندها:
+                    <span
+                      *ngFor="let codeVoucherGroupId of form.controls['codeVoucherGroupIds'].value | slice:0:4; let i = index"
+                      class="filter">
+                      <span *ngIf="i>2">
+                        و {{form.controls['codeVoucherGroupIds'].value.length-3}} فیلتر دیگر
+                      </span>
+                      <span *ngIf="3>i">
+                        {{codeVoucherGroupDisplayFn(codeVoucherGroupId)}}،
+                      </span>
+                    </span>
+                  </span>
+
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="row">
+                  <!-- <div class="col-1">
+                        <mat-form-field>
+                          <mat-label>در سطح</mat-label>
+                          <mat-select (selectionChange)="resetAccountHeadIdsFilter()" formControlName="level">
+                            <mat-option *ngFor="let level of accountLevels" [value]="level.id">
+                              {{level.title}}
+                            </mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                      </div> -->
+                  <div class="col-2">
+                    <mat-form-field>
+                      <mat-label>از تاریخ</mat-label>
+                      <input matInput [matDatepicker]="picker1" formControlName="voucherDateFrom">
+                      <mat-datepicker-toggle matSuffix [for]="picker1">
+                        <mat-icon matDatepickerToggleIcon>
+                          <img class="mb-3" src="/assets/icons/calendar.svg" alt="">
+                        </mat-icon>
+                      </mat-datepicker-toggle>
+                      <mat-datepicker #picker1></mat-datepicker>
+                    </mat-form-field>
+                  </div>
+                  <div class="col-2">
+                    <mat-form-field>
+                      <mat-label>تا تاریخ</mat-label>
+                      <input matInput [matDatepicker]="picker2" formControlName="voucherDateTo">
+                      <mat-datepicker-toggle matSuffix [for]="picker2">
+                        <mat-icon matDatepickerToggleIcon>
+                          <img class="mb-3" src="/assets/icons/calendar.svg" alt="">
+                        </mat-icon>
+                      </mat-datepicker-toggle>
+                      <mat-datepicker #picker2></mat-datepicker>
+                    </mat-form-field>
+                  </div>
+                  <div class="col-1" *ngIf="identityService.doesHavePermission('CurrencyFieldAccess')">
+                    <mat-form-field>
+                      <mat-label>نوع ارز</mat-label>
+                      <mat-select (selectionChange)="showCurrencyRelatedFields()" formControlName="currencyTypeBaseId">
+                        <mat-option *ngFor="let currency of currencyTypes" [value]="currency.id">
+                          {{currency.title}}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+
+                  <div class="col-2">
+                    <div class="row flex-column">
+                      <div>
+                        <mat-form-field>
+                          <mat-label>حساب</mat-label>
+                          <input matInput type="text" [formControl]="accountHeadControl"
+                            [matAutocomplete]="accountHeadAuto">
+
+                          <mat-autocomplete autoActiveFirstOption #accountHeadAuto="matAutocomplete"
+                            (optionSelected)="handleAccountHeadSelection($event.option.value)"
+                            [displayWith]="accountHeadDisplayFn.bind(this)">
+                            <mat-option *ngFor="let accountHead of accountHeads;let i=index" [value]="accountHead.id">
+                              {{accountHead.fullCode + ' ' + accountHead.title}}
+
+                            </mat-option>
+                          </mat-autocomplete>
+                        </mat-form-field>
+                      </div>
+
+                    </div>
+                  </div>
+
+                  <div class="col-2">
+                    <div class="row flex-column">
+                      <div>
+                        <mat-form-field>
+                          <mat-label>گروه تفصیل</mat-label>
+                          <input matInput type="text" [formControl]="accountReferencesGroupControl"
+                            [matAutocomplete]="accountReferencesGroupAuto">
+
+                          <mat-autocomplete autoActiveFirstOption #accountReferencesGroupAuto="matAutocomplete"
+                            (optionSelected)="handleAccountReferencesGroupSelection($event.option.value)"
+                            [displayWith]="accountReferencesGroupDisplayFn.bind(this)">
+                            <mat-option *ngFor="let accountReferencesGroup of accountReferencesGroups"
+                              [value]="accountReferencesGroup.id">
+                              {{accountReferencesGroup.code + ' ' + accountReferencesGroup.title}}
+                            </mat-option>
+                          </mat-autocomplete>
+                        </mat-form-field>
+                      </div>
+
+                    </div>
+                  </div>
+
+                  <div class="col-2">
+                    <div class="row">
+                      <div>
+                        <mat-form-field>
+                          <mat-label>تفصیل</mat-label>
+                          <input matInput type="text" [formControl]="accountReferenceControl"
+                            [matAutocomplete]="accountReferenceAuto">
+
+                          <mat-autocomplete autoActiveFirstOption #accountReferenceAuto="matAutocomplete"
+                            (optionSelected)="handleAccountReferenceSelection($event.option.value)"
+                            [displayWith]="accountReferenceDisplayFn.bind(this)">
+                            <mat-option *ngFor="let accountReference of accountReferences"
+                              [value]="accountReference.id">
+                              {{accountReference.code + ' ' + accountReference.title}}
+                            </mat-option>
+                          </mat-autocomplete>
+                        </mat-form-field>
+                      </div>
+
+                    </div>
+                  </div>
+
+                  <div class="col-1">
+                    <div class="row">
+                      <button (click)="get(true)" class="col-12 " color="primary" mat-raised-button>دریافت
+                        گزارش</button>
+                      <button (click)="removeAllFilters()" class="col-12 me-1 mt-1" color="primary"
+                        mat-raised-button>حذف فیلترها</button>
+
+                    </div>
+                  </div>
+
+
+                </div>
+
+                <div class="row">
+                  <div class="col-2"></div>
+                  <div class="col-2"></div>
+                  <div class="col-1"></div>
+                  <div class="col-2">
+                    <div>
+                      <mat-chip-list>
+                          <span *ngIf="form.controls['accountHeadIds'].value.length>0"
+                                style="color: #d51e1e;font-size: 13px;">تعداد فیلترها:
+                            {{form.controls['accountHeadIds'].value.length}}
+                          </span>
+                      </mat-chip-list>
+
+                    </div>
+                  </div>
+                  <div class="col-2">
+                    <div>
+                      <mat-chip-list>
+                          <span *ngIf="form.controls['referenceGroupIds'].value.length>0"
+                                style="color: #d51e1e;font-size: 13px;">تعداد فیلترها:
+                            {{form.controls['referenceGroupIds'].value.length}}
+                          </span>
+                      </mat-chip-list>
+                    </div>
+                  </div>
+                  <div class="col-2">
+                    <div>
+                      <mat-chip-list>
+                          <span *ngIf="form.controls['referenceIds'].value.length>0"
+                                style="color: #d51e1e;font-size: 13px;">تعداد فیلترها:
+                            {{form.controls['referenceIds'].value.length}}
+
+                          </span>
+                      </mat-chip-list>
+                    </div>
+                  </div>
+                  <div class="col-1"></div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="h-100 overflow-auto">
+          <app-table (rowSelected)="updateTotalCreditAndTotalDebit()"
+            (allRowsSelected)="updateTotalCreditAndTotalDebit()" (rowDoubleClicked)="handleRowDoubleClick($event)"
+            [tableConfigurations]="tableConfigurations" (exportData)="exportFile($event)" [tableRows]="reportResult"
+            (filtersChanged)="''" (sortChanged)="''" (paginationChanged)=" ''">
+
+            <div footerContent>
+              <div class="me-auto d-flex flex-row gap-1">
+                <button color="primary" mat-raised-button (click)="printRial()">
+                  <mat-icon>print</mat-icon>
+                  <mat-label> چاپ</mat-label>
+                </button>
+
+
+                <!-- <button mat-raised-button color="primary" [matMenuTriggerFor]="rialExportActions">
+                      <mat-label> چاپ</mat-label>
+                      <mat-icon>print</mat-icon>
+                    </button>
+                    <mat-menu #rialExportActions="matMenu">
+                      <button mat-menu-item (click)="printRial()">چاپ </button>
+                      <button mat-menu-item (click)="downloadRialExcel()">دانلود Excel</button>
+                    </mat-menu> -->
+
+
+              </div>
+            </div>
+          </app-table>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+  </mat-card>
+</div>

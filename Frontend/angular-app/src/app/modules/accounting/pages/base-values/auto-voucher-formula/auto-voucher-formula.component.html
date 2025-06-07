@@ -1,0 +1,74 @@
+<div class="h-100 d-flex flex-column gap-3" style="max-height: inherit;">
+    <div 
+         style="z-index:9999;position: absolute;left:0;top:0;bottom: 0; right: 0;background: rgba(0,0,0,0.3);"
+         class="d-flex align-items-center justify-content-center">
+      <mat-spinner></mat-spinner>
+    </div>
+    <app-action-bar (onSave)="submit()" (onAdd)="reset()"
+                    (onList)="navigateToAccountReferencesList()"></app-action-bar>
+  
+    <mat-card>
+      <div [formGroup]="form">
+        <div class="row">
+          <div class="col-12">
+            <div class="row">
+              <div class="col-3">
+                <mat-form-field>
+                  <mat-label class="asterix--before">عنوان</mat-label>
+                  <input type="text" matInput formControlName="title">
+                </mat-form-field>
+              </div>
+              <div class="col-3">
+                <mat-form-field>
+                  <mat-label>شرح</mat-label>
+                  <input type="text" matInput formControlName="description">
+                </mat-form-field>
+              </div>
+              <div class="col-3">
+                <mat-form-field>
+                  <mat-label class="asterix--before">کد حسابداری</mat-label>
+                  <input type="text" matInput formControlName="code">
+                </mat-form-field>
+              </div>
+              <div class="col-3" *ngIf="pageMode === pageModes.Add">
+                <mat-form-field>
+                  <mat-label>نوع کد تفصیل</mat-label>
+                  <mat-select formControlName="accountReferenceTypeBaseId">
+                    <mat-option *ngFor="let accountReferenceType of accountReferenceTypes" [value]="accountReferenceType.id">
+                      {{accountReferenceType.value + ' ' + accountReferenceType.title}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div class="col-2">
+                <mat-checkbox color="primary" formControlName="isActive">
+                  <mat-label>فعال است</mat-label>
+                </mat-checkbox>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </mat-card>  
+    <mat-card class="h-100 overflow-auto p-0" [class.mat-disabled]="pageMode === pageModes.Add">
+    <mat-tab-group class="h-100">
+      <mat-tab label="گروه ها">
+        <app-tree (onSelect)="handleGroupSelection($event)"
+                  [selectable]="true"
+                  [useNew]="true"
+                  [rawNodes]="accountReferencesGroups"></app-tree>
+      </mat-tab>
+      <mat-tab label="ارتباط مستقیم به معین">
+        <app-tree (onSelect)="handleAccountHeadSelection($event)"
+                  [selectable]="true"
+                  [useNew]="true"
+                  [rawNodes]="accountHeads"></app-tree>
+      </mat-tab>
+    </mat-tab-group>
+  
+    </mat-card>
+  
+  </div>
+  
+  
+  

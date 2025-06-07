@@ -1,0 +1,82 @@
+[
+
+  {
+    "FieldName": "WarehouseId",
+    "Conditions": [
+      {
+        "Condition": "@WarehouseId>0",
+        "Message": {
+          "Key": "IsRequired",
+          "Values": []
+        }
+      }
+    ]
+
+  },
+  {
+    "FieldName": "Title",
+    "Conditions": [
+      {
+        "Condition": "Validators.StringIsNotEmpty(@Title)",
+        "Message": {
+          "Key": "IsRequired",
+          "Values": []
+        }
+      }
+    ]
+
+  },
+  {
+    "FieldName": "Status",
+    "Conditions": [
+      {
+        "Condition": "@Status>=0",
+        "Message": {
+          "Key": "IsRequired",
+          "Values": []
+        }
+      }
+    ]
+
+  },
+  {
+    "FieldName": "EntryMode",
+    "Conditions": [
+      {
+        "Condition": "@EntryMode>=0",
+        "Message": {
+          "Key": "IsRequired",
+          "Values": []
+        }
+      }
+    ]
+
+  },
+  {
+    "FieldName": "Capacity",
+    "Conditions": [
+      {
+        "Condition": "@Capacity>=0",
+        "Message": {
+          "Key": "IsRequired",
+          "Values": []
+        }
+      }
+    ]
+
+  },
+
+  {
+    "FieldName": "ChildCount",
+    "Conditions": [
+      {
+        "Condition": "@ChildCount>0",
+        "Message": {
+          "Key": "IsRequired",
+          "Values": []
+        }
+      }
+    ]
+
+  } 
+]

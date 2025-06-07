@@ -1,0 +1,15 @@
+
+.btn-tab {
+  margin-top: 20px !important;
+  width: 200px;
+  height: 40px;
+  border-radius: 0.5rem !important;
+}
+
+mat-icon {
+
+  //transform: scale(1) !important;  is by default in the material design how ingnoring it
+
+  transform: none !important;
+
+}

@@ -1,0 +1,564 @@
+
+
+<div class="h-100 d-flex flex-column overflow-auto gap-3" style="max-height: inherit; padding: 0!important;">
+    {{messsage}}
+
+    <app-form-actions (onEdit)="update()" *ngIf="correctionRequest?.status==0">
+
+       <!--  <button mat-raised-button color="primary" matTooltip="ذخیره کامل اطلاعات" (click)="update()" [disabled]="_notificationService.isLoader" id="Save" *ngIf="Service.identityService.doesHavePermission('ConfirmChangeRequest')">
+            <mat-icon>
+                check
+            </mat-icon>
+            تایید و ذخیره سازی
+        </button> -->
+
+        <button mat-raised-button color="primary" matTooltip="ذخیره کامل اطلاعات" (click)="update()" [disabled]="_notificationService.isLoader" id="Save" >
+            <mat-icon>
+                check
+            </mat-icon>
+            تایید و ذخیره سازی
+        </button>
+
+        <span class="btn-link" *ngIf="editType==4" style="font-size:20px;">
+            تغییر کرایه حمل
+        </span>
+
+        <!-- <button mat-raised-button color="primary" matTooltip="ذخیره کامل اطلاعات" (click)="updateCorrectionRequest(2)" [disabled]="_notificationService.isLoader">
+        <mat-icon class="text-danger">
+            priority_high
+        </mat-icon>
+        عدم تایید
+    </button> -->
+    </app-form-actions>
+    <!--آیتم های غیرقابل تغییر-->
+    <mat-card>
+        <div class="row ">
+
+            <div class="col-md-3">
+
+                <mat-label class="mat-label">نوع رسید</mat-label>
+                :
+                <label>{{receipt?.codeVoucherGroupTitle}}</label>
+            </div>
+
+            <div class="col-md-2">
+                <mat-label class="mat-label">شماره مالی </mat-label>
+                :
+                <label>{{receipt?.documentId}}</label>
+
+            </div>
+
+
+
+            <div class="col-md-2" *ngIf="oldPayLoad?.voucherHeadId">
+                <mat-label class="mat-label">شماره سند مکانیزه</mat-label>
+                :<label class="btn-link" (click)="navigateToVoucher()">{{receipt?.voucherNo}}</label>
+
+            </div>
+            <div class="col-md-4" *ngIf="receipt?.invoiceDate">
+
+                <div class="row">
+
+                    <div class="col-md-6">
+                        <mat-label class="mat-label">تاریخ مالی :</mat-label>
+                        <label>{{oldPayLoad?.invoiceDate | toPersianDate}}</label>
+                    </div>
+                    <div class="col-md-6" *ngIf="oldPayLoad.invoiceDate!=form.controls.invoiceDate.value">
+                        <label [ngClass]="{'text-danger' : oldPayLoad.invoiceDate!=form.controls.invoiceDate.value}">{{form.controls.invoiceDate.value | toPersianDate}}</label>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </mat-card>
+    <!--Files-->
+    <div class="row">
+        <div *ngIf="attachmentIds.length>0">
+            <app-uploader class="d-flex justify-content-center"
+                          [autoUpload]="true"
+                          (filesChange)="files=$event"
+                          (isUploadingChange)="isUploading"
+                          [attachmentsModel]="attachmentsModel"
+                          [attachmentIds]="attachmentIds"
+                          [allowFileUpload]="false">
+            </app-uploader>
+        </div>
+    </div>
+    <!--آیتم های قابل تغییر--------------------------->
+    <mat-card *ngIf="receipt!=undefined" [formGroup]="form" class="h-100 overflow-auto p-0">
+
+
+        <div class="row">
+
+
+            <div class="col-md-6">
+                <mat-label class="mat-label">سرفصل حساب بدهکار</mat-label>
+                <div class="row">
+                    <div class="col-md-6">
+                        <app-combo-account-head-tree [DefaultId]="oldPayLoad.debitAccountHeadId"
+                                                     [lablelTitleCombo]="'سرفصل حساب بدهکار اولیه'"
+                                                     [isLastLevel]="false"
+                                                     [isDisable]="true">
+                        </app-combo-account-head-tree>
+                    </div>
+                    <div class="col-md-6 ">
+                        <app-combo-account-head-tree [DefaultId]="form.controls.debitAccountHeadId.value"
+                                                     [isDisable]="true"
+                                                     [lablelTitleCombo]="'سرفصل حساب بدهکار تغییر یافته'"
+                                                     [isLastLevel]="false"
+                                                     [ngClass]="{'text-danger' : oldPayLoad.debitAccountHeadId!=form.controls.debitAccountHeadId.value}">
+                        </app-combo-account-head-tree>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <mat-label class="mat-label">سرفصل حساب بستانکار</mat-label>
+                <div class="row">
+                    <div class="col-md-6">
+                        <app-combo-account-head-tree [DefaultId]="oldPayLoad?.creditAccountHeadId"
+                                                     [isDisable]="true"
+                                                     [lablelTitleCombo]="'سرفصل حساب بستانکار اولیه'"
+                                                     [isLastLevel]="false">
+                        </app-combo-account-head-tree>
+                    </div>
+                    <div class="col-md-6">
+                        <app-combo-account-head-tree [DefaultId]="form.controls.creditAccountHeadId.value"
+                                                     [isDisable]="true"
+                                                     [lablelTitleCombo]="'سرفصل حساب بستانکار تغییر یافته'"
+                                                     [isLastLevel]="false"
+                                                     [ngClass]="{'text-danger' : oldPayLoad.creditAccountHeadId!=form.controls.creditAccountHeadId.value}">
+                        </app-combo-account-head-tree>
+                    </div>
+                </div>
+
+
+            </div>
+
+            <div class="col-md-6 ">
+                <mat-label class="mat-label">حساب بدهکار</mat-label>
+                <div class="row">
+                    <div class="col-md-6">
+                        <app-combo-account-refrence [DefaultId]="oldPayLoad.debitAccountReferenceId"
+                                                    [lablelTitleCombo]="'حساب بدهکار اولیه'"
+                                                    [isDisable]="true">
+                        </app-combo-account-refrence>
+                    </div>
+                    <div class="col-md-6">
+                        <app-combo-account-refrence [DefaultId]="form.controls.debitAccountReferenceId.value"
+                                                    [lablelTitleCombo]="'حساب بدهکار تغییر یافته'"
+                                                    [isDisable]="true"
+                                                    [ngClass]="{'text-danger' : oldPayLoad.debitAccountReferenceId!=form.controls.debitAccountReferenceId.value}">
+                        </app-combo-account-refrence>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 ">
+                <mat-label class="mat-label">حساب بستانکار</mat-label>
+                <div class="row">
+                    <div class="col-md-6">
+                        <app-combo-account-refrence [DefaultId]="oldPayLoad?.creditAccountReferenceId"
+                                                    [lablelTitleCombo]="'حساب بستانکار اولیه'"
+                                                    [isDisable]="true">
+                        </app-combo-account-refrence>
+                    </div>
+                    <div class="col-md-6">
+                        <app-combo-account-refrence [DefaultId]="form.controls.creditAccountReferenceId.value"
+                                                    [lablelTitleCombo]="'حساب بستانکار تغییر یافته'"
+                                                    [isDisable]="true"
+                                                    [ngClass]="{'text-danger' : oldPayLoad.creditAccountReferenceId!=form.controls.creditAccountReferenceId.value}">
+                        </app-combo-account-refrence>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 ">
+                <mat-label class="mat-label">شماره عملیات مالی</mat-label>
+                <div class="row">
+                    <div class="col-md-6">
+                        <mat-form-field>
+                            <mat-label>شماره عملیات مالی اولیه</mat-label>
+                            <input matInput
+                                   type="text"
+                                   [value]="oldPayLoad?.financialOperationNumber!=undefined?oldPayLoad?.financialOperationNumber:0"
+                                   [readonly]="true">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-6">
+                        <mat-form-field>
+                            <mat-label>شماره عملیات مالی تغییر یافته</mat-label>
+                            <input matInput
+                                   type="text"
+                                   formControlName="financialOperationNumber"
+                                   [readonly]="true"
+                                   [ngClass]="{'text-danger' : oldPayLoad.financialOperationNumber!=form.controls.financialOperationNumber.value}">
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <mat-label class="mat-label">شماره صورتحساب </mat-label>
+                <div class="row">
+                    <div class="col-md-6">
+                        <mat-form-field>
+                            <mat-label>شماره صورتحساب اولیه</mat-label>
+                            <input matInput type="text"
+                                   [value]="oldPayLoad?.invoiceNo!=undefined?oldPayLoad?.invoiceNo:''"
+                                   [readonly]="true">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-6">
+                        <mat-form-field>
+                            <mat-label>شماره صورتحساب یافته</mat-label>
+                            <input matInput type="text"
+                                   formControlName="invoiceNo"
+                                   [readonly]="true"
+                                   [ngClass]="{'text-danger' : oldPayLoad.invoiceNo!=form.controls.invoiceNo.value}">
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="row">
+                    <mat-label class="mat-label">سرفصل حساب هزینه اضافی </mat-label>
+                    <div class="col-md-6 form-group">
+
+                        <app-combo-account-head-tree [DefaultId]="oldPayLoad.extraCostAccountHeadId"
+
+                                                     [isRequired]="false"
+                                                     [isDisable]="true"
+                                                     [lablelTitleCombo]="'سرفصل حساب هزینه اضافی اولیه'"
+                                                     [isLastLevel]="true">
+                        </app-combo-account-head-tree>
+
+                    </div>
+                    <div class="col-md-6 form-group">
+
+                        <app-combo-account-head-tree [DefaultId]="form.controls.extraCostAccountHeadId.value"
+
+                                                     [isRequired]="false"
+                                                     [isDisable]="true"
+                                                     [lablelTitleCombo]="' سرفصل حساب هزینه اضافی تغییر یافته'"
+                                                     [isLastLevel]="true"
+                                                     [ngClass]="{'text-danger' : oldPayLoad.extraCostAccountHeadId!=form.controls.extraCostAccountHeadId.value}">
+                        </app-combo-account-head-tree>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="row">
+                    <mat-label class="mat-label">حساب هزینه اضافی </mat-label>
+                    <div class="col-md-6 form-group">
+
+                        <app-combo-account-refrence [DefaultId]="oldPayLoad.extraCostAccountReferenceId"
+
+                                                    [lablelTitleCombo]="'حساب هزینه اضافی اولیه'"
+                                                    [isRequired]="false"
+                                                    [isDisable]="true"
+                                                    [accountReferencesGroupsId]="oldPayLoad.extraCostAccountReferenceGroupId">
+                        </app-combo-account-refrence>
+
+                    </div>
+                    <div class="col-md-6 form-group">
+
+                        <app-combo-account-refrence [DefaultId]="form.controls.extraCostAccountReferenceId.value"
+
+                                                    [lablelTitleCombo]="'حساب هزینه اضافی تغییر یافته'"
+                                                    [isRequired]="false"
+                                                    [isDisable]="true"
+                                                    [accountReferencesGroupsId]="form.controls.extraCostAccountReferenceGroupId.value"
+                                                    [ngClass]="{'text-danger' : oldPayLoad.extraCostAccountReferenceId!=form.controls.extraCostAccountReferenceId.value}">
+                        </app-combo-account-refrence>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+
+            <div class="row border-dash">
+                <div class="col-md-3">
+
+                    <mat-label class="mat-label"> مالیات ارزش افزوده</mat-label>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <mat-form-field>
+                                <mat-label>مالیات ارزش افزوده اولیه</mat-label>
+                                <input matInput type="text"
+                                       [value]="oldPayLoad?.vatDutiesTax"
+                                       [readonly]="true">
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-6">
+                            <mat-form-field>
+                                <mat-label>مالیات ارزش افزوده تغییر یافته</mat-label>
+                                <input matInput type="text"
+                                       formControlName="vatDutiesTax"
+                                       [readonly]="true"
+                                       [ngClass]="{'text-danger' : oldPayLoad.vatDutiesTax!=form.controls.vatDutiesTax.value }">
+                            </mat-form-field>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+
+                    <mat-label class="mat-label"> مبلغ تسهیم</mat-label>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <mat-form-field>
+                                <mat-label>مبلغ تسهیم اولیه</mat-label>
+                                <input matInput type="text"
+                                       [value]="oldPayLoad?.extraCostCurrency!=undefined?oldPayLoad?.extraCostCurrency:0"
+                                       [readonly]="true">
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-6">
+                            <mat-form-field>
+                                <mat-label>مبلغ تسهیم تغییر یافته</mat-label>
+                                <input matInput type="text"
+                                       formControlName="extraCostCurrency"
+                                       [readonly]="true"
+                                       [ngClass]="{'text-danger' : oldPayLoad.extraCostCurrency!=form.controls.extraCostCurrency.value}">
+                            </mat-form-field>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <mat-label class="mat-label">هزینه اضافه</mat-label>
+                    <div class="row">
+
+                        <div class="col-md-6">
+                            <mat-form-field>
+                                <mat-label>هزینه اضافه اولیه</mat-label>
+                                <input matInput type="text"
+                                       [value]="oldPayLoad?.extraCost!=undefined?oldPayLoad?.extraCost:0"
+                                       [readonly]="true">
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-6">
+                            <mat-form-field>
+                                <mat-label>هزینه اضافه یافته</mat-label>
+                                <input matInput type="text"
+                                       formControlName="extraCost"
+                                       [readonly]="true"
+                                       [ngClass]="{'text-danger' : oldPayLoad.extraCost!=form.controls.extraCost.value}">
+                            </mat-form-field>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+
+                <div class="col-md-3">
+                    <mat-label class="mat-label">هزینه به جمع کل اضافه شود؟</mat-label>
+                    <div class="row">
+
+                        <div class="col-md-6">
+
+                            <mat-checkbox [(ngModel)]="oldPayLoad.isFreightChargePaid" color="primary" disabled>
+
+                            </mat-checkbox>
+                            <mat-label class="font-11">اولیه</mat-label>
+
+
+                        </div>
+                        <div class="col-md-6">
+
+                            <mat-checkbox formControlName="isFreightChargePaid"
+                                          color="primary"
+                                          [ngClass]="{'text-danger' : oldPayLoad.isFreightChargePaid!=form.controls.isFreightChargePaid.value}"
+                                          disabled>
+
+                            </mat-checkbox>
+                            <mat-label class="font-11">تغییر یافته</mat-label>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+            <div class="row border-dash line">
+                <div class="row">
+
+                    <div class="col-md-6 ">
+                        <mat-label class="mat-label"> برچسب اولیه</mat-label>
+                        :
+                        <label *ngFor="let item of oldPayLoad.tagArray">{{item}} - </label>
+                    </div>
+                    <div class="col-md-6 ">
+                        <mat-label class="mat-label"> برچسب تغییر یافته</mat-label>
+                        :
+                        <label *ngFor="let item of oldPayLoad.tagArray">{{item}} - </label>
+                    </div>
+                </div>
+                <div class="row">
+
+                    <div class="col-md-6 ">
+                        <mat-label class="mat-label">شرح اولیه</mat-label>
+                        :
+                        <label class="font-13">{{oldPayLoad?.documentDescription}}</label>
+                    </div>
+
+                    <div class="col-md-6 " [ngClass]="{'text-danger' : oldPayLoad.documentDescription!=form.controls.documentDescription.value}">
+                        <mat-label class="mat-label">شرح تغییر یافته</mat-label>
+                        :
+                        <label class="font-13">{{form.controls.documentDescription.value}}</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <mat-spinner style="top:30%;right:40%;position:absolute;z-index:1000" *ngIf="_notificationService.isLoader"></mat-spinner>
+        <div class="row border-dash line" *ngIf="editType!=4">
+            <div class="col-md-8">
+            </div>
+            <div class="col-md-3">
+                <mat-label class="btn-link">جمع کل قابل پرداخت</mat-label>
+                <div class="row">
+
+                    <div class="col-md-6">
+
+                        <span [ngClass]="{'decoration' :oldPayLoad.totalItemPrice!=form.controls.totalItemPrice.value}">
+                            {{oldPayLoad?.totalItemPrice  | number : '1.0-0'}}
+                        </span>
+
+                    </div>
+                    <div class="col-md-6">
+
+                        <span [ngClass]="{'text-danger' : oldPayLoad.totalItemPrice!=form.controls.totalItemPrice.value}">
+                            {{form.controls.totalItemPrice.value  | number : '1.0-0'}}
+                        </span>
+
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+        <div class="col-md-12 mt-2" *ngIf="editType!=4">
+            <mat-card class="mt-2" *ngIf="oldPayLoad?.receiptDocumentItems">
+                <table class="mas-table">
+                    <thead>
+                        <tr>
+                            <th  resizable >ردیف</th>
+                            <th  resizable >کالا</th>
+
+                            <th  resizable >تعداد کالا</th>
+
+                            <th  resizable >
+                                قیمت واحد
+                            </th>
+                            <th  resizable >
+                                مبلغ کل ریالی
+                            </th>
+                            <th  resizable >
+                                مبلغ ارزی
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody *ngFor="let item of oldPayLoad?.receiptDocumentItems ;let i = index " id="Items">
+                        <tr>
+                            <th class="width-3">{{i+1}}</th>
+                            <td>
+
+                                <app-combo-commodity [DefaultId]="item.commodityId"
+                                                     [isRequired]="true"
+                                                     [readonly]="true"
+                                                     style="text-align:right !important">
+                                </app-combo-commodity>
+                            </td>
+
+                            <td>
+
+                                <samp [ngClass]="{'decoration' :payLoad?.receiptDocumentItems[i]?.quantity!=item.quantity}">
+
+                                    {{item.quantity}}
+                                </samp>
+
+
+                                <samp class="text-danger" *ngIf="payLoad?.receiptDocumentItems[i]?.quantity!=item.quantity">
+                                    <br />
+                                    {{payLoad?.receiptDocumentItems[i]?.quantity}}
+                                </samp>
+                            </td>
+
+
+                            <td>
+                                <!--قیمت واحد-->
+
+                                <samp [ngClass]="{'decoration' :payLoad?.receiptDocumentItems[i]?.unitPrice-item.unitPrice>=1 || payLoad?.receiptDocumentItems[i]?.unitPrice-item.unitPrice<=-1 }">
+                                    {{item.unitPrice | number : '1.0-2'}}
+                                </samp>
+
+                                <samp class="text-danger" *ngIf="payLoad?.receiptDocumentItems[i]?.unitPrice-item.unitPrice>1 || payLoad?.receiptDocumentItems[i]?.unitPrice-item.unitPrice<=-1">
+                                    <br />
+                                    {{payLoad?.receiptDocumentItems[i]?.unitPrice | number : '1.0-2'}}
+
+
+                                </samp>
+
+                            </td>
+                            <td>
+                                <!--قیمت کل-->
+                                <samp [ngClass]="{'decoration' :payLoad?.receiptDocumentItems[i]?.productionCost-item.productionCost>=1 || payLoad?.receiptDocumentItems[i]?.productionCost-item.productionCost<=-1}">
+                                    {{item.productionCost | number : '1.0-2'}}
+                                </samp>
+
+                                <samp class="text-danger" *ngIf="payLoad?.receiptDocumentItems[i]?.productionCost-item.productionCost>=1 ||  payLoad?.receiptDocumentItems[i]?.productionCost-item.productionCost<=-1">
+                                    <br />
+                                    {{payLoad?.receiptDocumentItems[i]?.productionCost | number : '1.0-2'}}
+                                </samp>
+                            </td>
+                            <td>
+                                <samp [ngClass]="{'decoration' :payLoad?.receiptDocumentItems[i]?.currencyPrice-item.currencyPrice>=1 || payLoad?.receiptDocumentItems[i]?.currencyPrice-item.currencyPrice<=-1}">
+                                    {{item.currencyPrice | number : '1.0-2'}}
+                                </samp>
+
+                                <samp class="text-danger" *ngIf="payLoad?.receiptDocumentItems[i]?.currencyPrice-item.currencyPrice>=1 || payLoad?.receiptDocumentItems[i]?.currencyPrice-item.currencyPrice<=-1">
+                                    <br />
+                                    {{payLoad?.receiptDocumentItems[i]?.currencyPrice | number : '1.0-2'}}
+                                </samp>
+                            </td>
+
+
+                        </tr>
+                    </tbody>
+
+                </table>
+
+            </mat-card>
+
+
+        </div>
+
+    </mat-card>
+
+
+
+
+
+
+</div>
+

@@ -1,0 +1,56 @@
+@import "/src/assets/scss/variables";
+.table th {
+  font-size: 12px !important;
+  background:color(primary,20) !important;
+
+}
+.table > thead
+{
+  border: solid 1px color(primary,50) !important;
+
+}
+.table tr {
+  border: solid 1px color(primary,50) !important;
+  vertical-align: middle !important;
+}
+.table tbody{
+  border: solid 1px color(primary,500) !important;
+}
+.btn-add{
+  background: color(accent,100) !important;
+  color: color(primary,500) !important;
+  margin-right: 15px !important;
+}
+
+
+  .mat-icon{
+    color: color(primary,500) !important;
+  }
+
+.error{
+
+  color:red;
+  font-size: 14px;
+}
+
+.mat-raised-button {
+    box-shadow:unset !important;
+}
+.mat-card{
+  padding: unset !important;
+  box-shadow:unset!important;
+}
+.lock{
+  color:color(md-red,500)!important;
+}
+.lock_clock {
+  color:color(md-red,A700)!important;
+}
+.login{
+  color:color(success,500)!important;
+}
+.logout{
+  color:color(md-amber,500)!important;
+
+}
+

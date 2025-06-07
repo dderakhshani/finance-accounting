@@ -1,0 +1,103 @@
+<app-form-actions [actions]="formActions"  (OnAdd)="reset()">
+
+  <button matTooltip="نسخه چاپی" (click)="print(DivId)" mat-raised-button color="primary" >
+    <mat-icon>print</mat-icon>
+    ارسال به چاپگر
+  </button>
+</app-form-actions>
+
+<div>
+
+  <div id="{{DivId}}" class="mt-2">
+    <table class="mainTable">
+      <tr id="header">
+        <td style="width:25% ;text-align:center;border-left:unset" class="header-tr">
+          <img src="/assets/images/logo.png" />
+        </td>
+        <td style="width:50%" class="header-tr">
+          <h3 style="text-align:center">
+            برگه تایید کالا
+          </h3>
+        </td>
+        <td style="width: 25% ;text-align:right; border-right: unset" class="header-tr">
+          <p>
+            تاریخ رسید {{receipt?.documentDate | toPersianDate}}
+          </p>
+          <!--<p>
+            شماره رسید {{receipt?.documentNo}}
+          </p>-->
+        </td>
+
+      </tr>
+      <tr id="obligation">
+        <td style="width:50%" class="col" colspan="3">
+
+          اینجاب ..<i>{{receipt?.requesterReferenceTitle}}</i>..مسئول ...........................اقلام زیر را بررسی نموده و نتیجه به شرح زیر می باشد
+        </td>
+      </tr>
+      <tr id="contains">
+        <td colspan="3">
+          <table style="width:100%" class="containsTable">
+            <thead>
+              <tr>
+                <th style="width:25%">کد کالا</th>
+                <th style="width:25%">شرح کالا</th>
+                <th class="width-20">توضیحات</th>
+                <th class="width-5">تعداد</th>
+
+                <th class="width-5">واحد</th>
+                <th class="width-5">تایید</th>
+                <th class="width-5">عدم تایید</th>
+                <th class="width-10">شماره درخواست</th>
+                <th class="width-10">شماره رسید</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of receipt?.items">
+                <td>{{item.commodity?.tadbirCode}}</td>
+                <td>{{item.commodity?.title}}</td>
+                <td>{{item.description}}</td>
+                <td>{{item.quantity}}</td>
+                <td>{{item.commodity?.measureTitle}}</td>
+                <td></td>
+                <td></td>
+                <td>{{item.requestNo}}</td>
+                <td>{{item.documentNo}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+
+      </tr>
+      <tr id="footer">
+        <td colspan="3">
+          <table style="width:100%">
+            <tr>
+              <td style="width:50%" class="col">
+                نام و امضا انباردار :
+              </td>
+              <td style="width:50%" class="col">
+                نام و امضا بررسی کننده :<i>{{receipt?.requesterReferenceTitle}}</i>
+              </td>
+            </tr>
+          </table>
+
+        </td>
+
+      </tr>
+    </table>
+    <table style="width: 100%; font-size: 10px">
+      <tr>
+        <td style="width: 50%; padding: 10px">
+          تاریخ بازنگری :96/05/18
+        </td>
+        <td style="width: 50%; text-align: left; padding: 10px">
+          ST-F11/02
+        </td>
+      </tr>
+    </table>
+  </div>
+  <mat-spinner style="top:30%;right:40%;  position:absolute" *ngIf="_notificationService.isLoader"></mat-spinner>
+
+</div>
+

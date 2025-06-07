@@ -1,0 +1,41 @@
+@import "/src/assets/scss/variables";
+
+.btn-color {
+  color: color(md-grey,500) !important;
+ 
+}
+
+.mat-card {
+  padding: 15px !important;
+  margin:5px;
+}
+
+.disabled {
+  pointer-events: none;
+}
+.label {
+  font-size: 12px;
+}
+mat-label {
+  font-size: 14px;
+  color: color(primary,500);
+}
+
+.line {
+  line-height: 2.5
+}
+
+.mat-elevation-z8 {
+  box-shadow: unset !important;
+}
+.title {
+  font-size: 15px;
+  color: color(md-green,500);
+  word-wrap: break-word !important;
+}
+mat-panel-title {
+  white-space:unset !important;
+}
+.mat-hearder {
+  background-color: color(primary,100) !important;
+}

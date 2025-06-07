@@ -1,0 +1,39 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+     <TargetFramework>net8.0</TargetFramework>
+  </PropertyGroup>
+
+	<PropertyGroup>
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+		<NoWarn>1701;1702;1591;1998</NoWarn>
+		<LangVersion>preview</LangVersion>
+		<UserSecretsId>b1f207cc-4927-4fba-bcf0-43a14a66ac12</UserSecretsId>
+	</PropertyGroup>
+  
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>obj\Debug\net8.0\Eefa.Inventory.WebApi.xml</DocumentationFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <_WebToolingArtifacts Remove="Properties\PublishProfiles\DevIISProfile.pubxml" />
+    <_WebToolingArtifacts Remove="Properties\PublishProfiles\FactoryDevIISProfile.pubxml" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="ExcelDataReader" Version="3.6.0" />
+    <PackageReference Include="Microsoft.Office.Interop.Excel" Version="15.0.4795.1001" />
+    <PackageReference Include="NLog" Version="5.0.4" />
+    <PackageReference Include="NLog.Extensions.Logging" Version="5.0.4" />
+    <PackageReference Include="NLog.Web.AspNetCore" Version="5.1.4" />
+    <PackageReference Include="ServiceStack.Text" Version="5.12.0" />
+    <PackageReference Include="System.Data.OleDb" Version="7.0.0" />
+  </ItemGroup>
+  <ItemGroup>   
+    <ProjectReference Include="..\Eefa.Inventory.Application\Eefa.Inventory.Application.csproj" />
+    <ProjectReference Include="..\Eefa.Invertory.Infrastructure\Eefa.Invertory.Infrastructure.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Controllers\WarehouseManagement\" />
+    <Folder Include="InternalLog\" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,35 @@
+<div class="h-100 d-flex flex-column">
+  <app-action-bar class="p-3" (onAdd)="add()" (onDelete)="delete()" (onCustomClick)="handleCustomActions($event)">
+      <div class="d-flex flex-row gap-2">
+          <mat-checkbox color='primary' [(ngModel)]="autoFillNextArticle" [checked]="autoFillNextArticle">
+              <mat-label class="mat-caption">کپی اتوماتیک</mat-label>
+          </mat-checkbox>
+
+          <mat-checkbox color='primary' (change)="showCurrencyRelatedFields($event.checked)" *ngIf="identityService.doesHavePermission('CurrencyFieldAccess')">
+              <mat-label class="mat-caption">فیلد های ارزی</mat-label>
+          </mat-checkbox>
+
+          <mat-checkbox color='primary' *ngIf="isCurrencyFormat" [(ngModel)]="isCalculateByCurrency" (change)="handleRowChange(tableConfigurations.rowToEdit)">
+              <mat-label class="mat-caption">محاسبه ارزی</mat-label>
+          </mat-checkbox>
+
+        <mat-slide-toggle style="transform: scale(0.7)" color="primary" [checked]="isVoucherDescriptionMinimized" (toggleChange)="changeDescriptionColumnStyle()">خلاصه شرح</mat-slide-toggle>
+
+      </div>
+
+  </app-action-bar>
+  <div class="h-100 overflow-auto">
+    <app-table
+      [tableConfigurations]="tableConfigurations"
+      (rowClicked)="voucherDetailSelected.emit($event)"
+      [tableRows]="form.controls"
+      [areRowsSimpleArray]="false"
+      (selectedRowChange)="handleRowUpdate($event,'table')"
+      (formKeydown)="handleFormKeydown($event)"
+      (onFormEscape)="handleEscape($event)"
+    ></app-table>
+
+
+  </div>
+
+</div>

@@ -1,0 +1,53 @@
+<div class="action-bar  d-flex align-items-center gap-3 w-100" *ngIf="viewMode == 'default' ; else sliderView"  >
+<ng-content select="[before]"></ng-content>
+  <div class="d-flex gap-3">
+    <button style="width: fit-content;padding: 0 3px 0 9px !important;" [class]="action.customClass"
+            (click)="actionClickHandler(action)"
+            *ngFor="let action of actions" mat-raised-button
+            [color]="action.color" [class.mat-disabled]="action.disabled" [class.mat-show]="action.show">
+      <mat-icon class="ms-1" *ngIf="action.icon">{{action.icon}}</mat-icon>
+      <span>{{action.title}}</span>
+    </button>
+  </div>
+  <div class="flex-fill">
+    <ng-content></ng-content>
+  </div>
+  <div>
+    <ng-content select="[after]"></ng-content>
+  </div>
+</div>
+<ng-template #sliderView>
+  <div class="side-bar-container" >
+    <button class="toggle-button" [class.open]="isOpen" (click)="toggleSideBar()">
+      <mat-icon>{{ isOpen ? 'chevron_left' : 'chevron_right' }}</mat-icon>
+    </button>
+    <div class="side-bar" [class.open]="isOpen">
+      <div class="side-content">
+        <!-- محتوای عمودی -->
+        <div class="rotated-content">
+          <ng-content class="rotated-button" select="[before2]"></ng-content>
+        </div>
+
+        <ng-container *ngFor="let action of actions">
+          <button style="width: fit-content;padding: 5px 10px;"
+                  class="rotated-button"
+                  [class]="action.customClass"
+                  (click)="actionClickHandler(action)"
+                  mat-raised-button
+                  [color]="action.color">
+            <mat-icon class="ms-1" *ngIf="action.icon">{{ action.icon }}</mat-icon>
+            <span>{{ action.title }}</span>
+          </button>
+        </ng-container>
+
+        <div class=" rotated-content">
+          <ng-content  select="[Main2]" class="rotated-button"></ng-content>
+        </div>
+        <div class="rotated-content">
+
+          <ng-content select="[after2]"></ng-content>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>

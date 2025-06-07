@@ -1,0 +1,16 @@
+<h1 mat-dialog-title>جزئیات ممیزی</h1>
+
+<div class="row">
+  <mat-dialog-content style="width:50vw" class="mx-auto" *ngIf="databaseMetadata">
+
+    <mat-card>
+      <app-table [tableConfigurations]="tableConfigurations"
+                 [tableRows]="entity.changesValuesCollection"
+                 (rowDoubleClicked)="update($event)"
+                 (filtersChanged)="get()"
+                 (sortChanged)="get()"
+                 (paginationChanged)="get()"
+      ></app-table>
+    </mat-card>
+  </mat-dialog-content>
+</div>

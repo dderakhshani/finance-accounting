@@ -1,0 +1,73 @@
+
+  <app-action-bar class="p-3" (onAdd)="reset()"  (onSave)="submit()"  (onList)="navigateToLanguageList()"></app-action-bar>
+  <mat-card >
+  <form class="row" [formGroup]="form">
+    <div class="col-md-6">
+
+      <div class="col-md-12">
+        <mat-form-field >
+          <mat-label> عنوان</mat-label>
+          <input matInput type="text" formControlName="title">
+        </mat-form-field>
+      </div>
+      <div class="row">
+        <div class="col-md-4">
+          <mat-form-field >
+            <mat-label> کد سئو</mat-label>
+            <input matInput type="text" formControlName="seoCode">
+          </mat-form-field>
+        </div>
+
+        <div class="col-md-4">
+          <mat-form-field >
+            <mat-label>واحد پولی </mat-label>
+            <mat-select formControlName="defaultCurrencyBaseId">
+              <mat-option  *ngFor="let c of currencies" [value]="c.id">
+                {{c.title}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+        </div>
+
+        <div class="col-md-4">
+          <mat-form-field >
+            <mat-label> کد اختصاصی</mat-label>
+            <input matInput type="text" formControlName="culture">
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-md-6 mb-auto">
+            <mat-card (click)="photoInput.click()" class="d-flex" style="align-content: center">
+              <img style="object-fit: cover; border-radius: inherit; width:100px; height: 100px " mat-card-lg-image class="mx-auto"
+                   [src]="form.get('img')?.value ? fileServerAddress+addLanguageForm.get('flagImageUrl')?.value : ''" alt="">
+              <div (click)="photoInput.click()" class="col-md-6 align-items-center d-flex flex-column" style="cursor:pointer;">
+                <img style="width: 30px; object-fit: contain" class="my-3 mx2" src="/assets/icons/upload-image.svg" alt="">
+                <h5 mat-card-subtitle>بارگذازی عکس</h5>
+              </div>
+              <input hidden (change)="onPhotoInput($event)" #photoInput type="file" id="photoInput">
+            </mat-card>
+          </div>
+          <div class="col-md-6 mb-auto">
+            <div class="col-md-12 my-3">
+              <mat-label class="d-block mb-1 mat-caption"> جهت نوشتاری </mat-label>
+              <mat-radio-group class="gap-4 d-flex" aria-labelledby="example-radio-group-label"
+                               formControlName="directionBaseId">
+                <div class="row">
+                  <mat-radio-button class="col-md-12 mb-4" color="primary" [checked]="dir.id==0" *ngFor="let dir of directions"
+                                    [value]="dir.id">
+                    {{dir.title}}
+                  </mat-radio-button>
+                </div>
+              </mat-radio-group>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+
+</mat-card>

@@ -1,0 +1,156 @@
+<mat-card class="h-100 d-flex flex-column overflow-hidden" style="max-height: inherit; padding: 0!important;">
+
+  <div class="d-inline p-3">
+    <div class="d-flex">
+  <app-form-actions [actions]="formActions" (OnRefresh)="get()" class="flex-fill" (OnDelete)="delete()">
+
+
+    <button mat-raised-button color="primary" (click)="print()">
+      <mat-icon>
+        print
+      </mat-icon>
+      چاپ
+    </button>
+
+    <button mat-raised-button color="primary" (click)="showRelatedDocument()">
+      <mat-icon>view_headline</mat-icon>
+      سند مرتبط
+    </button>
+
+  </app-form-actions>
+<div>
+
+  <button mat-raised-button color="primary" *ngIf=" entryMode == '0'  || entryMode == '3' || entryMode == '6'"  style="margin-right: 6px;background: #68b0a9;" (click)="selectReference(1)">
+    <mat-icon>
+      account_balance
+    </mat-icon>
+    درجریان وصول
+  </button>
+  <button mat-raised-button color="primary" *ngIf="entryMode == '0'  || entryMode == '3' || entryMode == '1' || entryMode == '6'"  style="margin-right: 6px;background: #528b52;" (click)="validateTypeChequeDocument(2)">
+    <mat-icon>
+      verified
+    </mat-icon>
+    وصول شده
+  </button>
+  <button mat-raised-button color="primary" *ngIf=" entryMode == '1'"  style="margin-right: 6px;background: #f56363;" (click)="chequeDocument(3)">
+    <mat-icon>
+      settings_backup_restore
+    </mat-icon>
+   برگشت شده
+  </button>
+  <button mat-raised-button color="primary" *ngIf="entryMode == '0' || entryMode == '3' "  style="margin-right: 6px;background: #eca34e;" (click)="selectDate(4)">
+    <mat-icon>
+      swipe_left
+    </mat-icon>
+   عودت شده
+  </button>
+</div>
+
+
+
+
+</div>
+<div class="d-flex">
+<div class="flex-fill" style="margin-top: 8px;margin-bottom: 8px;">
+
+  <mat-label> وضعیت : </mat-label>
+  <mat-button-toggle-group [(ngModel)]="entryMode" required (click)="get()">
+    <mat-button-toggle matTooltip="دریافت" [value]="0">
+      <mat-label>دریافت</mat-label>
+      <mat-icon class="text-warning">person</mat-icon>
+    </mat-button-toggle>
+    <mat-button-toggle matTooltip="باز" [value]="6">
+      <mat-label>باز</mat-label>
+      <mat-icon color="primary">input</mat-icon>
+    </mat-button-toggle>
+    <mat-button-toggle matTooltip="درجریان وصول" [value]="1">
+      <mat-label>درجریان وصول</mat-label>
+      <mat-icon class="text-success">account_balance</mat-icon>
+    </mat-button-toggle>
+
+    <mat-button-toggle matTooltip="وصول" [value]="2">
+      <mat-label>وصول</mat-label>
+      <mat-icon class="text-success">verified</mat-icon>
+    </mat-button-toggle>
+
+    <mat-button-toggle matTooltip="برگشت" [value]="3">
+      <mat-label>برگشت</mat-label>
+      <mat-icon color="primary">settings_backup_restore</mat-icon>
+    </mat-button-toggle>
+
+    <mat-button-toggle matTooltip="عودت" [value]="4">
+      <mat-label>عودت</mat-label>
+      <mat-icon color="primary">swipe_left</mat-icon>
+    </mat-button-toggle>
+
+    <mat-button-toggle matTooltip="همه" [value]="5">
+      <mat-label>همه</mat-label>
+      <mat-icon color="primary">list</mat-icon>
+    </mat-button-toggle>
+
+  </mat-button-toggle-group>
+
+
+  <mat-label> چک : </mat-label>
+  <mat-button-toggle-group [(ngModel)]="chequeType" required (click)="get()">
+    <mat-button-toggle matTooltip="معمولی" [value]='1' >
+      <mat-label>معمولی</mat-label>
+      <mat-icon class="text-warning">person</mat-icon>
+    </mat-button-toggle>
+    <mat-button-toggle matTooltip="تضمینی" [value]='2'>
+      <mat-label>تضمینی</mat-label>
+      <mat-icon color="primary">input</mat-icon>
+    </mat-button-toggle>
+    <mat-button-toggle matTooltip="همه" [value]='0'>
+      <mat-label>همه</mat-label>
+      <mat-icon class="text-success">account_balance</mat-icon>
+    </mat-button-toggle>
+ 
+
+  </mat-button-toggle-group>
+
+
+
+</div>
+
+
+<div>
+
+  <button mat-raised-button class="text-success" style="margin: auto" matTooltip="فیلتر آیتم های انتخابی" (click)="filterSelectedItem()">
+
+    فیلتر ایتم های انتخابی
+      </button>
+
+      <ng-container *ngIf="filterSum>0">
+        <mat-label color="primary" class="mx-2">جمع کل : </mat-label>
+        {{filterSum | money}}
+      </ng-container>
+
+</div>
+
+</div>
+</div>
+<div class="h-100 overflow-auto">
+  <app-table
+  (rowDoubleClicked)="update($event)"
+  [tableRows]="chequeSheets"
+   [tableConfigurations]="tableConfigurations"
+   (filtersChanged)="get()"
+   (paginationChanged)="get()"
+   (sortChanged)="get()">
+  </app-table>
+</div>
+
+</mat-card>
+
+<ng-template #buttonShowDetails let-element="row" >
+  <div class="d-flex gap-1" dir="ltr">
+    <mat-icon class="" color="warn" (click)="uploadAttachments(element)" style="cursor: pointer;font-size: xx-large;">cloud_upload</mat-icon>
+    <mat-icon class="text-warning" (click)="showDetails(element)" style="cursor: pointer;font-size: xx-large;"> format_list_numbered</mat-icon>
+    <mat-icon color="primary" (click)="showChequeAttachments(element)" style="cursor: pointer;font-size: xx-large;">perm_media</mat-icon>
+  </div>
+</ng-template>
+
+<div  *ngIf="isLoading" style="position: absolute;left:0;top:0;bottom: 0; right: 0;background: #ffffff94;" class="d-flex align-items-center justify-content-center">
+  <mat-spinner></mat-spinner>
+</div>

@@ -1,0 +1,556 @@
+
+<div class="h-100 d-flex flex-column overflow-auto gap-3" style="max-height: inherit; padding: 0!important;">
+
+    <form [formGroup]="SearchForm">
+        <div class="row">
+            <div class="col-md-2">
+                <mat-card style="height:221px">
+                    <div class="row">
+
+                        <div class="col-md-12">
+                            <button mat-raised-button class="btn-tab  font-14" matTooltip="رسیدهایی که ریالی نشده اند" (click)="onChangeState('convertRials')" [ngClass]="{'background-primary-100':rialsStatus==1}" tabindex="0">
+                                <mat-icon>currency_exchange</mat-icon>
+                                ریالی نشده
+                            </button>
+                        </div>
+                        <div class="col-md-12">
+                            <button mat-raised-button class="btn-tab font-14" matTooltip="رسیدهایی که ریالی نشده اند" (click)="onChangeState('Rials')" [ngClass]="{'background-primary-100':rialsStatus==2}" tabindex="1">
+                                <mat-icon> monetization_on</mat-icon>
+                                ریالی شده
+                            </button>
+                        </div>
+                        <div class="col-md-12">
+                            <button mat-raised-button class="btn-tab font-14" matTooltip="رسیدهایی که سند مکانیزه برای ان صادر شده" (click)="onChangeState('document')" [ngClass]="{'background-primary-100':rialsStatus==3}" tabindex="2">
+                                <mat-icon> receipt_long</mat-icon>
+                                سند خورده
+                            </button>
+                        </div>
+                    </div>
+                </mat-card>
+
+
+
+            </div>
+            <div class="col-md-8" style="height:221px">
+                <mat-card>
+                  <div class="row">
+                    <div class="col-md-3">
+                      <mat-form-field>
+                        <mat-label>از تاریخ رسید</mat-label>
+                        <input tabindex="3" matInput [matDatepicker]="pickerFrom" formControlName="fromDate">
+                        <mat-datepicker-toggle matSuffix [for]="pickerFrom">
+                          <mat-icon matDatepickerToggleIcon>
+                            <img class="mb-3" src="/assets/icons/calendar.svg" alt="">
+                          </mat-icon>
+                        </mat-datepicker-toggle>
+                        <mat-datepicker #pickerFrom></mat-datepicker>
+                      </mat-form-field>
+                    </div>
+                    <div class="col-md-3">
+                      <mat-form-field>
+                        <mat-label>تا تاریخ رسید</mat-label>
+                        <input tabindex="4" matInput [matDatepicker]="picker" formControlName="toDate">
+                        <mat-datepicker-toggle matSuffix [for]="picker">
+                          <mat-icon matDatepickerToggleIcon>
+                            <img class="mb-3" src="/assets/icons/calendar.svg" alt="">
+                          </mat-icon>
+                        </mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                      </mat-form-field>
+                    </div>
+                    <div class="col-md-3">
+                      <app-combo-warhouse-tree [DefaultId]="SearchForm.controls.warehouseId.value"
+                                               (SelectId)="WarehouseIdSelect($event)"
+                                               [lablelTitleCombo]="'انبار'"
+                                               [isLastLevel]="true" [tabindex]="5">
+                      </app-combo-warhouse-tree>
+                    </div>
+                    <div class="col-md-3">
+                      <app-combo-commodity [DefaultId]="SearchForm.controls.commodityId.value"
+                                           (SelectId)="getCommodityById($event)"
+                                           [lablelTitleCombo]="'کالا'"
+                                           [warehouseId]="SearchForm.controls.warehouseId.value"
+                                           [isOnlyFilterByWarehouse]="true"
+                                           [isRequired]="false" [tabindex]="6">
+                      </app-combo-commodity>
+                    </div>
+
+                    <!-- <div class="col-md-3">
+
+      <app-combo-account-refrence (SelectId)="debitAccountReferencesIdSelect($event)"
+                                  [DefaultId]="SearchForm.controls.debitAccountReferencesId.value"
+                                  [lablelTitleCombo]="'حساب بدهکار'"
+                                  [isRequired]="false" [tabindex]="7">
+      </app-combo-account-refrence>
+  </div> -->
+                    <div class="col-md-3">
+
+                      <app-combo-account-refrence (SelectId)="ReferenceSelect($event)"
+                                                  [DefaultId]="SearchForm.controls.accountReferencesId.value"
+                                                  [lablelTitleCombo]="'تامین کننده'"
+                                                  [isRequired]="false" [tabindex]="8">
+                      </app-combo-account-refrence>
+                    </div>
+                    <div class="col-md-3">
+
+                      <app-combo-account-head-tree [DefaultId]="SearchForm.controls.debitAccountHeadId.value"
+                                                   (SelectId)="debitAccountHeadIdSelect($event)"
+                                                   [isRequired]="false"
+                                                   [lablelTitleCombo]="'سرفصل حساب بدهکار'"
+                                                   [isLastLevel]="true"
+                                                  
+                                                   [tabindex]="0">
+                      </app-combo-account-head-tree>
+
+                    </div>
+                    <div class="col-md-3">
+
+                      <app-combo-account-head-tree [DefaultId]="SearchForm.controls.creditAccountHeadId.value"
+                                                   (SelectId)="creditAccountHeadIdSelect($event)"
+                                                   [isRequired]="false"
+                                                   [lablelTitleCombo]="'سرفصل حساب بستانکار'"
+                                                 
+                                                   [isLastLevel]="true"
+                                                   [tabindex]="2">
+                      </app-combo-account-head-tree>
+
+                    </div>
+
+
+                    <div class="col-md-3">
+
+                      <mat-form-field tabindex="10">
+                        <mat-label>شماره رسید</mat-label>
+                        <input formControlName="documentNo" matInput type="text">
+                      </mat-form-field>
+                    </div>
+                    
+                    <div class="col-md-3">
+
+                      <mat-form-field tabindex="12">
+                        <mat-label>شماره مالی</mat-label>
+                        <input formControlName="documentId" matInput type="text">
+                      </mat-form-field>
+                    </div>
+                    <div class="col-md-3">
+
+                      <mat-form-field tabindex="13">
+                        <mat-label>نوع صورتحساب </mat-label>
+                        <mat-select formControlName="codeVoucherGroupId">
+                          <mat-option [value]="1">
+                            همه
+                          </mat-option>
+                          <mat-option [value]="2">
+                            خرید
+                          </mat-option>
+                          <mat-option [value]="3">
+                            مرجوعی خرید
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+
+                    </div>
+
+
+                    <div class="col-md-6">
+                      <button mat-raised-button color="primary" type="button" (click)="currentPage=1;get()" [disabled]="_notificationService.isLoader" tabindex="13" id="Search">
+                        <mat-icon>
+                          search
+                        </mat-icon>
+                        جستجو
+                      </button>
+
+                      <button mat-raised-button color="primary" matTooltip="چاپ رسیدهای انتخاب شده" (click)="print(true)" [disabled]="_notificationService.isLoader" tabindex="14">
+                        <mat-icon>print</mat-icon>
+                        چاپ سطرها
+                      </button>
+                      <button mat-stroked-button color="primary" type="button" (click)="ondeleteFilter(SearchForm)" [disabled]="_notificationService.isLoader" tabindex="15">
+                        <mat-icon>
+                          delete_forever
+                        </mat-icon>
+                        حذف فیلترها
+                      </button>
+
+                    </div>
+                  </div>
+                </mat-card>
+            </div>
+
+            <div class="col-md-2">
+
+
+                <mat-card class="mt-1" style="height:221px">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <button mat-raised-button color="warn" class="btn-tab font-12" *ngIf="rialsStatus==1" matTooltip="ریالی کردن لیست انتخاب شده" (click)="navigateToReceiptRialsAll()" [disabled]="_notificationService.isLoader" tabindex="16">
+                                <mat-icon>currency_exchange</mat-icon>
+                                ریالی کردن
+                            </button>
+                            <button mat-raised-button color="warn" class="btn-tab  font-12" *ngIf="rialsStatus==2" matTooltip="صدور سند مکانیزه" (click)="ConvertToInvoice()" [disabled]="_notificationService.isLoader" tabindex="17">
+                                <mat-icon>receipt_long</mat-icon>
+                                صدور سند مکانیزه
+                            </button>
+                        </div>
+                        <div class="col-md-12">
+                            <button mat-raised-button class="btn-tab  font-12" matTooltip="پاک کردن لیست انتخابی تامین کنندگان" (click)="clearListId()" [disabled]="_notificationService.isLoader" tabindex="18">
+                                <mat-icon class="text-danger">delete</mat-icon>
+                                پاک کردن لیست انتخابی
+                            </button>
+                        </div>
+                        <div class="col-md-12" *ngIf="rialsStatus==2">
+                            <button mat-raised-button class="btn-tab  font-12" matTooltip="پاک کردن لیست صدور سند" (click)="clearDocuments()" [disabled]="_notificationService.isLoader" tabindex="19">
+                                <mat-icon class="text-danger">delete</mat-icon>
+                                پاک کردن لیست صدور سند
+                            </button>
+                        </div>
+                        <div class="col-md-12" *ngIf="rialsStatus==1">
+                            <button mat-raised-button class="btn-tab  font-12" *ngIf="rialsStatus==1" matTooltip="از لیست ریالی خارج شود" (click)="clearDocuments()" [disabled]="_notificationService.isLoader" tabindex="20">
+                                <mat-icon class="text-danger">delete_forever</mat-icon>
+                                از لیست ریالی خارج شود
+                            </button>
+                        </div>
+
+                    </div>
+                </mat-card>
+
+            </div>
+        </div>
+    </form>
+    <mat-spinner style="top:30%;right:40%;position:absolute;z-index:1000" *ngIf="_notificationService.isLoader"></mat-spinner>
+    <div [ngClass]="{'modal-large-table':IslargeSize ,'modal-large-close': !IslargeSize}" class="h-100 overflow-auto p-0">
+
+        <div [ngClass]="{'modal-large-table-content':IslargeSize}">
+
+            <mat-card id="reports-containt">
+
+                <div class="row">
+                    <app-table-filter (GetQuery)="get($event)"
+                                      (onPrint)="print()"
+                                      (IslargeSize)="IslargeSize=$event"
+
+                                      [data]="Reports_filter"
+                                      (filterTable)="filterTable($event)"
+                                      (isSelectedRows)="selectedRows($event)"
+                                      [IsShowFilter]="true">
+                    </app-table-filter>
+
+                    <div [ngClass]="{'tableFixHead_largSize':IslargeSize ,'tableFixHead': !IslargeSize}" [appDynamicTableHeight]="marginFromBottom_appDynamicTableHeight" [tableData]="data">
+                        <table class="mas-table">
+                            <thead>
+
+                              <tr>
+                                <th resizable class="width-3">
+                                  ردیف
+                                </th>
+                                <th resizable class="width-3">
+
+                                  <a mat-raised-button style="z-index:250;border-radius: 0.5rem !important" matTooltip="وضعیت نمایش سطرهای جدول">
+                                    <mat-icon *ngIf="selectedAll" mat-icon-button class="btn-color" (click)="onSelectAll(false)">
+                                      check_box
+                                    </mat-icon>
+                                    <mat-icon *ngIf="!selectedAll" mat-icon-button class="btn-color" (click)="onSelectAll(true)">
+                                      check_box_outline_blank
+                                    </mat-icon>
+                                    <span *ngIf="!isViewJustSelected" (click)="isViewJustSelected = !isViewJustSelected;onViewJustSelected()">
+                                      همه
+                                    </span>
+                                    <span *ngIf="isViewJustSelected" (click)="isViewJustSelected = !isViewJustSelected;onViewJustSelected()">
+                                      منتخب
+                                    </span>
+                                  </a>
+
+                                </th>
+                                <th resizable style="width:6%" accessKey="documentDate" abbr="date">
+                                  تاریخ رسید
+                                </th>
+                                <th resizable class="width-5" accessKey="documentNo" abbr="number">
+                                  شماره رسید
+                                </th>
+
+                                <th resizable class="width-10 min-width-px-60 " accessKey="commodityTitle" abbr="string">
+
+                                  کالا
+                                </th>
+
+                                <th resizable class="width-3" accessKey="quantity" abbr="number">
+                                  مقدار
+                                </th>
+                                <th resizable class="width-3" accessKey="measureTitle" abbr="string">
+                                  واحد
+                                </th>
+                                <th resizable class="width-8" accessKey="itemUnitPrice" abbr="number">
+                                  مبلغ واحد
+                                </th>
+                                <th resizable class="width-8" accessKey="totalItemUnitPrice" abbr="number">
+                                  مبلغ کل
+
+                                </th>
+                                <th resizable class="width-8" accessKey="totalProductionCost" abbr="number">
+                                  مبلغ کل صورتحساب
+                                </th>
+                                <th resizable class="width-10 min-width-px-50" accessKey="debitReferenceTitle" abbr="string">
+                                  حساب بدهکار
+                                </th>
+                                <th resizable class="width-10 min-width-px-50" accessKey="creditReferenceTitle" abbr="string">
+                                  حساب بستانکار
+                                </th>
+
+                                <th resizable class="width-5" accessKey="scaleBill" abbr="string">
+                                  شماره قبض
+                                </th>
+                                <th resizable class="width-5" accessKey="documentId" abbr="number">
+                                  شماره مالی
+                                </th>
+
+                                <!-- <th  resizable  class="width-5" accessKey="invoiceNo" abbr="string">
+      شماره صورتحساب
+  </th> -->
+                                <th resizable class="width-5" accessKey="requestNo" abbr="string">
+                                  شماره درخواست
+                                </th>
+                                <th resizable class="width-12 min-width-px-50" accessKey="documentDescription" abbr="string">
+                                  شرح رسید
+                                </th>
+                                <th accesskey="descriptionItems" class="width-12 min-width-px-50" abbr="string">
+                                  شرح کالا
+                                </th>
+                                <th resizable class="width-10 min-width-px-50" accessKey="warehousesTitle" abbr="string">
+                                  انبار
+                                </th>
+
+
+                              </tr>
+                            </thead>
+                            <tbody id="tbody">
+
+                              <tr *ngFor="let item of data ;let i=index" [ngClass]="{'background-primary-50':item.selected ,'btn-black': !item.selected}">
+                                <th>
+                                  {{i+1}}
+                                </th>
+                                <td>
+                                  <mat-icon *ngIf="item.selected && item.allowInput!=true" mat-icon-button class="btn-color" (click)="RemoveId(item)">
+                                    check_box
+                                  </mat-icon>
+                                  <mat-icon *ngIf="!item.selected  && item.allowInput!=true && item.allowOutput!=true" mat-icon-button class="btn-color" (click)="checkValue(item)">
+                                    check_box_outline_blank
+                                  </mat-icon>
+
+                                  <mat-icon *ngIf="item.allowInput==true" mat-icon-button class="btn-color" matTooltip="در حال صدور سند">
+                                    hourglass_top
+                                  </mat-icon>
+                                  <mat-icon *ngIf="item.allowOutput==true" mat-icon-button class="btn-color" matTooltip="سند صادر شده">
+                                    receipt_long
+                                  </mat-icon>
+
+
+                                </td>
+                                <td class="font-12" accessKey="documentDate">
+
+                                  {{Service.toPersianDate(item.documentDate)}}
+                                </td>
+
+                                <td accessKey="documentNo">
+                                  <span class="btn-link" (click)="navigateToReceipt(item)" *ngIf="rialsStatus==1">
+                                    {{item.documentNo}}
+                                  </span>
+                                  <span class="btn-link" (click)="navigateToReceiptRials(item)" *ngIf="rialsStatus==2">
+                                    {{item.documentNo}}
+                                  </span>
+                                  <span class="btn-link" [matMenuTriggerFor]="amenu" *ngIf="rialsStatus==3">
+                                    {{item.documentNo}}
+
+                                  </span>
+                                  <mat-menu #amenu="matMenu">
+                                    <button mat-menu-item
+                                            matTooltip="ویرایش"
+                                            [matTooltipPosition]="'right'"
+                                            class="btn-color"
+                                            (click)="navigateToRialReceipt(item,1)">
+                                      <mat-icon>price_check</mat-icon>
+                                      ویرایش تعداد کالا
+                                    </button>
+
+                                    <button mat-menu-item
+                                            matTooltip="ویرایش"
+                                            [matTooltipPosition]="'right'"
+                                            class="btn-color"
+                                            (click)="navigateToRialReceipt(item,2)">
+                                      <mat-icon>edit_document</mat-icon>
+                                      ویرایش شرح
+                                    </button>
+                                    <button mat-menu-item
+                                            matTooltip="ویرایش"
+                                            [matTooltipPosition]="'right'"
+                                            class="btn-color"
+                                            (click)="navigateToRialReceipt(item,3)">
+                                      <mat-icon>price_check</mat-icon>
+                                      ویرایش سایر
+                                    </button>
+
+                                  </mat-menu>
+                                </td>
+
+                                <td class="font-10" accessKey="commodityTitle">
+                                  <span class="btn-link font-10" (click)="navigateToHistory(item)">
+                                    {{item.commodityCode}}
+                                  </span>
+                                  <br />
+                                  <span>
+                                    {{item.commodityTitle}}
+                                  </span>
+                                </td>
+                                <td accessKey="quantity">
+                                  {{item.quantity}}
+                                </td>
+                                <td accessKey="measureTitle">
+                                  <span class="font-10">
+                                    {{item.measureTitle}}
+                                  </span>
+
+                                </td>
+                                <td accessKey="itemUnitPrice">
+                                  <span *ngIf="returnReceipt(item.codeVoucherGroupId)"
+                                        class="text-danger">
+                                    (
+                                  </span>
+                                  {{item.itemUnitPrice | number : '1.0-0'}}
+                                  <span *ngIf="returnReceipt(item.codeVoucherGroupId)"
+                                        class="text-danger">
+                                    )
+                                  </span>
+                                </td>
+                                <td accessKey="totalItemUnitPrice">
+                                  {{item.itemUnitPrice * item.quantity | number : '1.0-0'}}
+
+                                </td>
+                                <td accessKey="totalProductionCost">
+                                  <span *ngIf="returnReceipt(item.codeVoucherGroupId)"
+                                        class="text-danger">
+                                    (
+                                  </span>
+                                  {{item.totalProductionCost | number : '1.0-0'}}
+                                  <span *ngIf="returnReceipt(item.codeVoucherGroupId)"
+                                        class="text-danger">
+                                    )
+                                  </span>
+                                </td>
+                                <td class="font-10" accessKey="debitReferenceTitle">
+                                  {{item.debitReferenceTitle}}
+                                </td>
+                                <td class="font-10" accessKey="creditReferenceTitle">
+                                  {{item.creditReferenceTitle}}
+                                </td>
+
+                                <td accessKey="scaleBill">
+                                  {{item.scaleBill}}
+                                </td>
+                                <td accessKey="documentId">
+
+                                  <span class="btn-color" matTooltip="جزئیات رسید" (click)="navigateToreceiptDetails(item)">
+                                    {{item.documentId}}
+                                  </span>
+                                </td>
+                                <!--  <td accessKey="invoiceNo">
+
+      {{item.invoiceNo}}
+
+  </td> -->
+                                <td class="width-5" accessKey="requestNo" abbr="string">
+
+                                  <samp class="btn-link">
+
+                                    <span (click)="navigateToRequestReceipt(item.requestNoPurchaseForExit)" *ngIf="returnReceipt(item.codeVoucherGroupId)">
+                                      {{item.requestNoPurchaseForExit}}
+                                    </span>
+                                    <br />
+                                    <span (click)="navigateToRequestReceipt(item.requestNo)" *ngIf="item.documentStauseBaseValue!=Service.CodeInvoiceAmountLeave && item.documentStauseBaseValue!=Service.CodeLeaveReceipt">
+                                      {{item.requestNo}}
+                                    </span>
+
+                                  </samp>
+
+                                </td>
+                                <td class="font-10" accessKey="documentDescription">
+                                  {{item.documentDescription}}
+                                  <span *ngIf="returnReceipt(item.codeVoucherGroupId)" class="text-danger">
+                                    مرجوعی
+                                  </span>
+                                </td>
+                                <td accesskey="descriptionItems">{{item.descriptionItems}}</td>
+                                <td class="font-10" accessKey="warehousesTitle">
+
+                                  <span matTooltip="شماره اموال" class="btn-link font-10" (click)="CommoditySerials(item)" *ngIf="item.codeVoucherGroupTitle.includes('اموال')">
+                                    {{item.warehousesTitle}}
+                                  </span>
+                                  <span *ngIf="!item.codeVoucherGroupTitle.includes('اموال')">
+                                    {{item.warehousesTitle}}
+                                  </span>
+
+
+                                </td>
+                              </tr>
+
+                            </tbody>
+                            <tfoot>
+
+                              <tr>
+                                <td>
+                                  {{dataLength}}
+                                </td>
+                                <td></td>
+                                <td accessKey="documentDate"></td>
+                                <td accessKey="documentNo"></td>
+                                <td accessKey="commodityTitle">
+                                 مجموع کل صفحات
+                                </td>
+                                <td accessKey="quantity">{{total}}</td>
+                                <td accessKey="measureTitle">
+                                </td>
+                                <td accessKey="itemUnitPrice">
+
+                                </td>
+                                <td accessKey="totalItemUnitPrice">
+                                  {{sumAll | number : '1.0-0'}}
+                                </td>
+                                <td accessKey="totalProductionCost"></td>
+                                <td accessKey="debitReferenceTitle"></td>
+                                <td accessKey="creditReferenceTitle"> </td>
+
+                                <td accessKey="scaleBill"></td>
+                                <td accessKey="documentId"></td>
+
+                                <!-- <td accessKey="invoiceNo"></td> -->
+                                <td accessKey="requestNo"></td>
+                                <td accessKey="documentDescription"></td>
+                                <td accesskey="descriptionItems"></td>
+                                <td accessKey="warehousesTitle"> </td>
+
+
+
+
+
+
+                              </tr>
+                                <tr *ngIf="Service.PageSize<RowsCount">
+                                    <td colspan="20">
+                                        <app-table-pagging [RowsCount]="RowsCount" [activePage]="currentPage" [pageSize]="pageSize"  (ActivePage)="ChangePage($event)" (ExportToALLExcel)="ExportAllToExcel()">
+
+                                        </app-table-pagging>
+                                    </td>
+                                </tr>
+                            </tfoot>
+                        </table>
+
+                    </div>
+                </div>
+
+
+            </mat-card>
+        </div>
+    </div>
+
+
+
+</div>
+
+

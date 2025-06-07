@@ -1,0 +1,54 @@
+<mat-dialog
+  (onSubmit)="submit()"
+  (onDelete)="delete()"
+  [showDeleteBtn]="pageMode === pageModes.Update">
+
+  <div dialog-header="">فرمول</div>
+  <div dialog-content="">
+    <div class="col-md-12" style="width: 80vw;">
+      <mat-dialog-content *ngIf="form" class="mx-auto" [formGroup]="form">
+
+        <form [formGroup]="form"  *ngIf="form">
+          <div class="row">
+            <div class="col-6">
+              <mat-form-field>
+                <mat-label>شرح</mat-label>
+                <input type="text" matInput formControlName="rowDescription">
+              </mat-form-field>
+            </div>
+            <div class="col-3">
+              <mat-form-field>
+                <mat-label>حساب</mat-label>
+                <mat-select formControlName="accountHeadId">
+                  <mat-option *ngFor="let accountHead of accountHeads"
+                              [value]="accountHead.id">
+                    {{accountHead.title}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="col-3">
+              <mat-form-field>
+                <mat-label>ماهیت حساب</mat-label>
+                <mat-select formControlName="debitCreditStatus">
+                  <mat-option *ngFor="let statusType of debitCreditStatusTypes"
+                              [value]="statusType.id">
+                    {{statusType.title}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="col-12">
+              <mat-card class="my-2">
+                <app-voucher-formula [entity]="formula" *ngFor="let formula of request.parsedFormula" [databaseMetadata]="databaseMetadata" label="شرح سند" [formControl]="form.get('formula')"></app-voucher-formula>
+
+              </mat-card>
+            </div>
+          </div>
+        </form>
+
+      </mat-dialog-content>
+
+    </div>
+  </div>
+</mat-dialog>

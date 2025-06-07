@@ -1,0 +1,24 @@
+.filter{
+  color: #777474;
+  font-size: 12px;
+}
+.ExpandRowWithTemplate{
+  width: 100%;
+  height: 50px;
+  border: 1px solid rgba(141, 90, 90, 0.25);
+  border-radius: 0 0 7px 7px ;
+}
+.wrapper-btn{
+  display: flex;
+  align-content: center;
+  align-items: center;
+  padding: 3px 14px;
+  margin: 1px 4px;
+  border: 1px solid #8a8484;
+  border-radius: 25px;
+  p{
+    font-size: 13px;
+    font-weight: 700;
+    text-align: center;
+  }
+}

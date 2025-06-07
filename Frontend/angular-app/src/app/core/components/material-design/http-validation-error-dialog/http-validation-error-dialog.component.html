@@ -1,0 +1,12 @@
+<div mat-dialog-title class="bg-red-500">خطا در ثبت اطلاعات !</div>
+<div mat-dialog-content class="d-flex flex-column">
+  <div class="errors-wrapper">
+    <div class="error-group" *ngFor="let group of groupedErrorsList">
+      <li class="error-message" *ngFor="let error of group ">
+        {{error.message}}
+      </li>
+      <br>
+    </div>
+  </div>
+  <button class="mx-auto" color="primary" mat-dialog-close mat-flat-button>باشه</button>
+</div>

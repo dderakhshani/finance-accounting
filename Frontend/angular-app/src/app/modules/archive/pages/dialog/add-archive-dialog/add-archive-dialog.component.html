@@ -1,0 +1,69 @@
+<mat-dialog (onSubmit)="submit()" [showDeleteBtn]="false">
+  <div dialog-header="">{{titleHeader}}</div>
+  <div dialog-content="" >
+
+    <div class="row p-3" style="" [formGroup]="form">
+      <div class="col-md-6">
+        <mat-form-field>
+          <mat-label> عنوان</mat-label>
+          <input formControlName="title" type="text" matInput>
+        </mat-form-field>
+      </div>
+      <div class="col-md-6">
+        <mat-form-field>
+          <mat-label> شماره فایل</mat-label>
+          <input formControlName="fileNumber" type="text" matInput>
+        </mat-form-field>
+      </div>
+      <div class="col-md-12">
+      <mat-form-field >
+        <mat-label>کلمات کلیدی</mat-label>
+        <mat-chip-list #chipList aria-label="کلمات کلیدی" multiple>
+          <mat-chip
+            color="primary"
+            *ngFor="let keyword of keywords"
+            [selected]="keyword"
+            [value]="keyword"
+            (removed)="removeKeyword(keyword)">
+            {{keyword}}
+          </mat-chip>
+          <input
+            formControlName="keyWords"
+            placeholder="کلمات کلیدی جدید..."
+            [matChipInputFor]="chipList"
+            (matChipInputTokenEnd)="addKeywordFromInput($event)" matInput>
+        </mat-chip-list>
+      </mat-form-field>
+      </div>
+      <div class="col-md-12">
+        <mat-form-field>
+          <mat-label>  نوع آرشیو</mat-label>
+          <input tabindex="8"
+                 formControlName="typeBaseId"
+                 type="text" matInput autocomplete="typeBaseId" [matAutocomplete]="typeBaseId">
+          <mat-autocomplete autoActiveFirstOption #typeBaseId="matAutocomplete"
+                            [displayWith]="baseValueDisplayFn.bind(this)">
+            <mat-option
+              *ngFor="let baseValue of baseValues | arrayFilter : form.controls['typeBaseId'].value : ['title']"
+              [value]="baseValue.id">
+              {{baseValue.title}}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+      </div>
+
+      <div class="col-md-12">
+        <mat-form-field>
+          <mat-label> توضیحات</mat-label>
+          <textarea   formControlName="description"  rows="10" cols="100" matInput></textarea>
+        </mat-form-field>
+      </div>
+
+<!--      <div class="col-md-12">-->
+<!--        <app-uploader class="d-flex justify-content-center" [autoUpload]="false"-->
+<!--                      [allowFileUpload]="true">-->
+<!--        </app-uploader>-->
+<!--      </div>-->
+    </div>
+  </div>
+</mat-dialog>

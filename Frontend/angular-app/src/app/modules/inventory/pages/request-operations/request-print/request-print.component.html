@@ -1,0 +1,208 @@
+<app-form-actions [actions]="formActions" (OnAdd)="reset()">
+
+    <button matTooltip="نسخه چاپی" (click)="myPrint(DivId)" mat-raised-button color="primary">
+        <mat-icon>print</mat-icon>
+        پیش نمایش چاپ
+    </button>
+</app-form-actions>
+
+<div>
+    <div id="{{DivId}}" class="mt-2">
+        <table class="mainTable">
+            <tr>
+                <th rowspan="4" width="30px" style="font-size:10px; text-align:center">
+                    توسط درخواست کننده تکمیل شود.
+                </th>
+
+            </tr>
+
+            <tr id="header">
+                <td style="width:25% ;text-align:center;border-left:unset" class="header-tr">
+                    <img src="/assets/images/logo.png" />
+
+                </td>
+                <td style="width:50%" class="header-tr">
+                    <h3 style="text-align:center">
+                        {{pageTitle}}
+                    </h3>
+                </td>
+                <td style="width: 25% ;text-align:right; border-right: unset" class="header-tr">
+                    <p>
+                        تاریخ سند {{receipt?.documentDate | toPersianDate}}
+                    </p>
+                    <p>
+                        شماره سند {{receipt?.documentNo}}
+                    </p>
+                </td>
+
+            </tr>
+
+            <tr id="obligation">
+                <td class="col" colspan="3">
+
+                    <div style="display:inline-flex;width:100%">
+                        <div style="width:65%" *ngIf="receipt?.isImportPurchase">
+                            بازرگانی محترم لطفا از خرید داخلی ⬜ خرید خارجی ⬛ خریداری گردد.
+                        </div>
+                        <div style="width:65%" *ngIf="!receipt?.isImportPurchase">
+                            بازرگانی محترم لطفا از خرید داخلی ⬛ خرید خارجی ⬜ خریداری گردد.
+                        </div>
+                        <div style="width:30%">
+                            درخواست دهنده : <i>{{receipt?.requesterReferenceTitle}}</i>
+                        </div>
+                    </div>
+
+                </td>
+
+            </tr>
+            <tr id="contains">
+                <td colspan="3">
+                    <table style="width:100%" class="containsTable">
+                        <thead style="background-color: #e7e7eb; font-size: 12px;">
+                            <tr>
+                                <th  resizable  class="width-5 font-11">کد پیگیری</th>
+                                <th  resizable  class="width-15 font-11">کد کالا</th>
+                                <th  resizable  class="width-18 font-11">نام کالا</th>
+                                <th  resizable  class="width-5 font-11">کیل مصرف</th>
+                                <th  resizable  class="width-5 font-11">موجودی انبار</th>
+                                <th  resizable  class="width-8 font-11" >مقدار مصرف طی دوره</th>
+                                <th  resizable  class="width-10 font-11">محل مصرف</th>
+                                <th  resizable  class="width-8 font-11">مقدار مورد نیاز</th>
+                                <th  resizable  class="width-8 font-11">واحد اندازه گیری</th>
+                                <th  resizable  class="width-8 font-11">تاریخ نیاز</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of receipt?.items">
+                                <td>{{item.documentNo}}</td>
+                                <td>{{item.commodity?.tadbirCode}}</td>
+                                <td>{{item.commodity?.title}}</td>
+                                <td>{{item.commodityQuota}}</td><!--کیل مصرف-->
+                                <td>{{item.quantityChose}}</td>
+                                <td>{{item.commodityQuotaUsed}}</td><!--مقدار مصرف طی دوره-->
+                                <td>
+                                    <p> ⬜ بسته بندی توسعه</p>
+                                    <p> ⬜ مصرف</p>
+                                    <p> ⬜ شارژ انبار</p>
+                                </td>
+                                <td>{{item.quantity}}</td>
+                                <td>{{item.commodity?.measureTitle}}</td>
+                                <td>{{receipt?.expireDate | toPersianDate}}</td>
+
+                            </tr>
+                            <tr>
+                                <td colspan="5" rowspan="5" style="vertical-align:top">
+                                    <span class="font-12">
+                                        شرح توضیحات درباره کالا و محل مصرف :
+                                    </span>
+                                    
+
+                                    {{receipt?.documentDescription}}
+                                </td>
+
+                            </tr>
+                            <tr>
+                                <th rowspan="2" colspan="1">
+                                    نوع خرید :
+                                </th>
+                                <td colspan="4">
+                                    <p>
+                                        استعلام شود و به تایید درخواست کننده
+                                    </p>
+
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td colspan="4">
+                                    <p>
+                                        با مسئولیت بازرگانی
+                                    </p>
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" style="font-size: 12px">
+                                    نام امضا سرپرست قسمت
+                                </td>
+                                <td colspan="2" style="font-size: 12px">
+                                    نام امضا سرپرست قسمت
+                                </td>
+                                <td colspan="2" style="font-size: 12px">
+                                    نام امضا سرپرست قسمت
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" style="height:30px;">
+                                </td>
+                                <td colspan="2" style="height:30px;">
+                                </td>
+                                <td colspan="2" style="height:30px;">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+
+            </tr>
+
+            <tr class="containsTable">
+                <td style="font-size:10px; text-align:center">
+                    تکمیل توسط بازرگانی
+                </td>
+                <td colspan="9">
+                    <p>
+                        به پیوست تعداد ..........فقره استعلام جهت بررسی و اعلام نظر ارسال می گردد
+                    </p>
+                    <p>
+                        توضیحات :
+                    </p>
+                    <br />
+                    <br />
+                    <div style="float: left;  margin-left: 50px; font-size: 13px ">
+                        <p>
+                            امضا و تایید واحد بازرگانی کارخانه
+                        </p>
+                    </div>
+
+                </td>
+
+            </tr>
+            <tr class="containsTable">
+                <td style="font-size:10px; text-align:center">
+                    تکمیل توسط مدیر واحد درخواست دهنده
+                </td>
+                <td colspan="9">
+                    <p>
+                        نظر مدیر یا واحد درخواست کننده : ...................................
+                    </p>
+                    <p> ⬜ تایید است</p>
+                    <p> ⬜ توضیحات دارد</p>
+
+                    <div style="float:left;">
+                        <span style="margin-left:50px; font-size:13px">
+                            امضا مدیر واحد و تاریخ
+                        </span>
+                        <span style="margin-left: 50px; font-size: 13px">
+                            تایید رییس هیئت مدیره
+                        </span>
+                    </div>
+                    <p style="font-size: 12px">جهت خرید کالاهای متفرقه کالاهایی غیر از مواد اولیه و قطعات و لوازم یدکی تایید هیئت مدیره الزامی می باشد. </p>
+                </td>
+            </tr>
+        </table>
+        <table style="width: 100%; font-size: 10px">
+            <tr>
+                <td style="width: 50%; padding: 5px">
+                    تاریخ بازنگری :97/02/11
+                </td>
+                <td style="width: 50%; text-align: left; padding: 5px">
+                    ST-F09/08
+                </td>
+            </tr>
+        </table>
+    </div>
+    <mat-spinner style="top:30%;right:40%;  position:absolute" *ngIf="_notificationService.isLoader"></mat-spinner>
+
+</div>

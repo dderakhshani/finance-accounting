@@ -1,0 +1,86 @@
+<div class="d-flex flex-column h-100 gap-3">
+    <mat-card >
+      <h1 class="mat-subheading-1 py-1">محدوده اسناد</h1>
+      <div class="row">
+        <div class="col-md-5">
+          <div [formGroup]="form" class="row">
+            <div class="col-md-12">
+              <mat-form-field  >
+                <mat-label> نوع سند </mat-label>
+                <mat-select (selectionChange)="get()" formControlName="codeVoucherGroupId">
+                  <mat-option *ngFor="let codeVoucherGroup of codeVoucherGroups" [value]="codeVoucherGroup.id">
+                    {{[codeVoucherGroup.code,codeVoucherGroup.title].join('  ')}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="col-md-6">
+              <mat-form-field >
+                <mat-label>از تاریخ</mat-label>
+                <input (dateChange)="get()" matInput [matDatepicker]="pickerFrom" formControlName="fromDateTime">
+                <mat-datepicker-toggle matSuffix [for]="pickerFrom">
+                  <mat-icon matDatepickerToggleIcon>
+                    <img class="mb-3" src="/assets/icons/calendar.svg" alt="">
+                  </mat-icon>
+                </mat-datepicker-toggle>
+                <mat-datepicker #pickerFrom></mat-datepicker>
+              </mat-form-field>
+            </div>
+            <div class="col-md-6">
+              <mat-form-field >
+                <mat-label>تا تاریخ</mat-label>
+                <input (dateChange)="get()" matInput [matDatepicker]="pickerTo" formControlName="toDateTime">
+                <mat-datepicker-toggle matSuffix [for]="pickerTo">
+                  <mat-icon matDatepickerToggleIcon>
+                    <img class="mb-3" src="/assets/icons/calendar.svg" alt="">
+                  </mat-icon>
+                </mat-datepicker-toggle>
+                <mat-datepicker #pickerTo></mat-datepicker>
+              </mat-form-field>
+            </div>
+            <div class="col-md-6">
+              <mat-form-field  >
+                <mat-label>از شماره سند </mat-label>
+                <input (change)="get()" formControlName="fromNo" type="text" matInput>
+              </mat-form-field>
+            </div>
+            <div class="col-md-6">
+              <mat-form-field  >
+                <mat-label>تا شماره سند </mat-label>
+                <input (change)="get()" formControlName="toNo" type="text" matInput>
+              </mat-form-field>
+            </div>
+            <div class="col-md-6"></div>
+          </div>
+        </div>
+
+
+        <div class="col-md-7">
+
+          <div class="col-md-12"></div>
+          <div class="col-md-12"></div>
+          <div class="col-md-4 mx-auto">
+            <button mat-raised-button color="primary" type="button" (click)="submit()">شماره گذاری مجدد اسناد</button>
+          </div>
+        </div>
+      </div>
+    </mat-card>
+
+    <mat-card class="h-100" >
+      <mat-tab-group style="height: 55vh;" >
+        <mat-tab label="انتخاب شده">
+          <app-table
+            (rowDoubleClicked)="navigateToVoucherHead($event)"
+            [tableConfigurations]="selectedVouchersTableConfiguration"
+            [tableRows]="selectedVouchers"
+            (paginationChanged)="get()"
+            (sortChanged)="get()"
+          ></app-table>
+        </mat-tab>
+      </mat-tab-group>
+
+    </mat-card>
+
+
+
+</div>

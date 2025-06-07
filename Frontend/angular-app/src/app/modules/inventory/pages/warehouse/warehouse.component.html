@@ -1,0 +1,10 @@
+<app-tree
+  [useNew]="true"
+  [editable]="true"
+  [canAdd]="true"
+  (onAdd)="add($event)"
+  (onEdit)="update($event)"
+  [rawNodes]="Warehouses">
+</app-tree>
+
+<mat-spinner style="top:30%;right:40%;position:absolute;z-index:1000" *ngIf="_notificationService.isLoader"></mat-spinner>

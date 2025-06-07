@@ -1,0 +1,146 @@
+<mat-dialog (onSubmit)="submit()" (onDelete)="delete()" [showDeleteBtn]="pageMode === pageModes.Update" *ngIf="form">
+
+  <div dialog-header="">دسترسی</div>
+  <div dialog-content="">
+    <div class="row" [formGroup]="form">
+
+      <div class="col-6">
+        <mat-form-field>
+          <mat-label> عنوان </mat-label>
+          <input formControlName="title" type="text" matInput>
+        </mat-form-field>
+      </div>
+      <div class="col-6">
+        <mat-form-field>
+          <mat-label> نام یکتا </mat-label>
+          <input formControlName="uniqueName" type="text" matInput>
+        </mat-form-field>
+      </div>
+      <div class="col-6">
+        <mat-form-field>
+          <mat-label> زیر سیستم </mat-label>
+          <input formControlName="subSystem" type="text" matInput>
+        </mat-form-field>
+      </div>
+      <div class="col-6 mt-3">
+        <mat-checkbox color="primary" formControlName="isDataRowLimiter"
+          (change)="checkDataRowLimiter($event)"></mat-checkbox>
+        <mat-label>کنترل دسترسی به داده ها</mat-label>
+      </div>
+      <hr>
+      <div class="row ng-pristine ng-valid ng-touched" *ngIf="form.value.isDataRowLimiter==true">
+        <div class="col-6">
+          <mat-form-field>
+            <mat-label>جداول</mat-label>
+            <input matInput type="text" [formControl]="tableControl" [matAutocomplete]="tableAuto">
+
+            <mat-autocomplete autoActiveFirstOption #tableAuto="matAutocomplete"
+              (optionSelected)="handleTableSelection($event.option.value)">
+              <mat-option *ngFor="let tableName of tableNames" [value]="tableName">
+                {{tableName}}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+        </div>
+
+        <div class="col-12 mb-3">
+          <mat-checkbox color="primary" formControlName="accessToAll"></mat-checkbox>
+          <mat-label>دسترسی به همه</mat-label>
+        </div>
+        <div class="col-12 " *ngIf="form.value.accessToAll==false">
+          <button style="width: fit-content" class="col-1 margin-left" color="primary" mat-raised-button
+            (click)="addPermission()">
+            <mat-icon class="ms-1">control_point</mat-icon>
+            <span>افزودن شرط</span></button>
+        </div>
+        <table class="col-3" *ngIf="form.value.accessToAll==false">
+          <thead>
+            <tr>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of termsOfAccess ;let i=index ">
+              <td class="col-4 pr-3">
+                <mat-form-field>
+                  <mat-label>فیلد</mat-label>
+                  <input matInput [formControl]="item.field" [matAutocomplete]="fieldAuto">
+
+                  <mat-autocomplete autoActiveFirstOption #fieldAuto="matAutocomplete"
+                    (optionSelected)="filterComparison($event.option.value)">
+                    <mat-option *ngFor="let tablefield of tablefields" [value]="tablefield.column">
+                      {{tablefield.column}} ({{tablefield.description}})
+                    </mat-option>
+                  </mat-autocomplete>
+                </mat-form-field>
+
+
+
+              </td>
+              <td class="col-2 pr-3">
+                <!-- <mat-form-field>
+                  <mat-label>عملیات</mat-label>
+                  <input matInput [value]="item.oparation" />
+                </mat-form-field> -->
+
+                <mat-form-field>
+                  <mat-label>عملیات</mat-label>
+                  <input matInput [formControl]="item.oparation" [matAutocomplete]="oparationAuto">
+
+                  <mat-autocomplete autoActiveFirstOption #oparationAuto="matAutocomplete">
+                    <mat-option *ngFor="let ColumnFilterOperand of ColumnFilterOperands"
+                      [value]="ColumnFilterOperand.value">
+                      {{ColumnFilterOperand.title}}
+                    </mat-option>
+                  </mat-autocomplete>
+                </mat-form-field>
+
+
+              </td>
+              <td class="col-4 pr-3">
+                <mat-form-field>
+                  <mat-label>مقدار</mat-label>
+                  <input matInput [formControl]="item.value" />
+                </mat-form-field>
+              </td>
+
+
+
+
+              <td class="col-2 pr-3">
+                <mat-form-field>
+                  <mat-label>ترکیب</mat-label>
+                  <input matInput [formControl]="item.composition" [matAutocomplete]="compositionAuto">
+
+                  <mat-autocomplete autoActiveFirstOption #compositionAuto="matAutocomplete">
+                    <mat-option *ngFor="let composition of compositions" [value]="composition.value">
+                      {{composition.title}}
+                    </mat-option>
+                  </mat-autocomplete>
+                </mat-form-field>
+
+
+              </td>
+
+
+
+
+
+
+
+
+              <td>
+                <button class=" margin-left" mat-raised-button (click)="deletePermission(i)">
+                  <mat-icon style="color: red;">delete_forever</mat-icon>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+
+        </table>
+
+      </div>
+    </div>
+
+  </div>
+
+</mat-dialog>

@@ -1,0 +1,12 @@
+<div class="tree-branch-item" [class.tree-branch-item-toggled]="branch._toggled">
+  <div class="tree-branch-item-wrapper" >
+    <h6 [style.padding-right.%]="(subLevel * 10)"  (click)="nodeClicked(branch)">{{branch.title}}</h6>
+  </div>
+  <div class="tree-branch-item-children"
+       [class.tree-branch-item-children-show]="branch._toggled">
+    <app-tree-branch-item [subLevel]="subLevel + 1" (branchChanged)="branchChanged.emit($event)" *ngFor="let child of branch.children" [branch]="child">
+
+    </app-tree-branch-item>
+  </div>
+
+</div>

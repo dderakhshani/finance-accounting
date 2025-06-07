@@ -1,0 +1,27 @@
+@import "/src/assets/scss/variables";
+ .mat-card{
+  padding: 15px !important;
+}
+.disabled {
+  pointer-events: none;
+  
+}
+mat-label {
+  font-size: 14px;
+  color: color(primary,500);
+}
+
+.line {
+  line-height: 2.5
+}
+table tr th {
+  padding-right: 10px;
+}
+
+table tr td {
+  padding: 5px 10px 5px 5px;
+  height: 40px;
+}
+.mat-elevation-z8 {
+  box-shadow: unset !important;
+}

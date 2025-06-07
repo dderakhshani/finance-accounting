@@ -1,0 +1,117 @@
+:host {
+  height: fit-content;
+  display: flex;
+  z-index: 1 !important;
+}
+.action-bar{
+  position: sticky;
+  top: 0;
+  z-index: 999;
+}
+.side-bar-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  z-index: 999;
+
+  .side-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 100%;
+    background-color: transparent;
+
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: width 0.3s ease;
+  }
+
+  .side-bar.open {
+    width: 50px; /* عرض نوار کناری در حالت باز */
+  }
+
+  .side-content {
+    display: flex;
+    flex-direction: column;
+
+    height: 100%;
+    flex-wrap: nowrap;
+    align-content: center;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .toggle-button {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    background-color: transparent;
+    color: #fff;
+    border: 1px solid #f4f4f4;
+    padding: 0;
+    cursor: pointer;
+    border-radius: 0 21% 50% 0;
+    box-shadow: rgba(3, 102, 214, 0.3) 0 2px 4px 0, rgba(14, 30, 37, 0.32) 0 2px 16px 0;
+    z-index: 1100;
+    transition: left 0.3s ease, transform 0.3s ease;
+    .mat-icon {
+      margin-right: 5px;
+      font-size: 30px;
+      font-weight: bold;
+      color: #6d72ed;
+    }
+    &:hover {
+    ;
+      border: 1px solid rgba(3, 102, 214, 0.17);
+      box-shadow: rgba(0, 0, 0, 0.25) 0 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+
+      mat-icon {
+        font-weight: bolder;
+        font-size: 32px;
+        color: #1e26e3;
+      }
+    }
+  }
+
+  .toggle-button.open {
+    left: 50px;
+  }
+
+  .rotated-button {
+
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transform: rotate(-90deg);
+    margin: 45px 0;
+    width: fit-content;
+    padding: 5px 10px;
+  }
+
+  .rotated-button:hover {
+    background-color: #e7e7e7;
+
+  }
+
+
+
+  .rotated-content {
+    transform: rotate(-90deg);
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+  }
+
+  .align{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+  }
+}

@@ -1,0 +1,9 @@
+
+<span (click)="handleSort()">
+
+                       <mat-icon [matBadge]="columnCurrentSortIndex"  matBadgeSize="medium" matBadgeColor="warn" [matBadgeHidden]="!isSorted" *ngIf="columnCurrentSortDirection === 'desc' || !isSorted" class="sort"
+                                 [class.sort-active-icon]="isSorted || isHovered" >north</mat-icon>
+                       <mat-icon [matBadge]="columnCurrentSortIndex"  matBadgeSize="medium"  matBadgeColor="warn" [matBadgeHidden]="!isSorted" *ngIf="columnCurrentSortDirection === 'asc'" class="sort"
+                                 [class.sort-active-icon]="isSorted || isHovered" >south</mat-icon>
+
+ </span>

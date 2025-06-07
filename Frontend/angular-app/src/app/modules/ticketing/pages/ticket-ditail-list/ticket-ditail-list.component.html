@@ -1,0 +1,79 @@
+<div class="d-flex flex-column h-90 gap-3">
+    <mat-card class="p-3">
+        <div class="row">
+            <div class="mat-headline">
+                <span class="label requestor-type-operator">
+                    عنوان تیکت:
+                </span>
+                {{ticketTitle}}
+            </div>
+
+            <div style="text-align: center;">
+                <button mat-raised-button color="primary" (click)="replyTicket()">
+                    پاسخ دادن
+                </button>
+                <span style="float: left;" *ngIf="!isCloseTicket">
+                    <button mat-raised-button color="primary" (click)="closeTicket()">
+                        <mat-icon class="ms-1">close</mat-icon>
+                        بستن تیکت
+                    </button>
+                </span>
+                <span class="closedMessage" *ngIf="isCloseTicket">
+                    این تیکت بسته شده است. جهت بازگشایی آن، باید پاسخی ارسال کنید.
+                </span>
+            </div>
+        </div>
+    </mat-card>
+
+
+    <div *ngFor="let item of ticketDetails">
+        <mat-card class="p-3">
+            <div class="ticket-reply markdown-content staff {{headerColor(item)}}">
+                <div style="padding: 11px;border-radius: 7px;">
+
+                    <div style="float: left;padding: 5px 10px;" *ngIf="checkForwardAccess(item)">
+                        <button mat-raised-button color="primary" (click)="forwardTicket(item)">ارجاع تیکت</button> |
+                        <button mat-raised-button color="primary" (click)="privateMessage(item)">پیام های خصوصی</button>
+                    </div>
+                    <div class="user">
+                        <i class="fas fa-user"></i>
+                        <span class="name">
+                            {{item.detailCreatorUserFullName}} از
+                            <span class="label requestor-type-operator">
+
+                                {{item.detailCreatorUserRoleName}}
+
+                                <br>
+                                تاریخ ایجاد: {{item.creatDate | toPersianDate}}
+                            </span>
+                            <span>
+                                دپارتمان مربوطه: {{item.roleName}}
+                            </span>
+                            <span *ngIf="item.historyCount>0">
+                                (ارجاع داده شده {{item.historyCount}})
+                            </span>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="message"
+                    style="background-color: #fff;border-top: 1px solid #bbb; padding-top: 8px;padding-bottom: 20px">
+                    {{item.description}}
+                </div>
+                <div class="col-md-12" *ngIf="item.attachmentIdsNumber">
+
+                    <app-uploader class="d-flex justify-content-center"  [attachmentIds]="item.attachmentIdsNumber"
+                        [allowFileUpload]="false">
+                    </app-uploader>
+                </div>
+
+            </div>
+
+
+            <!-- <button mat-raised-button (click)="closeVoucherHeads()" color="primary">صدور سند بستن حسابها</button> -->
+
+        </mat-card>
+
+    </div>
+
+</div>

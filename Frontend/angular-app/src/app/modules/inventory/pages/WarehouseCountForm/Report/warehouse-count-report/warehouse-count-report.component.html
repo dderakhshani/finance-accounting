@@ -1,0 +1,40 @@
+<div *ngIf="showStepList">
+<div class="stepper-container">
+  <div class="step" *ngFor="let step of stepList; let i = index"
+       [class.active]="i === stepIndex" [class.completed]="i < stepIndex">
+    <div class="circle">{{ i + 1 }}</div>
+    <div class="label">{{ step.label }}</div>
+  </div>
+</div>
+<div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
+<div *ngIf="isCompleted" class="success">✅ عملیات با موفقیت انجام شد!</div>
+
+<div class="button-group">
+<!--  <button (click)="prevStep()" [disabled]="stepIndex === 0 || isLoading">⬅ Back</button>-->
+  <button (click)="nextStep()" [disabled]="isLoading || isCompleted" mat-raised-button  class="rotated-button bg-green-500" color="primary">➡ مرحله بعد</button>
+</div>
+</div>
+<div *ngIf="isLoading" class="loader">⏳ Processing...</div>
+<mat-card class="h-100 d-flex flex-column">
+  <div class="h-100 overflow-auto">
+    <app-table-virtual-scrolling
+      [tableRows]="rowData"
+      [tableConfigurations]="tableConfigurations"
+      (sortChanged)="get()"
+      (refreshEvent)="get()"
+      (filtersChanged)="get()"
+      (paginationChanged)="get()"
+    >
+      <div buttonTopContent >
+        <button type="button" (click)="addDeductionAndExtraForm()" mat-raised-button  class="rotated-button bg-green-500" color="primary" [disabled]="this.stateCount>=4 || isCompleted" >
+          <mat-icon>add</mat-icon>
+          صدور فرم کسری و اضافی
+        </button>
+        <button type="button" (click)="countCancellation()" mat-raised-button  class="rotated-button bg-red-500" color="primary" [disabled]="this.stateCount>=4" >
+          <mat-icon>cancel</mat-icon>
+          ابطال شمارش
+        </button>
+      </div>
+    </app-table-virtual-scrolling>
+  </div>
+</mat-card>

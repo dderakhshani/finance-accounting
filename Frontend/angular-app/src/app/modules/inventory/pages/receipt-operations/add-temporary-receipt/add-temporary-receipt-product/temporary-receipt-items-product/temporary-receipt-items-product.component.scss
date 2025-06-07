@@ -1,0 +1,31 @@
+@import "/src/assets/scss/variables";
+.mat-card{
+  padding: 15px !important;
+}
+.mat-input-element{
+  padding-right: 0px !important;
+  font-size: 12px !important;
+}
+
+.mat-elevation-z8 {
+  box-shadow: unset !important;
+}
+.btn-color {
+  color: color(md-grey,500) !important;
+}
+
+.btn-ok {
+  color: color(success,500) !important;
+}
+.btn-red {
+  color: color(danger,500) !important;
+ 
+  border: unset;
+  background: unset;
+}
+
+.btn-md-amber {
+  color: color(md-amber,500) !important;
+  border: unset;
+  background: unset;
+}

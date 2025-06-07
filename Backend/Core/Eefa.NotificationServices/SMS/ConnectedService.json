@@ -1,0 +1,16 @@
+{
+    "ExtendedData": {
+        "inputs": [
+            "http://payamak-service.ir/SendService.svc?wsdl"
+        ],
+        "collectionTypes": [
+            "System.Array",
+            "System.Collections.Generic.Dictionary`2"
+        ],
+        "namespaceMappings": [
+            "*, Eefa.NotificationServices.SMS"
+        ],
+        "targetFramework": "net8.0",
+        "typeReuseMode": "All"
+    }
+}

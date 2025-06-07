@@ -1,0 +1,30 @@
+<div class="h-100 d-flex flex-column gap-3">
+  <mat-card class="h-50 overflow-auto">
+    <app-tree
+      [useNew]="true"
+      (onClick)="get($event)"
+      height="100%"
+      [rawNodes]="baseValueTypes"
+      [editable]="true"
+      [canAdd]="true"
+      (onAdd)="addBaseValueType($event)"
+      (onEdit)="updateBaseValueType($event)"
+>
+    </app-tree>
+
+  </mat-card>
+  <mat-card class="h-50 overflow-auto d-flex flex-column" style="max-height: inherit; padding: 0!important;">
+
+      <app-action-bar  class="p-3" (onEdit)="update()" (onAdd)="add()">
+        <span class="mat-caption">{{activeBaseValueType?.title}}</span>
+      </app-action-bar>
+
+    <app-table
+      [tableRows]="baseValues"
+      [tableConfigurations]="tableConfigurations"
+      (rowDoubleClicked)="update($event)">
+
+    </app-table>
+  </mat-card>
+
+</div>

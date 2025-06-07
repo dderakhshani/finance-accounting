@@ -1,0 +1,57 @@
+<div class="h-100 d-flex flex-column">
+
+  <app-action-bar class="p-3" (onAdd)="reset()" (onSave)="add()" (onList)="navigateToCompaniesList()" ></app-action-bar>
+  <div class="h-100 d-flex flex-column gap-3">
+
+    <mat-card>
+
+      <form [formGroup]="form">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="row">
+              <div class="col-md-3">
+                <mat-form-field>
+                  <mat-label>عنوان</mat-label>
+                  <input tabindex="1" formControlName="title" type="text" matInput>
+                </mat-form-field>
+              </div>
+              <div class="col-md-3">
+                <mat-form-field>
+                  <mat-label>نام اختصاصی</mat-label>
+                  <input tabindex="1" formControlName="uniqueName" type="text" matInput>
+                </mat-form-field>
+              </div>
+              <div class="col-md-3">
+                <mat-form-field>
+                  <mat-label>تاریخ بسته شدن اطلاعات</mat-label>
+                  <input tabindex="6" matInput [matDatepicker]="picker" formControlName="expireDate">
+                  <mat-datepicker-toggle matSuffix [for]="picker">
+                    <mat-icon matDatepickerToggleIcon>
+                      <img class="mb-3" src="/assets/icons/calendar.svg" alt="">
+                    </mat-icon>
+                  </mat-datepicker-toggle>
+                  <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+              </div>
+
+              <div class="col-md-3">
+                <mat-form-field>
+                  <mat-label>حداکثر تعداد کاربران</mat-label>
+                  <input tabindex="1" formControlName="maxNumOfUsers" type="text" matInput>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+
+
+
+    </mat-card>
+
+    <app-company-years-list class="h-100" [form]="form.controls['yearsId']"></app-company-years-list>
+
+
+  </div>
+
+</div>

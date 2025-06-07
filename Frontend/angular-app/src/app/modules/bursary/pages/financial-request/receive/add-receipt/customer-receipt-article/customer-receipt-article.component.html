@@ -1,0 +1,439 @@
+<mat-card [formGroup]="form">
+
+  <div class="d-flex justify-content-around">
+    <div>
+      <mat-label style="font-size: x-small">نوع سند </mat-label>
+      <mat-button-toggle-group style="font-size: x-small" [formControl]="form.get('documentTypeBaseId')" formControlName="documentTypeBaseId" (click)="changeDocumentsType(form)" name="fontStyle" aria-label="Font Style">
+        <mat-button-toggle *ngFor="let item of documentTypes" [value]="item.id">{{ item.title }}</mat-button-toggle>
+      </mat-button-toggle-group>
+    </div>
+
+
+    <div [ngClass]="{'flex-fill':form.get('isRial')?.value != currencyType.NonRial}">
+      <mat-button-toggle-group style="font-size: x-small" [formControl]="form.get('isRial')" formControlName="isRial" (click)="changeDocumentsType(form)" name="fontStyle" aria-label="Font Style">
+        <mat-button-toggle *ngFor="let item of moneyTypes" [value]="item.value">{{ item.title }}</mat-button-toggle>
+      </mat-button-toggle-group>
+    </div>
+
+    <div *ngIf="form.get('isRial')?.value == currencyType.NonRial && form.get('documentTypeBaseId')?.value != documents.Cash">
+      <mat-form-field>
+        <mat-label style="font-size: x-small"> نوع فروش ارزی </mat-label>
+        <mat-select formControlName="nonRialStatus" (click)="fillAccountHeadByNonRialType(form.get('nonRialStatus').value,form)" style="font-size: x-small">
+          <mat-option *ngFor="let item of nonRialTypes" [value]="item.value">
+            {{ item.title }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    
+
+      <mat-checkbox color="primary"   formControlName="bedCurrencyStatus">
+        <mat-label> نمایش ارزی بدهکار </mat-label>
+        </mat-checkbox>
+    
+        <mat-checkbox color="primary"   formControlName="besCurrencyStatus">
+          <mat-label> نمایش ارزی بستانکار </mat-label>
+          </mat-checkbox>
+      
+    </div>
+     
+    <!-- <mat-button-toggle-group style="font-size: x-small" [formControl]="form.get('nonReferenceCode')" formControlName="nonReferenceCode" (click)="disableCredits(form)" name="fontStyle" aria-label="Font Style">
+      <mat-button-toggle *ngFor="let item of useReferenceTypes" [value]="item.value">{{ item.title }}</mat-button-toggle>
+    </mat-button-toggle-group> -->
+
+    <div class="flex-fill">
+
+    </div>
+    <div>
+      <button button mat-stroked-button class=" mx-2 text-danger" (click)="removeArticle(index)">
+        <mat-icon>
+          delete icon
+        </mat-icon>
+        <span>حذف</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="col-12">
+    <div class="d-flex justify-content-around gap-3 mt-3">
+      <div class="col-md-3">
+
+        <mat-checkbox color="primary" (click)="disableCredit()" formControlName="isCreditAccountHead">
+          <mat-label>در سطح معین</mat-label>
+        </mat-checkbox>
+
+        <mat-form-field>
+          <mat-label> سرفصل حساب بستانکار</mat-label>
+          <input type="text" matInput formControlName="creditAccountHeadId" [matAutocomplete]="creditAccountHeadIdAuto" />
+          <mat-autocomplete autoActiveFirstOption #creditAccountHeadIdAuto="matAutocomplete" [displayWith]="accountHeadDisplayFn.bind(this)">
+            <mat-option *ngFor="let item of creditAccountHeads" [value]="item.id">
+              <span>{{item.title}}</span> <span>({{item.code}})</span>
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+      </div>
+      <div class="col-md-3">
+        <mat-form-field>
+          <mat-label>گروه حساب بستانکار</mat-label>
+          <input type="text" matInput formControlName="creditAccountReferenceGroupId" [matAutocomplete]="creditAccountReferenceGroupIdAuto" />
+          <mat-autocomplete autoActiveFirstOption #creditAccountReferenceGroupIdAuto="matAutocomplete" [displayWith]="accountReferenceGroupDisplayFn.bind(this)">
+            <mat-option *ngFor="let item of creditAccountReferenceGroups" [value]="item.id">
+              <span>{{item.title}}</span> <span>({{item.code}})</span>
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+      </div>
+      <div class="col-md-3">
+        <mat-form-field>
+          <mat-label>تفصیل بستانکار</mat-label>
+          <input type="text" matInput formControlName="creditAccountReferenceId" [matAutocomplete]="creditAccountReferenceIdAuto" />
+          <mat-autocomplete autoActiveFirstOption #creditAccountReferenceIdAuto="matAutocomplete" [displayWith]="accountReferenceDisplayFn.bind(this)">
+            <mat-option *ngFor="let item of creditAccountReferences" [value]="item.id">
+              <span>{{item.title}}</span>   <span>({{item.code}})</span>
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+      </div>
+    </div>
+
+
+    <div class="col-12">
+      <div class="d-flex justify-content-around gap-3 mt-2">
+        <div class="col-md-3">
+
+          <mat-checkbox color="primary" (click)="disableDebits()" formControlName="isDebitAccountHead">
+            <mat-label>در سطح معین</mat-label>
+          </mat-checkbox>
+
+          <mat-form-field>
+            <mat-label>کد سرفصل بدهکار</mat-label>
+            <input type="text" matInput formControlName="debitAccountHeadId" [matAutocomplete]="debitAccountHeadIdAuto" />
+            <mat-autocomplete  autoActiveFirstOption #debitAccountHeadIdAuto="matAutocomplete" [displayWith]="accountHeadDisplayFn.bind(this)">
+              <mat-option *ngFor="let item of debitAccountHeads" [value]="item.id">
+                <span>{{item.title}}</span> <span>({{item.code}})</span>
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+        </div>
+        <div class="col-md-3">
+          <mat-form-field>
+            <mat-label>گروه حساب بدهکار</mat-label>
+            <input type="text" matInput formControlName="debitAccountReferenceGroupId" [matAutocomplete]="debitAccountReferenceGroupIdAuto" />
+            <mat-autocomplete autoActiveFirstOption #debitAccountReferenceGroupIdAuto="matAutocomplete"
+             [displayWith]="accountReferenceGroupDisplayFn.bind(this)">
+              <mat-option *ngFor="let item of debitAccountReferenceGroups" [value]="item.id">
+                <span>{{item.title}}</span> <span>({{item.code}})</span>
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+        </div>
+        <div class="col-md-3">
+          <mat-form-field>
+            <mat-label> تفصیل بدهکار</mat-label>
+            <input type="text" matInput formControlName="debitAccountReferenceId" [matAutocomplete]="debitAccountReferenceIdAuto" />
+            <mat-autocomplete  autoActiveFirstOption #debitAccountReferenceIdAuto="matAutocomplete" [displayWith]="accountReferenceDisplayFn.bind(this)">
+              <mat-option *ngFor="let item of debitAccountReferences" [value]="item.id">
+                <span>{{item.title}}</span> <span>({{item.code}})</span>
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+        </div>
+
+      </div>
+    </div>
+    <div class="d-flex justify-content-around gap-3 mt-2">
+      <mat-form-field>
+        <mat-label>نوع مبنا </mat-label>
+        <mat-select formControlName="financialReferenceTypeBaseId">
+          <mat-option *ngFor="let item of referenceTypes" [value]="item.id">
+            {{ item.title }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <!-- <mat-form-field>
+        <mat-label> شرح سند</mat-label>
+        <textarea rows="1" matInput formControlName="description"></textarea>
+      </mat-form-field> -->
+    </div>
+  </div>
+
+
+
+  <!-- حواله -->
+  <div *ngIf="form.get('documentTypeBaseId')?.value == documents.Remittance" class="m-2 p-2">
+    <div class="col-12 row my-3">
+      <div class="col-4" *ngIf="form.get('isRial').value == currencyType.NonRial">
+
+
+        <mat-form-field>
+          <mat-label>نوع ارز </mat-label>
+          <mat-select formControlName="currencyTypeBaseId">
+            <mat-option *ngFor="let item of currencyTypes" [value]="item.id">
+              نام : {{ item.title }} &nbsp; کد : {{item.code}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-4" *ngIf="form.get('isRial').value == currencyType.NonRial">
+        <mat-form-field>
+          <mat-label>مبلغ ارزی</mat-label>
+          <input matInput type="text" formControlName="currencyAmount" (keydown)="calculateAmount(form)" (change)="calculateAmount(form)"  required />
+          <span matSuffix>$&nbsp;</span>
+        </mat-form-field>
+        {{form.get('currencyAmount')?.value | number: '2.'}}
+      </div>
+
+      <div class="col-4">
+        <mat-form-field>
+          <mat-label> شرح رسید</mat-label>
+          <input matInput type="text" formControlName="paymentCode"  />
+        </mat-form-field>
+      </div>
+
+      <div class="col-4" *ngIf="form.get('isRial').value == currencyType.NonRial">
+        <mat-form-field>
+          <mat-label>فی</mat-label>
+          <input matInput type="text" formControlName="currencyFee" (keydown)="calculateAmount(form)" (change)="calculateAmount(form)"  required />
+        </mat-form-field>
+      </div>
+
+      <div class="col-4">
+        <mat-form-field>
+          <mat-label> مبلغ ریالی</mat-label>
+          <input currencyMask matInput type="text" (keydown)="ttt($event,form)" formControlName="amount"  required />
+        </mat-form-field>
+        <!-- {{form.get('amount')?.value | number: '2.'}} -->
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Cheque -->
+  <div *ngIf="form.get('documentTypeBaseId')?.value == documents.ChequeSheet" class="m-2 p-2">
+    <mat-divider></mat-divider>
+
+
+    <!-- Loop Cheques -->
+    <div class="row my-2 border rounded cheque-item p-2">
+      <div [formGroup]="form.controls['chequeSheet']">
+        <div class="col-12 row">
+          <div class="col-4">
+
+            <!--
+            <mat-form-field>
+              <mat-label>جستجوی چک های ثبت شده</mat-label>
+              <input type="text" matInput [matAutocomplete]="chequeSheetAuto" formControlName="chequeSheetId" />
+              <mat-icon matSuffix>search</mat-icon>
+              <mat-autocomplete autoActiveFirstOption #chequeSheetAuto="matAutocomplete" (optionSelected)="autoFillChequeDetails(form.controls['chequeSheet'],$event)" [displayWith]="chequeSheetsDisplayFn.bind(this)">
+                <mat-option *ngFor="let item of filteredChequeSheets" [value]="item">
+                  شماره سریال : {{item.sheetSeqNumber}} &nbsp; مبلغ : {{item.totalCost}} &nbsp; شرح : {{item.description}}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field> -->
+
+
+
+            <app-combo-search
+             [nodes]="chequeSheets"
+             [DefaultId]="form.controls['chequeSheet'].id"
+             (SelectId)="chequeSheetsSelect($event,form.controls['chequeSheet'])"
+             [lablelTitleCombo]="'جستجوی چک های ثبت شده'"
+             [isRequired]="false"
+             (SearchTerm)="chequeSheetsFilter($event,undefined)"
+             [isInternalSearch]="true">
+
+            </app-combo-search>
+ 
+
+          </div>
+          <div class="col-4">
+            <button mat-flat-button type="button" (click)="addChequeSheet(form.controls['chequeSheet'])" color="primary">
+              <mat-icon>add</mat-icon>
+              ثبت چک جدید
+            </button>
+          </div>
+        </div>
+
+        <div class="col-12 row">
+          <div class="col-md-3">
+            <mat-form-field>
+              <mat-label> سریال چک</mat-label>
+              <input matInput type="text" readonly formControlName="sheetSeqNumber" required />
+            </mat-form-field>
+          </div>
+
+          <div class="col-md-3">
+            <mat-form-field>
+              <mat-label>سری چک</mat-label>
+              <input matInput type="text" readonly formControlName="sheetSeriNumber" required />
+              <span matSuffix>$&nbsp;</span>
+            </mat-form-field>
+          </div>
+
+          <div class="col-md-3">
+            <mat-form-field>
+              <mat-label>کد صیادی</mat-label>
+              <input matInput type="text" readonly  formControlName="sheetUniqueNumber" required />
+              <span matSuffix>$&nbsp;</span>
+            </mat-form-field>
+          </div>
+
+          <div class="col-md-3">
+            <mat-form-field>
+              <mat-label>مبلغ</mat-label>
+              <input matInput type="text" readonly formControlName="totalCost" required currencyMask/>
+              <span matSuffix>$&nbsp;</span>
+            </mat-form-field>
+            <!-- {{form.get('totalCost')?.value | number: '2.'}} -->
+          </div>
+
+          <div class="col-md-3">
+            <mat-form-field>
+              <mat-label>تاریخ دریافت چک</mat-label>
+              <input tabindex="3" matInput [matDatepicker]="issueDate" disabled formControlName="issueDate" />
+              <mat-datepicker-toggle matSuffix [for]="issueDate">
+                <mat-icon matDatepickerToggleIcon>
+                  <img class="mb-3" src="/assets/icons/calendar.svg" alt="" />
+                </mat-icon>
+              </mat-datepicker-toggle>
+              <mat-datepicker #issueDate></mat-datepicker>
+            </mat-form-field>
+          </div>
+
+          <div class="col-md-3">
+            <mat-form-field>
+              <mat-label>تاریخ سر رسید</mat-label>
+              <input tabindex="3" matInput [matDatepicker]="formDate" disabled formControlName="receiptDate" />
+              <mat-datepicker-toggle matSuffix [for]="formDate">
+                <mat-icon matDatepickerToggleIcon>
+                  <img class="mb-3" src="/assets/icons/calendar.svg" alt="" />
+                </mat-icon>
+              </mat-datepicker-toggle>
+              <mat-datepicker #formDate></mat-datepicker>
+            </mat-form-field>
+          </div>
+
+          <div class="col-md-3">
+            <mat-form-field>
+              <mat-label>بانک </mat-label>
+              <mat-select formControlName="bankId" disabled>
+                <mat-option *ngFor="let b of banks" [value]="b.id">
+                  {{ b.title }}
+                </mat-option>
+              </mat-select>
+              <mat-icon matPrefix>account_balance</mat-icon>
+            </mat-form-field>
+          </div>
+
+          <div class="col-md-3">
+
+            <mat-form-field>
+              <mat-label>شعبه </mat-label>
+              <input matInput type="text" readonly formControlName="branchName" required />
+            </mat-form-field>
+          </div>
+
+          <div class="col-md-3">
+            <mat-form-field>
+              <mat-label>شماره حساب</mat-label>
+              <input matInput type="text" readonly formControlName="accountNumber" required />
+            </mat-form-field>
+
+          </div>
+
+          <div class="col-md-3">
+            <mat-form-field>
+              <mat-label>نوع چک</mat-label>
+              <mat-select formControlName="chequeTypeBaseId" disabled>
+                <mat-option *ngFor="let c of chequeTypes" [value]="c.id">
+                  {{ c.title }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+          </div>
+
+          <div class="col-md-6">
+            <mat-form-field>
+              <mat-label>توضیحات</mat-label>
+              <input matInput type="text" readonly formControlName="description" required />
+            </mat-form-field>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <!-- نقدی -->
+  <div *ngIf="form.get('documentTypeBaseId')?.value == documents.Cash" class="m-2 p-2">
+    <div class="d-flex justify-content-around gap-3 my-3">
+
+<div class="row col-12">
+  <div class="col-3">
+    <mat-form-field>
+      <mat-label>شماره پیگیری</mat-label>
+      <input matInput type="text" formControlName="registrationCode" required />
+      <span matSuffix>$&nbsp;</span>
+    </mat-form-field>
+  </div>
+  <div class="col-3">
+    <mat-form-field>
+      <mat-label>شناسه پرداخت</mat-label>
+      <input matInput type="text" formControlName="paymentCode" required />
+      <span matSuffix>$&nbsp;</span>
+    </mat-form-field>
+  </div>
+
+  <div class="col-3" *ngIf="form.get('isRial').value == currencyType.NonRial">
+    <mat-form-field >
+      <mat-label>نوع ارز </mat-label>
+      <mat-select formControlName="currencyTypeBaseId">
+        <mat-option *ngFor="let item of currencyTypes" [value]="item.id">
+          نام : {{ item.title }} &nbsp; کد : {{item.code}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div class="col-3" *ngIf="form.get('isRial').value == currencyType.NonRial">
+    <mat-form-field >
+      <mat-label>مبلغ ارزی</mat-label>
+      <input matInput type="text" formControlName="currencyAmount" (keydown)="calculateAmount(form)" (change)="calculateAmount(form)" currencyMask required />
+      <span matSuffix>$&nbsp;</span>
+    </mat-form-field>
+    <!-- {{form.get('currencyAmount')?.value | number: '2.'}} -->
+  </div>
+
+  <div class="col-3" *ngIf="form.get('isRial').value == currencyType.NonRial">
+    <mat-form-field >
+      <mat-label>فی</mat-label>
+      <input matInput type="text" formControlName="currencyFee" (keydown)="calculateAmount(form)" (change)="calculateAmount(form)" currencyMask required />
+    </mat-form-field>
+  </div>
+
+  <div class="col-3">
+    <mat-form-field>
+      <mat-label> مبلغ ریالی</mat-label>
+      <input currencyMask matInput type="text" formControlName="amount"  required />
+
+    </mat-form-field>
+    <!-- {{form.get('amount')?.value | number: '2.'}} -->
+    </div>
+
+</div>
+
+    </div>
+
+  </div>
+
+
+  <!-- <div class="p-2">
+    <app-uploader class="d-flex justify-content-center" [autoUpload]="true" (filesChange)="files=$event" (isUploadingChange)="isUploading" ></app-uploader>
+
+  </div> -->
+
+</mat-card>
+
+

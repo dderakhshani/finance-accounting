@@ -1,0 +1,153 @@
+@import "/src/assets/scss/variables";
+
+.btn-tree {
+  background: unset;
+  border: unset;
+  display: inherit;
+  // margin-top: 5px;
+}
+
+.btn-tree-node:hover {
+  background-color: color(primary,50);
+  cursor: pointer;
+}
+
+.btn-tree-node {
+  padding-top: 7px;
+  padding-bottom: 5px;
+  width: 100%;
+}
+
+::ng-deep {
+  .mat-drawer-inner-container {
+    min-width: unset !important;
+    max-width: unset !important;
+    height: 100% !important;
+    overflow: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+
+  .mat-menu-content {
+    padding-top: 8px !important;
+    padding-bottom: 0px !important;
+  }
+
+  .mat-tree-node .mat-nested-tree-node {
+    font-weight: 400;
+    font-size: 14px;
+    padding-left: 15px;
+  }
+
+  .mat-tree-node {
+    min-height: 25px;
+    border-bottom: solid 1px color(primary,50) !important;
+  }
+
+
+  .mat-menu-panel {
+    min-width: 350px !important;
+    max-height: 50vh;
+    max-width: 100%;
+  }
+}
+
+
+.mat-input-element {
+  padding-right: 20px;
+  width: 100%;
+  max-width: 100%;
+}
+
+.search-input {
+  margin-right: 10px;
+  margin-left: 10px;
+  background-image: url('/assets/icons/search.svg');
+  background-position: right;
+  background-repeat: no-repeat;
+  width: 95%;
+  border: solid 1px color(primary,50);
+  border-radius: 3px;
+  padding: 8px;
+  padding-right: 25px;
+  font-size: 12px;
+}
+
+.search-input:focus {
+  outline: none;
+  border: solid 1px color(primary,500);
+}
+
+.mat-icon {
+  color: color(primary,500) !important;
+}
+
+.mat-input-element {
+  padding-right: 20px;
+  width: 100%;
+  max-width: 100%;
+}
+
+
+.expand {
+  margin-right: 10px;
+  margin-left: 5px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.mat-option {
+  font-size: 15px;
+}
+
+.disabled {
+  pointer-events: none;
+  opacity: .5;
+}
+.selectedItems {
+  border: solid;
+  border-width: 1px;
+  border-color: color(primary,200);
+  /* margin-right: 7px;*/
+  font-size: 13px !important;
+  position: relative;
+  z-index: 100;
+  /*left: -3px;*/
+  border-radius: 6px;
+  font-size: 20px;
+  padding: 5px;
+  padding-top: 5px;
+  margin-top: 2px;
+  justify-content: center;
+}
+.selectedItemsDelete {
+  padding: 5px;
+  padding-right:-1px;
+  color: color(primary,300);
+  cursor: pointer;
+}
+.selectedItemsDelet:hover {
+  color: color(primary,500);
+  background-color: #d1ebf1;
+}
+._content {
+  border-style: solid;
+  border-width: 1px;
+  border-color: rgba(0, 0, 0, 0.12);
+  padding-right: 100px;
+  display: flex;
+  padding: 0px;
+  flex-direction: column;
+  border-radius: 5px;
+  min-height: 40px !important;
+  position:relative;
+}
+.height-40 {
+  min-height: 40px !important;
+}
+.height-50 {
+  min-height: 50px !important;
+}
+.seprator {
+  border: dashed 1px;
+  border-color:#808080;
+}

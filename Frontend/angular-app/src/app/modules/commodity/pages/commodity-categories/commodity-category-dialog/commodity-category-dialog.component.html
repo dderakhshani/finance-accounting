@@ -1,0 +1,70 @@
+<mat-dialog
+  (onSubmit)="submit()"
+  (onDelete)="delete()"
+  [showDeleteBtn]="pageMode === pageModes.Update">
+<div dialog-header=""> دسته بندی کالا</div>
+
+<div dialog-content="">
+  <form [formGroup]="form">
+    <div class="row">
+      <div class="col-md-6">
+        <mat-form-field>
+          <mat-label>عنوان</mat-label>
+          <input matInput formControlName="title" type="text">
+        </mat-form-field>
+      </div>
+      <div class="col-md-6">
+        <mat-form-field>
+          <mat-label>ترتیب نمایش</mat-label>
+          <input matInput formControlName="orderIndex" type="text">
+        </mat-form-field>
+      </div>
+
+      <div class="col-md-6">
+        <mat-form-field>
+          <mat-label>کد</mat-label>
+          <input matInput formControlName="code" type="text">
+        </mat-form-field>
+      </div>
+      <div class="col-md-6">
+        <mat-form-field>
+          <mat-label>نوع کد گزاری</mat-label>
+          <mat-select formControlName="codingMode">
+            <mat-option
+              *ngFor="let codingMode of codingModes"
+              [value]="codingMode.id">
+              {{codingMode.title}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-md-6">
+        <mat-form-field>
+          <mat-label>واحد اندازه گیری</mat-label>
+          <input (keyup)="filterMeasureUnits()" formControlName="measureId" type="text" matInput [matAutocomplete]="measureUnitsAuto">
+          <mat-autocomplete [displayWith]="getMeasureUnitTitle.bind(this)" autoActiveFirstOption #measureUnitsAuto="matAutocomplete">
+            <mat-option
+              *ngFor="let measureUnit of measureUnits"
+              [value]="measureUnit.id">
+              {{measureUnit.title}}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+
+      </div>
+      <div class="col-md-3 mt-2">
+        <section class="example-section">
+          <mat-slide-toggle
+            color="primary"
+            formControlName="requireParentProduct">
+            آیا امکان ثبت کالا دارد
+          </mat-slide-toggle>
+        </section>
+      </div>
+
+    </div>
+  </form>
+</div>
+
+
+</mat-dialog>

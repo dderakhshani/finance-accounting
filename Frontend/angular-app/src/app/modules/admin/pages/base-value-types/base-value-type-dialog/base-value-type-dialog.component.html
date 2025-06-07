@@ -1,0 +1,40 @@
+
+<mat-dialog
+  (onSubmit)="submit()"
+  (onDelete)="delete()"
+  [showDeleteBtn]="pageMode === pageModes.Update"
+>
+
+  <div dialog-header="">تایپ</div>
+
+  <div dialog-content="">
+    <div class="row" [formGroup]="form">
+      <div class="col-md-6">
+        <mat-form-field>
+          <mat-label> عنوان</mat-label>
+          <input formControlName="title" type="text" matInput>
+        </mat-form-field>
+      </div>
+      <div class="col-md-6">
+        <mat-form-field>
+          <mat-label> نام یکتا</mat-label>
+          <input formControlName="uniqueName" type="text" matInput>
+        </mat-form-field>
+      </div>
+      <div class="col-md-6">
+        <mat-form-field>
+          <mat-label> گروه</mat-label>
+          <input formControlName="groupName" type="text" matInput>
+        </mat-form-field>
+      </div>
+      <div class="col-md-6">
+        <mat-form-field>
+          <mat-label> سیستم</mat-label>
+          <input formControlName="subSystem" type="text" matInput>
+        </mat-form-field>
+      </div>
+
+    </div>
+  </div>
+
+</mat-dialog>

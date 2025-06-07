@@ -1,0 +1,192 @@
+<div class="h-100 gap-2 d-flex flex-column overflow-hidden" style="max-height: inherit; padding: 3px"
+     [formGroup]="form">
+    <app-action-bar (onSave)="submit()" (onList)="navigateToCommoditiesList()" (onAdd)="reset()"></app-action-bar>
+
+
+    <mat-card class="d-flex flex-column" style="height:100px">
+
+        <div class="px-3 pt-2 d-flex gap-3 align-items-center ">
+            <div class="col-3">
+                <app-combo-tree [nodes]="commodityCategories"
+                                (SelectId)="commodityCategorySelectionHandler($event)"
+                                lablelTitleCombo="انتخاب دسته بندی کالا"
+                                [isRequired]="true"
+                                [DefaultId]="form.controls.commodityCategoryId.value">
+                </app-combo-tree>
+
+            </div>
+
+
+            <div class="col-6">
+                <mat-chip-list>
+                    <ng-container *ngFor="let chip of selectedCommodityCategories; let i = index">
+                        <mat-chip (click)="commodityCategorySelectionHandler(chip.id)">
+                            {{chip.title}}
+                        </mat-chip>
+                        <mat-icon *ngIf="i !== (selectedCommodityCategories.length - 1)">keyboard_arrow_left</mat-icon>
+                    </ng-container>
+                </mat-chip-list>
+            </div>
+
+            <div class="col-3 p-1" *ngIf="getQueryParam('pageMode') == 'Copy'">
+                رونوشت از کالا :
+                <span class="btn-color font-14">
+                    {{form.controls['title'].value}}
+                </span>
+            </div>
+
+        </div>
+
+       
+    </mat-card>
+    <mat-drawer-container class="h-100 p-2 d-flex border-top"
+                          *ngIf="(doesSelectedCategoryNeedsParentProduct && form.controls['parentId']?.value) || (selectedCommodityCategories.length > 0 )">
+
+        <mat-drawer class="col-3" mode="side" opened>
+            <div class="mat-tab-label w-100 bg-grey-50">
+                <span>مشخصات کالا</span>
+                <mat-divider class="bottom-0"></mat-divider>
+            </div>
+
+            <div class="p-4">
+
+                <mat-form-field>
+                    <mat-label>عنوان</mat-label>
+                    <input type="text" matInput formControlName="title" required>
+                </mat-form-field>
+
+                <mat-form-field>
+                    <mat-label>کد والد</mat-label>
+                    <input type="text" matInput formControlName="parentCode">
+                </mat-form-field>
+
+                <mat-form-field>
+                    <mat-label>کد</mat-label>
+                    <input type="text" matInput formControlName="code" required>
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>کد تدبیر</mat-label>
+                    <input type="text" matInput formControlName="tadbirCode" required>
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>کد اختصاری</mat-label>
+                    <input type="text" matInput formControlName="compactCode" required>
+                </mat-form-field>
+
+                <mat-form-field>
+                    <mat-label>واحد اندازه گیری</mat-label>
+                    <mat-select formControlName="measureId" required>
+                        <mat-option *ngFor="let unit of measureUnits" [value]="unit.id">
+                            {{unit.title}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <div class="row">
+                   
+                    <div class="col-md-4">
+                        <mat-checkbox color="primary" formControlName="isHaveWast"></mat-checkbox>
+                        <mat-label class="mat-caption"> داغی دارد؟</mat-label>
+                    </div>
+                    <div class="col-md-4">
+                        <mat-checkbox color="primary" formControlName="isHaveForceWast"></mat-checkbox>
+                        <mat-label class="mat-caption"> داغی اجباری؟</mat-label>
+                    </div>
+                    <div class="col-md-4">
+                        <mat-checkbox color="primary" formControlName="isActive"></mat-checkbox>
+                        <mat-label class="mat-caption"> فعال؟</mat-label>
+                    </div>
+                </div>
+                <mat-form-field>
+                    <mat-label>شناسه ملی کالا</mat-label>
+                    <input type="text" matInput formControlName="commodityNationalId">
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>عنوان ملی کالا</mat-label>
+                    <input type="text" matInput formControlName="commodityNationalTitle">
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>توضیحات</mat-label>
+                    <textarea formControlName="descriptions" rows="1" matInput></textarea>
+                </mat-form-field>
+                <div class="row">
+                    <div class="col-4">
+                        <mat-form-field>
+                            <mat-label>حداقل تعداد</mat-label>
+                            <input type="number" matInput formControlName="minimumQuantity">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-4">
+                        <mat-form-field>
+                            <mat-label>حداکثر تعداد</mat-label>
+                            <input type="number" matInput formControlName="maximumQuantity">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-4">
+                        <mat-form-field>
+                            <mat-label>تعداد سفارش</mat-label>
+                            <input type="number" matInput formControlName="orderQuantity">
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <mat-form-field>
+                    <mat-label>نوع محاسبه قیمت</mat-label>
+                    <mat-select formControlName="pricingTypeBaseId">
+                        <mat-option *ngFor="let type of pricingTypes" [value]="type.id">
+                            {{type.title}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+        </mat-drawer>
+
+        <mat-drawer-content class="col-9">
+            <mat-tab-group>
+
+                <mat-tab label="خصوصیات">
+
+                    <div style="padding:15px;">
+                        <div class="row p2">
+                            <div class="col-md-4" *ngFor="let property of commodityCategoryProperties; let i = index">
+                                <app-commodity-properties [nodes]="property.items"
+                                                          [nodes_filter]="property.items"
+                                                          [property]="property"
+                                                          (SelectedItem)="SelectedPropertyItem($event,property)">
+
+                                </app-commodity-properties>
+                            </div>
+                        </div>
+                    </div>
+
+                </mat-tab>
+               
+                <mat-tab label="فرمول ساخت">
+
+                    <app-bom-headers-headers class="pt-2"
+                                             *ngIf="!this.isAddMode"
+                                             [commodityId]="form.controls.id.value"
+                                             [commodityCategoryId]="form.controls.commodityCategoryId.value">
+
+                    </app-bom-headers-headers>
+
+                </mat-tab>
+              
+
+                <mat-tab label="موجودی در انبار ها" >
+                    <app-warehouse-layouts-commodity-quantity *ngIf="!this.isAddMode"
+                                                              [commodityId]="form.controls.id.value">
+                    </app-warehouse-layouts-commodity-quantity>
+                </mat-tab>
+                <mat-tab label="کاردکس" style="padding:15px;">
+                    <app-warehouse-stocks-commodity *ngIf="!this.isAddMode"
+                                                    [commodityId]="form.controls.id.value">
+                    </app-warehouse-stocks-commodity>
+                </mat-tab>
+            </mat-tab-group>
+        </mat-drawer-content>
+    </mat-drawer-container>
+    <mat-spinner style="top:30%;right:40%;position:absolute;z-index:1000" *ngIf="_notificationService.isLoader"></mat-spinner>
+</div>
+

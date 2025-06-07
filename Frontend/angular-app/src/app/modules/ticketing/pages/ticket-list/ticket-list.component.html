@@ -1,0 +1,48 @@
+<mat-card class="h-100 d-flex flex-column overflow-hidden" style="max-height: inherit; padding: 0!important;">
+
+  <app-action-bar class="p-3" (onAdd)="add()"  (onRefresh)="get()">
+    <div class="d-flex justify-content-end" [formGroup]="ticketForm">
+      <div class="col-md-3 mx-4">
+        <mat-form-field>
+          <mat-label>وضعیت</mat-label>
+          <mat-select formControlName="ticketStatuses" (selectionChange)="get()">
+            <mat-option>--</mat-option>
+            <mat-option *ngFor="let status of ticketStatuses" [value]="status">
+              {{ TicketStatus2LabelMapping[status] }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-md-3">
+        <mat-form-field>
+          <mat-label>الویت</mat-label>
+          <mat-select formControlName="ticketPriority"  (selectionChange)="get()">
+            <mat-option>--</mat-option>
+            <mat-option *ngFor="let priority of ticketPriority" [value]="priority">
+              {{ ticketPriority2LabelMapping[priority] }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+
+
+  </app-action-bar>
+
+  <div class="h-100 overflow-auto">
+    <app-table [tableConfigurations]="tableConfigurations" [tableRows]="entities"
+               (rowDoubleClicked)="navigateToTicketDetails($event)" (filtersChanged)="get()" (sortChanged)="get()"
+               (paginationChanged)="get()"></app-table>
+  </div>
+
+  <ng-template #statusTemplate let-element="row">
+    <span class="alert {{ticketStatus2ClassMapping[element.status]}}">
+      {{ ticketStatus2LabelMapping[element.status] }}
+    </span>
+  </ng-template>
+  <ng-template #priorityTemplate let-element="row">
+    <span class="alert {{ticketPriority2ClassMapping[element.priority]}}">
+      {{ ticketPriority2LabelMapping[element.priority] }}
+    </span>
+  </ng-template>
+</mat-card>

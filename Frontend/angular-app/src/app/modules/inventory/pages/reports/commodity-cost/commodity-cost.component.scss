@@ -1,0 +1,17 @@
+
+  ::ng-deep {
+    ._content {
+      border-style: solid;
+      border-width: 1px;
+      border-color: rgba(0, 0, 0, 0.12);
+      padding-right: 100px;
+      display: flex;
+      padding: 0px;
+      flex-direction: column;
+      border-radius: 5px;
+      min-height: 45px !important;
+      position: relative;
+      margin-top: -12px;
+    }
+  }
+

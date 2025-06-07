@@ -1,0 +1,90 @@
+
+<div [matMenuTriggerFor]="menu" [ngClass]="{'disabled' : isDisable,'height-40':lablelTitleCombo==''}">
+
+    <mat-form-field *ngIf="lablelTitleCombo!=''">
+        <mat-label>{{lablelTitleCombo}}</mat-label>
+        <div>
+            <input matInput
+                   [(ngModel)]="title"
+                   (focus)="openMenu()"
+                   id="inputTitle"
+                   [ngModelOptions]="{standalone: true}"
+                   autocomplete="off"
+                   [required]="isRequired"
+                   (keyup)="onEnterTitle()" />
+        </div>
+    </mat-form-field>
+    <input *ngIf="lablelTitleCombo==''"
+           [(ngModel)]="title"
+           (focus)="openMenu()"
+           id="inputTitle"
+           [ngModelOptions]="{standalone: true}"
+           autocomplete="off"
+           [required]="isRequired"
+           class="form-control"
+           (keyup)="onEnterTitle()"
+           placeholder="" />
+
+    <mat-icon [ngClass]="{'remove-select' : lablelTitleCombo!='','remove-select-40':lablelTitleCombo==''}" *ngIf="title!='' && !isDisable" (click)="onSelectNode(null)" matTooltip="پاک کردن">
+        close
+    </mat-icon>
+
+</div>
+
+<mat-menu #menu="matMenu" style="margin-bottom:-33px;">
+
+
+
+    <div class="fix-top-input">
+        <input class="search-input"
+               [(ngModel)]="searchTerm"
+               mat-menu-item
+               (keyup)="onSearchTerm()"
+               placeholder="جستجو"
+               (click)="$event.stopPropagation()"
+               autofocus
+               id="searchTerm"
+               autocomplete="off" />
+        <mat-spinner [diameter]="20" style="top:20%;left:5%;position:absolute" *ngIf="_notificationService.isLoaderDropdown"></mat-spinner>
+    </div>
+
+    <!--Combo Select-->
+
+    <table class="mas-table" mat-menu-item>
+        <thead>
+            <tr>
+                <th>
+                    عنوان گروه
+                </th>
+                <th>
+                    نام فرمول
+                </th>
+
+                <th style="min-width:100px;">
+                    تاریخ سند
+                </th>
+
+
+            </tr>
+        </thead>
+        <tbody>
+
+            <tr *ngFor="let node of nodes" (click)="onSelectNode(node.bomsHeaderId)">
+
+                <td>
+                    {{node.title}}
+                </td>
+                <td>
+                    {{node.name}}
+                </td>
+                <td>
+                    {{node.bomDate  | toPersianDate}}
+                </td>
+
+            </tr>
+        </tbody>
+    </table>
+
+
+</mat-menu>
+

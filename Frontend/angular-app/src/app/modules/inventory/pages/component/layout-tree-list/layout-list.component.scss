@@ -1,0 +1,38 @@
+
+@import "/src/assets/scss/variables";
+.btn-tree{
+
+    background: unset;
+    border: unset;
+
+
+  }
+  .btn-tree:hover{
+    color: color(primary,800);
+  }
+  .btn-tree:active{
+    color: color(primary,800);
+  }
+  .search-input{
+
+    margin: 10px;
+    margin-bottom: 0px;
+
+    background-image:url('/assets/icons/search.svg') ;
+    background-position: right;
+    background-repeat: no-repeat;
+    width: 92%;
+    border: solid 1px color(primary,50);
+    border-radius: 3px;
+    padding: 8px;
+    padding-right: 25px;
+    font-size: 12px;
+  }
+  .search-input:focus {outline:none;}
+
+    .mat-icon{
+      color: color(primary,500) !important;
+    }
+    .mat-raised-button {
+      box-shadow:unset !important;
+    }

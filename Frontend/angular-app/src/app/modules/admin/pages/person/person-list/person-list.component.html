@@ -1,0 +1,37 @@
+<mat-card class="h-100 d-flex flex-column overflow-hidden" style="max-height: inherit; padding: 0!important;">
+
+  <app-action-bar class="p-3" (onAdd)="add()" (onCustomClick)="handleCustomClick($event)">
+
+    <button mat-raised-button color="primary" (click)="setDepositIdForCustomerByReferenceCode()">
+      <mat-icon>
+        assured_workload
+      </mat-icon>
+       ایجاد شناسه پرداخت
+    </button>
+
+  </app-action-bar>
+
+
+  <div class="h-100 overflow-auto">
+    <app-table-virtual-scrolling
+      [tableRows]="people"
+      [requestsIndex]="requestsIndex"
+      [tableConfigurations]="tableConfigurations"
+      (sortChanged)="get()"
+      (refreshEvent) ="get()"
+      (filtersChanged)="get()"
+      (paginationChanged)="get()"
+      (rowDoubleClicked)="navigateToPerson($event)"
+      (rowsSelected)="handleRowsSelected($event)"
+      (optionSelectedEvent)="handleOptionSelected($event)"
+      (advancedFilterEvent)="handleAdvancedFilter($event)"
+      (restorePreviousFilterEvent)="handleRestorePreviousFilter($event)"
+      (removeAllFiltersAndSortsEvent)="handleRemoveAllFiltersAndSorts($event)"
+      (tableConfigurationsChangeEvent)="handleTableConfigurationsChange($event)"
+      (excludeSelectedItemsFilterEvent)="handleExcludeSelectedItemsEvent($event)"
+      (selectedItemsFilterForPrintEvent)="handleSelectedItemsFilterForPrint($event)"
+
+
+    ></app-table-virtual-scrolling>
+  </div>
+</mat-card>

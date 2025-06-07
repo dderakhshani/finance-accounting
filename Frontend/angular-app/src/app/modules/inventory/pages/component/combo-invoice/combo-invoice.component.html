@@ -1,0 +1,97 @@
+
+<div [matMenuTriggerFor]="menu" [ngClass]="{'disabled' : isDisable,'height-40':lablelTitleCombo=='','height-66':lablelTitleCombo!=''}">
+
+    <mat-form-field *ngIf="lablelTitleCombo!=''" (focus)="openMenu()" tabindex="{{tabindex}}">
+        <mat-label>{{lablelTitleCombo}}</mat-label>
+
+        <input matInput
+               [(ngModel)]="title"
+               (click)="onfocus()"
+               id="inputTitle"
+               [ngModelOptions]="{standalone: true}"
+               autocomplete="off"
+               (focus)="openMenu()"
+               [required]="isRequired"
+               (keyup)="onEnterTitle()" /><!--اگر مستقیم مقدار شماره صورتحساب وارد شود و از لیست چیزی انتخاب نشود-->
+
+    </mat-form-field>
+    <input *ngIf="lablelTitleCombo==''"
+           [(ngModel)]="title"
+           id="inputTitle"
+           [ngModelOptions]="{standalone: true}"
+           autocomplete="off"
+           (focus)="openMenu()"
+           [required]="isRequired"
+           class="form-control"
+           (keyup)="onEnterTitle()"
+           placeholder="" />
+
+
+    <mat-icon [ngClass]="{'remove-select' : lablelTitleCombo!='','remove-select-40':lablelTitleCombo==''}" *ngIf="title!='' && !isDisable" (click)="onSelectNode(null)" matTooltip="پاک کردن">
+        close
+    </mat-icon>
+
+
+</div>
+
+<mat-menu #menu="matMenu" style="margin-bottom:-33px;">
+
+
+
+    <div style="position: sticky; top: 0; z-index: 1000;">
+        <input class="search-input"  [(ngModel)]="searchTerm" (keyup)="onSearchTerm()" placeholder="جستجو" (click)="$event.stopPropagation()" autofocus id="searchTerm" autocomplete="off" />
+
+    </div>
+
+    <!--Combo Select-->
+    <table class="mas-table" >
+        <thead>
+            <tr id="data-filde">
+                <th>
+                    شماره صوت
+                </th>
+                <th style="min-width:120px;">
+                    شماره صورتحاسب تامین کننده
+                </th>
+
+                <th style="min-width:100px;">تامین کننده</th>
+                <th style="min-width:100px;">
+                    تاریخ سند
+                </th>
+                <th style="min-width:100px;">
+                    تاریخ انقضا
+                </th>
+                <th>
+                    نوع
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let node of nodes" (click)="onSelectNode(node.id)">
+                <td>
+                    {{node.documentNo}}
+                </td>
+                <td>
+                    {{node.invoiceNo}}
+                </td>
+
+                <td>
+                    {{node.creditReferenceTitle}}
+                </td>
+
+                <td>
+                    {{node.documentDate  | toPersianDate}}
+                </td>
+                <td>
+                    {{node.expireDate  | toPersianDate}}
+                </td>
+                <td>
+                    {{node.codeVoucherGroupTitle}}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+
+</mat-menu>
+

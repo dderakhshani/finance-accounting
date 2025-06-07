@@ -1,0 +1,45 @@
+<mat-dialog (onSubmit)="submit()"
+            (onDelete)="delete()"
+            [showDeleteBtn]="pageMode === pageModes.Update">
+
+  <div dialog-header="">{{PageTitle}}</div>
+  <div dialog-content="">
+    <div class="col-md-12" style="width: 60vw;">
+      <div class="row" [formGroup]="form">
+        <div class="col-md-4">
+          <mat-form-field>
+            <mat-label>عنوان</mat-label>
+            <input formControlName="title" type="text" matInput required>
+          </mat-form-field>
+        </div>
+        <div class="col-md-4">
+          <app-combo-commodity-categories-tree [DefaultId]="form.controls.commodityCategoryId.value"
+                                               (SelectId)="CommodityCategoryIdSelect($event)"
+                                               [isRequired]="true"
+                                               [lablelTitleCombo]="'دسته بندی محصول'"
+                                               [isDisable]="false">
+          </app-combo-commodity-categories-tree>
+        </div>
+        <div class="col-md-4">
+          <mat-checkbox color="primary" formControlName="isActive"></mat-checkbox>
+          <mat-label class="mat-caption"> فعال است</mat-label>
+        </div>
+        <div class="col-md-12">
+          <mat-form-field>
+            <mat-label>شرح</mat-label>
+            <input formControlName="description" type="text" matInput required>
+          </mat-form-field>
+        </div>
+
+
+      </div>
+    </div>
+
+    <div class="col-12" *ngIf="form">
+        <app-bom-items [formSetter]="form?.controls['bomItems']"></app-bom-items>
+    </div>
+    <mat-spinner style="top: 30%; right: 40%; position: absolute; " *ngIf="_notificationService.isLoader"></mat-spinner>
+  </div>
+  
+
+</mat-dialog>

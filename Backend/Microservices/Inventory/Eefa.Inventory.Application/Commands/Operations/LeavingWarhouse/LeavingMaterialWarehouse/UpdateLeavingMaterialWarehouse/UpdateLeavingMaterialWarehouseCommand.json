@@ -1,0 +1,30 @@
+[
+
+  {
+    "FieldName": "WarehouseId",
+    "Conditions": [
+      {
+        "Condition": "@WarehouseId>0",
+        "Message": {
+          "Key": "IsRequired",
+          "Values": []
+        }
+      }
+    ]
+
+  },
+
+  {
+    "FieldName": "DocumentDate",
+    "Conditions": [
+      {
+        "Condition": "Validators.IsValidDate(@DocumentDate)",
+        "Message": {
+          "Key": "IsRequired",
+          "Values": []
+        }
+      }
+    ]
+
+  }
+]

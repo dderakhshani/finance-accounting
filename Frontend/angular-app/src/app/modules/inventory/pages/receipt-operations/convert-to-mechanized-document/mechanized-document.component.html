@@ -1,0 +1,172 @@
+<div class="h-100 d-flex flex-column overflow-auto gap-3" style="max-height: inherit; padding: 0!important;">
+    <app-form-actions [actions]="listActions" (OnRefresh)="get()">
+        <button mat-raised-button color="primary" (click)="print()">
+            <mat-icon>
+                print
+            </mat-icon>
+            چاپ
+        </button>
+        <button mat-raised-button color="primary" matTooltip="صدور سند مکانیزه لیست انتخابی" (click)="update()" [disabled]="_notificationService.isLoader">
+            <mat-icon>receipt_long</mat-icon>
+            صدور سند مکانیزه لیست انتخابی
+        </button>
+
+        <button mat-raised-button color="primary" matTooltip="پاک کردن لیست انتخابی" (click)="clearListId()" [disabled]="_notificationService.isLoader">
+            <mat-icon>delete</mat-icon>
+            پاک کردن لیست انتخابی
+        </button>
+        <button mat-raised-button color="primary" type="button" (click)="onDeleteFilter(SearchForm,tableConfigurations)" [disabled]="_notificationService.isLoader">
+            <mat-icon>
+                delete_forever
+            </mat-icon>
+            حذف فیلترها
+        </button>
+        <button mat-raised-button color="primary" type="button" (click)="getThreeDayBefor()" [disabled]="_notificationService.isLoader">
+            <mat-icon>
+                search
+            </mat-icon>
+            صدور سند خروجی های سه روز گذشته
+        </button>
+        <span class="message-style font-14">
+            در هر بار صدور سند مکانیزه تنها صد سطر قابل ارسال می باشد
+        </span>
+
+    </app-form-actions>
+
+  <mat-card>
+    <form [formGroup]="SearchForm">
+        <div class="row">
+            <div class="col-md-2">
+                <mat-form-field>
+                    <mat-label>از تاریخ مالی</mat-label>
+                    <input tabindex="0" matInput [matDatepicker]="pickerFrom" formControlName="fromDate">
+                    <mat-datepicker-toggle matSuffix [for]="pickerFrom">
+                        <mat-icon matDatepickerToggleIcon>
+                            <img class="mb-3" src="/assets/icons/calendar.svg" alt="">
+                        </mat-icon>
+                    </mat-datepicker-toggle>
+                    <mat-datepicker #pickerFrom></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div class="col-md-2">
+                <mat-form-field>
+                    <mat-label>تا تاریخ مالی</mat-label>
+                    <input tabindex="1" matInput [matDatepicker]="picker" formControlName="toDate">
+                    <mat-datepicker-toggle matSuffix [for]="picker">
+                        <mat-icon matDatepickerToggleIcon>
+                            <img class="mb-3" src="/assets/icons/calendar.svg" alt="">
+                        </mat-icon>
+                    </mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+            </div>
+
+
+            <div class="col-md-2">
+
+                <app-combo-account-refrence (SelectId)="debitReferenceSelect($event)"
+                                            [DefaultId]="SearchForm.controls.debitAccountReferenceId.value"
+                                            [lablelTitleCombo]="'حساب بدهکار'"
+                                            [isRequired]="false" [tabindex]="2">
+                </app-combo-account-refrence>
+
+            </div>
+            <div class="col-md-2">
+
+                <app-combo-account-refrence (SelectId)="creditReferenceSelect($event)"
+                                            [DefaultId]="SearchForm.controls.creditAccountReferenceId.value"
+                                            [lablelTitleCombo]="'حساب بستانکار'"
+                                            [isRequired]="false" [tabindex]="3">
+                </app-combo-account-refrence>
+            </div>
+            <div class="col-md-2">
+                <mat-form-field tabindex="4">
+                    <mat-label>شماره رسید</mat-label>
+                    <input formControlName="invoceNo" matInput type="text">
+                </mat-form-field>
+            </div>
+            <div class="col-md-2" *ngIf="viewType == 'accounting'">
+                <mat-form-field tabindex="5">
+                    <mat-label>ورودی / خروجی</mat-label>
+                    <mat-select formControlName="documentStauseBaseValue">
+                        <mat-option [value]="43">
+                            ورودی
+                        </mat-option>
+                        <mat-option [value]="44">
+                            خروجی
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+
+            </div>
+
+            <div class="col-md-4">
+                <button mat-raised-button color="primary" type="button" (click)="get()" [disabled]="_notificationService.isLoader" tabindex="6" id="Search">
+                    <mat-icon>
+                        search
+                    </mat-icon>
+                    جستجو
+                </button>
+                
+            </div>
+        </div>
+    </form>
+
+  </mat-card>
+
+
+
+  <mat-card class="h-100 overflow-auto p-0">
+      <app-table [tableConfigurations]="tableConfigurations"
+                 [tableRows]="Receipts"
+                 (filtersChanged)="get()"
+                 (paginationChanged)="get()"
+                 (sortChanged)="get()">
+
+          <div footerContent *ngIf="viewType == 'accounting'">
+              <div class="me-auto d-flex flex-row gap-1">
+
+                  <button mat-stroked-button>
+                      <span>جمع کل </span>
+                      <span class="text-danger"> {{totalItemPrice | money }}</span>
+                  </button>
+
+
+              </div>
+          </div>
+      </app-table>
+
+
+    <ng-template #txtCodeVoucherGroupTitle let-element="row">
+
+      <p class="font-12">
+        {{element.codeVoucherGroupTitle}}
+
+      </p>
+    </ng-template>
+    <ng-template #txtcreditReferenceTitle let-element="row">
+
+      <p class="font-12">
+        {{element.creditReferenceTitle}}
+
+      </p>
+    </ng-template>
+    <ng-template #txtdebitReferenceTitle let-element="row">
+
+      <p class="font-12">
+        {{element.debitReferenceTitle}}
+
+      </p>
+    </ng-template>
+    <ng-template #buttonDetails let-element="row">
+
+        <button mat-icon-button class="btn-color" (click)="navigateToReceiptAll(element)">
+            <mat-icon>visibility</mat-icon>
+        </button>
+
+    </ng-template>
+
+    <mat-spinner style="top:30%;right:40%;position:absolute;z-index:1000" *ngIf="_notificationService.isLoader"></mat-spinner>
+  </mat-card>
+</div>

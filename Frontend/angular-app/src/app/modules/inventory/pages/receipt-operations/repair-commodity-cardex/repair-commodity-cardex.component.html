@@ -1,0 +1,124 @@
+
+<div [formGroup]="form" class="h-100 d-flex flex-column overflow-auto" style="max-height: inherit; padding: 0!important;">
+
+    <app-form-actions [actions]="formActions" (OnAdd)="reset()">
+
+
+    </app-form-actions>
+
+
+    
+
+    <div class="row ">
+
+
+
+
+        <div class="col-md-6 mt-2">
+
+            <mat-card class="p-0" [formGroup]="editCordexForm">
+                <div class="row">
+
+                    <div class="col-md-12">
+                        <mat-form-field>
+                            <mat-label>سال مالی</mat-label>
+                            <mat-select (selectionChange)="handleYearChange($event.value)" formControlName="yearId">
+                                <mat-option *ngFor="let year of allowedYears"
+                                            [value]="year.id">{{'سال مالی  ' + year.yearName}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-md-12">
+
+
+                        <app-combo-warhouse-tree [DefaultId]="editCordexForm.controls.warehouseId.value"
+                                                 (SelectId)="WarehouseIdEditSelectCordex($event)"
+                                                 [isRequired]="true"
+                                                 [lablelTitleCombo]="'انبار'"
+                                                 [isLastLevel]="true">
+                        </app-combo-warhouse-tree>
+
+                    </div>
+
+
+                    <div class="col-md-12">
+                        <button mat-raised-button color="primary" matTooltip="ویرایش کالا" (click)="updateWarehouseCardex()" [disabled]="_notificationService.isLoader">
+                            <mat-icon>
+                                save
+                            </mat-icon>
+                            بازسازی کاردکس  کل انبار
+                        </button>
+                    </div>
+
+                </div>
+
+            </mat-card>
+        </div>
+        <div class="col-md-6 mt-2">
+
+            <mat-card class="p-0" [formGroup]="editForm">
+                <div class="row">
+
+                    <div class="col-md-6">
+                        <mat-form-field>
+                            <mat-label>سال مالی</mat-label>
+                            <mat-select (selectionChange)="handleYearChange($event.value)" formControlName="yearId">
+                                <mat-option *ngFor="let year of allowedYears"
+                                            [value]="year.id">{{'سال مالی  ' + year.yearName}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-md-6">
+
+
+                        <app-combo-warhouse-tree [DefaultId]="editForm.controls.warehouseId.value"
+                                                 (SelectId)="WarehouseIdEditSelect($event)"
+                                                 [isRequired]="true"
+                                                 [lablelTitleCombo]="'انبار'"
+                                                 [isLastLevel]="true">
+                        </app-combo-warhouse-tree>
+
+                    </div>
+                    <div class="col-md-6">
+                        <app-combo-commodity [DefaultId]="editForm.controls.commodityId.value"
+                                             (SelectId)="getCommodityById($event)"
+                                             [lablelTitleCombo]="'کالا'"
+                                             [warehouseId]="editForm.controls.warehouseId.value"
+                                             [isRequired]="true">
+                        </app-combo-commodity>
+                    </div>
+
+                    <div class="col-md-6">
+                        <mat-form-field>
+                            <mat-label>قیمت</mat-label>
+                            <input matInput type="text" formControlName="unitPrice" disabled mask="separator.9" thousandSeparator=",">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-6">
+                        <mat-form-field>
+                            <mat-label>موجودی</mat-label>
+                            <input matInput type="text" formControlName="quantity" disabled mask="separator.9" thousandSeparator=",">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-6">
+                        <button mat-raised-button color="primary" matTooltip="ویرایش کالا" (click)="edit()" [disabled]="_notificationService.isLoader">
+                            <mat-icon>
+                                save
+                            </mat-icon>
+                          بازسازی یک کالا
+                        </button>
+                    </div>
+                </div>
+
+            </mat-card>
+        </div>
+
+
+    </div>
+
+    <mat-spinner style="top:30%;right:40%;position:absolute;z-index:1000" *ngIf="_notificationService.isLoader"></mat-spinner>
+
+</div>
+

@@ -1,0 +1,67 @@
+<div class="p-4 d-flex overflow-auto border rounded uploader-container ">
+
+    <div *ngIf="(!singleFile || files.length==0) && allowFileUpload"
+         class="upload-area m-1 d-flex align-items-center justify-content-center" (click)="onClickUpload()">
+
+        <div class="content opacity-50">
+            <mat-icon style="font-size: 2rem;">add_circle_outline</mat-icon>
+            <br>
+            افزودن فایل
+
+        </div>
+
+    </div>
+
+    <div class="upload-area m-1 " *ngFor="let file of files">
+
+        <mat-icon-button class="position-absolute top-0 start-0" (click)="removeImage(file)" *ngIf="allowFileUpload">
+            <mat-icon class="text-red-500">cancel</mat-icon>
+        </mat-icon-button>
+
+        <ng-container *ngIf="file.progressStatus=='in-progress' || file.progressStatus==''">
+            <mat-progress-bar [value]="file.progress" *ngIf="file.progressStatus=='in-progress'">
+            </mat-progress-bar>
+
+            <div *ngIf="!isImageFile(file)" class="content align-self-center">
+                <mat-icon class="icon-size-14 text-muted">insert_drive_file</mat-icon>
+                <div class="px-1.5 rounded text-sm font-semibold leading-5 text-white "
+                     [class.bg-red-600]="file.extention === 'PDF'" [class.bg-blue-600]="file.extention === 'DOC'"
+                     [class.bg-blue-600]="file.extention === 'DOCX'" [class.bg-green-600]="file.extention === 'XLSX'"
+                     [class.bg-green-600]="file.extention === 'XLS'" [class.bg-gray-600]="file.extention=== 'TXT'">
+                    {{file.extention}}
+                </div>
+            </div>
+            <img *ngIf="isImageFile(file)" class="opacity-50" [src]="file.fullFilePath">
+        </ng-container>
+
+        <ng-container *ngIf="file.progressStatus=='uploaded'">
+            <span style="position: absolute;top: 50%;left: 50%;margin: -15px 0 0 -19px;"
+                  *ngIf="checkIsDownlod(file.extention)">
+                <a href="{{file.fullFilePath}}" target="_blank">دانلود</a>
+            </span>
+            <span *ngIf="!checkIsDownlod(file.extention)">
+                <img [src]="file.fullFilePath" (click)="onclick(file.fullFilePath,'')">
+            </span>
+        </ng-container>
+    </div>
+
+
+
+
+    <input #fileUpload type="file" name="fileUpload" accept="{{fileFilters}}" id="fileUpload" style="display: none" />
+</div>
+
+
+<!-- The Modal -->
+<section id="myModal" class="modal" *ngIf="isLargSizeShow">
+
+
+    <span class="close" (click)="ondblclick()">&times;</span>
+
+
+    <img class="modal-content" id="img01" [src]="modalImg">
+
+
+    <div id="caption">{{captionText}}</div>
+</section>
+

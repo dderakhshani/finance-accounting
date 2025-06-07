@@ -1,0 +1,57 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+     <TargetFramework>net8.0</TargetFramework>
+  </PropertyGroup>
+
+ 
+
+  <ItemGroup>
+    <Compile Remove="Jobs\**" />
+    <Compile Remove="Queries\DocumentHead\**" />
+    <EmbeddedResource Remove="Jobs\**" />
+    <EmbeddedResource Remove="Queries\DocumentHead\**" />
+    <None Remove="Jobs\**" />
+    <None Remove="Queries\DocumentHead\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Commands\CreateByExcel\Create\CreateByExcelCommand.cs" />
+    <Compile Remove="Commands\CustomerReceipt\Update\UpdateDescriptions.cs" />
+    <Compile Remove="Commands\FinancialRequest\Delete\DeleteFinancialRequestCommand.cs" />
+    <Compile Remove="Models\_ChequeSheetModel.cs" />
+    <Compile Remove="Queries\FinancialRequest\ChequeSheetModel.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Commands\FinancialRequest\Delete\DeleteFinancialRequestCommand.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+
+    <ProjectReference Include="..\Eefa.Bursary.Domain\Eefa.Bursary.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Commands\ChequeSheet\Delete\" />
+    <Folder Include="Commands\CreateByExcel\Create\" />
+    <Folder Include="Commands\CreateByExcel\Update\" />
+    <Folder Include="Commands\CustomerReceipt\Validation\" />
+    <Folder Include="Commands\FinancialRequestAttachment\Delete\" />
+    <Folder Include="Commands\FinancialRequestAttachment\Update\" />
+    <Folder Include="Commands\FinancialRequest\Delete\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Dapper" Version="2.1.66" />
+    <PackageReference Include="RestSharp" Version="108.0.2" />
+	  <PackageReference Include="MassTransit" Version="8.3.4" />
+	  <PackageReference Include="MassTransit.RabbitMQ" Version="8.3.4" />
+	  <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.0" />
+	 
+
+  </ItemGroup>
+
+ 
+
+</Project>

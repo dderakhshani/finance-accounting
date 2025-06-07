@@ -1,0 +1,57 @@
+@import "/src/assets/scss/variables";
+
+
+.spring {
+  background: #c6db98;
+
+}
+.spring-e {
+  background: #c6db98;
+
+}
+.summer {
+  background: #9cc093;
+
+}
+.fall {
+  background: #d8b49a;
+
+}
+.winter {
+  background: #a5bed7;
+
+}
+
+
+
+
+tbody > tr >td {
+  .td-div{
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    align-items: center;
+
+    padding: 0;
+
+    .enter, .exit {
+      width: 100%;
+      text-align: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-sizing: border-box;
+      height: 20px;
+
+    }
+
+    .enter {
+      color: green;
+      border-bottom: 1px solid #00b7f9;
+    }
+
+    .exit {
+      color: red;
+    }
+  }
+}

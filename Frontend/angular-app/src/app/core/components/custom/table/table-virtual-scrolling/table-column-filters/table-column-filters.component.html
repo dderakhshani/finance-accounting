@@ -1,0 +1,168 @@
+<div class="container_filter">
+  <span class="filter" #menuTrigger="matMenuTrigger" [matMenuTriggerFor]="filterMenu"
+
+        [class.filter-active]="(isFiltered &&  columnCurrentFilterIndex > 0) || isHovered">
+                              <mat-icon [matBadge]="columnCurrentFilterIndex"  matBadgeSize="small" matBadgeColor="warn"
+                                        matBadgePosition="above before"
+                                        [matBadgeHidden] = "!isFiltered && columnCurrentFilterIndex ===0">filter_alt</mat-icon>
+                     </span>
+  <mat-menu class="px-3 table-filters-menu" #filterMenu (click)="$event.preventDefault()" tabindex="0">
+    <mat-label (click)="$event.stopPropagation()">
+      {{title}}
+    </mat-label>
+    <div class="row" *ngFor="let filter of filters; index as filterIndex; let isLast=last">
+      <div class="col-4 p-1" (click)="$event.stopPropagation()">
+        <mat-form-field>
+          <mat-select #actualSearchConditions [panelClass]="'mat-elevation-z10'" placeholder=''
+                      [(value)]="filter.actualSearchCondition">
+            <mat-option *ngFor="let  operand of columnFilterOperands"
+                        [value]="operand.value">{{operand.title}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div class="col-4 p-1" (click)="$event.stopPropagation()" #searchInput>
+        <div *ngIf="filter.filterType === tableColumnFilterTypes.Text && filter.actualSearchCondition">
+          <mat-form-field>
+            <input autofocus (keydown.enter)="updateFilters(menuTrigger)" matInput
+                   placeholder="جستجوی {{title}}" type="text" [(ngModel)]="filter.searchValue">
+          </mat-form-field>
+        </div>
+
+        <div
+          *ngIf="filter.filterType === tableColumnFilterTypes.Number && filter.actualSearchCondition && filter.actualSearchCondition != 'between'">
+          <mat-form-field>
+            <input autofocus (keydown.enter)="updateFilters(menuTrigger)" matInput
+                   placeholder="{{title}}" type="number" [(ngModel)]="filter.searchValue" appOnlyNumber>
+          </mat-form-field>
+        </div>
+        <div
+          *ngIf="filter.filterType === tableColumnFilterTypes.Number && filter.actualSearchCondition && filter.actualSearchCondition == 'between'">
+          <mat-form-field>
+            <input autofocus (keydown.enter)="updateFilters(menuTrigger)" matInput
+                   placeholder="{{title}}" type="number" [(ngModel)]="filter.multipleSearchValues[0]" appOnlyNumber>
+          </mat-form-field>
+          <mat-form-field>
+            <input autofocus (keydown.enter)="updateFilters(menuTrigger)" matInput
+                   placeholder="{{title}}" type="number" [(ngModel)]="filter.multipleSearchValues[1]">
+          </mat-form-field>
+        </div>
+
+        <div
+          *ngIf="filter.filterType === tableColumnFilterTypes.Money && filter.actualSearchCondition && filter.actualSearchCondition != 'between'">
+          <mat-form-field>
+            <input autofocus (keydown.enter)="updateFilters(menuTrigger)" matInput
+                   placeholder="{{title}}" mask="separator.9" thousandSeparator=","
+                   [(ngModel)]="filter.searchValue">
+          </mat-form-field>
+        </div>
+        <div
+          *ngIf="filter.filterType === tableColumnFilterTypes.Money && filter.actualSearchCondition && filter.actualSearchCondition == 'between'">
+          <mat-form-field>
+            <input autofocus (keydown.enter)="updateFilters(menuTrigger)" matInput
+                   placeholder="{{title}}" mask="separator.9" thousandSeparator=","
+                   [(ngModel)]="filter.multipleSearchValues[0]">
+          </mat-form-field>
+          <mat-form-field>
+            <input autofocus (keydown.enter)="updateFilters(menuTrigger)" matInput
+                   placeholder="{{title}}" mask="separator.9" thousandSeparator=","
+                   [(ngModel)]="filter.multipleSearchValues[1]">
+          </mat-form-field>
+        </div>
+
+
+        <div
+          *ngIf="filter.filterType === tableColumnFilterTypes.Date && filter.actualSearchCondition && filter.actualSearchCondition != 'between'">
+          <mat-form-field>
+            <input autofocus (keydown.enter)="updateFilters(menuTrigger)" matInput
+                   placeholder="از {{title}}" [matDatepicker]="columnDatePicker1"
+                   [(ngModel)]="filter.searchValue">
+            <mat-datepicker-toggle matSuffix [for]="columnDatePicker1">
+              <mat-icon matDatepickerToggleIcon>
+                <img class="mb-3" src="/assets/icons/calendar.svg" alt="">
+              </mat-icon>
+            </mat-datepicker-toggle>
+            <mat-datepicker #columnDatePicker1></mat-datepicker>
+          </mat-form-field>
+        </div>
+        <div
+          *ngIf="filter.filterType === tableColumnFilterTypes.Date && filter.actualSearchCondition && filter.actualSearchCondition == 'between'">
+          <mat-form-field>
+            <input autofocus (keydown.enter)="updateFilters(menuTrigger)" matInput
+                   placeholder="از {{title}}" [matDatepicker]="columnDatePicker1"
+                   [(ngModel)]="filter.multipleSearchValues[0]">
+            <mat-datepicker-toggle matSuffix [for]="columnDatePicker1">
+              <mat-icon matDatepickerToggleIcon>
+                <img class="mb-3" src="/assets/icons/calendar.svg" alt="">
+              </mat-icon>
+            </mat-datepicker-toggle>
+            <mat-datepicker #columnDatePicker1></mat-datepicker>
+          </mat-form-field>
+
+          <mat-form-field>
+            <input autofocus (keydown.enter)="updateFilters(menuTrigger)" matInput
+                   placeholder="تا {{title}}" [matDatepicker]="columnDatePicker2"
+                   [(ngModel)]="filter.multipleSearchValues[1]">
+            <mat-datepicker-toggle matSuffix [for]="columnDatePicker2">
+              <mat-icon matDatepickerToggleIcon>
+                <img class="mb-3" src="/assets/icons/calendar.svg" alt="">
+              </mat-icon>
+            </mat-datepicker-toggle>
+            <mat-datepicker #columnDatePicker2></mat-datepicker>
+          </mat-form-field>
+
+        </div>
+        <div
+          *ngIf="filter.filterType === tableColumnFilterTypes.CheckBox && filter.actualSearchCondition && filter.actualSearchCondition != 'between'">
+
+
+          <mat-form-field>
+            <mat-select #actualSearchConditions [panelClass]="'mat-elevation-z10'" placeholder=''
+                        [(value)]="filter.searchValue">
+              <mat-option *ngFor="let  operand of filter.bindingsList"
+                          [value]="operand.value">{{operand.label}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="col-2 p-1" (click)="$event.stopPropagation()">
+        <mat-form-field>
+          <mat-select [panelClass]="'mat-elevation-z10'" placeholder='' [(value)]="filter.nextOperand">
+            <mat-option *ngFor="let operand of ['and', 'or']" [value]="operand">{{operand === 'and' ? 'و' :
+              'یا'}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div *ngIf="filters?.length > 1" class="col-1 p-1"
+           (click)="$event.stopPropagation();removeFilter(columnFilter,filterIndex)">
+        <button mat-icon-button color="primary" style="padding: 0!important;" class="mx-auto">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </div>
+      <div *ngIf="isLast" class="col-1 p-0" (click)="$event.stopPropagation();addFilter(columnFilter)">
+        <button mat-icon-button color="primary" style="padding: 0!important;" class="mx-auto">
+          <mat-icon>add</mat-icon>
+        </button>
+      </div>
+
+
+    </div>
+
+    <div class="my-1 mx-auto d-flex gap-2">
+      <div>
+        <button mat-raised-button color="primary" (click)="updateFilters()">فیلتر</button>
+      </div>
+
+      <div class="me-1">
+        <button mat-raised-button color="warn" (click)="deleteFilter(columnFilter)">
+          حذف
+        </button>
+      </div>
+    </div>
+  </mat-menu>
+
+</div>

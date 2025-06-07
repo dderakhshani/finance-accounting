@@ -1,0 +1,261 @@
+
+<div class="h-100 d-flex flex-column overflow-auto gap-3" style="max-height: inherit; padding: 0!important;">
+
+
+    <mat-card>
+        <form [formGroup]="SearchForm">
+            <div class="row">
+                <div class="col-md-3">
+                    <mat-form-field>
+                        <mat-label>از تاریخ رسید</mat-label>
+                        <input tabindex="0" matInput [matDatepicker]="pickerFrom" formControlName="fromDate">
+                        <mat-datepicker-toggle matSuffix [for]="pickerFrom">
+                            <mat-icon matDatepickerToggleIcon>
+                                <img class="mb-3" src="/assets/icons/calendar.svg" alt="">
+                            </mat-icon>
+                        </mat-datepicker-toggle>
+                        <mat-datepicker #pickerFrom></mat-datepicker>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-3">
+                    <mat-form-field>
+                        <mat-label>تا تاریخ رسید</mat-label>
+                        <input tabindex="1" matInput [matDatepicker]="picker" formControlName="toDate">
+                        <mat-datepicker-toggle matSuffix [for]="picker">
+                            <mat-icon matDatepickerToggleIcon>
+                                <img class="mb-3" src="/assets/icons/calendar.svg" alt="">
+                            </mat-icon>
+                        </mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+                </div>
+
+                <div class="col-md-3">
+                    <app-combo-commodity [DefaultId]="SearchForm.controls.commodityId.value"
+                                         (SelectId)="getCommodityById($event)"
+                                         [lablelTitleCombo]="'کالا'"
+                                         [warehouseId]="SearchForm.controls.warehouseId.value"
+                                         [isOnlyFilterByWarehouse]="true"
+                                         [isRequired]="false" [tabindex]="3">
+                    </app-combo-commodity>
+                </div>
+
+                <div class="col-md-3">
+
+                    <div class="input-container">
+                        <button class="btn btn-primary" [ngClass]="{'btn-primary-after-select' : isContainsName}" (click)="isContainsName=true"> مشمول بر</button>
+                        <button class="btn btn-primary" [ngClass]="{'btn-primary-after-select' : !isContainsName}" (click)="isContainsName=false">شروع با</button>
+
+                        <mat-form-field>
+                            <mat-label>عنوان کالا/ کد کالا/کد کوتاه</mat-label>
+                            <input formControlName="commodityTitle" matInput type="text">
+                        </mat-form-field>
+                    </div>
+
+                </div>
+                <div class="col-md-3">
+                    <app-combo-search [DefaultId]="SearchForm.controls.commodityTitle.value"
+                                      (SelectItem)="commodityGroupIdSelect($event)"
+                                      [isRequired]="false"
+                                      [lablelTitleCombo]="'گروه محصول'"
+                                      [nodes]="commodityCategoreis" [tabindex]="1">
+                    </app-combo-search>
+
+                </div>
+                <div class="col-md-4">
+
+                    <app-combo-search-multiper-items [nodes]="WarehouseNodes"
+                                                     [listItems]="filterWarehouseNodes"
+                                                     (SelectedList)="getWarehousesList($event)"
+                                                     [lablelTitleCombo]="'انبارها'"
+                                                     [isRequired]="true"
+                                                     [viewDetalis]="false">
+                    </app-combo-search-multiper-items>
+                </div>
+
+
+                <div class="col-md-4">
+                    <button mat-raised-button color="primary" type="button" (click)="currentPage=1;get()" [disabled]="_notificationService.isLoader" tabindex="4" id="Search">
+                        <mat-icon>
+                            search
+                        </mat-icon>
+                        جستجو
+                    </button>
+                    <button mat-stroked-button color="primary" type="button" (click)="ondeleteFilter(SearchForm)" [disabled]="_notificationService.isLoader" tabindex="5">
+                        <mat-icon>
+                            delete_forever
+                        </mat-icon>
+                        حذف فیلترها
+                    </button>
+
+                </div>
+            </div>
+        </form>
+
+    </mat-card>
+    <mat-spinner style="top:30%;right:40%;position:absolute;z-index:1000;" *ngIf="_notificationService.isLoader"></mat-spinner>
+    <div [ngClass]="{'modal-large-table':IslargeSize ,'modal-large-close': !IslargeSize}" class="h-100 overflow-auto p-0">
+
+        <div [ngClass]="{'modal-large-table-content':IslargeSize}">
+
+            <mat-card id="reports-containt">
+
+                <div class="row">
+                    <app-table-filter (GetQuery)="onGet($event)"
+                                      (onPrint)="print()"
+                                      (IslargeSize)="IslargeSize=$event"
+                                      [data]="Reports_filter"
+                                      (filterTable)="filterTable($event)"
+                                      (isSelectedRows)="selectedRows($event)"
+                                      [IsShowFilter]="true">
+                    </app-table-filter>
+
+                    <div [ngClass]="{'tableFixHead_largSize':IslargeSize ,'tableFixHead': !IslargeSize}" id="report-table-2" [appDynamicTableHeight]="marginFromBottom_appDynamicTableHeight" [tableData]="data">
+                        <table class="mas-table" id="mas-table-2">
+                            <thead>
+
+                                <tr id="data-filde">
+                                    <th resizable class="width-3">
+                                        ردیف
+                                    </th>
+                                    <th resizable class="width-8" accessKey="commodityCode" abbr="string">
+                                        کد کالا
+                                    </th>
+                                    <th resizable class="width-8" accessKey="compactCode" abbr="string">
+                                        کد کوتاه
+                                    </th>
+                                    <th resizable class="width-8" accessKey="commodityTitle" abbr="string">
+                                        عنوان کالا
+                                    </th>
+                                    <th resizable class="width-8" accessKey="measureTitle" abbr="string">
+                                        واحد کالا
+                                    </th>
+
+                                    <th resizable class="width-15" accessKey="prefix_Quantity" abbr="number">
+                                        مقدار اولیه
+                                    </th>
+
+
+                                    <th resizable class="width-15" accessKey="current_Enter_Quantity" abbr="number">
+                                        مقدار وارده
+                                    </th>
+
+
+                                    <th resizable class="width-15" accessKey="current_Exit_Quantity" abbr="number">
+                                        مقدار صادره
+                                    </th>
+
+
+                                    <th resizable class="width-15" accessKey="postfix_Quantity" abbr="number">
+                                        مقدار نهایی
+                                    </th>
+
+                                </tr>
+                            </thead>
+                            <tbody >
+
+                                <tr *ngFor="let item of data ;let i=index">
+                                    <th>
+                                        {{i+1}}
+                                    </th>
+                                    <td accessKey="commodityCode">
+
+                                        <samp class="btn-link font-11" (click)="navigateToDetails(item)">
+                                            {{item.commodityCode}}
+                                        </samp>
+
+                                    </td>
+                                    <td class="font-12" accessKey="compactCode" abbr="string">
+                                        {{item.compactCode}}
+                                    </td>
+                                    <td class="font-11" accessKey="commodityTitle" (dblclick)="CopyInCommodity(item)">
+                                        {{item.commodityTitle}}
+
+                                    </td>
+                                    <td class="font-11" accessKey="measureTitle">
+
+                                        {{item.measureTitle}}
+                                    </td>
+
+
+                                    <td accessKey="prefix_Quantity" matTooltip="{{item.postfix_Quantity}}" class="font-14">
+                                        {{item.prefix_Quantity  | number : '1.0-0'}}
+
+                                    </td>
+
+                                    <td accessKey="current_Enter_Quantity" matTooltip="{{item.current_Enter_Quantity}}" class="font-14">
+                                        {{item.current_Enter_Quantity  | number : '1.0-0'}}
+                                    </td>
+
+                                    <td accessKey="current_Exit_Quantity" matTooltip="{{item.current_Exit_Quantity}}" class="font-14">
+                                        {{item.current_Exit_Quantity  | number : '1.0-0'}}
+                                    </td>
+
+
+                                    <td accessKey="postfix_Quantity" matTooltip="{{item.postfix_Quantity}}" class="font-14">
+                                        {{item.postfix_Quantity  | number : '1.0-0'}}
+                                    </td>
+
+
+
+                                </tr>
+
+                            </tbody>
+                            <tfoot>
+                                <tr *ngIf="sumALL.length==0">
+                                    <td>
+                                        {{dataLength}}
+                                    </td>
+                                    <td accessKey="commodityCode">
+                                    </td>
+                                    <td accessKey="compactCode">
+                                    </td>
+                                    <td accessKey="commodityTitle" class="font-14">
+                                        جمع جدول
+                                    </td>
+                                    <td accessKey="measureTitle">
+                                    </td>
+                                    <td accessKey="prefix_Quantity" class="font-14" matTooltip="{{prefix_Quantity}}">{{prefix_Quantity  | number : '1.0-0'}}</td>
+                                    <td accessKey="current_Enter_Quantity" class="font-14" matTooltip="{{current_Enter_Quantity}}">{{current_Enter_Quantity  | number : '1.0-0'}}</td>
+                                    <td accessKey="current_Exit_Quantity" class="font-14" matTooltip="{{current_Exit_Quantity}}">{{current_Exit_Quantity  | number : '1.0-0'}}</td>
+                                    <td accessKey="postfix_Quantity" class="font-14" matTooltip="{{postfix_Quantity}}">{{postfix_Quantity  | number : '1.0-0'}}</td>
+                                </tr>
+                                <tr *ngIf="sumALL.length > 0">
+                                    <td>
+                                        <!--                                        {{dataLength}}-->
+                                    </td>
+                                    <td accessKey="commodityCode">
+                                    </td>
+                                    <td accessKey="compactCode">
+                                    </td>
+                                    <td accessKey="commodityTitle">
+                                    </td>
+                                    <td accessKey="measureTitle">
+                                    </td>
+                                    <td accessKey="prefix_Quantity" class="font-14" matTooltip="{{prefix_Quantity}}">{{sumALL[0]?.prefix_Quantity | number : '1.0-0'}}</td>
+                                    <td accessKey="current_Enter_Quantity" class="font-14" matTooltip="{{current_Enter_Quantity}}">{{sumALL[0]?.current_Enter_Quantity | number : '1.0-0'}}</td>
+                                    <td accessKey="current_Exit_Quantity" class="font-14" matTooltip="{{current_Exit_Quantity}}">{{sumALL[0]?.current_Exit_Quantity | number : '1.0-0'}}</td>
+                                    <td accessKey="postfix_Quantity" class="font-14" matTooltip="{{postfix_Quantity}}">{{sumALL[0]?.postfix_Quantity | number : '1.0-0'}}</td>
+
+                                </tr>
+                                <tr *ngIf="pageSize<=RowsCount">
+                                    <td colspan="14">
+                                        <app-table-pagging [RowsCount]="RowsCount" [activePage]="currentPage" [pageSize]="pageSize" (ActivePage)="ChangePage($event)" (ExportToALLExcel)="ExportAllToExcel()">
+
+                                        </app-table-pagging>
+                                    </td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+
+
+            </mat-card>
+        </div>
+
+    </div>
+</div>
+
+
+

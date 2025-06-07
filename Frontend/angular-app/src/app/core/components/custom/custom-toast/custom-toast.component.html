@@ -1,0 +1,40 @@
+<div class="toaster" >
+  <div class="toast-icon" [class]="'custom-' + toastType">
+
+    <mat-icon class="toast-mat-icon"> info</mat-icon>
+  </div>
+  <div class="toast-details">
+    <div>
+      <div *ngIf="title" class="custom-title">
+        {{ title }}
+      </div>
+      <div class="message-container" [class.expanded]="isExpanded">
+
+        <p
+          #messageContent
+          class="custom-message"
+          [innerHTML]="message"
+        ></p>
+        <mat-icon
+          *ngIf="showExpandIcon"
+          class="expand-icon"
+          (click)="toggleMessage($event)"
+        >
+          {{ isExpanded ? 'expand_less' : 'expand_more' }}
+        </mat-icon>
+      </div>
+    </div>
+  </div>
+  <div class="close-icon">
+    <a
+      *ngIf="options.closeButton"
+      (click)="$event.stopPropagation(); remove()"
+      class="toast-close-button"
+    >
+      &times;
+    </a>
+  </div>
+</div>
+<div *ngIf="options.progressBar">
+  <div class="toast-progress" [style.width]="width + '%'"></div>
+</div>

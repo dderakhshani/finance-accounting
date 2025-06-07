@@ -1,0 +1,21 @@
+<div class="h-100 d-flex flex-column overflow-hidden gap-3">
+  <mat-card class="h-75 overflow-auto">
+    <app-tree
+      [useNew]="true"
+      levelCodeKey="orderIndex"
+      [editable]="true"
+      [canAdd]="true"
+      (onAdd)="add($event)"
+      (onEdit)="update($event)"
+      height="100%"
+      [rawNodes]="menuItems"
+      (onClick)="handleMenuRoles($event)"
+      >
+    </app-tree>
+  </mat-card>
+
+  <div class="h-75 overflow-hidden p-0 w-100">
+    <app-menu-item-roles-list [menuItemPermissionId]="menuItemPermissionId"
+    ></app-menu-item-roles-list>
+  </div>
+</div>

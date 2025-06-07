@@ -1,0 +1,30 @@
+<div class="p-4 flex-container border rounded uploader-container ">
+
+
+  <div class="upload-area m-1 " *ngFor="let file of files">
+    <label>
+      {{ file.TypeName }}
+    </label>
+    <img [src]="file.FileName" (click)="onclick(file.FileName,file.TypeName)">
+
+  </div>
+
+  <span>هیج فایلی یافت نشد.</span>
+
+
+</div>
+
+
+<!-- The Modal -->
+<section id="myModal" (click)="handleModalClicks($event)" class="modal" *ngIf="isLargSizeShow">
+
+
+  <span class="close" (click)="closeFullScreenImage()">&times;</span>
+
+  <div id="caption">{{ captionText }}</div>
+
+  <img class="modal-content" id="img01" [src]="modalImg">
+
+
+</section>
+

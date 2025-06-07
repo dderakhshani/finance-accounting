@@ -1,0 +1,49 @@
+<div class="help help-container">
+
+  <div *ngIf="isLoading"
+       style="z-index:9999;position: absolute;left:0;top:0;bottom: 0; right: 0;background: rgba(0,0,0,0.3);"
+       class="d-flex align-items-center justify-content-center">
+    <mat-spinner></mat-spinner>
+  </div>
+
+  <div class="help-header">
+    <div class="menu-tree">
+      <mat-icon style="cursor: pointer; transform: scale(1.3)!important;" class="mb-2 ms-3" (click)="close()">close</mat-icon>
+      <h6 *ngFor="let menu of activeMenus">
+        <mat-icon *ngIf="menu.parentId">arrow_back_ios</mat-icon>
+        {{menu.title}}
+      </h6>
+    </div>
+
+    <div class="search-bar">
+      <mat-form-field>
+        <mat-label>جستجو</mat-label>
+        <input type="text"
+               aria-label="جستجو"
+               matInput
+               [formControl]="helpSearchFormControl"
+               [matAutocomplete]="auto">
+        <mat-autocomplete (optionSelected)="handleSearchedMenuSelection($event.option.value)" [displayWith]="menuOptionsDisplayFunction.bind(this)" #auto="matAutocomplete">
+          <mat-option *ngFor="let option of filteredUserMenus | async" [value]="option.id">
+            {{menuOptionsDisplayFunction(option.id)}}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+    </div>
+
+  </div>
+
+  <div class="help-sidebar overflow-auto">
+        <app-help-sidebar [isToggledHelp]="isToggledHelp" (helpSidebarItemClicked)="navigateToHelp($event)"
+                     [helpNavigations]="helpNavigations" [helpFlatNavigations]="helpFlatNavigations"></app-help-sidebar>
+  </div>
+
+  <mat-card class="help p-0 help-content">
+
+  <mat-card class="content overflow-auto">
+    <div class="pointer-event">
+      <div id="editor-viewer" class="overflow-auto"></div>
+    </div>
+  </mat-card>
+</mat-card>
+</div>

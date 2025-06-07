@@ -1,0 +1,33 @@
+export class DocumentHead {
+  public id !: number  ;
+  public accountReferencesGroupId : number|undefined = undefined;
+  public codeVoucherGroupId : number|undefined = undefined;
+  public yearId : number|undefined = undefined;
+  public documentHeadFullDescriptions : string|undefined = undefined;
+  public warehouseId : number|undefined = undefined;
+  public warehouseTitle : string|undefined = undefined;
+  public parentId : number|undefined = undefined;
+  public referenceId : number|undefined = undefined;
+  public referenceTitle : string|undefined = undefined;
+  public documentNo : string|undefined = undefined;
+  public documentDate : string|undefined = undefined;
+  public documentDescription : string|undefined = undefined;
+  public documentStateBaseId : number|undefined = undefined;
+  public isManual : boolean|undefined = undefined;
+  public voucherHeadId : number|undefined = undefined;
+  public totalWeight : number|undefined = undefined;
+  public totalQuantity : number|undefined = undefined;
+  public totalItemPrice : number|undefined = undefined;
+  public vatTax : number|undefined = undefined;
+  public vatDutiesTax : number|undefined = undefined;
+  public healthTax : number|undefined = undefined;
+  public totalItemsDiscount : number|undefined = undefined;
+  public totalProductionCost : number|undefined = undefined;
+  public discountPercent : number|undefined = undefined;
+  public documentDiscount : number|undefined = undefined;
+  public priceMinusDiscount : number|undefined = undefined;
+  public priceMinusDiscountPlusTax : number|undefined = undefined;
+  public paymentTypeBaseId : number|undefined = undefined;
+  public expireDate : Date|undefined = undefined;
+  public partNumber : string|undefined = undefined;
+}

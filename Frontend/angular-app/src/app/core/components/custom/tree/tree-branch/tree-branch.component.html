@@ -1,0 +1,5 @@
+<div class="tree-branches">
+    <nav>
+      <app-tree-branch-item (branchChanged)="branchChanged.emit($event)" *ngFor="let branch of nestedBranches" [branch]="branch"></app-tree-branch-item>
+    </nav>
+</div>

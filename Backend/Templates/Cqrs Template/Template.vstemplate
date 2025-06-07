@@ -1,0 +1,40 @@
+<VSTemplate Version="3.0.0" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005" Type="Item">
+  <TemplateData>  
+    <DefaultName>Service</DefaultName>
+    <Name>CQRS CRUD Template</Name>
+    <Description>
+    Generate CRUD
+    version 1.5
+    last update : 2021-07-15
+    </Description>
+    <ProjectType>CSharp</ProjectType>
+    <SortOrder>10</SortOrder>
+    <Icon>__Icon.ico</Icon>
+  </TemplateData>
+
+  <TemplateContent>
+    <References />
+    <ProjectItem SubType="" TargetFileName="$fileinputname$/Query/Get/Get$fileinputname$Query.cs" ReplaceParameters="true">Get.cs</ProjectItem>
+    
+    <ProjectItem SubType="" TargetFileName="$fileinputname$/Query/GetAll/GetAll$fileinputname$Query.cs" ReplaceParameters="true">GetAll.cs</ProjectItem>
+
+    <ProjectItem SubType="" TargetFileName="$fileinputname$/Query/Search/Search$fileinputname$Query.cs" ReplaceParameters="true">Search.cs</ProjectItem>
+
+    <ProjectItem SubType="" TargetFileName="$fileinputname$/Command/Create/Create$fileinputname$Command.cs" ReplaceParameters="true">Create.cs</ProjectItem>
+    <ProjectItem SubType="" TargetFileName="$fileinputname$/Command/Create/Create$fileinputname$Command.json" ReplaceParameters="true">json.json</ProjectItem>
+    
+    <ProjectItem SubType="" TargetFileName="$fileinputname$/Command/Update/Update$fileinputname$Command.cs" ReplaceParameters="true">Update.cs</ProjectItem>
+    <ProjectItem SubType="" TargetFileName="$fileinputname$/Command/Update/Update$fileinputname$Command.json" ReplaceParameters="true">json.json</ProjectItem>
+    
+    <ProjectItem SubType="" TargetFileName="$fileinputname$/Command/Delete/Delete$fileinputname$Command.cs" ReplaceParameters="true">Delete.cs</ProjectItem>
+    <ProjectItem SubType="" TargetFileName="$fileinputname$/Command/Delete/Delete$fileinputname$Command.json" ReplaceParameters="true">json.json</ProjectItem>
+    
+    <ProjectItem SubType="" TargetFileName="$fileinputname$/Command/Validation/$fileinputname$ValidatorFunctions.cs" ReplaceParameters="true">Validation.cs</ProjectItem>
+
+    <ProjectItem SubType="" TargetFileName="$fileinputname$/Model/$fileinputname$Model.cs" ReplaceParameters="true">Model.cs</ProjectItem>
+
+  </TemplateContent>
+
+
+
+</VSTemplate>

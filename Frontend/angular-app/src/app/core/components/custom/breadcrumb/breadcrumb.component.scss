@@ -1,0 +1,39 @@
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  list-style: none;
+  padding-left: 0;
+  font-family: 'IRANYekan', sans-serif;
+  font-size: 14px;
+  color: #333;
+  background: #f7f7f7;
+  padding: 10px 15px;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  margin-bottom: 0 !important;
+}
+
+.breadcrumb-item {
+  padding: 4px 8px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.breadcrumb-item.disabled {
+  cursor: not-allowed !important;
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.breadcrumb-item:hover:not(.disabled) {
+  background-color: #6d72ed;
+  color: #fff;
+}
+
+.breadcrumb-separator {
+  margin: 0 5px;
+  color: #888;
+  font-weight: bold;
+  cursor: default;
+}

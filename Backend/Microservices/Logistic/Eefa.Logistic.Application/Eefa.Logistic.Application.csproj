@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+     <TargetFramework>net8.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Commands\MapSamatozinToDana\Delete\Delete.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Commands\MapSamatozinToDana\Create\Create.json" />
+    <EmbeddedResource Include="Commands\MapSamatozinToDana\Delete\Delete.json" />
+    <EmbeddedResource Include="Commands\MapSamatozinToDana\Update\Update.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Core\Eefa.Common\Eefa.Common.csproj" />
+    <ProjectReference Include="..\Eefa.Logistic.Domain\Eefa.Logistic.Domain.csproj" />
+    <ProjectReference Include="..\Eefa.Logistic.Infrastructure\Eefa.Logistic.Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ProjectExtensions><VisualStudio><UserProperties /></VisualStudio></ProjectExtensions>
+
+</Project>

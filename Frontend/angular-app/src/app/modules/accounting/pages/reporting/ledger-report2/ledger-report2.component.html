@@ -1,0 +1,138 @@
+<mat-card class="h-100 d-flex flex-column overflow-hidden" style="max-height: inherit; padding: 0!important;">
+
+  <div class="h-100 overflow-auto">
+    <app-table-virtual-scrolling
+      [tableRows]="reportResult"
+      [requestsIndex]="requestsIndex"
+
+      [tableConfigurations]="tableConfigurations"
+      (sortChanged)="get()"
+      (filtersChanged)="get()"
+      (refreshEvent)="get()"
+      (paginationChanged)=" get()"
+      (rowDoubleClicked)="navigateToVoucherHead($event)"
+      (optionSelectedEvent)="handleOptionSelected($event)"
+      (advancedFilterEvent)="handleAdvancedFilter($event)"
+      (restorePreviousFilterEvent)="handleRestorePreviousFilter($event)"
+      (showCurrencyFieldsEvent)="showCurrencyRelatedFields($event)"
+      (removeAllFiltersAndSortsEvent)="handleRemoveAllFiltersAndSorts($event)"
+      (tableConfigurationsChangeEvent)="handleTableConfigurationsChange($event)"
+      (excludeSelectedItemsFilterEvent)="handleExcludeSelectedItemsEvent($event)"
+      (selectedItemsFilterForPrintEvent)="handleSelectedItemsFilterForPrint($event)"
+    >
+      <div buttonTopContent>
+
+        <!--        <div class="" *ngIf="identityService.doesHavePermission('CurrencyFieldAccess')">-->
+        <!--          <mat-checkbox color='primary' (change)="showCurrencyRelatedFields($event.checked)">-->
+        <!--            <mat-label class="mat-caption">نمایش فیلد های ارزی</mat-label>-->
+        <!--          </mat-checkbox>-->
+        <!--        </div>-->
+        <button mat-raised-button [matMenuTriggerFor]="ElectronicLedgersExportActions">
+          <mat-label> دفاتر الکترونیکی</mat-label>
+          <mat-icon>print</mat-icon>
+        </button>
+        <button mat-raised-button [matMenuTriggerFor]="rialExportActions">
+          <mat-label> ریالی</mat-label>
+          <mat-icon>print</mat-icon>
+        </button>
+        <mat-menu #ElectronicLedgersExportActions="matMenu" disabled>
+
+          <button mat-menu-item (click)="downloadElectronicLedgersExcel()"> اکسل دفاتر الکترونیکی  </button>
+
+        </mat-menu>
+        <mat-menu #rialExportActions="matMenu" disabled>
+          <button mat-menu-item (click)="printRial()">چاپ ریالی</button>
+          <button mat-menu-item (click)="downloadRialExcel()">دانلود Excel</button>
+        </mat-menu>
+
+        <button mat-raised-button [matMenuTriggerFor]="dollarExportActions"
+                *ngIf="identityService.doesHavePermission('PrintDollar')">
+          <mat-label> ارزی</mat-label>
+          <mat-icon>print</mat-icon>
+        </button>
+        <mat-menu #dollarExportActions="matMenu">
+          <button mat-menu-item (click)="printDollar()">چاپ ارزی</button>
+          <button mat-menu-item (click)="downloadDollarExcel()">دانلود Excel</button>
+        </mat-menu>
+
+        <button mat-raised-button [matMenuTriggerFor]="rialiDollarExportActions"
+                *ngIf="identityService.doesHavePermission('PrintDollar')">
+          <mat-label> ریالی،ارزی</mat-label>
+          <mat-icon>print</mat-icon>
+        </button>
+        <mat-menu #rialiDollarExportActions="matMenu">
+          <button mat-menu-item (click)="printDollarAndRial()">چاپ ارزی،ریالی</button>
+          <button mat-menu-item (click)="downloadRialDollarExcel()">دانلود Excel</button>
+        </mat-menu>
+
+      </div>
+      <div footerContent>
+        <div class="me-auto d-flex flex-row gap-1">
+
+          <div class="d-flex flex-column">
+            <div class="wrapper-btn bg-blue-300" >
+
+              <p style="color: black"> جمع بدهکار:{{ totalDebit.value | money }}</p>
+            </div>
+            <div class="wrapper-btn bg-amber-300 mt-1"  *ngIf="showCurrencyFields">
+
+              <p style="color: black"> جمع بدهکار ارزی: {{ totalCurrencyDebit.value | money }}</p>
+            </div>
+
+
+          </div>
+          <div class="d-flex flex-column">
+            <div class=" wrapper-btn bg-blue-300" >
+              <p style="color: black"> جمع بستانکار:{{ totalCredit.value | money }}</p>
+            </div>
+
+            <div class="wrapper-btn bg-amber-300 mt-1"  *ngIf="showCurrencyFields">
+              <p style="color: black"> جمع بستانکار ارزی:{{  totalCurrencyCredit.value | money }}</p>
+            </div>
+          </div>
+          <div class="d-flex flex-column ">
+            <div class="wrapper-btn bg-blue-300" >
+              <p>
+                مانده :  {{
+                  (totalDebit.value - totalCredit.value) > 0 ? ((totalDebit.value - totalCredit.value) | money)
+                    : '(' + (calculateMathABS(totalDebit.value, totalCredit.value)| money) + ')'
+
+                }}
+              </p>
+            </div>
+            <div class=" wrapper-btn bg-amber-300 mt-1"  *ngIf="showCurrencyFields">
+              <p >
+                مانده ارزی:  {{
+                  (totalCurrencyDebit.value - totalCurrencyCredit.value) > 0 ? ((totalCurrencyDebit.value - totalCurrencyCredit.value) | money)
+                    : '(' + (calculateMathABS(totalCurrencyDebit.value, totalCurrencyCredit.value)| money) + ')'
+                }}
+              </p>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </app-table-virtual-scrolling>
+    <ng-template #updateTaxpayerFlag let-row="row" let-column="column">
+      <mat-checkbox style="padding-right: 8px" color="primary"
+                    [(ngModel)]="row[column.field]"
+                    tabindex="1"
+                    (change)="changeTaxpayerFlagFn(row ,$event.checked )"></mat-checkbox>
+    </ng-template>
+    <ng-template #expandRowWithTemplate let-row="row" let-column="column">
+      <div class="ExpandRowWithTemplate">
+        <div class="flex">
+          <p>
+            {{ row.rowIndex }}
+          </p>
+        </div>
+      </div>
+    </ng-template>
+  </div>
+</mat-card>
+<app-action-bar  [viewMode]="'slider'"  (onEdit)="updateTaxpayerFlagFn()">
+</app-action-bar>
+
+
+

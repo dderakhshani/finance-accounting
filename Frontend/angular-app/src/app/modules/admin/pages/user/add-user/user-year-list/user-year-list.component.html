@@ -1,0 +1,8 @@
+
+<app-action-bar class="p-3" (onEdit)="update()" (onAdd)="add()" (onDelete)="delete()" (onRefresh)="get()"> </app-action-bar>
+<app-table
+  height="100%"
+  [tableRows]="userCompanies"
+  [tableConfigurations]="tableConfiguration">
+
+</app-table>

@@ -1,0 +1,9 @@
+<table  class="table ">
+  <tbody style="height: 100%">
+<tr *ngFor="let _ of skeletonColumns" class="skeleton-row" [style.height.px]="height">
+  <td *ngFor="let column of showColumns" class="skeleton-cell" [style]="column.style">
+    <div class="skeleton-box" [style.height.px]="height -6"></div>
+  </td>
+</tr>
+  </tbody>
+</table>

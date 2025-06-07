@@ -1,0 +1,94 @@
+
+<mat-drawer-container class="example-container" [formGroup]="form">
+
+
+
+
+  <mat-drawer-content style="background-color: #f2f3fe">
+
+    <div class="col-12 p-2 row search-cheque-item">
+
+      <div class="col-9">
+        <div class="col-12 row ">
+          <div class="col-6">
+      <mat-form-field>
+        <mat-label>تاریخ رسید</mat-label>
+        <input tabindex="3" matInput [matDatepicker]="documentDate" formControlName="documentDate" />
+        <mat-datepicker-toggle matSuffix [for]="documentDate">
+          <mat-icon matDatepickerToggleIcon>
+            <img class="mb-3" src="/assets/icons/calendar.svg" alt="" />
+          </mat-icon>
+        </mat-datepicker-toggle>
+        <mat-datepicker #documentDate></mat-datepicker>
+      </mat-form-field>
+    </div>
+    <div class="col-6">
+      <mat-form-field>
+        <mat-label> شرح رسید</mat-label>
+        <textarea rows="1" matInput formControlName="description" required></textarea>
+        <!-- <button (click)="fillDescription()">
+          <mat-icon color="primary">list</mat-icon>
+        </button> -->
+      </mat-form-field>
+    </div>
+    </div>
+  </div>
+<div class="col-3">
+
+
+      <button class="m-2 btn btn-info"  mat-raised-button (click)="addAttachments()" >
+        افزودن مستندات
+      </button>
+      <button class="mx-2" mat-raised-button (click)="submit()" color="primary">
+        ثبت
+      </button>
+
+
+    </div>
+    </div>
+
+
+    <div class="py-2 h-100 bg-white">
+
+
+
+<div class="corner">
+
+
+
+
+  <button mat-flat-button type="button" (click)="addPayment()" color="primary">
+    <mat-icon>add</mat-icon>
+    ثبت آرتیکل سند
+  </button>
+
+</div>
+
+      <!-- <app-payment-article class="my-2" *ngFor="let receipt of form?.controls['financialRequestPartials']?.controls ;let i = index"
+          [form]="receipt"
+          [index]="i"
+          [pageMode]="pageMode"
+          [documentTypes]="documentTypes"
+          [currencyTypes]="currencyTypes"
+          [referenceTypes]="referenceTypes"
+          [chequeTypes]="chequeTypes"
+          [finantialReferenceTypes]="finantialReferenceTypes"
+          [chequeSheets]="chequeSheets"
+          [banks]="banks"
+          (removeItem)="removeItem($event)">
+
+      </app-payment-article> -->
+
+
+
+
+    </div>
+
+
+  </mat-drawer-content>
+
+
+
+
+
+</mat-drawer-container>

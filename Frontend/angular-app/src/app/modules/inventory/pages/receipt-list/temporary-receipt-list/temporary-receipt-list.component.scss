@@ -1,0 +1,39 @@
+@import "/src/assets/scss/variables";
+.btn-color {
+  color: color(md-grey,500) !important;
+}
+.btn-warn {
+  color: color(warn,700) !important;
+}
+.btn-success {
+  color: color(success,500) !important;
+}
+.btn-confirm {
+  height: 35px !important;
+  background-color: color(md-grey,300) !important;
+  color:#ffffff;
+}
+.font-12 {
+  font-size: 12px;
+}
+.btn-red {
+  color: color(danger,500) !important;
+  font-size: 20px;
+  border: unset;
+  background: unset;
+}
+
+.btn-md-amber {
+  color: color(md-amber,500) !important;
+  border: unset;
+  background: unset;
+}
+.open {
+  display: block !important;
+  position: relative;
+  z-index: 1000;
+}
+.close {
+  display: none !important;
+ 
+}

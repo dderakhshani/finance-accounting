@@ -1,0 +1,138 @@
+
+<div [formGroup]="form" class="h-100 d-flex flex-column overflow-auto" style="max-height: inherit; padding: 0!important;">
+
+    <app-form-actions [actions]="formActions" (OnShowList)="navigateToReceiptList()" (OnAdd)="reset()">
+        <button mat-raised-button color="primary" matTooltip="ذخیره کامل اطلاعات" (click)="add()" *ngIf="!pageModeTypeUpdate && !isSubmitForm" [disabled]="_notificationService.isLoader" id="Save">
+            <mat-icon>
+                save
+            </mat-icon>
+            تایید و ذخیره سازی
+        </button>
+        <button mat-raised-button color="primary" matTooltip="ویرایش کامل اطلاعات" (click)="update()" *ngIf="pageModeTypeUpdate && !isSubmitForm" [disabled]="_notificationService.isLoader" id="Save">
+            <mat-icon>
+                save
+            </mat-icon>
+            ویرایش کامل اطلاعات
+        </button>
+        <button mat-raised-button color="primary" matTooltip="افزودن کالا جدید" (click)="AddItems()" *ngIf="!isSubmitForm" [disabled]="_notificationService.isLoader">
+            <mat-icon>
+                add
+            </mat-icon>
+            افزودن کالا
+        </button>
+    </app-form-actions>
+
+
+    <div class="row ">
+
+
+        <div class="col-md-12 mt-2">
+
+            <mat-card class="p-0">
+              <div class="row">
+                <div class="col-md-3">
+                  <mat-form-field [tabindex]="0">
+                    <mat-label>شماره</mat-label>
+                    <input matInput type="text" formControlName="documentNo" disabled>
+                  </mat-form-field>
+                </div>
+                <div class="col-md-3">
+
+
+                  <app-combo-code-voucher-groups [DefaultId]="form.controls.codeVoucherGroupId.value"
+                                                 (SelectId)="codeVoucherGroupSelect($event)"
+                                                 [isRequired]="true"
+                                                 [lablelTitleCombo]="'نوع سند'"
+                                                 [viewId]="Service.CodeRequestRecive" [tabindex]="1">
+                  </app-combo-code-voucher-groups>
+
+                </div>
+                <div class="col-md-3">
+                  <app-combo-warhouse-tree [DefaultId]="form.controls.warehouseId.value"
+                                           (SelectId)="WarehouseIdSelect($event)"
+                                           [isRequired]="true"
+                                           [lablelTitleCombo]="'انتخاب انبار تحویل دهنده'"
+                                           [isFilterByCodeVoucher]="true"
+                                           [isDisable]="!form.controls.codeVoucherGroupId.value"
+                                           [codeVoucherGroupId]="form.controls.codeVoucherGroupId.value" [tabindex]="2">
+                  </app-combo-warhouse-tree>
+
+                </div>
+                <div class="col-md-3">
+                  <mat-form-field>
+                    <mat-label>تاریخ </mat-label>
+                    <input tabindex="3" matInput [matDatepicker]="picker" formControlName="documentDate" required>
+                    <mat-datepicker-toggle matSuffix [for]="picker">
+                      <mat-icon matDatepickerToggleIcon>
+                        <img class="mb-3" src="/assets/icons/calendar.svg" alt="">
+                      </mat-icon>
+                    </mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                  </mat-form-field>
+                </div>
+                <div class="col-md-3">
+
+                  <app-combo-account-head-tree [DefaultId]="form.controls.debitAccountHeadId.value"
+                                              
+                                               (SelectId)="debitAccountHeadIdSelect($event)"
+                                               [isRequired]="true"
+                                               [lablelTitleCombo]="'سرفصل حساب بدهکار'"
+                                               [isLastLevel]="true" [tabindex]="4">
+                  </app-combo-account-head-tree>
+
+                </div>
+                <div class="col-md-3">
+                  <app-combo-account-refrence [DefaultId]="form.controls.debitAccountReferenceId.value"
+                                              
+                                              (SelectId)="debitReferenceSelect($event)"
+                                              [lablelTitleCombo]="'حساب بدهکار (تحویل گیرنده)'"
+                                              [isRequired]="true"
+                                              [accountReferencesGroupsId]="form.controls.debitAccountReferenceGroupId.value" [tabindex]="5">
+                  </app-combo-account-refrence>
+                </div>
+                <div class="col-md-3">
+                  <app-combo-account-refrence [DefaultId]="form.controls.requesterReferenceId.value"
+                                              (SelectId)="requesterReferenceSelect($event)"
+                                              [lablelTitleCombo]="'درخواست دهنده'"
+                                              [isRequired]="true"
+                                              [accountReferencesGroupsCode]="Service.PersonalCodeGroup"
+                                              [tabindex]="6">
+                  </app-combo-account-refrence>
+                </div>
+
+
+                <div class="col-md-3">
+
+                  <app-combo-tag [documentTags]="documentTags" (SelectTags)="TagSelect($event)" [tabindex]="7">
+
+                  </app-combo-tag>
+                </div>
+                <div class="col-md-12">
+                  <mat-form-field [tabindex]="8">
+                    <mat-label>شرح</mat-label>
+                    <input matInput type="text" formControlName="documentDescription">
+                  </mat-form-field>
+                </div>
+
+
+              </div>
+
+            </mat-card>
+        </div>
+        <div class="col-md-12 mt-2">
+
+            <app-add-manual-items [formSetter]="form?.controls['receiptDocumentItems']"
+                                  [receipt]="_Receipt"
+                                  (Additems)="AddItems()"
+                                  [warehouseId]="form.controls.warehouseId.value"
+                                  [codeVoucherGroup]="Service.CodeLeaveReceipt">
+
+            </app-add-manual-items>
+
+        </div>
+    </div>
+
+
+    <mat-spinner style="top:30%;right:40%;position:absolute;z-index:1000" *ngIf="_notificationService.isLoader"></mat-spinner>
+</div>
+

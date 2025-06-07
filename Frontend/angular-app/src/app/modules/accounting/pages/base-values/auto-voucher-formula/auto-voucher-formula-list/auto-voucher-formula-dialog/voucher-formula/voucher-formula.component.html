@@ -1,0 +1,31 @@
+<mat-form-field *ngIf="formControl">
+  <mat-label>{{label}}</mat-label>
+  <mat-chip-list #formulaChipList>
+    <mat-chip
+      *ngFor="let chip of chips"
+      [selectable]="true"
+      [removable]="true"
+      (removed)="delete(chip)"
+    >
+      {{chip}}
+      <mat-icon matChipRemove>cancel</mat-icon>
+    </mat-chip>
+    <input
+      ngDefaultControl
+      matInput
+      [formControl]="formControl"
+      [matAutocomplete]="formulaChipsAuto"
+      [matChipInputFor]="formulaChipList"
+      (matChipInputTokenEnd)="add($event)"
+      #chipInput
+    >
+  </mat-chip-list>
+
+  <mat-autocomplete autoActiveFirstOption
+                    #formulaChipsAuto="matAutocomplete"
+                    (optionSelected)="selected($event.option.value); chipInput.value = ''">
+    <mat-option *ngFor="let databaseMetadatum of filteredDatabaseMetadata | async" [value]="databaseMetadatum">
+      {{databaseMetadatum.translated}}
+    </mat-option>
+  </mat-autocomplete>
+</mat-form-field>

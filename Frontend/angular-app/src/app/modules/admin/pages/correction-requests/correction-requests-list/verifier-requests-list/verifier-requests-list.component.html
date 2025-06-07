@@ -1,0 +1,31 @@
+<mat-card class=" h-100 d-flex flex-column " style=" padding: 0!important;">
+
+  <app-action-bar    class="p-3" (onRefresh)="get()" (onAdd)="submitCorrectionRequest(true)"
+                         (onDelete)="submitCorrectionRequest(false)">
+
+    <div after>
+      <mat-form-field>
+        <mat-label>وضعیت</mat-label>
+        <mat-select (selectionChange)="get()" [formControl]="statusFormControl">
+          <mat-option *ngFor="let status of statuses" [value]="status.value">
+            {{ status.title }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </app-action-bar>
+
+
+  <div class="h-100 overflow-auto">
+    <app-table
+      [tableConfigurations]="tableConfigurations"
+      [tableRows]="verifiersList"
+      (rowDoubleClicked)="navigateToRequestPage($event)"
+      (filtersChanged)="get()"
+      (paginationChanged)="get()"
+      (sortChanged)="get()"
+      height="100%"
+
+    ></app-table>
+  </div>
+</mat-card>

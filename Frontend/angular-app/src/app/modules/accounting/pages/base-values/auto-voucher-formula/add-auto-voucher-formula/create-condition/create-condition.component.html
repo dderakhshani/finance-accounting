@@ -1,0 +1,32 @@
+
+<div [formGroup]="formCondition">
+  <div class="row">
+    <div class="col-3">
+      <mat-form-field>
+        <mat-label>Expression</mat-label>
+        <input type="text" matInput formControlName="expression">
+      </mat-form-field>
+    </div>
+    <div class="col-3">
+      <mat-form-field>
+        <mat-label>بارامتر</mat-label>
+        <input type="text" matInput formControlName="paramCondition">
+      </mat-form-field>
+    </div>
+    <div class="col-1">
+      <button mat-raised-button (click)="addParameter(formCondition.controls['paramCondition'].value)"
+              class="bg-blue-200 m-1" matTooltip="افزودن">
+        <mat-icon>add_circle_outline</mat-icon>
+      </button>
+    </div>
+    <div class="col-2">
+      <div class="col-12">
+                <mat-chip  *ngFor="let param of arrayParams">{{ param }}
+               <mat-icon style="color: darkred" (click)="removeParam(param)">remove_circle_outline</mat-icon>
+             </mat-chip>
+         </div>
+    </div>
+  </div>
+</div>
+
+

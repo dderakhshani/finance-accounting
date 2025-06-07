@@ -1,0 +1,23 @@
+@import "/src/assets/scss/variables";
+.btn-color {
+  color: color(md-grey,500) !important;
+}
+.btn-confirm {
+  height: 35px !important;
+  background-color: color(md-grey,300) !important;
+  color:#ffffff;
+}
+.btn-warn {
+  color: color(warn,700) !important;
+}
+
+
+.mat-card-details {
+  width: 1000px;
+  line-height: 2;
+  padding: 20px !important;
+}
+.mat-card-details mat-label {
+  font-size: 12px;
+  color: color(primary,500);
+}

@@ -1,0 +1,83 @@
+[
+
+  //{
+  //  "FieldName": "Id",
+  //  "Conditions": [
+  //    {
+  //      "Condition": "@Id>0",
+  //      "Message": {
+  //        "Key": "IsRequired",
+  //        "Values": []
+  //      }
+  //    }
+  //  ]
+
+  //}
+  //{
+  //  "FieldName": "DocumentItemId",
+  //  "Conditions": [
+  //    {
+  //      "Condition": "@DocumentItemId>0",
+  //      "Message": {
+  //        "Key": "IsRequired",
+  //        "Values": []
+  //      }
+  //    }
+  //  ]
+
+
+  //},
+  //{
+  //  "FieldName": "CommodityId",
+  //  "Conditions": [
+  //    {
+  //      "Condition": "@CommodityId>0",
+  //      "Message": {
+  //        "Key": "IsRequired",
+  //        "Values": []
+  //      }
+  //    }
+  //  ]
+
+  //},
+  //{
+  //  "FieldName": "Quantity",
+  //  "Conditions": [
+  //    {
+  //      "Condition": "@Quantity>0",
+  //      "Message": {
+  //        "Key": "IsRequired",
+  //        "Values": []
+  //      }
+  //    }
+  //  ]
+
+  //},
+  //{
+  //  "FieldName": "WarehouseLayoutId",
+  //  "Conditions": [
+  //    {
+  //      "Condition": "@WarehouseLayoutId>0",
+  //      "Message": {
+  //        "Key": "IsRequired",
+  //        "Values": []
+  //      }
+  //    }
+  //  ]
+
+  //},
+  //{
+  //  "FieldName": "WarehouseId",
+  //  "Conditions": [
+  //    {
+  //      "Condition": "@WarehouseId>0",
+  //      "Message": {
+  //        "Key": "IsRequired",
+  //        "Values": []
+  //      }
+  //    }
+  //  ]
+
+  //}
+
+]

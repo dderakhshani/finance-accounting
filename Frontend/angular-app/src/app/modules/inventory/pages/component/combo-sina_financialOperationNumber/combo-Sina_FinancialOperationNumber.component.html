@@ -1,0 +1,25 @@
+<mat-form-field class="overview">
+    <mat-label>{{lablelTitleCombo}}</mat-label>
+    <input [matAutocomplete]="auto" #input
+           [formControl]="title"
+           (input)="onSearchTerm()"
+           (click)="onSelectNode(undefined)"
+           placeholder="جستجو"
+           matInput
+           autocomplete="off"
+           matTooltip="{{title.value}}" />
+
+    <mat-icon [ngClass]="{'remove-select' : lablelTitleCombo!='','remove-select-40':lablelTitleCombo==''}" *ngIf="title.value!=undefined && DefaultId!=undefined && !isDisable" (click)="onSelectNode(undefined)" matTooltip="پاک کردن">
+        close
+    </mat-icon>
+    <mat-icon [ngClass]="{'remove-select' : lablelTitleCombo!='','remove-select-40':lablelTitleCombo==''}" *ngIf="title.value==undefined && !isDisable" (click)="onfocus()" matTooltip="انتخاب">
+        arrow_drop_down
+    </mat-icon>
+
+    <mat-autocomplete requireSelection #auto="matAutocomplete" (optionSelected)="onSelectionChange($event)">
+        <mat-spinner [diameter]="20" class="spinner-combo" *ngIf="_notificationService.isLoaderDropdown"></mat-spinner>
+        <mat-option *ngIf="nodes.length==0" class="font-12">هیچ موردی یافت نشد</mat-option>
+        <mat-option class="font-14" [value]="node.id" *ngFor="let node of nodes;let i=index" (click)="onSelectNode(node)" (keyup)="onSelectNode(node)">{{node.paymentNumber}}</mat-option>
+
+    </mat-autocomplete>
+</mat-form-field>

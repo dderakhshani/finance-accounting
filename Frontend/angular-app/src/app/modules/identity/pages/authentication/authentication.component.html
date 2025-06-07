@@ -1,0 +1,56 @@
+<div class="authentication" dir="rtl">
+  <div *ngIf="isLoading" class="spinner">
+    <mat-spinner></mat-spinner>
+  </div>
+
+<!--  <div class="authentication-bg1">-->
+<!--    <div id="stars"></div>-->
+<!--    <div id="stars2"></div>-->
+<!--    <div id="stars3"></div>-->
+<!--  </div>-->
+
+
+<!--  <div class="authentication-bg2"></div>-->
+
+  <div class="authentication-bg3">
+    <div class="waveWrapper waveAnimation">
+      <div class="waveWrapperInner bgTop">
+        <div class="wave waveTop" style="background-image: url('http://front-end-noobs.com/jecko/img/wave-top.png')"></div>
+      </div>
+      <div class="waveWrapperInner bgMiddle">
+        <div class="wave waveMiddle" style="background-image: url('http://front-end-noobs.com/jecko/img/wave-mid.png')"></div>
+      </div>
+      <div class="waveWrapperInner bgBottom">
+        <div class="wave waveBottom" style="background-image: url('http://front-end-noobs.com/jecko/img/wave-bot.png')"></div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="mx-auto p-2" style=" width: 460px; height: 500px; display: flex;flex-direction: column">
+    <div class="login-logo">
+      <img src="/assets/icons/common/logo.svg" alt="" style="margin: auto; position: relative" class="p-2">
+    </div>
+    <h6 class="text-center py-4" style="width: 100%; position: relative; color: white">ورود به سیستم یکپارچه دانا</h6>
+    <mat-card class="p-5" style="border-radius: 1rem!important;width:100%;height:100%;display: flex">
+      <form class="px-5" [formGroup]="loginForm" style="width: 100%; height: fit-content; margin: auto!important;">
+        <div  class="col-md-12 mx-auto">
+            <mat-form-field  >
+              <mat-label>نام کاربری </mat-label>
+              <input formControlName="username" type="text" matInput>
+            </mat-form-field>
+          </div>
+          <div  class="col-md-12 mx-auto">
+            <mat-form-field  >
+              <mat-label> رمز عبور </mat-label>
+              <input formControlName="password" type="password" matInput>
+            </mat-form-field>
+          </div>
+        <div class="col-md-12 mx-auto">
+          <button class="p-2" color="primary" mat-raised-button (click)="login()">ورود</button>
+        </div>
+      </form>
+    </mat-card>
+  </div>
+</div>
+

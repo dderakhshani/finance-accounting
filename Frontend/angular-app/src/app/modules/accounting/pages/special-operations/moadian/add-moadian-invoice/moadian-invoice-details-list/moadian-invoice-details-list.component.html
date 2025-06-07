@@ -1,0 +1,13 @@
+<div class="d-flex flex-column">
+
+
+  <app-action-bar class="p-3"   (onAdd)="add()" (onDelete)="delete()" (onEdit)="update()">  </app-action-bar>
+  <app-table
+    (keydown.control.enter)="add()"
+    [tableConfigurations]="tableConfigurations"
+    [tableRows]="form"
+  ></app-table>
+
+
+
+</div>

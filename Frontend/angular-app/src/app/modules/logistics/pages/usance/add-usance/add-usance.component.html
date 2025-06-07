@@ -1,0 +1,150 @@
+<mat-card class="py-2">
+  <app-form-actions [actions]="formActions" (OnSave)="submit()" (OnAdd)="reset()">
+
+  </app-form-actions>
+
+  <form [formGroup]="form">
+
+    <div class="row">
+
+      <div class="col-md-3">
+        <mat-form-field >
+          <mat-label>شماره بار</mat-label>
+          <input matInput formControlName="usanceNumber" type="text">
+        </mat-form-field>
+      </div>
+
+      <div class="col-md-3">
+        <mat-form-field >
+          <mat-label>تاریخ </mat-label>
+          <input tabindex="6" matInput [matDatepicker]="picker" formControlName="usanceIssueDate">
+          <mat-datepicker-toggle matSuffix [for]="picker">
+            <mat-icon matDatepickerToggleIcon>
+              <img class="mb-3" src="/assets/icons/calendar.svg" alt="">
+            </mat-icon>
+          </mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+      </div>
+
+      <div class="col-md-3">
+        <mat-form-field >
+          <mat-label>شناسه ارسال</mat-label>
+          <input matInput formControlName="issuerFreightId" type="text">
+        </mat-form-field>
+      </div>
+
+      <div class="col-md-3">
+        <mat-form-field >
+          <mat-label>ارسال کننده</mat-label>
+          <input matInput formControlName="originPersonId" type="text">
+        </mat-form-field>
+      </div>
+
+      <div class="col-md-3">
+        <mat-form-field >
+          <mat-label>مقصد</mat-label>
+          <input matInput formControlName="destinationPersonId" type="text">
+        </mat-form-field>
+      </div>
+
+      <div class="col-md-3">
+        <mat-form-field >
+          <mat-label>راننده اول</mat-label>
+          <input matInput formControlName="firstDriverId" type="text">
+        </mat-form-field>
+      </div>
+
+      <div class="col-md-3">
+        <mat-form-field >
+          <mat-label>راننده دوم</mat-label>
+          <input matInput formControlName="secondDriverId" type="text">
+        </mat-form-field>
+      </div>
+
+      <div class="col-md-3">
+        <mat-form-field >
+          <mat-label>وزن</mat-label>
+          <input matInput formControlName="weight" type="text">
+        </mat-form-field>
+      </div>
+
+      <div class="col-md-3">
+        <mat-form-field >
+          <mat-label>پلاک</mat-label>
+          <input matInput formControlName="vehicleId" type="text">
+        </mat-form-field>
+      </div>
+
+      <div class="col-md-3">
+        <mat-form-field >
+          <mat-label>شماره حساب</mat-label>
+          <input matInput formControlName="perosnBankAccountId" type="text">
+        </mat-form-field>
+      </div>
+
+      <div class="col-md-3">
+        <mat-form-field >
+          <mat-label>دستمزد</mat-label>
+          <input matInput formControlName="wagePerUnit" type="text">
+        </mat-form-field>
+      </div>
+
+      <div class="col-md-3">
+        <mat-form-field >
+          <mat-label>دستمزد کل</mat-label>
+          <input matInput formControlName="totallWage" type="text">
+        </mat-form-field>
+      </div>
+
+      <div class="col-md-3">
+        <mat-form-field >
+          <mat-label>دستمزد اضافه</mat-label>
+          <input matInput formControlName="extraWage" type="text">
+        </mat-form-field>
+      </div>
+
+      <div class="col-md-3">
+        <mat-form-field >
+          <mat-label>توضیحات اضافی</mat-label>
+          <input matInput formControlName="extraDescriptions" type="text">
+        </mat-form-field>
+      </div>
+
+      <div class="col-md-3">
+        <mat-form-field >
+          <mat-label>توضیحات</mat-label>
+          <input matInput formControlName="descriptions" type="text">
+        </mat-form-field>
+      </div>
+
+      <div class="col-md-3">
+        <mat-form-field >
+          <mat-label>نوع کالا</mat-label>
+          <mat-select formControlName="commodityTypeBaseId">
+            <mat-option *ngFor="let commodityType of commodityType" [value]="commodityType.id">{{commodityType.title}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div class="col-md-3">
+        <mat-form-field >
+          <mat-label>توضیحات کالا</mat-label>
+          <input matInput formControlName="commodityDescriptions" type="text">
+        </mat-form-field>
+      </div>
+
+      <div class="col-md-3">
+        <mat-form-field >
+          <mat-label>شمارکانتینر</mat-label>
+          <input matInput formControlName="containerNumber" type="text">
+        </mat-form-field>
+      </div>
+
+
+
+    </div>
+
+  </form>
+
+</mat-card>

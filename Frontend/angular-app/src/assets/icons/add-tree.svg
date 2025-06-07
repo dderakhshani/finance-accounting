@@ -1,0 +1,6 @@
+<svg id="add-tree" xmlns="http://www.w3.org/2000/svg" width="15.282" height="15.282" viewBox="0 0 15.282 15.282">
+  <path id="Path_556" data-name="Path 556" d="M7.641,0a7.641,7.641,0,1,0,7.641,7.641A7.667,7.667,0,0,0,7.641,0Z" fill="#7d0"/>
+  <path id="Path_557" data-name="Path 557" d="M263.641,7.641A7.667,7.667,0,0,1,256,15.282V0A7.667,7.667,0,0,1,263.641,7.641Z" transform="translate(-248.359)" fill="#6b0"/>
+  <path id="Path_558" data-name="Path 558" d="M114.954,109.582v1.791h-3.582v3.582h-1.791v-3.582H106v-1.791h3.582V106h1.791v3.582Z" transform="translate(-102.836 -102.836)" fill="#e7e7e7"/>
+  <path id="Path_559" data-name="Path 559" d="M260.477,109.582v1.791H256.9v3.582H256V106h.9v3.582Z" transform="translate(-248.359 -102.836)" fill="#d3d3d8"/>
+</svg>

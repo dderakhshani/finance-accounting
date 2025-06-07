@@ -1,0 +1,27 @@
+@import "../../../../../assets/scss/variables";
+
+:host {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  display: grid;
+  grid-template-areas: "area";
+}
+
+.form-action-wrapper {
+  grid-area: area;
+  display: flex;
+  gap: 1rem;
+  /*margin-bottom: 10px;*/
+  align-items: center;
+  /*padding: 0.5rem 1rem!important;*/
+
+}
+
+
+.disabled-form-action {
+  pointer-events: none;
+  cursor: default;
+  -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
+  filter: grayscale(100%);
+}

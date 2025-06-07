@@ -1,0 +1,22 @@
+export interface FilesByPaymentNumber {
+  FullName: string,
+  TypeName: string,
+  UploadDate: Date,
+  VerifierUserId: string,
+  VerifyDate: string,
+  IsUsed: boolean,
+  UseDescription: string,
+  id: number,
+  requestPaymentId: number,
+  requestPaymentInvoiceId: string,
+  FileName: string,
+  type: number,
+  userId: number,
+  isDelete: string,
+  isVerified: boolean,
+  documentFileId: string,
+  checkedUsers: string,
+  requestPayment: string,
+  documentFile: string,
+  requestPaymentInvoice: string
+}

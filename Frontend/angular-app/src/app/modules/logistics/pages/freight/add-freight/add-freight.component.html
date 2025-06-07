@@ -1,0 +1,43 @@
+
+
+<mat-card class="mt-3">
+
+  <app-form-actions [actions]="formActions" (OnSave)="submit()" (OnAdd)="reset()">
+
+  </app-form-actions>
+  <form [formGroup]="form" >
+    <div class="row">
+      <div class="col-md-3">
+        <mat-form-field >
+          <mat-label>کد شخص</mat-label>
+          <input matInput formControlName="personId" type="text">
+        </mat-form-field>
+      </div>
+
+      <div class="col-md-3">
+        <mat-form-field >
+          <mat-label>نام کامل</mat-label>
+          <input matInput formControlName="managerFullName" type="text">
+        </mat-form-field>
+      </div>
+      <div class="col-md-3">
+      <mat-form-field >
+        <mat-label>امتیاز</mat-label>
+        <input matInput formControlName="rate" type="text">
+      </mat-form-field>
+    </div>
+      <div class="col-md-3">
+        <mat-form-field >
+          <mat-label>توضیحات</mat-label>
+          <input matInput formControlName="descriptions" type="text">
+        </mat-form-field>
+      </div>
+      <div class="col-md-3">
+          <mat-checkbox formControlName="isActive"> فعال </mat-checkbox>
+      </div>
+      <div class="col-md-3">
+            <mat-checkbox formControlName="isBlock"> مسدود </mat-checkbox>
+        </div>
+      </div>
+  </form>
+</mat-card>

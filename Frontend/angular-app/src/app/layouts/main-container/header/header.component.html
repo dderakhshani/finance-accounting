@@ -1,0 +1,61 @@
+<div class="app-header">
+  <div class="header-wrapper">
+    <mat-icon [style.transform]="isToggled ? '' : 'rotate(180deg)'" style="transform: scale(1.25)" color="primary" class="menu-toggle" (click)="toggle()">menu_open</mat-icon>
+
+    <div class="header-date">
+      <button mat-stroked-button color="primary" class="mat-caption">
+        {{currentDay ? (currentDate + ' ' + currentDay + ' ' + currentHour) : ''}}
+      </button>
+    </div>
+
+    <div class="header-actions">
+      <mat-icon [matMenuTriggerFor]="menu" style="transform: scale(1.25); cursor: pointer" color="primary">settings</mat-icon>
+
+      <mat-menu [formGroup]="form" #menu="matMenu">
+        <div class="col-12" style="height: fit-content!important;" mat-menu-item (click) = "$event.stopPropagation()">
+          <mat-form-field class="p-0">
+            <mat-label>نقش</mat-label>
+            <mat-select (selectionChange)="handleRoleChange($event.value)" formControlName="roleId">
+              <mat-option *ngFor="let role of allowedRoles" [value]="role.roleId">{{role.title}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-12" style="height: fit-content!important;"  mat-menu-item (click) = "$event.stopPropagation()">
+          <mat-form-field class="p-0">
+            <mat-label>زبان</mat-label>
+            <mat-select (selectionChange)="handleLanguageChange($event.value)" formControlName="languageId">
+              <mat-option *ngFor="let language of languages" [value]="language.id">{{language.title}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-12" style="height: fit-content!important;"  mat-menu-item (click) = "$event.stopPropagation()">
+          <mat-form-field class="p-0">
+            <mat-label>سال مالی</mat-label>
+            <mat-select (selectionChange)="handleYearChange($event.value)" formControlName="yearId">
+              <mat-option *ngFor="let year of allowedYears"
+                          [value]="year.id">{{'سال مالی  ' + year.yearName}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </mat-menu>
+
+
+
+      <mat-icon style="transform: scale(1.25); cursor: pointer" color="primary">notifications</mat-icon>
+    </div>
+
+    <div class="header-avatar">
+      <h1>{{applicationUserFullName}}</h1>
+      <img [matMenuTriggerFor]="accountInfo" [src]="avatarUrl" alt="">
+      <mat-menu #accountInfo="matMenu">
+        <button mat-menu-item (click)="identityService.logout()" class="d-flex">
+          <span>خروج</span>
+          <mat-icon style="margin: auto auto auto 0" color="primary">logout</mat-icon>
+        </button>
+      </mat-menu>
+    </div>
+
+
+  </div>
+
+</div>

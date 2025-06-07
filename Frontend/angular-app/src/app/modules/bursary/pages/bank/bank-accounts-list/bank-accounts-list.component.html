@@ -1,0 +1,42 @@
+<mat-card class="h-100 d-flex flex-column overflow-hidden" style="max-height: inherit; padding: 0!important;">
+
+    <app-action-bar class="p-3" [viewMode]="'slider'" (onAdd)="add()">
+
+
+    </app-action-bar>
+
+
+    <div class="h-100 overflow-auto">
+        <app-table-virtual-scrolling
+                [tableRows]="bankAccounts"
+                [requestsIndex]="requestsIndex"
+                [tableConfigurations]="tableConfigurations"
+                (sortChanged)="get()"
+                (refreshEvent)="get()"
+                (filtersChanged)="get()"
+                (paginationChanged)="get()"
+                (rowDoubleClicked)="navigateToChequeBooks($event)"
+                (rowsSelected)="handleRowsSelected($event)"
+                (optionSelectedEvent)="handleOptionSelected($event)"
+                (restorePreviousFilterEvent)="handleRestorePreviousFilter($event)"
+                (removeAllFiltersAndSortsEvent)="handleRemoveAllFiltersAndSorts($event)"
+                (tableConfigurationsChangeEvent)="handleTableConfigurationsChange($event)"
+
+        ></app-table-virtual-scrolling>
+    </div>
+
+</mat-card>
+<ng-template #rowBtn1 let-row="row" let-column="column">
+
+    <button mat-raised-button color="primary" (click)="showDetail(row)" matTooltip="نمایش لیست دسته چک ها "
+            *ngIf="row.haveChekBook"
+    >
+        <mat-icon>
+            list
+        </mat-icon>
+        دسته چک ها
+
+    </button>
+
+
+</ng-template>

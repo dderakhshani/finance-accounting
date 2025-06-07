@@ -1,0 +1,50 @@
+
+<app-action-bar class="p-3" (onAdd)="add()" (onEdit)="update()" (onRefresh)="get()"></app-action-bar>
+
+<app-table [tableConfigurations]="tableConfigurations"
+           [tableRows]="form"
+           (filtersChanged)="get()"
+           (sortChanged)="get()"
+           (paginationChanged)="get()">
+
+</app-table>
+
+<ng-template #dropDowncommodities let-rowFg="row">
+    <app-combo-commodity [DefaultId]="rowFg.get('usedCommodityId').value"
+                         (SelectId)="getCommodityById($event,rowFg)"
+                         [isConsumable]="false"
+                         [isAsset]="false"
+                         style="text-align:right !important"
+                         [isRequired]="true">
+    </app-combo-commodity>
+
+</ng-template>
+<ng-template #dropWarehouse let-rowFg="row">
+   
+    
+    <app-combo-warhouse-tree [DefaultId]="rowFg.get('bomWarehouseId').value"
+                             (SelectId)="WarehouseIdSelect($event,rowFg)"
+                             [isRequired]="true"
+                             style="text-align:right !important"
+                             [isFilterByCodeVoucher]="false"
+                             [isLastLevel]="true">
+    </app-combo-warhouse-tree>
+
+</ng-template>
+<ng-template #txtValue let-rowFg="row">
+
+    <input [formControl]="rowFg.get('value')"
+           type="number"
+           style="text-align: center; width: 95%; "
+           class="form-control"
+           required />
+</ng-template>
+
+
+
+<ng-template #btnDelete let-rowFg="row" let-Index="i">
+    <button mat-icon-button matTooltip="حذف" class="btn-color" (click)="onDelete(rowFg)">
+        <mat-icon>delete</mat-icon>
+    </button>
+</ng-template>
+

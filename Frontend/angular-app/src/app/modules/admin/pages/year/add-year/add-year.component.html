@@ -1,0 +1,93 @@
+<div class="col-md-12">
+
+<app-action-bar class="p-3" (onAdd)="reset()" (onSave)="submit()" (onList)="navigateToYearList()" (onDelete)="delete()"></app-action-bar>
+
+  <mat-card class="col-md-12">
+  <form [formGroup]="form">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="row">
+
+          <div class="row">
+            <div class="col-md-3">
+            <mat-form-field  >
+              <mat-label> نام سال مالی جدید </mat-label>
+              <input tabindex="2" formControlName="yearName" type="text" matInput>
+            </mat-form-field>
+          </div>
+          </div>
+
+          <div class="row">
+              <div class="col-md-3">
+                <mat-form-field >
+                  <mat-label>تاریخ شروع سال مالی</mat-label>
+                  <input tabindex="3" matInput [matDatepicker]="picker" formControlName="firstDate">
+                  <mat-datepicker-toggle matSuffix [for]="picker">
+                    <mat-icon matDatepickerToggleIcon>
+                      <img class="mb-3" src="/assets/icons/calendar.svg" alt="">
+                    </mat-icon>
+                  </mat-datepicker-toggle>
+                  <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+              </div>
+
+              <div class="col-md-3">
+                <mat-form-field >
+                  <mat-label>تاریخ پایان سال مالی</mat-label>
+                  <input tabindex="4" matInput [matDatepicker]="picker1" formControlName="lastDate">
+                  <mat-datepicker-toggle matSuffix [for]="picker1">
+                    <mat-icon matDatepickerToggleIcon>
+                      <img class="mb-3" src="/assets/icons/calendar.svg" alt="">
+                    </mat-icon>
+                  </mat-datepicker-toggle>
+                  <mat-datepicker #picker1></mat-datepicker>
+                </mat-form-field>
+              </div>
+
+              <div class="col-md-3">
+                <mat-form-field >
+                  <mat-label>تاریخ انقضا قابلیت ویرایش </mat-label>
+                  <input tabindex="5" matInput [matDatepicker]="picker2" formControlName="lastEditableDate">
+                  <mat-datepicker-toggle matSuffix [for]="picker2">
+                    <mat-icon matDatepickerToggleIcon>
+                      <img class="mb-3" src="/assets/icons/calendar.svg" alt="">
+                    </mat-icon>
+                  </mat-datepicker-toggle>
+                  <mat-datepicker #picker2></mat-datepicker>
+                </mat-form-field>
+              </div>
+            </div>
+
+          <div class="row py-3">
+              <div class="col-md-3">
+                <mat-checkbox color="primary" formControlName="isEditable">
+                  <mat-label class="mat-caption">قابل ویرایش </mat-label>
+                </mat-checkbox>
+              </div>
+
+              <div class="col-md-3">
+                <mat-checkbox  color="primary" formControlName="isCalculable">
+                  <mat-label class="mat-caption">قابل محاسبه</mat-label>
+                </mat-checkbox>
+              </div>
+
+              <div class="col-md-3">
+                <mat-checkbox color="primary" formControlName="isCurrentYear">
+                  <mat-label class="mat-caption">سال مالی جاری</mat-label>
+                </mat-checkbox>
+              </div>
+
+
+        </div>
+
+
+        </div>
+      </div>
+    </div>
+
+
+
+  </form>
+
+ </mat-card>
+</div>

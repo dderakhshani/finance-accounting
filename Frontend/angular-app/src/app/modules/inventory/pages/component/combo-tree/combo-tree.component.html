@@ -1,0 +1,60 @@
+<!--امکان نمایش همزمان درخت و کمبو عادی با امکان جستجو-->
+<div [matMenuTriggerFor]="menu" [ngClass]="{'disabled' : isDisable}">
+  <!--Input view result select-->
+  <mat-form-field>
+
+    <mat-label>{{lablelTitleCombo}}</mat-label>
+    <div  >
+      <input matInput   [(ngModel)]="title"
+      [ngModelOptions]="{standalone: true}" autocomplete="false"
+      readonly
+      [required]="isRequired"
+
+      />
+    </div>
+    </mat-form-field>
+  <mat-icon class="remove-select" *ngIf="title!='' && !isDisable" (click)="onSelectNode(null)" matTooltip="پاک کردن">
+    close
+  </mat-icon>
+</div>
+
+<mat-menu #menu="matMenu" style="margin-bottom:-33px;">
+  <div disabled>
+
+
+    <div>
+      <input class="search-input" [(ngModel)]="searchTerm" (keyup)="onSearchTerm()" placeholder="جستجو" (click)="$event.stopPropagation()" />
+
+    </div>
+
+    <!--Tree Select-->
+    <mat-tree *ngIf="isTree" [dataSource]="dataSource" [treeControl]="treeControl">
+      <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
+
+        <button mat-icon-button disabled></button>
+        <button class="btn-tree btn-tree-node" (click)="onSelectNode(node.id,node.name,node.code)">
+          <span>{{node.name}}</span>
+
+        </button>
+
+      </mat-tree-node>
+
+      <mat-tree-node *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding>
+        <span mat-icon-button matTreeNodeToggle class="btn-tree"
+              [attr.aria-label]="'Toggle ' + node.name">
+          <mat-icon class="mat-icon-rtl-mirror expand">
+            {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+          </mat-icon>
+        </span>
+        <span class="btn-tree-node" (click)="onSelectNode(node.id,node.name)">{{node.name}}</span>
+      </mat-tree-node>
+    </mat-tree>
+    <!--Combo Select-->
+    <div *ngIf="!isTree">
+      <mat-option *ngFor="let node of nodes" (click)="onSelectNode(node.id,node.title)">
+        <span>{{node.title}}</span>
+      </mat-option>
+    </div>
+  </div>
+</mat-menu>
+

@@ -1,0 +1,75 @@
+<div [matMenuTriggerFor]="menu">
+
+    <div class="_content">
+        
+        <button mat-stroked-button style="height:40px!important">
+            <mat-icon style="font-size:30px;">
+                search
+            </mat-icon>
+            <span style="color: black">{{lablelTitleCombo}}</span>
+            <span *ngIf="viewDetalis==false && nodesSelected.length>2" style="color:#cd6096;padding-right:15px;">تعداد انتخابی {{nodesSelected.length}} از {{sources_filter.length}} آیتم</span>
+            <span *ngIf="viewDetalis==false && nodesSelected.length<3" style="color:#cd6096;padding-right:15px;">
+                <span *ngFor="let item of nodesSelected" class="selectedItems">
+
+                    {{item.title}}
+                    <span (click)="onDeleteItem(item.id)" matTooltip="حذف" class="selectedItemsDelete">
+                        ✖
+                    </span>
+                </span>
+                
+            </span>
+        </button>
+
+        <div class="row" style="background-color:#fff;padding:0px 15px 15px 15px;z-index:100" *ngIf="nodesSelected.length>0 && viewDetalis==true">
+            <span *ngFor="let item of nodesSelected" class="col-md-6 selectedItems">
+
+                <span (click)="onDeleteItem(item.id)" matTooltip="حذف" class="selectedItemsDelete">
+                    ✖
+                </span>
+                {{item.title}}
+                {{item.id}}
+
+            </span>
+        </div>
+
+    </div>
+    
+
+</div>
+
+<mat-menu #menu="matMenu" style="margin-bottom:-33px;">
+    <div disabled>
+
+       
+        <div style="position: sticky; top: 0; z-index: 1000;">
+            <input class="search-input"
+                   [(ngModel)]="searchTerm"
+                   (keyup)="onSearchTerm()"
+                   placeholder="جستجو"
+                   (click)="$event.stopPropagation()"
+                   autofocus
+                   id="searchTerm"
+                   autocomplete="off" />
+
+        </div>
+
+
+        <!--Combo Select-->
+        <div>
+            <mat-option style="background-color:azure">
+                <mat-checkbox color="primary" (change)="onSelectAll($event)" [(ngModel)]="selectedAll">
+                    <span>انتخاب همه</span>
+                </mat-checkbox>
+            </mat-option>
+            <div class="seprator">
+            </div>
+            <mat-option *ngFor="let node of sources ;let i = index " (click)="$event.stopPropagation()">
+               
+                <mat-checkbox [(ngModel)]="node.selected" color="primary" (change)="onSelectNode(node,$event)">
+                    <span>{{node.title}}</span>
+                </mat-checkbox>
+
+            </mat-option>
+        </div>
+    </div>
+</mat-menu>

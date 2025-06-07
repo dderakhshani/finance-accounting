@@ -1,0 +1,57 @@
+[
+
+  {
+    "Conditions": [
+      {
+        "Condition": "@WarehouseId>0",
+        "Message": {
+          "Key": "IsRequired",
+          "Values": []
+        }
+      }
+    ],
+    "FieldName": "WarehouseId"
+  },
+  {
+    "FieldName": "CodeVoucherGroupId",
+    "Conditions": [
+      {
+        "Condition": "@CodeVoucherGroupId>0",
+        "Message": {
+          "Key": "IsRequired",
+          "Values": []
+        }
+      }
+    ]
+
+  },
+  {
+    "FieldName": "DocumentDate",
+    "Conditions": [
+      {
+        "Condition": "Validators.IsValidDate(@DocumentDate)",
+        "Message": {
+          "Key": "IsRequired",
+          "Values": []
+        }
+      }
+    ]
+
+  },
+  {
+    "FieldName": "CreditAccountReferenceId",
+    "Conditions": [
+      {
+        "Condition": "@CreditAccountReferenceId>0",
+        "Message": {
+          "Key": "IsRequired",
+          "Values": []
+        }
+      }
+    ]
+
+  }
+
+
+]
+

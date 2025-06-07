@@ -1,0 +1,9 @@
+.errors-wrapper {
+  display: flex;
+  flex-direction: column;
+  padding: 2rem;
+
+  .error-message {
+    font-size: 12px;
+  }
+}

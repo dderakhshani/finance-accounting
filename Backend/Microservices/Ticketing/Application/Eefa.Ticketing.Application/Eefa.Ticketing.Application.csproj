@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+     <TargetFramework>net8.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\Core\Eefa.NotificationServices\Eefa.NotificationServices.csproj" />
+    <ProjectReference Include="..\..\Domain\Eefa.Ticketing.Domain.Core\Eefa.Ticketing.Domain.Core.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\Eefa.Ticketing.Infrastructure\Eefa.Ticketing.Infrastructure.csproj" />
+    <ProjectReference Include="..\Eefa.Ticketing.Application.Contract\Eefa.Ticketing.Application.Contract.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Commands\BasicInfos\" />
+  </ItemGroup>
+
+</Project>

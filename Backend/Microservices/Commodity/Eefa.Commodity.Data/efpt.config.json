@@ -1,0 +1,51 @@
+﻿{
+   "CodeGenerationMode": 0,
+   "ContextClassName": "CommodityUnitOfWork",
+   "ContextNamespace": null,
+   "DefaultDacpacSchema": null,
+   "FilterSchemas": false,
+   "IncludeConnectionString": false,
+   "ModelNamespace": null,
+   "OutputContextPath": null,
+   "OutputPath": "Entities\/reverse",
+   "ProjectRootNamespace": "Eefa.Commodity.Data",
+   "Schemas": null,
+   "SelectedHandlebarsLanguage": 0,
+   "SelectedToBeGenerated": 2,
+   "Tables": [
+      {
+         "Name": "[admin].[Roles]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[admin].[Users]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[common].[MeasureUnitConversions]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[common].[MeasureUnits]",
+         "ObjectType": 0
+      }
+   ],
+   "UiHint": "PROGRAMMING-SRV\\SQL2019.EefaDev",
+   "UseBoolPropertiesWithoutDefaultSql": false,
+   "UseDatabaseNames": true,
+   "UseDbContextSplitting": true,
+   "UseFluentApiOnly": true,
+   "UseHandleBars": true,
+   "UseHierarchyId": false,
+   "UseInflector": true,
+   "UseLegacyPluralizer": true,
+   "UseManyToManyEntity": false,
+   "UseNoConstructor": true,
+   "UseNoDefaultConstructor": false,
+   "UseNoNavigations": false,
+   "UseNoObjectFilter": false,
+   "UseNodaTime": false,
+   "UseNullableReferences": true,
+   "UseSchemaFolders": false,
+   "UseSpatial": false
+}

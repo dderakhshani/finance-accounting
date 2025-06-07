@@ -1,0 +1,155 @@
+
+<div [formGroup]="form" class="h-100 d-flex flex-column overflow-auto" style="max-height: inherit; padding: 0!important;">
+
+  <app-form-actions [actions]="formActions" (OnShowList)="navigateToInvoiceList()">
+
+
+
+  </app-form-actions>
+
+  <mat-card class="p-0" *ngIf="Invoice!=undefined">
+
+    <div class="row line">
+
+      <div class="col-md-4 ">
+        <mat-label>شماره صورتحساب</mat-label>
+        :
+        <label>{{Invoice?.invoiceNo}}</label>
+      </div>
+
+      <div class="col-md-4 ">
+        <mat-label>شماره سند  </mat-label>
+        :
+        <label>{{Invoice?.documentNo}}</label>
+      </div>
+
+
+      <div class="col-md-4 ">
+        <mat-label>تاریخ سند</mat-label>
+        :
+        <label>{{Invoice?.expireDate | toPersianDate}}</label>
+      </div>
+
+      <div class="col-md-4 ">
+        <mat-label>تاریخ تحویل</mat-label>
+        :
+        <label>{{Invoice?.documentDate | toPersianDate}}</label>
+
+      </div>
+      <div class="col-md-4 ">
+        <mat-label>انبار تحویل گیرنده</mat-label>
+        :
+        <label>{{Invoice?.warehouseTitle}}</label>
+      </div>
+
+      <div class="col-md-4 ">
+        <mat-label> تامین کننده</mat-label>
+        :
+        <label>{{Invoice?.referenceTitle}}</label>
+      </div>
+      <div class="col-md-4 ">
+        <mat-label> درخواست دهنده</mat-label>
+        :
+        <label>{{Invoice?.requesterReferenceTitle}}</label>
+      </div>
+      <div class="col-md-4 ">
+        <mat-label> پیگیری کننده</mat-label>
+        :
+        <label>{{Invoice?.followUpReferenceTitle}}</label>
+      </div>
+      <div class="col-md-4 ">
+
+        <mat-label>شرح</mat-label>
+        :
+        <label>{{Invoice?.documentDescription}}</label>
+      </div>
+      <div class="col-md-4 ">
+
+        <mat-label>برچسب</mat-label>
+        :
+        <label *ngFor="let item of Invoice.tagArray">{{item}} - </label>
+      </div>
+    </div>
+      <div class="row line" >
+      <div class="col-md-4" >
+        <mat-label>مبلغ مالیات ارزش افزوده</mat-label> :
+
+        <span class="lable">
+          {{Invoice?.vatDutiesTax | number:'4.0-0'}}
+        </span> <span style="font-size:12px;"> ریال </span>
+      </div>
+
+      <div class="col-md-4" >
+        <mat-label>جمع قیمت تمام شده</mat-label> :
+
+        <span class="lable">
+          {{Invoice?.totalProductionCost | number:'4.0-0'}}
+        </span><span style="font-size:12px;"> ریال </span>
+      </div>
+      <div class="col-md-4" >
+        <mat-label>جمع کل قابل پرداخت</mat-label> :
+
+        <span class="text-danger">
+          {{Invoice?.totalItemPrice | number:'4.0-0'}}
+        </span> <span style="font-size:12px;"> ریال </span>
+
+      </div>
+
+    </div>
+
+  </mat-card>
+
+  <div class="col-md-12 mt-2">
+    <mat-card class="mt-2" *ngIf="Invoice?.items">
+      <table class="mat-table cdk-table mat-elevation-z8 ng-star-inserted" style="width:100%;text-align:center;">
+        <thead style="font-size:14px;">
+          <tr class="mat-header-row cdk-header-row ng-star-inserted">
+            <th>کد کالا</th>
+            <th>نام کالا </th>
+            <th>واحد کالا</th>
+            <th>تعداد کالا</th>
+
+
+            <th >
+              قیمت واحد
+            </th>
+            <th >
+              مبلغ کل ریالی
+            </th>
+
+          </tr>
+        </thead>
+
+        <tbody *ngFor="let item of Invoice?.items " id="Items">
+          <tr>
+            <td>{{item?.commodity.tadbirCode}}</td>
+            <td>{{item?.commodity.title}}</td>
+            <td>{{item?.commodity.measureTitle}}</td>
+
+
+            <td>{{item.quantity}}</td>
+
+            <td >
+              {{item.unitPrice | number:'4.0-0'}}
+
+            </td>
+            <td>
+              {{item.totalPrice | number:'4.0-0'}}
+
+            </td>
+
+
+          </tr>
+        </tbody>
+      </table>
+    </mat-card>
+
+
+
+  </div>
+
+
+
+
+</div>
+

@@ -1,0 +1,61 @@
+<mat-dialog
+  (onSubmit)="submit()"
+  (onDelete)="delete()"
+  [showDeleteBtn]="pageMode === pageModes.Update"
+  class="w-75"
+>
+  <div dialog-header="">
+    {{dialogHeader}}
+  </div>
+
+  <div dialog-content="" style="width: 75vw" [formGroup]="form">
+    <div class="row" >
+      <div class="col-3">
+        <mat-form-field>
+          <mat-label>سریال</mat-label>
+          <input formControlName="serial" type="text" matInput>
+        </mat-form-field>
+      </div>
+      <div class="col-3">
+        <mat-form-field>
+          <mat-label> تعداد برگه</mat-label>
+          <mat-select (selectionChange)="changeSheetsCount()" formControlName="sheetsCount">
+            <mat-option *ngFor="let column of sheetsCountCount" [value]="column.value">
+              {{column.title}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div class="col-3">
+        <mat-form-field>
+          <mat-label>شروع از</mat-label>
+          <input formControlName="startNumber" type="text" matInput>
+        </mat-form-field>
+      </div>
+      <div class="col-3">
+        <mat-form-field>
+          <mat-label>تاریخ دریافت</mat-label>
+          <input matInput [matDatepicker]="picker1" formControlName="getDate">
+          <mat-datepicker-toggle matSuffix [for]="picker1">
+            <mat-icon matDatepickerToggleIcon>
+              <img class="mb-3" src="/assets/icons/calendar.svg" alt="">
+            </mat-icon>
+          </mat-datepicker-toggle>
+          <mat-datepicker #picker1></mat-datepicker>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row" >
+
+      <mat-form-field>
+        <mat-label>توضیحات</mat-label>
+        <textarea formControlName="descp" type="text" matInput> </textarea>
+      </mat-form-field>
+    </div>
+
+  </div>
+
+
+
+</mat-dialog>

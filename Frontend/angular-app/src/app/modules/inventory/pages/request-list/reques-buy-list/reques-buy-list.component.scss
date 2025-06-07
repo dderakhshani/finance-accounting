@@ -1,0 +1,22 @@
+@import "/src/assets/scss/variables";
+
+.btn-color {
+  color: color(md-grey,500) !important;
+}
+.btn-warn {
+  color: color(warn,700) !important;
+
+}
+.btn-link {
+
+  font-size: 16px;
+  cursor:pointer;
+}
+.mat-menu-panel {
+  min-height: 35px !important;
+
+}
+.btn-success {
+  color: color(success,500) !important;
+}
+

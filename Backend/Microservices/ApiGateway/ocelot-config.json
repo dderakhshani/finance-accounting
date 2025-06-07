@@ -1,0 +1,224 @@
+{
+  "Routes": [
+    // ===> Eefa.WebServices
+
+    //identity
+    {
+      "UpstreamPathTemplate": "/identity/{everything}", // From
+      "DownstreamPathTemplate": "/api/identity/{everything}", // To
+      "DownstreamScheme": "http",
+      "UpstreamHttpMethod": [ "GET", "POST", "DELETE", "PUT" ],
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "192.168.2.151",
+          "Port": 50000
+        }
+      ]
+    },
+    // admin
+    {
+      "UpstreamPathTemplate": "/admin/{everything}", // From
+      "DownstreamPathTemplate": "/api/admin/{everything}", // To
+      "DownstreamScheme": "http",
+      "UpstreamHttpMethod": [ "GET", "POST", "DELETE", "PUT" ],
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "127.0.0.1",
+          "Port": 50001
+        }
+      ]
+    },
+    // accounting
+    {
+      "UpstreamPathTemplate": "/accounting/{everything}", // From
+      "DownstreamPathTemplate": "/api/accounting/{everything}", // To
+      "DownstreamScheme": "http",
+      "UpstreamHttpMethod": [ "GET", "POST", "DELETE", "PUT" ],
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "127.0.0.1",
+          "Port": 50002
+        }
+      ]
+    },
+
+    {
+      "UpstreamPathTemplate": "/accountingreports/{everything}", // From
+      "DownstreamPathTemplate": "/accountingreports/{everything}", // To
+      "DownstreamScheme": "http",
+      "UpstreamHttpMethod": [ "GET", "POST", "DELETE", "PUT" ],
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "127.0.0.1",
+          "Port": 50002
+        }
+      ]
+    },
+
+    // fileTransfer
+    {
+      "UpstreamPathTemplate": "/fileTransfer/{everything}", // From
+      "DownstreamPathTemplate": "/api/fileTransfer/{everything}", // To
+      "DownstreamScheme": "http",
+      "UpstreamHttpMethod": [ "GET", "POST", "DELETE", "PUT" ],
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "127.0.0.1",
+          "Port": 50003
+        }
+      ]
+    },
+    {
+      "UpstreamPathTemplate": "/assets/{everything}", // From
+      "DownstreamPathTemplate": "/assets/{everything}", // To
+      "DownstreamScheme": "http",
+      "UpstreamHttpMethod": [ "GET", "POST", "DELETE", "PUT" ],
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "127.0.0.1",
+          "Port": 50003
+        }
+      ]
+    },
+
+
+    // audit
+    {
+      "UpstreamPathTemplate": "/audit/{everything}", // From
+      "DownstreamPathTemplate": "/api/audit/{everything}", // To
+      "DownstreamScheme": "http",
+      "UpstreamHttpMethod": [ "GET", "POST", "DELETE", "PUT" ],
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "127.0.0.1",
+          "Port": 50004
+        }
+      ]
+    },
+
+    // ===> SinaPlus.Microsevices
+
+    // commodity
+    {
+      "UpstreamPathTemplate": "/commodity/{everything}", // From
+      "DownstreamPathTemplate": "/api/{everything}", // To
+      "DownstreamScheme": "http",
+      "UpstreamHttpMethod": [ "GET", "POST", "DELETE", "PUT" ],
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "127.0.0.1",
+          "Port": 50010
+        }
+      ]
+    },
+
+    // inventory
+    {
+      "UpstreamPathTemplate": "/inventory/{everything}", // From
+      "DownstreamPathTemplate": "/api/{everything}", // To
+      "DownstreamScheme": "http",
+      "UpstreamHttpMethod": [ "GET", "POST", "DELETE", "PUT" ],
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "127.0.0.1",
+          "Port": 50011
+        }
+      ]
+    },
+
+    // bursary
+    {
+      "UpstreamPathTemplate": "/bursary/{everything}", // From
+      "DownstreamPathTemplate": "/api/{everything}", // To
+      "DownstreamScheme": "http",
+      "UpstreamHttpMethod": [ "GET", "POST", "DELETE", "PUT" ],
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "127.0.0.1",
+          "Port": 50012
+        }
+      ]
+    },
+
+    // sale
+    {
+      "UpstreamPathTemplate": "/sale/{everything}", // From
+      "DownstreamPathTemplate": "/api/{everything}", // To
+      "DownstreamScheme": "http",
+      "UpstreamHttpMethod": [ "GET", "POST", "DELETE", "PUT" ],
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "127.0.0.1",
+          "Port": 50013
+        }
+      ]
+    },
+    // purchase
+    {
+      "UpstreamPathTemplate": "/purchase/{everything}", // From
+      "DownstreamPathTemplate": "/api/{everything}", // To
+      "DownstreamScheme": "http",
+      "UpstreamHttpMethod": [ "GET", "POST", "DELETE", "PUT" ],
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "127.0.0.1",
+          "Port": 50014
+        }
+      ]
+    },
+    {
+      "UpstreamPathTemplate": "/ticketing/{everything}", // From
+      "DownstreamPathTemplate": "/api/{everything}", // To
+      "DownstreamScheme": "http",
+      "UpstreamHttpMethod": [ "GET", "POST", "DELETE", "PUT" ],
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "127.0.0.1",
+          "Port": 50015
+        }
+      ]
+    },
+    // logistic
+    {
+      "UpstreamPathTemplate": "/logistics/{everything}", // From
+      "DownstreamPathTemplate": "/api/{everything}", // To
+      "DownstreamScheme": "http",
+      "UpstreamHttpMethod": [ "GET", "POST", "DELETE", "PUT" ],
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "127.0.0.1",
+          "Port": 50016
+        }
+      ]
+    },
+    // notification
+    {
+      "DownstreamPathTemplate": "/NotificationUserHub",
+      "UpstreamPathTemplate": "/NotificationUserHub",
+      "DownstreamScheme": "ws",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "127.0.0.1",
+          "Port": 50017
+        }
+      ],
+      "RouteIsCaseSensitive": false,
+      "UpstreamHttpMethod": [ "GET" ]
+    },
+    {
+      "UpstreamPathTemplate": "/notification/{everything}", // From
+      "DownstreamPathTemplate": "/api/{everything}", // To
+      "DownstreamScheme": "http",
+      "UpstreamHttpMethod": [ "GET", "POST", "DELETE", "PUT" ],
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "127.0.0.1",
+          "Port": 50017
+        }
+      ]
+    }
+  ],
+  "GlobalConfiguration": {
+    "BaseUrl": "http://0.0.0.0"
+  }
+}

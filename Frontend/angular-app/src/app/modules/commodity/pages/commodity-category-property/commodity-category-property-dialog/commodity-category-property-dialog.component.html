@@ -1,0 +1,64 @@
+<mat-dialog
+  (onSubmit)="submit()"
+  (onDelete)="delete()"
+  [showDeleteBtn]="pageMode === pageModes.Update"
+>
+
+
+<div dialog-header="">افزودن خصوصیات به دسته بندی {{category.title}}</div>
+
+<div dialog-content="">
+  <form class="row" [formGroup]="form">
+    <div class="col-6">
+      <mat-form-field>
+        <mat-label> عنوان</mat-label>
+        <input formControlName="title" type="text" matInput>
+      </mat-form-field>
+    </div>
+    <div class="col-6">
+      <mat-form-field>
+        <mat-label> نام یکتا</mat-label>
+        <input formControlName="uniqueName" type="text" matInput>
+      </mat-form-field>
+    </div>
+    <div class="col-6">
+      <mat-form-field>
+        <mat-label>ترتیب نمایش</mat-label>
+        <input formControlName="orderIndex" type="text" matInput>
+      </mat-form-field>
+    </div>
+
+    <div class="col-6">
+      <mat-form-field>
+        <mat-label>واحد اندازه گیری</mat-label>
+        <input (keyup)="filterMeasureUnits()" formControlName="measureId" type="text" matInput [matAutocomplete]="measureUnitsAuto">
+        <mat-autocomplete [displayWith]="getMeasureUnitTitle.bind(this)" autoActiveFirstOption #measureUnitsAuto="matAutocomplete">
+          <mat-option
+            *ngFor="let measureUnit of measureUnits"
+            [value]="measureUnit.id">
+            {{measureUnit.title}}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+    </div>
+
+    <div class="col-6">
+      <mat-form-field >
+        <mat-label>نوع داده</mat-label>
+        <mat-select formControlName="propertyTypeBaseId">
+          <mat-option *ngFor="let type of categoryPropertyTypes" [value]="type.id">
+            {{type.title}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+  </form>
+  <mat-card class="my-2 " style="padding: 0!important; overflow: auto" *ngIf="form.controls.propertyTypeBaseId.value==28453">
+      <app-commodity-category-property-item [request]="request" [formSetter]="form?.controls['items']"></app-commodity-category-property-item>
+  </mat-card>
+</div>
+
+
+
+</mat-dialog>

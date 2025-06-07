@@ -1,0 +1,21 @@
+<VSTemplate Version="3.0.0" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005" Type="Item">
+  <TemplateData>  
+    <DefaultName>Service</DefaultName>
+    <Name>Service Template</Name>
+    <Description>
+    Generate Service and its model
+    version 1.0
+    last update : 2021-08-02
+    </Description>
+    <ProjectType>CSharp</ProjectType>
+    <SortOrder>10</SortOrder>
+    <Icon>__Icon.ico</Icon>
+  </TemplateData>
+
+  <TemplateContent>
+    <References />
+    <ProjectItem SubType="" TargetFileName="$fileinputname$/$fileinputname$Service.cs" ReplaceParameters="true">Service.cs</ProjectItem>    
+    <ProjectItem SubType="" TargetFileName="$fileinputname$/$fileinputname$ServiceModel.cs" ReplaceParameters="true">ServiceModel.cs</ProjectItem>
+    <ProjectItem SubType="" TargetFileName="Interfaces/I$fileinputname$Service.cs" ReplaceParameters="true">IService.cs</ProjectItem>
+  </TemplateContent>
+</VSTemplate>

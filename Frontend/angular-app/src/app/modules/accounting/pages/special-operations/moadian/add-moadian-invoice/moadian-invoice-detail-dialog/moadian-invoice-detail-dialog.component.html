@@ -1,0 +1,121 @@
+
+<mat-dialog
+  (onSubmit)="submit()"
+  (onDelete)="delete()"
+  [showDeleteBtn]="pageMode === pageModes.Update"
+  class="w-75"
+>
+  <div dialog-header="">
+ آرتیکل
+  </div>
+
+  <div dialog-content="" style="width: 75vw">
+    <div class="row" [formGroup]="form">
+      <div class="col-2">
+        <mat-form-field>
+          <mat-label>شناسه خدمت/کالا</mat-label>
+          <input formControlName="sstid" type="text" matInput>
+        </mat-form-field>
+      </div>
+      <div class="col-4">
+        <mat-form-field>
+          <mat-label> شرح خدمت/کالا</mat-label>
+          <input formControlName="sstt" type="text" matInput>
+        </mat-form-field>
+      </div>
+
+      <div class="col-2">
+        <mat-form-field>
+          <mat-label>واحد اندازه گیری</mat-label>
+          <input formControlName="mu" type="text" matInput>
+        </mat-form-field>
+      </div>
+      <div class="col-2">
+        <mat-form-field>
+          <mat-label>تعداد/مقدار</mat-label>
+          <input currencyMask [options]="{suffix:''}" formControlName="am" type="text" matInput>
+        </mat-form-field>
+      </div>
+      <div class="col-2">
+        <mat-form-field>
+          <mat-label>مبلغ واحد</mat-label>
+          <input currencyMask formControlName="fee" type="text" matInput>
+        </mat-form-field>
+      </div>
+
+      <div class="col-2">
+        <mat-form-field>
+          <mat-label>مبلغ قبل از تخفیف</mat-label>
+          <input currencyMask formControlName="prdis" type="text" matInput>
+        </mat-form-field>
+      </div>
+      <div class="col-2">
+        <mat-form-field>
+          <mat-label>مبلغ تخفیف</mat-label>
+          <input currencyMask formControlName="dis" type="text" matInput>
+        </mat-form-field>
+      </div>
+      <div class="col-2">
+        <mat-form-field>
+          <mat-label>مبلغ بعد از تخفیف</mat-label>
+          <input currencyMask formControlName="adis" type="text" matInput>
+        </mat-form-field>
+      </div>
+      <div class="col-2">
+        <mat-form-field>
+          <mat-label>نرخ مالیات بر ارزش افزوده</mat-label>
+          <input currencyMask formControlName="vra" type="text" matInput>
+        </mat-form-field>
+      </div>
+      <div class="col-2">
+        <mat-form-field>
+          <mat-label>مبلغ مالیات بر ارزش افزوده</mat-label>
+          <input currencyMask formControlName="vam" type="text" matInput>
+        </mat-form-field>
+      </div>
+      <div class="col-2">
+        <mat-form-field>
+          <mat-label>مبلغ کل کالا/خدمت</mat-label>
+          <input currencyMask formControlName="tsstam" type="text" matInput>
+        </mat-form-field>
+      </div>
+      <div class="col-2">
+        <mat-form-field>
+          <mat-label>نوع ارز</mat-label>
+          <input formControlName="cut" type="text" matInput>
+        </mat-form-field>
+      </div>
+      <div class="col-2">
+        <mat-form-field>
+          <mat-label>نرخ برابری ارز</mat-label>
+          <input currencyMask formControlName="exr" type="text" matInput>
+        </mat-form-field>
+      </div>
+      <div class="col-2">
+        <mat-form-field>
+          <mat-label>میزان/فی ارز</mat-label>
+          <input formControlName="cfee" type="number" matInput>
+        </mat-form-field>
+      </div>
+      <div class="col-2">
+        <mat-form-field>
+          <mat-label>ارزش ریالی کالا</mat-label>
+          <input currencyMask formControlName="ssrv" type="text" matInput>
+        </mat-form-field>
+      </div>
+      <div class="col-2">
+        <mat-form-field>
+          <mat-label>ارزش ارزی کالا</mat-label>
+          <input  formControlName="sscv" type="number" matInput>
+        </mat-form-field>
+      </div>
+      <div class="col-2">
+        <mat-form-field>
+          <mat-label>وزن خالص</mat-label>
+          <input currencyMask [options]="{suffix:''}" formControlName="nw" type="text" matInput>
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+
+</mat-dialog>

@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+    EefaCeram.Accounting.WebApi:
+        image: eefaceram/accounting.webapi:${TAG:-1.0.0-release}
+        container_name: EefaCeram.Accounting.WebApi
+
+        environment: 
+            - ASPNETCORE_URLS=http://+:80
+
+        build: 
+            context: .
+            dockerfile: ./Microservices/Accounting/Dockerfile
+
+    EefaCeram.Admin.WebApi:
+        image: eefaceram/admin.webapi:${TAG:-1.0.0-release}
+        container_name: EefaCeram.Admin.WebApi
+        ports:
+            - 100:80
+        environment: 
+            - ASPNETCORE_URLS=http://+:80
+
+        build: 
+            context: .
+            dockerfile: ./Microservices/Admin/Dockerfile

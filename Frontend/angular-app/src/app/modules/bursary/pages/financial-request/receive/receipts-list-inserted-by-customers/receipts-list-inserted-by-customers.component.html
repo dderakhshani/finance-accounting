@@ -1,0 +1,27 @@
+<mat-card>
+
+  <div class="d-flex m-2">
+    <button button mat-raised-button color="primary" (click)="get()">
+      <mat-icon>autorenew</mat-icon>
+      <span>بروزرسانی</span>
+    </button>
+    <!-- <button button mat-stroked-button class="mx-2 text-danger" (click)="addReceiptsToBursary()">
+      <mat-icon>add</mat-icon>
+      <span>ثبت در خزانه داری</span>
+    </button> -->
+
+    <div>
+
+    </div>
+  </div>
+  <app-table (rowDoubleClicked)="update($event)" [tableRows]="form" [tableConfigurations]="tableConfigurations" (filtersChanged)="get()" (paginationChanged)="get()" (sortChanged)="get()">
+  </app-table>
+</mat-card>
+
+<ng-template #buttonShowAttached let-element="row">
+
+  <mat-icon class="m-1" color="primary" (click)="showReceiptAttached(element)" style="cursor: pointer">perm_media</mat-icon>
+  <mat-icon class="m-1" color="warn" (click)="removeReceipt(element)" style="cursor: pointer;">remove_circle</mat-icon>
+  <mat-icon class="m-1" (click)="addReceiptsToBursary(element)" style="cursor: pointer;color: green;">done_all</mat-icon>
+
+</ng-template>

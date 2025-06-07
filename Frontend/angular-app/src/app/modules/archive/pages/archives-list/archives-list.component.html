@@ -1,0 +1,104 @@
+<div class="h-100 d-flex flex-column overflow-hidden gap-2">
+  <mat-card class="h-50 overflow-auto p-0 w-100">
+    <app-tree
+      [useNew]="true"
+      [editable]="true"
+      [canAdd]="true"
+      [restrictedLevel]="1"
+      [codeKey]="'groupName'"
+      [searchableProperties]="['title','groupName']"
+      [minimumCharactersNeedToSearch]="2"
+      (onAdd)="addBaseValueType($event)"
+      (onEdit)="updateBaseValueType($event)"
+      (onClick)="handleClickPath($event)"
+      [rawNodes]="baseValueTypes">
+    </app-tree>
+  </mat-card>
+  <mat-card class="h-50 overflow-auto p-0 w-100">
+
+
+    <app-table-virtual-scrolling
+      [tableRows]="rowData"
+      [tableConfigurations]="tableConfigurations"
+
+      (rowDoubleClicked)="updateArchive($event)"
+      (expandedRowIndexEvent)="handleExpandedRowIndex($event)"
+    >
+      <div buttonTopContent>
+        <app-action-bar class="" (onEdit)="updateArchive()" (onAdd)="addArchive()">
+          <div before>
+            <span class="mat-caption">{{ activeBaseValueType?.title }} </span>
+          </div>
+        </app-action-bar>
+      </div>
+    </app-table-virtual-scrolling>
+    <ng-template #actionsButtons let-row="row" let-column="column">
+
+      <button mat-raised-button (click)="addAttachment(row)">
+        <mat-icon>attach_file</mat-icon>
+        <span>  افزودن داکیومنت</span>
+      </button>
+
+
+    </ng-template>
+
+
+  </mat-card>
+</div>
+
+<ng-template #expandRowTable let-row="row" let-column="column" let-columns="columns">
+
+
+  <div *ngIf="subRowData.length">
+    <div class="expand-table-container">
+    <table
+      class="expand-table ">
+      <thead>
+      <tr>
+
+        <th class="border border-gray-700 " style="width: 3%">ردیف</th>
+        <th class="border border-gray-700 " style="width: 14%">عنوان</th>
+        <th class="border border-gray-700 " style="width: 20%">شماره فایل</th>
+        <th class="border border-gray-700 " style="width: 20%">کلمات کلیدی</th>
+        <th class="border border-gray-700 " style="width: 20%">توضیحات</th>
+
+        <th class="border border-gray-700 " style="width: 20%">عملیات</th>
+
+      </tr>
+      </thead>
+      <tbody >
+      <tr class="expand_table-body-row"  (dblclick)="updateAttachment(subRow)" *ngFor="let subRow of subRowData ; let i = index">
+
+        <td class="border border-gray-700  ">{{ i + 1 }}</td>
+        <td class="border border-gray-700 ">{{ subRow.title }}</td>
+        <td class="border border-gray-700 ">{{ subRow.fileNumber }}</td>
+        <td class="border border-gray-700 ">{{ subRow.keyWords }}</td>
+        <td class="border border-gray-700 ">{{ subRow.description }}</td>
+
+        <td class="border border-gray-700 ">
+<!--          <button mat-raised-button color="primary" (click)="updateAttachment(subRow)" matTooltip="ویرایش"-->
+
+<!--          >-->
+<!--            <mat-icon>edit</mat-icon>-->
+<!--          </button>-->
+          <button mat-raised-button color="warn" (click)="deleteAttachment(subRow)" matTooltip="حذف"
+
+          >
+            <mat-icon>delete</mat-icon>
+
+          </button>
+
+        </td>
+
+      </tr>
+      </tbody>
+    </table>
+    </div>
+
+  </div>
+  <div *ngIf="!subRowData.length && !this.isLoadingSubTable ">
+    <p class="text-center p-1" > اسنادی برای این آرشیو ثبت نشده است </p>
+  </div>
+
+</ng-template>
+

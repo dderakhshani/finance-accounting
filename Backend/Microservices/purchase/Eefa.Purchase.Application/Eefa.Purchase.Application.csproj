@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+     <TargetFramework>net8.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Commands\Invoice\ArchiveCotract\ArchiveCotractCommand.json" />
+    <EmbeddedResource Include="Commands\Invoice\ArchiveFactory\ArchiveFactoryCommand.json" />
+    <EmbeddedResource Include="Commands\Invoice\Create\CreateCommand.json" />
+    <EmbeddedResource Include="Commands\Invoice\Update\UpdateInvoiceCommand.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Core\Eefa.Common\Eefa.Common.csproj" />
+    <ProjectReference Include="..\Eefa.Purchase.Domain\Eefa.Purchase.Domain.csproj" />
+    <ProjectReference Include="..\Eefa.Purchase.Infrastructure\Eefa.Purchase.Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ProjectExtensions><VisualStudio><UserProperties /></VisualStudio></ProjectExtensions>
+
+</Project>

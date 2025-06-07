@@ -1,0 +1,112 @@
+<mat-dialog (onSubmit)="submit()" [showDeleteBtn]="false">
+
+  <div dialog-header="">اصلاح موجودی کالا</div>
+
+  <div dialog-content="">
+    <mat-dialog-content class="mx-auto" [formGroup]="form">
+
+        <div class="row">
+            <div class="col-md-4">
+                <mat-form-field>
+                    <mat-label>عنوان کالا </mat-label>
+                    <input formControlName="commodityTitle" type="text" matInput disabled>
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field>
+                    <mat-label>کد کالا </mat-label>
+                    <input formControlName="commodityCode" type="text" matInput disabled>
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field>
+                    <mat-label>موقعیت </mat-label>
+                    <input formControlName="warehouseLayoutTitle" type="text" matInput disabled>
+                </mat-form-field>
+            </div>
+
+
+            <div class="col-md-4">
+                <mat-radio-button color="primary"
+                                  style="font-size: 13px;line-height:2.5;"
+                                  *ngFor="let op of typeCalculate"
+                                  [checked]="op.checked"
+                                  [value]="op.ID"
+                                  name="opList"
+                                  fxLayoutGap="20px"
+                                  fxLayout="row"
+                                  (click)="AssignmentConfirmation(op.ID)">
+                    <label>
+                        {{op.name}}
+                    </label>
+
+                </mat-radio-button>
+            </div>
+
+            <div class="col-md-4">
+                <mat-form-field>
+                    <mat-label>تعداد اصلاحی </mat-label>
+                    <input formControlName="quantity" type="number" matInput required (keyup)="onComputing()">
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+
+
+                <app-combo-account-head-tree [DefaultId]="form.controls.debitAccountHeadId.value"
+                                             (SelectId)="debitAccountHeadIdSelect($event)"
+                                             [isRequired]="true"
+                                             [lablelTitleCombo]="'سرفصل حساب بدهکار'"
+                                             [isLastLevel]="true">
+                </app-combo-account-head-tree>
+
+            </div>
+            <div class="col-md-4">
+
+                <app-combo-account-refrence [DefaultId]="form.controls.debitAccountReferenceId.value"
+                                            (SelectId)="debitReferenceSelect($event)"
+                                            [lablelTitleCombo]="'حساب بدهکار'"
+                                            [isRequired]="true"
+                                            [accountReferencesGroupsId]="form.controls.debitAccountReferenceGroupId.value">
+                </app-combo-account-refrence>
+
+            </div>
+
+            <div class="col-md-4">
+
+                <app-combo-account-head-tree [DefaultId]="form.controls.creditAccountHeadId.value"
+                                             (SelectId)="creditAccountHeadIdSelect($event)"
+                                             [isRequired]="true"
+                                             [lablelTitleCombo]="'سرفصل حساب بستانکار'"
+                                             [isLastLevel]="true">
+                </app-combo-account-head-tree>
+
+            </div>
+            <div class="col-md-4">
+
+                <app-combo-account-refrence [DefaultId]="form.controls.creditAccountReferenceId.value"
+                                            (SelectId)="creditReferenceSelect($event)"
+                                            [lablelTitleCombo]="'حساب بستانکار'"
+                                            [isRequired]="true"
+                                            [accountReferencesGroupsId]="form.controls.creditAccountReferenceGroupId.value">
+                </app-combo-account-refrence>
+
+            </div>
+            <div class="col-md-4">
+                <mat-form-field>
+                    <mat-label>تعداد پس از اصلاح </mat-label>
+                    <input class="text-danger" formControlName="newQuantity" type="text" matInput disabled>
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field>
+                    <mat-label>تعداد فعلی </mat-label>
+                    <input formControlName="currentQuantity" type="text" matInput disabled>
+                </mat-form-field>
+            </div>
+
+        </div>
+    </mat-dialog-content>
+  </div>
+ <mat-spinner style="top:30%;right:40%;position:absolute;z-index:1000" *ngIf="_notificationService.isLoader"></mat-spinner>
+
+</mat-dialog>

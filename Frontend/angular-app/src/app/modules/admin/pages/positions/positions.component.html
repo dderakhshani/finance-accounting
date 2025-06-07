@@ -1,0 +1,10 @@
+<mat-card class="h-100">
+<app-tree
+  [useNew]="true"
+  [editable]="true"
+  [canAdd]="true"
+  (onAdd)="add($event)"
+  (onEdit)="update($event)"
+  [rawNodes]="positions"
+></app-tree>
+</mat-card>

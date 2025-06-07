@@ -1,0 +1,216 @@
+<div class="h-100 d-flex flex-column overflow-auto" style="max-height: inherit; padding: 0!important;">
+
+    <mat-card>
+        <form [formGroup]="SearchForm">
+            <div class="row">
+                <div class="col-md-6">
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <mat-form-field>
+                                <mat-label>تاریخ رسید</mat-label>
+                                <input tabindex="6" matInput [matDatepicker]="pickerFrom" formControlName="date">
+                                <mat-datepicker-toggle matSuffix [for]="pickerFrom">
+                                    <mat-icon matDatepickerToggleIcon>
+                                        <img class="mb-3" src="/assets/icons/calendar.svg" alt="">
+                                    </mat-icon>
+                                </mat-datepicker-toggle>
+                                <mat-datepicker #pickerFrom></mat-datepicker>
+                            </mat-form-field>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="col-md-6">
+                    <div class="row">
+
+                        <div class="col-md-3">
+                            <button mat-raised-button color="primary" matTooltip="جستجو" (click)="get(Service.CodeInvoiceAmountReceipt)" [disabled]="_notificationService.isLoader">
+                                <mat-icon>search</mat-icon>
+                                اظهارات ورودی
+                            </button>
+                        </div>
+                        <div class="col-md-3">
+                            <button mat-raised-button color="primary" matTooltip="جستجو" (click)="get(Service.CodeInvoiceAmountLeave)" [disabled]="_notificationService.isLoader">
+                                <mat-icon>search</mat-icon>
+                                اظهارات خروجی
+                            </button>
+                        </div>
+                        <div class="col-md-3">
+                            <button mat-raised-button color="primary" matTooltip="جستجو" (click)="exportexcel()" *ngIf="responce.length>0" [disabled]="_notificationService.isLoader">
+                                <mat-icon>download_for_offline</mat-icon>
+                                خروجی به اکسل
+                            </button>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </form>
+    </mat-card>
+
+    <!-------------------------------------------------------->
+    <!--Import-->
+    <mat-card *ngIf="ButtonId==Service.CodeInvoiceAmountReceipt">
+        <mat-header>
+            گزارش اظهار ورودی
+
+        </mat-header>
+        <div class="row">
+            <div class="col-md-12">
+
+                <table style="width:100%" id="excel-table">
+                    <thead>
+                        <tr>
+                            <th>
+                                کدپستی  محل انبارش
+                            </th>
+                            <th>
+                                تاریخ رسید
+                            </th>
+                            <th>
+                                نوع رسید
+                            </th>
+                            <th>
+                                نام فروشنده
+                            </th>
+                            <th>
+                                کد / شناسه ملی
+                            </th>
+                            <th>
+                                تلفن همراه
+                            </th>
+                            <th>
+                                کد ثبت سفارش
+                            </th>
+                            <th>
+                                کد منشا ارز
+                            </th>
+                            <th>
+                                کد کوتاژ
+                            </th>
+                            <th>
+                                شرح
+                            </th>
+                            <th>
+                                تعداد / مقدار
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of responce">
+                            <td>
+                                {{item.warehousePostalCode}}
+                            </td>
+                            <td>
+                                {{item.documentDate | toPersianDate}}
+                            </td>
+                            <td>
+                                {{item.documentType}}
+                            </td>
+                            <td>
+                                {{item.creditReferenceTitle}}
+                            </td>
+                            <td>
+                                {{item.economicCode}}
+                            </td>
+                            <td>
+                                {{item.phoneNumber}}
+                            <td>
+                                {{item.requestNo}}
+                            <td>
+                                {{item.currencyStatus}}
+                            </td>
+                            <td>
+                                {{item.cotajCode}}
+                            </td>
+                            <td>
+                                {{item.codeVoucherGroupTitle}}
+                            </td>
+                            <td>
+                                {{item.quantity | money}}
+                            </td>
+
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </mat-card>
+    <!-------------------------------------------------------->
+    <!--Export-->
+    <mat-card *ngIf="ButtonId==Service.CodeInvoiceAmountLeave">
+        <mat-header>
+            گزارش اظهار خروجی
+        </mat-header>
+        <div class="col-md-12">
+            <table style="width:100%" id="excel-table">
+
+                <thead>
+                    <tr>
+                        <th>
+                            کدپستی  محل انبارش
+                        </th>
+                        <th>
+                            تاریخ رسید
+                        </th>
+                        <th>
+                            نوع رسید
+                        </th>
+                        <th>
+                            شرح
+                        </th>
+                        <th>
+                            شناسه کالا
+                        </th>
+                        <th>
+                            تعداد/مقدار
+                        </th>
+                        <th>
+                            مبلغ واحد(ریال)
+                        </th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of responce">
+                        <td>
+                            {{item.warehousePostalCode}}
+                        </td>
+                        <td>
+                            {{item.documentDate | toPersianDate}}
+                        </td>
+                        <td>
+                            {{item.documentType}}
+                        </td>
+                        <td>
+                            {{item.codeVoucherGroupTitle}}
+                        </td>
+                        <td>
+                            {{item.commodityNationalId}}
+                        </td>
+                        <td>
+                            {{item.quantity | money}}
+                        <td>
+                            {{item.itemUnitPrice}}
+                        <td>
+                            {{item.currencyStatus}}
+                        </td>
+
+
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </mat-card>
+    <!-------------------------------------------------------->
+    <mat-spinner style="top:30%;right:40%;position:absolute;z-index:1000" *ngIf="_notificationService.isLoader"></mat-spinner>
+
+
+
+
+</div>

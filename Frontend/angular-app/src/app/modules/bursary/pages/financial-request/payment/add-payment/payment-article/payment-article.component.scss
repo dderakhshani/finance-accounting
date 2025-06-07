@@ -1,0 +1,35 @@
+.example-container {
+  width: 100%;
+  height: 100%;
+
+
+}
+
+.side-bar {
+   width: 320px;
+}
+
+mat-button-toggle-group {
+  margin-left: 12px;
+}
+
+
+.cheque-item{
+  background: rgb(251, 250, 255);
+}
+
+.search-cheque-item{
+  background: #fff !important
+}
+
+
+.nav-title{
+  text-align: right !important;
+    padding: 0 24px !important;
+    display: flex !important;
+    flex-direction: row !important;
+    align-content: center !important;
+    align-items: center !important;
+    font: 500 18px / 32px Material Icon, Roboto, "Helvetica Neue", sans-serif;
+    letter-spacing: normal;
+}

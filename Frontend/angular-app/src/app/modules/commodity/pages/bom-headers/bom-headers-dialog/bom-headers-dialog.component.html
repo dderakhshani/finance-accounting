@@ -1,0 +1,58 @@
+<mat-dialog (onSubmit)="submit()"
+            (onDelete)="delete()"
+            [showDeleteBtn]="pageMode === pageModes.Update">
+
+    <div dialog-header="">{{PageTitle}}</div>
+    <div dialog-content="">
+        <div class="col-md-12" style="width: 60vw;" *ngIf="form">
+            <div class="row" [formGroup]="form">
+                <div class="col-md-4" *ngIf="pageMode !== pageModes.Update">
+                    <app-combo-search [nodes]="bomHeaderValues"
+                                      (SelectId)="bomValueHeaderSelect($event)"
+                                      [lablelTitleCombo]="'کپی از فرمول ساخت محصول'"
+                                      (SearchTerm)="bomValueHeaderFilter($event)"
+                                      [isInternalSearch]="true">
+                    </app-combo-search>
+                </div>
+                <div class="col-md-4">
+                    <app-combo-search [nodes]="boms"
+                                      [DefaultId]="form.controls.bomId.value"
+                                      (SelectId)="bomSelect($event)"
+                                      [lablelTitleCombo]="'انتخاب گروه فرمول ساخت'"
+                                      (SearchTerm)="bomFilter($event)"
+                                      [isInternalSearch]="true"
+                                      [isRequired]="true">
+                    </app-combo-search>
+                </div>
+                <div class="col-md-4">
+                    <mat-form-field>
+                        <mat-label>تاریخ </mat-label>
+                        <input tabindex="6" matInput [matDatepicker]="picker" formControlName="bomDate" required>
+                        <mat-datepicker-toggle matSuffix [for]="picker">
+                            <mat-icon matDatepickerToggleIcon>
+                                <img class="mb-3" src="/assets/icons/calendar.svg" alt="">
+                            </mat-icon>
+                        </mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-12">
+                    <mat-form-field>
+                        <mat-label>عنوان فرمول</mat-label>
+                        <input matInput type="text" formControlName="name">
+                    </mat-form-field>
+
+                </div>
+                <div class="col-12" *ngIf="form">
+                    <app-bom-headers-items [formSetter]="form?.controls['values']" [commodityCategoryId]="commodityCategoryId" (Additems)="AddItems()"></app-bom-headers-items>
+                </div>
+
+            </div>
+        </div>
+
+        <mat-spinner style="top:30%;right:40%;position:absolute;z-index:1000" *ngIf="_notificationService.isLoader"></mat-spinner>
+
+    </div>
+
+
+</mat-dialog>

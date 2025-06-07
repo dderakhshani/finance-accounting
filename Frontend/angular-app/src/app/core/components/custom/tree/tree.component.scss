@@ -1,0 +1,103 @@
+@import "../../../../../assets/scss/variables";
+
+:host {
+  width: 100%;
+  height: 100%;
+}
+.card-header{
+  display: flex;
+  margin: 0;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 5px;
+  .card-breadcrumb{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+  }
+}
+.sticky-header {
+
+  position: sticky;
+  top: 0;
+  z-index: 96;
+  background: #fff;
+  padding: 0 5px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+
+.app-tree-wrapper {
+
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  .app-tree-search{
+    display: flex  ;
+    justify-content: flex-end;
+    align-items: center;
+    padding-left: 10px;
+  }
+  .app-tree-branches {
+    width: fit-content;
+  }
+  .app-tree {
+    width: fit-content;
+    min-width: 200px;
+    height: calc(100vh - 4.5rem);
+    max-height: 100%;
+    transition: height 0.3s;
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+    .add-node-card {
+      cursor: pointer;
+      width: 200px;
+      height: fit-content;
+      //box-shadow: 0 2px 3px 1px rgba(black,0.1);
+      border-radius: 5px;
+      position: relative;
+      margin: .5rem auto;
+      border: 2px dashed rgba(black,0.5);
+      -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
+      filter: grayscale(100%);
+      transition: 0.3s all;
+      &:hover {
+        -webkit-filter: grayscale(0); /* Safari 6.0 - 9.0 */
+        filter: grayscale(0);
+        border: 2px dashed color(primary);
+      }
+      .add-card-detail {
+        padding: 5px 1rem 5px 1rem;
+        display: flex;
+        gap: .5rem;
+        flex-direction: row;
+        width: 100%;
+        height: 100%;
+        border-radius: inherit;
+        text-align: right;
+        img {
+          width: 20px;
+          height: 20px;
+          object-fit: cover;
+          margin: auto;
+        }
+      }
+
+    }
+
+  }
+
+  .app-tree-grid {
+    padding-top: 4.5rem;
+    width: 100%;
+    height: 100%;
+    max-height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+}

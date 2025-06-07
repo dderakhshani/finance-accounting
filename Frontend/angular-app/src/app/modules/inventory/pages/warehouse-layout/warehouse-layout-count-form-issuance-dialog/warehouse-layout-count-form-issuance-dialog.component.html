@@ -1,0 +1,60 @@
+<mat-dialog (onSubmit)="submit()"
+            [showDeleteBtn]="false">
+  <div dialog-header="">صدور فرم شمارش</div>
+  <div dialog-content="">
+    <mat-dialog-content >
+      <form [formGroup]="form"  *ngIf="form">
+      <div class="row">
+        <div class="col-md-4">
+          <mat-form-field>
+            <mat-label>تاریخ فرم</mat-label>
+            <input tabindex="0" matInput [matDatepicker]="pickerFrom" formControlName="formDate">
+            <mat-datepicker-toggle matSuffix [for]="pickerFrom">
+              <mat-icon matDatepickerToggleIcon>
+                <img class="mb-3" src="/assets/icons/calendar.svg" alt="">
+              </mat-icon>
+            </mat-datepicker-toggle>
+            <mat-datepicker #pickerFrom></mat-datepicker>
+          </mat-form-field>
+        </div>
+        <div class="col-md-4">
+          <mat-form-field>
+            <mat-label>کاربر شمارنده</mat-label>
+
+            <div class="custom-wrapper-example" matAutocompleteOrigin #origin1="matAutocompleteOrigin">
+              <input matInput
+                     formControlName="counterUserId"
+                     [matAutocomplete]="auto1"
+                     [matAutocompleteConnectedTo]="origin1">
+            </div>
+            <mat-autocomplete #auto1="matAutocomplete" [displayWith]="counterUserDisplayFn.bind(this)">
+
+              <mat-option *ngFor="let item of counterUsers | arrayFilter: form.controls['counterUserId'].value : ['fullName'] " [value]="item.id">{{item.fullName}}</mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+        </div>
+        <div class="col-md-4">
+          <mat-form-field>
+          <mat-label>کاربر تایید کننده</mat-label>
+          <div class="custom-wrapper-example" matAutocompleteOrigin #origin="matAutocompleteOrigin">
+            <input matInput
+                   formControlName="confirmerUserId"
+                   [matAutocomplete]="auto"
+                   [matAutocompleteConnectedTo]="origin">
+          </div>
+          <mat-autocomplete #auto="matAutocomplete" [displayWith]="confirmUserDisplayFn.bind(this)">
+            <mat-option *ngFor="let item of confirmerUsers | arrayFilter: form.controls['confirmerUserId'].value : ['fullName'] " [value]="item.id">{{item.fullName}}</mat-option>
+          </mat-autocomplete>
+          </mat-form-field>
+        </div>
+      </div>
+        <div class="row">
+          <mat-form-field [tabindex]="4">
+            <mat-label>توضیحات</mat-label>
+            <textarea formControlName="description" type="text" matInput> </textarea>
+          </mat-form-field>
+        </div>
+      </form>
+    </mat-dialog-content>
+  </div>
+</mat-dialog>

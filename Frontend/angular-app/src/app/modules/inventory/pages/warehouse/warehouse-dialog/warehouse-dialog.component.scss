@@ -1,0 +1,14 @@
+.uploadfile {
+  padding: 5px 1rem 5px 1rem;
+  display: flex;
+  grid-gap: 0.5rem;
+  gap: 0.5rem;
+  flex-direction: row;
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  text-align: right;
+}
+.mat-dialog-content{
+    display:unset !important;
+}

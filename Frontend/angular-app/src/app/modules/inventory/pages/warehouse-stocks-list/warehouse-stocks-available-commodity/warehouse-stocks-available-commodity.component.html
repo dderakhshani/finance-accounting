@@ -1,0 +1,87 @@
+
+<div class="h-100 d-flex flex-column overflow-auto gap-3" style="max-height: inherit; padding: 0!important;">
+
+    <app-form-actions [actions]="listActions" (OnRefresh)="get()">
+
+        <button mat-raised-button color="primary" (click)="print()" [disabled]="_notificationService.isLoader">
+            <mat-icon>
+                print
+            </mat-icon>
+            چاپ
+        </button>
+        <button mat-raised-button color="primary" type="button" (click)="onDeleteFilter(SearchForm,tableConfigurations)" [disabled]="_notificationService.isLoader">
+            <mat-icon>
+                delete_forever
+            </mat-icon>
+            حذف فیلترها
+        </button>
+    </app-form-actions>
+
+    <mat-card>
+        <form [formGroup]="SearchForm">
+            <div class="row">
+
+                <div class="col-md-3">
+                    <app-combo-warhouse-tree [DefaultId]="SearchForm.controls.warehouseId.value"
+                                             (SelectId)="WarehouseIdSelect($event)"
+                                             [lablelTitleCombo]="'انبار'"
+                                             [isLastLevel]="true" [tabindex]="0">
+                    </app-combo-warhouse-tree>
+                </div>
+                <div class="col-md-3">
+                    <app-combo-commodity [DefaultId]="SearchForm.controls.commodityId.value"
+                                         (SelectId)="getCommodityById($event)"
+                                         [lablelTitleCombo]="'کالا'"
+                                         [warehouseId]="SearchForm.controls.warehouseId.value"
+                                         [isOnlyFilterByWarehouse]="true"
+                                         [isRequired]="false" [tabindex]="1">
+                    </app-combo-commodity>
+                </div>
+                <div class="col-md-3">
+                    <button mat-raised-button color="primary" matTooltip="جستجو" (click)="get()" [disabled]="_notificationService.isLoader" [tabindex]="2" id="Search">
+                        <mat-icon>search</mat-icon>
+                        جستجو
+                    </button>
+                </div>
+
+            </div>
+        </form>
+    </mat-card>
+
+    <mat-card class="h-100 overflow-auto p-0">
+        <app-table [tableConfigurations]="tableConfigurations"
+                   [tableRows]="WarehouseStocks"
+                   (filtersChanged)="get()"
+                   (paginationChanged)="get()"
+                   (sortChanged)="get()">
+
+        </app-table>
+
+        <ng-template #buttonDetails let-element="row">
+
+            <button mat-icon-button matTooltip="جزئیات" class="btn-color" (click)="navigateToDetails(element)">
+                <mat-icon>format_list_bulleted</mat-icon>
+
+            </button>
+
+        </ng-template>
+        <ng-template #buttonDetails let-element="row">
+
+            <button mat-icon-button matTooltip="جزئیات" class="btn-color" (click)="navigateToDetails(element)">
+                <mat-icon>format_list_bulleted</mat-icon>
+
+            </button>
+
+        </ng-template>
+        <ng-template #txtcommodityCode let-element="row">
+
+            <span matTooltip="کاردکس کالا" class="btn-link" (click)="navigateToHistory(element)">
+                {{element.commodityCode}}
+            </span>
+
+        </ng-template>
+
+        <mat-spinner style="top:30%;right:40%;position:absolute;z-index:1000" *ngIf="_notificationService.isLoader"></mat-spinner>
+    </mat-card>
+</div>
+

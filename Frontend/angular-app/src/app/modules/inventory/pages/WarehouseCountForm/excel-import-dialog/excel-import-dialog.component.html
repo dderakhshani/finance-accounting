@@ -1,0 +1,20 @@
+<mat-dialog (onSubmit)="add()"
+  (onDelete)="delete()">
+<!--  [showDeleteBtn]="pageMode === pageModes.Update" class="w-75"-->
+
+  <div dialog-header>
+    ثبت گروهی با فایل Excel
+  </div>
+  <div dialog-content >
+   <input class="form-control">
+  <form [formGroup]="form"  *ngIf="form">
+    <div class="row">
+      <div class="col-12 d-flex gap-3">
+        <button type="button" mat-raised-button color="primary" (click)="fileInput.click()">انتخاب فایل</button>
+        <input  (change)="onFileSelected($event)"  #fileInput type="file" accept=".xlsx, .xls" >
+        <span class="file-name d-block mt-3">{{fileName}}</span>
+      </div>
+    </div>
+  </form>
+  </div>
+</mat-dialog>

@@ -1,0 +1,29 @@
+
+<div [matMenuTriggerFor]="menu" [ngClass]="{'disabled' : isDisable,'height-40':lablelTitleCombo=='','height-66':lablelTitleCombo!=''}">
+    <div class="input-group mt-2 ">
+        <input [(ngModel)]="title"
+               id="inputTitle"
+               [ngModelOptions]="{standalone: true}"
+               autocomplete="off"
+               class="form-control font-12"
+               (keyup)="onSearchTerm()"
+               placeholder="شرح" />
+
+        <div class="input-group-prepend" (click)="$event.stopPropagation()">
+
+            <button class="btn btn-outline-secondary btn-search" (click)="add()" matTooltip="افزودن شرح جدید">
+                <mat-icon class="font-30">
+                    add
+                </mat-icon>
+            </button>
+        </div>
+
+
+    </div>
+</div>
+<mat-menu #menu="matMenu">
+    <mat-option *ngFor="let node of entities" (click)="onSelectNode(node.id)">
+        <span>{{node.title}}</span>
+    </mat-option>
+</mat-menu>
+

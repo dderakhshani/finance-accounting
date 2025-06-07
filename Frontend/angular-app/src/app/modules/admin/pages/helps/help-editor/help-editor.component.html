@@ -1,0 +1,38 @@
+<div class="h-100 d-flex flex-column gap-3" style="max-height: inherit;" >
+  <div *ngIf="isLoading"
+       style="z-index:9999;position: absolute;left:0;top:0;bottom: 0; right: 0;background: rgba(0,0,0,0.3);"
+       class="d-flex align-items-center justify-content-center">
+    <mat-spinner></mat-spinner>
+  </div>
+
+<mat-card class="d-flex flex-row gap-5">
+  <div>
+  <app-action-bar class="p-3" (onSave)="submit()" (onAdd)="reset()" (onList)="navigateToHelpsList()"></app-action-bar>
+  </div>
+
+    <div *ngIf="form" class="col-4">
+    <div  [formGroup]="form">
+      <mat-form-field>
+        <mat-label>عنوان صفحه</mat-label>
+        <input type="text"
+               aria-label="عنوان صفحه"
+               matInput
+               formControlName="menuItemId"
+               [matAutocomplete]="auto">
+        <mat-autocomplete #auto="matAutocomplete" [displayWith]="menuItemDisplayFn.bind(this)">
+          <mat-option *ngFor="let option of filteredMenuItems" [value]="option.id">
+            {{option.title}}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+    </div>
+    </div>
+</mat-card>
+
+  <mat-card class="h-100 overflow-auto">
+    <div class="h-100 overflow-auto">
+      <ckeditor [editor]="editor" [(ngModel)]="editorContent"> </ckeditor>
+    </div>
+  </mat-card>
+
+</div>

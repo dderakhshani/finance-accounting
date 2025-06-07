@@ -1,0 +1,19 @@
+﻿using Eefa.Common.Data;
+{{> imports}}
+
+namespace {{namespace}}
+{
+{{#if comment}}
+    /// <summary>
+   // {{comment}}
+    /// </summary>
+{{/if}}
+{{#each class-annotations}}
+{{{class-annotation}}}
+{{/each}}
+    public partial class {{class}} : BaseEntity
+    {
+{{{> constructor}}}
+{{{> properties}}}
+    }
+}

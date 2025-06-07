@@ -1,0 +1,47 @@
+<mat-card class="p-0" *ngIf="form">
+    <app-form-actions [actions]="formActions" (OnRefresh)="get()"></app-form-actions>
+
+    <app-table [tableConfigurations]="tableConfigurations"
+               [tableRows]="form"
+               (filtersChanged)="get()"
+               (sortChanged)="get()"
+               (paginationChanged)="get()">
+
+    </app-table>
+
+    <ng-template #txtunitPrice let-rowFg="row">
+        <input [formControl]="rowFg.get('unitPrice')"
+               type="text"
+               mask="separator.9" thousandSeparator=","
+               class="form-control font-12"
+               style="text-align: center; width:99%; margin-top:3px;">
+    </ng-template>
+
+    <ng-template #txtdescription let-rowFg="row">
+        <input [formControl]="rowFg.get('description')" type="text" style="width:97% !important; text-align:center" class="form-control">
+    </ng-template>
+
+    <ng-template #btnDelete let-rowFg="row">
+        <button mat-icon-button matTooltip="حذف" class="btn-color" (click)="onDelete(rowFg)">
+            <mat-icon>delete</mat-icon>
+        </button>
+    </ng-template>
+
+   
+   
+    <ng-template #dropWarehouse let-rowFg="row">
+
+        <app-combo-warhouse-tree [DefaultId]="rowFg.get('warehouseId').value"
+                                 (SelectId)="WarehouseIdSelect($event,rowFg)"
+                                 [isRequired]="true"
+                                 [isFilterByCodeVoucher]="true"
+                                 [codeVoucherGroupId]="codeVoucherGroupId"
+                                 style="text-align:right !important">
+        </app-combo-warhouse-tree>
+
+    </ng-template>
+
+</mat-card>
+
+
+

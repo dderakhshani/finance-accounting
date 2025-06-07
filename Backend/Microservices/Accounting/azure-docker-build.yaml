@@ -1,0 +1,36 @@
+trigger:
+- master
+
+pool:
+  vmImage: 'windows-latest'
+  name: build
+
+steps:
+- checkout: none
+# Clone or Pull the Repository
+- task: SSH@0
+  displayName: Clone or Pull the Repository
+  inputs:
+    sshEndpoint: $(Server_Connection_Name)
+    runOptions: 'commands'
+    commands: |
+        echo "Checking if folder exists: $(PROJECT_FOLDER_NAME)"
+        if [ ! -d "$(PROJECT_FOLDER_NAME)" ]; then
+          echo "Cloning repository from $(REPOSITORY_ADDRESS)"
+          git clone "$(REPOSITORY_ADDRESS)"
+        else
+          echo "Folder exists. Pulling latest changes."
+          cd "$(PROJECT_FOLDER_NAME)"
+          git pull
+        fi
+
+
+# Navigate to Project Directory and Build
+- task: SSH@0
+  displayName: Build Docker image on Remote Server
+  inputs:
+    sshEndpoint: $(Server_Connection_Name)
+    runOptions: 'commands'
+    commands: |
+      cd $(PROJECT_FOLDER_NAME)
+      docker-compose build $(DOCKER_COMPOSE_PROJECT_NAME)

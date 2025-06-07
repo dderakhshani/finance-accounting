@@ -1,0 +1,182 @@
+<div class="row">
+<form [formGroup]="form">
+  <mat-card>
+    <div class="row">
+      <div class="col-md-6">
+        <app-combo-warhouse-tree [warehouseCountShow]=warehouseCountShow
+                                 (SelectId)="WarehouseIdSelect($event)"
+                                 [isRequired]="true"
+                                 [lablelTitleCombo]="lablelTitleCombo"
+                                 [isLastLevel]="false"
+                                 [isFilterByCodeVoucher]="false"
+                                 >
+        </app-combo-warhouse-tree>
+      </div>
+      <div class="col-md-2">
+          <a *ngIf="Service.identityService.doesHavePermission('CreateLayouts') && !warehouseCountShow" href="http://192.168.2.151:8088/CreateLayout" target="_blank">ایجاد چیدمان انبار با فایل</a>
+      </div>
+    </div>
+  </mat-card>
+</form>
+</div>
+
+<mat-drawer-container class="sidenav-container" autosize>
+  <!--نمایش درخت--------------------------->
+  <mat-drawer #drawer class="pa-sidenav" mode="side" opened="true">
+    <div class="row">
+      <div class="tree-header">
+        <div class="float-right">
+          <span >
+            نمای درختی چیدمان انبار
+          </span>
+
+        </div>
+
+      </div>
+    </div>
+
+    <div class="mt-1" *ngIf="form && form.value" >
+      <!--افزودن به اولین سطح از درخت-->
+      <div class="add-node-card py-1 ng-star-inserted" *ngIf="!warehouseCountShow">
+        <a class="add-card-detail" (click)="addMainParent()" matTooltip="افزودن مجموعه جدید به ریشه درخت">
+
+          <mat-icon class="mat-icon-add">add</mat-icon>
+        </a>
+      </div>
+      <app-layout-list *ngIf="WarehouseLayoutTree!=undefined && WarehouseLayoutTree.length>0" [nodes]="WarehouseLayoutTree" (parentId)="onShowDetails($event)">
+
+      </app-layout-list>
+    </div>
+  </mat-drawer>
+  <!--------------------------------------->
+  <!--جزئیات ------------------------------>
+  <div class="header ">
+    <div class="float-right" style="padding-top: 10px;">
+      <samp (click)="drawer.toggle(); isToggled = !isToggled" class="btn-close" matTooltip="نمایش تمام صفحه">
+        <mat-icon *ngIf="!isToggled" role="img" color="primary" style="transform: rotate(180deg);" aria-hidden="true" data-mat-icon-type="font">menu_open</mat-icon>
+        <mat-icon *ngIf="isToggled">menu_open</mat-icon>
+      </samp>
+    </div>
+    <div class="header-details ">
+      <ul class="float-right" *ngIf="WarehouseLayouts!=undefined && WarehouseLayouts.length>0">
+
+        <li class="arrow-pointer" *ngFor="let item of WarehouseLayouts[0].parentNameString" (click)="onShowDetails(item[1])">
+          <p>
+            {{item[0]}}
+          </p>
+        </li>
+      </ul>
+      <div *ngIf="WarehouseLayouts.length==0">
+        <span class="align-middle">جزئیات</span>
+      </div>
+    </div>
+    <div class="float-left">
+      <input class="search-input" [(ngModel)]="searchTerm" (keyup)="onSearchTerm()" placeholder="جستجو در جزئیات" (click)="$event.stopPropagation()" />
+    </div>
+    <div class="float-left">
+      <div class="view-grid">
+
+
+        <samp matTooltip="نمایش جدولی" (click)="viewType='grid'"><mat-icon [ngClass]="{'success': viewType=='grid','grid-icon': viewType!='grid'}">calendar_view_month</mat-icon></samp>
+        <samp matTooltip="نمایش سطری" (click)="viewType='row'"><mat-icon [ngClass]="{'success': viewType=='row','grid-icon': viewType!='row'}">view_list</mat-icon></samp>
+        <samp matTooltip="نمایش تک سطری" (click)="viewType='stream'"><mat-icon [ngClass]="{'success': viewType=='stream','grid-icon': viewType!='stream'}">view_stream</mat-icon></samp>
+      </div>
+
+    </div>
+
+  </div>
+  <div class="sidenav-content">
+
+
+    <div [ngClass]="{'grid-container': viewType=='grid','grid-container-row': viewType=='row','grid-container-stream': viewType=='stream'}">
+
+      <!--افزودن به زیر شاخه از درخت-->
+      <div class="btn-card" *ngIf="WarehouseLayoutTree!=undefined && WarehouseLayouts.length>0 && !WarehouseLayouts[0].lastLevel">
+
+        <span (click)="add()" matTooltip="افزودن زیرمجموعه جدید به شاخه انتخاب شده">
+          <mat-icon class="mat-icon-add">add</mat-icon>
+
+        </span>
+      </div>
+      <div class="grid-item shadow:hover" *ngFor="let item of WarehouseLayouts ; let i=index" [ngClass]="{'backbground-lastlevel':!item.lastLevel , 'grid-item-child':i==0 && WarehouseLayouts[1]?.parentId!=item.parentId}">
+        <div id="progressbar" *ngIf="item.lastLevel==true">
+
+
+
+          <div class="progress">
+            <div [ngClass]="{'progress-bar-green':item.capacityUsedPercent<=75 , 'progress-bar-orang':item.capacityUsedPercent>75 && item.capacityUsedPercent<=90, 'progress-bar-red':item.capacityUsedPercent>90}"
+                 role="progressbar"
+                 aria-valuenow="60"
+                 aria-valuemin="0"
+                 aria-valuemax="100"
+                 [ngStyle]="{ 'width': item.capacityUsedPercent + '%' }">
+
+            </div>
+
+          </div>
+          <div class="labels">
+            <span>ظرفیت پر شده</span>
+            <span>{{item.capacityUsedPercent}}%</span>
+          </div>
+        </div>
+
+        <div (click)="onShowDetails(item.id)" style="cursor: pointer;">
+          <div class="grid-item-status">
+            <span class="show-capacity" *ngIf="item.capacity!=0">
+              <samp matTooltip="ظرفیت پرشده">{{item.capacityUsed}}</samp>/<samp matTooltip="ظرفیت اصلی">{{item.capacity}}</samp>
+
+            </span>
+
+            <mat-icon class="show-status call_split" *ngIf="item.entryMode==1" matTooltip="آخرین ورودی ، اولین خروجی">call_split</mat-icon>
+            <mat-icon class="show-status call_merge" *ngIf="item.entryMode==2" matTooltip="اولین ورودی ، اولین خروجی">call_merge</mat-icon>
+
+            <mat-icon class="show-status login" *ngIf="item.status==1" matTooltip="فقط ورودی">login</mat-icon>
+            <mat-icon class="show-status logout" *ngIf="item.status==2" matTooltip="فقط خروجی">logout</mat-icon>
+            <mat-icon class="show-status lock_clock" *ngIf="item.status==3" matTooltip="قفل موقت">lock_clock</mat-icon>
+            <mat-icon class="show-status lock" *ngIf="item.status==4" matTooltip="قفل دائم">lock</mat-icon>
+
+          </div>
+          <h6 class="title">
+            {{item.title}}
+          </h6>
+
+          <div class="categoreis">
+            <div>{{item.commodityTitle}}</div>
+            <div *ngFor="let category of item.categoreis">
+              {{category.categoryTitle}}
+            </div>
+          </div>
+
+        </div>
+
+
+        <div class="div-edit">
+          <span class="show-details" *ngIf="item.lastLevel==true">
+            آخرین سطح
+          </span>
+
+          <button mat-icon-button class="btn-edit" *ngIf="!warehouseCountShow">
+            <mat-icon (click)="update(item)" matTooltip="ویرایش">edit_note</mat-icon>
+          </button>
+          <button mat-icon-button class="btn-edit" *ngIf="warehouseCountShow && item.status!=3" >
+            <mat-icon (click)="warehouseCount(item)" matTooltip="صدور برگه شمارش">checklist</mat-icon>
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+ <mat-spinner style="top:30%;right:40%;position:absolute;z-index:1000" *ngIf="_notificationService.isLoader"></mat-spinner>
+  <!--------------------------------------->
+</mat-drawer-container>
+
+
+
+
+
+
+
+
+
+

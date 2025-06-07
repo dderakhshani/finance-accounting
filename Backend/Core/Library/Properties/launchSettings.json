@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "Infrastructure": {
+      "commandName": "Project"
+    },
+    "Farhad": {
+      "commandName": "Snapshot Debugger"
+    }
+  }
+}

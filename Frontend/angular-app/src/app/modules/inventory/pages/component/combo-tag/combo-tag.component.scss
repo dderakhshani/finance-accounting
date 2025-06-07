@@ -1,0 +1,14 @@
+@import "/src/assets/scss/variables";
+
+
+.mat-icon {
+  color: color(primary,500) !important;
+}
+.mat-option {
+  font-size: 15px;
+}
+.mat-standard-chip.mat-chip-with-trailing-icon {
+  padding-left: 5px !important;
+  padding-right: 8px !important;
+  font-size: 10px;
+}

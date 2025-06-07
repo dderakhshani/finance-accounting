@@ -1,0 +1,63 @@
+<div class="d-flex flex-column">
+    <app-action-bar class="p-3" (onAdd)="add()"></app-action-bar>
+    <app-table [tableConfigurations]="tableConfigurations"
+               (selectedRowChange)="handleRowChanges($event)"
+               [tableRows]="form.controls"></app-table>
+
+
+    <ng-template #txtTitle let-rowFg="row">
+
+        <input [formControl]="rowFg.get('title')"
+               type="text"
+               style="text-align: center; width: 95%; "
+               class="form-control"
+               required />
+    </ng-template>
+    <ng-template #txtUniqueName let-rowFg="row">
+
+        <input [formControl]="rowFg.get('uniqueName')"
+               type="text"
+               style="text-align: center; width: 95%; "
+               class="form-control"
+               required />
+    </ng-template>
+    <ng-template #txtCode let-rowFg="row">
+
+        <input [formControl]="rowFg.get('code')"
+               type="text"
+               style="text-align: center; width: 95%; "
+               class="form-control"
+               required />
+    </ng-template>
+    <ng-template #txtOrderIndex let-rowFg="row">
+
+        <input [formControl]="rowFg.get('orderIndex')"
+               type="number"
+               style="text-align: center; width: 95%; "
+               class="form-control"
+               required />
+    </ng-template>
+    <ng-template #txtActive let-rowFg="row">
+        <mat-checkbox [formControl]="rowFg.get('isActive')" color="primary">
+
+        </mat-checkbox>
+
+    </ng-template>
+    <ng-template #txtParentId let-rowFg="row" >
+
+        
+           
+            <mat-select [formControl]="rowFg.get('parentId')" >
+                <mat-option *ngFor="let type of items" [value]="type.id">
+                    {{type.title}}
+                </mat-option>
+            </mat-select>
+       
+    </ng-template>
+    <ng-template #btnDelete let-rowFg="row" let-Index="i">
+        <button mat-icon-button matTooltip="حذف" class="btn-color" (click)="onDelete(rowFg)">
+            <mat-icon>delete</mat-icon>
+        </button>
+    </ng-template>
+
+</div>

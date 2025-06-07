@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  registry:
+    image: registry:2
+    container_name: docker_registry
+    ports:
+      - 5000:5000
+    environment:
+      - REGISTRY_STORAGE_FILESYSTEM_ROOTDIRECTORY=/var/lib/registry
+      - REGISTRY_HTTP_ADDR=0.0.0.0:5000
+      - REGISTRY_HTTP_HEADERS_Access-Control-Allow-Origin=["*"]
+      - REGISTRY_HTTP_HEADERS_Access-Control-Allow-Methods=["HEAD", "GET", "OPTIONS", "DELETE"]
+      - REGISTRY_HTTP_HEADERS_Access-Control-Allow-Credentials=["true"]
+      - REGISTRY_HTTP_HEADERS_Access-Control-Allow-Headers=["Authorization", "Accept", "Cache-Control", "Docker-Content-Digest"]
+      - REGISTRY_STORAGE_DELETE_ENABLED=true
+    volumes:
+      - /home/root1/data/registry/registry_data:/var/lib/registry
+    restart: unless-stopped
+
+  registry-ui:
+    image: joxit/docker-registry-ui:latest
+    container_name: registry_ui
+    ports:
+      - 8080:80
+    environment:
+      - REGISTRY_URL=http://192.168.2.247:5000
+      - DELETE_IMAGES=true
+    depends_on:
+      - registry
+    restart: unless-stopped
+
+
+# Run garbage collector after removing an image from registry
+  #docker run --rm \
+  # -v /home/root1/data/registry/registry_data:/var/lib/registry \
+  # registry:2 \
+  # garbage-collect /etc/docker/registry/config.yml

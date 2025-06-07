@@ -1,0 +1,262 @@
+<div style="width: 100% ; height: 100%">
+  <table class="table content-table table-body">
+    <tbody style="height: 100%">
+    <ng-container *ngIf="cdkVirtual">
+
+      <ng-container *cdkVirtualFor="let item of virtualItems">
+      </ng-container>
+    </ng-container>
+    <!--      tableConfigurations.options.isLoadingTable-->
+    <ng-container *ngIf="tableConfigurations.options.isLoadingTable; else dataTable">
+      <app-table-skeleton-loader
+        [height]="tableConfigurations?.options?.itemSize"
+        [showColumns]="showColumns"
+      ></app-table-skeleton-loader>
+    </ng-container>
+
+    <!-- Data Table -->
+    <ng-template #dataTable>
+      <ng-container *ngIf="tableRows && tableRows.length >0 ">
+
+
+        <ng-container *ngIf="dataSlice as groupedData">
+          <ng-container *ngFor="let group of groupedData ">
+            <!-- نمای گروه -->
+            <tr class="row-groupName"
+                [style.height.px]="tableConfigurations?.options?.itemSize"
+                *ngIf="group.viewMode === 'group' && group?.items?.length  > 0"
+                tabindex="-1">
+              <td [attr.colspan]="group.colspan" class="row-group-cell table-body-cell">
+                <div [style.padding-right.px]="20 * group.level">
+                  <button class="btn-group-expand" (click)="toggleExpandedGroup(group.toggleExpandedKey)">
+                    {{ group.groupName }}: {{ group.groupKey }} - ({{ group?.items?.length }} مورد)
+                    <mat-icon class="icon-expand mx-1">
+                      {{ expandedRowGroupIndex[group.toggleExpandedKey] ? 'expand_more' : 'chevron_left' }}
+                    </mat-icon>
+                  </button>
+                </div>
+              </td>
+            </tr>
+
+            <!-- نمایش زیرگروه‌ها -->
+
+            <ng-container *ngIf="(expandedRowGroupIndex[group.toggleExpandedKey] && group?.items?.length > 0 && !group.expanded)
+                                 || (group.viewMode === 'default' && !group.expanded)">
+              <ng-container *ngFor="let row of group.items">
+                <tr
+                  [style.height.px]="tableConfigurations?.options?.itemSize"
+                  class="table-body-row m-0 p-0"
+
+
+                  [class]="{'table-row-highlight': tableConfigurations.highlightedRow === row}"
+                  (click)="onRowClick(row)"
+                  (dblclick)="onRowDoubleClick(row)"
+
+                  tabindex="-1"
+                >
+                  <td [attr.colspan]="showColumns.length" class="m-0 p-0">
+                    <div class="table-body-rowGroup"
+
+                    >
+                      <ng-container *ngFor="let column of showColumns">
+
+
+                        <span class="table-cell table-body-cell "
+                             *ngIf="column.type == fieldTypes.Select  && column.display"
+
+                             [class]="column.class"
+                             [style]="column.style">
+
+                          <mat-checkbox style="padding-right: 8px" color="warn"
+
+                                        *ngIf="column.type === fieldTypes.Select  && column.display"
+                                        [(ngModel)]="row[column.field]"
+                                        tabindex="-1"
+                                        (change)="selectItem(row )"></mat-checkbox>
+                        </span>
+                        <span class="table-cell table-body-cell "
+                             matTooltip="{{row[column.field]}}"
+                             matTooltipClass="tooltip-table-scrolling"
+                             [matTooltipDisabled]="column.matTooltipDisabled"
+                             *ngIf="column.type == fieldTypes.Index  && column.display"
+                             [style]="column.style"
+                             [class]="column.class"
+
+                        >{{ row[column.field] | customDecimal : column.digitsInfo }}
+                        </span>
+
+                        <span
+                          class="table-cell table-body-cell "
+                          *ngIf="column.type == fieldTypes.ExpandRowWithTemplate  && column.display"
+                          [style]="column.style"
+                          [class]="column.class"
+
+                        >
+                          <button class="btn-expand" (click)="toggleTemplate(row.rowIndex)">
+                            <mat-icon
+                              class="icon-expand">{{ expandedRowIndex === row.rowIndex ? 'expand_more' : 'chevron_left' }}
+                            </mat-icon>
+                          </button>
+                        </span>
+                        <span class="table-cell table-body-cell "
+                             *ngIf="column.type == fieldTypes.Text  && column.display"
+                             [style]="column.style"
+                             [class]="column.class"
+                             matTooltip="{{row[column.field]}}"
+                             matTooltipClass="tooltip-table-scrolling"
+                             [matTooltipDisabled]="column.matTooltipDisabled"
+                        >{{ column.displayFn ? column.displayFn(row) : row[column.field] }}
+                        </span>
+                        <span class="table-cell table-body-cell "
+                             matTooltip="{{row[column.field]}}"
+                             matTooltipClass="tooltip-table-scrolling"
+                             [matTooltipDisabled]="column.matTooltipDisabled"
+                             *ngIf="column.type == fieldTypes.Number  && column.display"
+                             [style]="column.style"
+                             [class]="column.class"
+
+                        >{{ (column.displayFn ? column.displayFn(row) : row[column.field]) | customDecimal : column.digitsInfo }}
+                        </span>
+                        <span class="table-cell table-body-cell "
+                             matTooltip="{{row[column.field]}}"
+                             matTooltipClass="tooltip-table-scrolling"
+                             [matTooltipDisabled]="column.matTooltipDisabled "
+                             *ngIf="column.type == fieldTypes.Money  && column.display"
+                             [style]="column.style"
+                             [class]="column.class"
+
+                        >{{ (column.displayFn ? column.displayFn(row) : row[column.field]) | customDecimal : column.digitsInfo }}
+                        </span>
+                        <span class="table-cell table-body-cell "
+                             matTooltip="{{row[column.field] | toPersianDate}}"
+                             matTooltipClass="tooltip-table-scrolling"
+                             [matTooltipDisabled]="column.matTooltipDisabled"
+                             *ngIf="column.type == fieldTypes.Date  && column.display"
+                             [style]="column.style"
+                             [class]="column.class"
+
+                        >{{ (column.displayFn ? column.displayFn(row) : row[column.field]) | toPersianDate }}
+                        </span>
+                        <span class="table-cell table-body-cell "
+                             matTooltip="{{row[column.field]}}"
+                             matTooltipClass="tooltip-table-scrolling"
+                             [matTooltipDisabled]="column.matTooltipDisabled"
+                             *ngIf="column.type === fieldTypes.DropDown || column.type === fieldTypes.AutoComplete && column.display"
+                             [style]="column.style"
+                             [class]="column.class"
+
+                        >{{ column.displayFn ? column.displayFn(row) : row[column.field] }}
+                        </span>
+                        <span class="table-cell table-body-cell "
+                             matTooltip="{{row[column.field]}}"
+                             matTooltipClass="tooltip-table-scrolling"
+                             [matTooltipDisabled]="column.matTooltipDisabled"
+                             *ngIf="column.type == fieldTypes.CheckBox  && column.display"
+                             [style]="column.style"
+                             [class]="column.class">
+                          <mat-checkbox color="warn" [checked]="row[column.field]"
+                                        disabled></mat-checkbox>
+                        </span>
+                        <span class="table-cell table-body-cell "
+                             *ngIf="column.type === fieldTypes.Action  && column.display"
+                             [style]="column.style"
+                             [class]="column.class"
+                        >
+                          <div class="row">
+
+                            <div class="col-6">
+                              <button mat-icon-button class=" mx-2">
+                                <mat-icon style="color: rgb(162,162,162)">
+
+                                  edit
+                                </mat-icon>
+                              </button>
+                            </div>
+                            <div class="col-6">
+                              <button mat-icon-button>
+                                <mat-icon style="color: rgb(162,162,162)">
+                                  delete
+                                </mat-icon>
+                              </button>
+
+                            </div>
+
+                          </div>
+                        </span>
+                        <span class="table-cell table-body-cell "
+                             *ngIf="column.type == fieldTypes.Template  && column.display"
+                             [style]="column.style"
+                             [class]="column.class"
+                        >
+                          <ng-container *ngTemplateOutlet="column.template;context:{ row: row , column : column }">
+                          </ng-container>
+                        </span>
+                      </ng-container>
+                    </div>
+                  </td>
+                </tr>
+
+                <tr *ngIf="expandedRowIndex === row.rowIndex">
+                  <ng-container *ngFor="let column of showColumns">
+                    <td [attr.colspan]="showColumns.length"
+                        *ngIf="column.type == fieldTypes.ExpandRowWithTemplate  && column.display"
+                        class="expandRowWithTemplate"
+                    >
+                      <ng-template class="expandRowWithTemplate"
+                                   *ngTemplateOutlet="column.expandRowWithTemplate;context:{ row: row , column : column }"></ng-template>
+                    </td>
+
+
+                  </ng-container>
+                </tr>
+
+              </ng-container>
+            </ng-container>
+
+            <ng-container
+              *ngIf=" expandedRowGroupIndex[group.toggleExpandedKey] && group.expanded && group.viewMode === 'group' && group?.items?.length  > 0 ">
+              <tr class="row-groupName"
+
+                  tabindex="-1">
+                <td [attr.colspan]="group.colspan">
+                  <div style="width: 100% ; height: 100%">
+                    <app-table-body-virtual-scrolling
+
+                      [dataSlice]="group.items"
+                      [cdkVirtual]="false"
+                      [tableConfigurations]="tableConfigurations"
+                      [tableRows]="tableRows"
+                      [showColumns]="showColumns"
+                      [virtualItems]="virtualItems"
+                      [viewMode]="viewMode"
+                      (rowClickedEvent)="onRowClick($event)"
+                      (rowDoubleClickedEvent)="onRowDoubleClick($event)"
+                      (selectItemEvent)="selectItem($event)"
+
+                    ></app-table-body-virtual-scrolling>
+                  </div>
+                </td>
+              </tr>
+            </ng-container>
+          </ng-container>
+
+
+        </ng-container>
+      </ng-container>
+      <ng-container *ngIf="!tableRows || tableRows?.length === 0">
+        <td [attr.colspan]="10">
+          <div class="no-data-message" *ngIf="tableConfigurations?.options?.isSelectedMode">
+            <mat-icon style="" class="no-data-message-icon">warning</mat-icon>
+            <span class="no-data-message-span">
+                            آیتم انتخاب شده ای برای نمایش وجود ندارد!
+                        </span>
+          </div>
+
+        </td>
+      </ng-container>
+
+    </ng-template>
+
+    </tbody>
+  </table>
+</div>

@@ -1,0 +1,25 @@
+<mat-dialog
+  submitBtnTitle="انتقال"
+  (onSubmit)="moveVoucherDetails()"
+  [showDeleteBtn]="false">
+  <div dialog-header="">انتقال آرتیکل</div>
+  <div dialog-content="">
+
+    <mat-form-field>
+      <mat-label>سند مرجع</mat-label>
+      <input matInput type="text" [formControl]="destinationVoucherHeadIdFormControl"
+             [matAutocomplete]="voucherHeadsAuto">
+
+      <mat-autocomplete autoActiveFirstOption #voucherHeadsAuto="matAutocomplete"
+                        [displayWith]="voucherHeadDisplayFn.bind(this)">
+        <mat-option *ngFor="let voucher of voucherHeads"
+                    [value]="voucher.id">
+          {{"سند شماره " + voucher.voucherNo + " به شرح: " + voucher.voucherDescription}}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+    <app-table [tableConfigurations]="tableConfigurations"
+               [tableRows]="entities"
+    ></app-table>
+  </div>
+</mat-dialog>

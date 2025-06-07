@@ -1,0 +1,31 @@
+@import "/src/assets/scss/variables";
+.mat-card{
+  padding: 15px !important;
+}
+.disabled {
+  pointer-events: none;
+  
+}
+::ng-deep {
+  .mat-form-field-appearance-fill .mat-form-field-flex {
+    background-color: unset !important;
+    border: 1px solid #ced4da !important;
+    border-radius: 5px;
+  }
+
+  .form-action-wrapper {
+    padding: unset !important
+  }
+}
+
+.title {
+  font-size: 13px;
+  margin-right: 5px;
+}
+.btn-color {
+  color: color(md-grey,500) !important;
+}
+
+.btn-warn {
+  color: color(warn,700) !important;
+}

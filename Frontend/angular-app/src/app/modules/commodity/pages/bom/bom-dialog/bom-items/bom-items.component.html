@@ -1,0 +1,43 @@
+
+  <app-action-bar class="p-3" (onAdd)="add()" (onEdit)="update()" (onRefresh)="get()"></app-action-bar>
+  
+  <app-table [tableConfigurations]="tableConfigurations"
+             [tableRows]="form"
+             (filtersChanged)="get()"
+             (sortChanged)="get()"
+             (paginationChanged)="get()">
+
+  </app-table>
+
+  <ng-template #dropDowncommodities let-rowFg="row">
+    <app-combo-commodity [DefaultId]="rowFg.get('commodityId').value"
+                         (SelectId)="getCommodityById($event,rowFg)"
+                         [isConsumable]="false"
+                         [isAsset]="false"
+                         style="text-align:right !important"
+                         [isRequired]="false">
+    </app-combo-commodity>
+
+
+   
+
+  </ng-template>
+  <ng-template #dropDownCommodityCategoryId let-rowFg="row">
+    <app-combo-commodity-categories-tree [DefaultId]="rowFg.get('subCategoryId').value"
+                                         (SelectId)="CommodityCategoryIdSelect($event,rowFg)"
+                                         [isRequired]="true"
+                                         style="text-align:right !important"
+                                        
+                                         >
+    </app-combo-commodity-categories-tree>
+
+  </ng-template>
+ 
+
+  <ng-template #btnDelete let-rowFg="row" let-Index="i">
+    <button mat-icon-button matTooltip="حذف" class="btn-color" (click)="onDelete(rowFg)">
+      <mat-icon>delete</mat-icon>
+    </button>
+  </ng-template>
+  
+

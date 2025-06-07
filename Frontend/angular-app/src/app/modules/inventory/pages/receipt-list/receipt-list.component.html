@@ -1,0 +1,172 @@
+<div class="h-100 d-flex flex-column overflow-auto gap-3" style="max-height: inherit; padding: 0!important;">
+    <app-form-actions [actions]="listActions" (OnRefresh)="get()">
+        <button mat-raised-button color="primary" (click)="print()" [disabled]="_notificationService.isLoader">
+            <mat-icon>
+                print
+            </mat-icon>
+            چاپ
+        </button>
+        <button mat-raised-button color="primary" type="button" (click)="onDeleteFilter(SearchForm,tableConfigurations)" [disabled]="_notificationService.isLoader">
+            <mat-icon>
+                delete_forever
+            </mat-icon>
+            حذف فیلترها
+        </button>
+    </app-form-actions>
+
+
+
+    <mat-card>
+        <form [formGroup]="SearchForm">
+            <div class="row">
+                <div class="col-md-3">
+                    <mat-form-field>
+                        <mat-label>از تاریخ </mat-label>
+                        <input tabindex="0" matInput [matDatepicker]="pickerFrom" formControlName="fromDate">
+                        <mat-datepicker-toggle matSuffix [for]="pickerFrom">
+                            <mat-icon matDatepickerToggleIcon>
+                                <img class="mb-3" src="/assets/icons/calendar.svg" alt="">
+                            </mat-icon>
+                        </mat-datepicker-toggle>
+                        <mat-datepicker #pickerFrom></mat-datepicker>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-3">
+                    <mat-form-field>
+                        <mat-label>تا تاریخ </mat-label>
+                        <input tabindex="1" matInput [matDatepicker]="picker" formControlName="toDate">
+                        <mat-datepicker-toggle matSuffix [for]="picker">
+                            <mat-icon matDatepickerToggleIcon>
+                                <img class="mb-3" src="/assets/icons/calendar.svg" alt="">
+                            </mat-icon>
+                        </mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-3">
+                    <app-combo-search [DefaultId]="SearchForm.controls.codeVoucherGroupId.value"
+                                      (SelectId)="codeVoucherGroupSelect($event)"
+                                      [isRequired]="false"
+                                      [nodes]="ReceiptAllStatus"
+                                      [isInternalSearch]="false"
+                                      [lablelTitleCombo]="'نوع رسید'" [tabindex]="2">
+                    </app-combo-search>
+
+                </div>
+                <div class="col-md-3">
+                    <app-combo-warhouse-tree [DefaultId]="SearchForm.controls.warehouseId.value"
+                                             (SelectId)="WarehouseIdSelect($event)"
+                                             [lablelTitleCombo]="'انبار'"
+                                             [isLastLevel]="true" [tabindex]="3">
+                    </app-combo-warhouse-tree>
+                </div>
+                <div class="col-md-3">
+                    <mat-form-field tabindex="4">
+                        <mat-label>شماره رسید</mat-label>
+                        <input formControlName="documentNo" matInput type="text">
+                    </mat-form-field>
+                </div>
+                <div class="col-md-3">
+                    <mat-form-field tabindex="5">
+                        <mat-label>شماره درخواست </mat-label>
+                        <input formControlName="requestNo" matInput type="text">
+                    </mat-form-field>
+                </div>
+                <div class="col-md-3">
+                    <mat-form-field tabindex="6">
+                        <mat-label>شماره سند مکانیزه</mat-label>
+                        <input formControlName="voucherNo" matInput type="text">
+                    </mat-form-field>
+                </div>
+
+                <div class="col-md-3">
+                    <button mat-raised-button color="primary" matTooltip="جستجو" (click)="get()" [disabled]="_notificationService.isLoader" tabindex="7">
+                        <mat-icon>search</mat-icon>
+                        جستجو
+                    </button>
+
+                </div>
+
+            </div>
+        </form>
+    </mat-card>
+
+
+
+    <mat-card class="h-100 overflow-auto p-0">
+        <app-table [tableConfigurations]="tableConfigurations"
+                   [tableRows]="Receipts"
+                   (rowDoubleClicked)="navigateToReceipt($event)"
+                   (filtersChanged)="get()"
+                   (paginationChanged)="get()"
+                   (sortChanged)="get()">
+
+        </app-table>
+
+
+
+
+        <mat-spinner style="top:30%;right:40%;position:absolute;z-index:1000" *ngIf="_notificationService.isLoader"></mat-spinner>
+    </mat-card>
+    <ng-template #buttonVoucherNo let-element="row">
+        <span matTooltip="مشاهده سند حسابداری" class="btn-link" (click)="navigateToVoucher(element)">
+            {{element.voucherNo}}
+
+        </span>
+    </ng-template>
+    
+
+    <ng-template #buttonRedo let-element="row" style="text-align:center">
+
+        <button mat-icon-button [matMenuTriggerFor]="amenu">
+            <mat-icon>more_vert</mat-icon>
+        </button>
+        <mat-menu #amenu="matMenu">
+          <button mat-menu-item (click)="navigateToReceipt(element)">
+            <mat-icon>visibility</mat-icon>
+            مشاهده جزئیات
+          </button>
+          <button mat-menu-item (click)="archive(element)" *ngIf="(element.documentStauseBaseValue!=53 && element.documentStauseBaseValue!=54)">
+            <mat-icon>redo</mat-icon>
+            بایگانی / حذف
+          </button>
+          <button mat-menu-item (click)="archive(element)" *ngIf="(element.documentStauseBaseValue==53 || element.documentStauseBaseValue==54) && Service.identityService.doesHavePermission('ConfirmChangeRequest')">
+            <mat-icon>redo</mat-icon>
+            بایگانی / حذف
+          </button>
+
+          <button mat-menu-item (click)="Edit(element,1)">
+            <mat-icon>edit</mat-icon>
+            ویرایش کد اموال
+          </button>
+
+          <button mat-menu-item (click)="Edit(element,2)">
+            <mat-icon>edit_note</mat-icon>
+            ویرایش تاریخ
+          </button>
+          <button mat-menu-item (click)="Edit(element,3)" *ngIf="element.documentStauseBaseValue<50">
+            <mat-icon>edit_square</mat-icon>
+            ویرایش نوع سند
+          </button>
+          <button mat-menu-item (click)="Edit(element,4)">
+            <mat-icon>edit_calendar</mat-icon>
+            ویرایش شرح کالا
+          </button>
+          <button mat-menu-item (click)="Edit(element,5)" *ngIf="element.documentStauseBaseValue<50">
+            <mat-icon>draw</mat-icon>
+            ویرایش کالا
+          </button>
+          <button mat-menu-item (click)="Edit(element,5)" *ngIf="element.documentStauseBaseValue>50 && Service.identityService.doesHavePermission('ConfirmChangeRequest')">
+            <mat-icon>draw</mat-icon>
+            ویرایش کالا
+          </button>
+          <button mat-menu-item (click)="Edit(element,6)" *ngIf="element.documentStauseBaseValue<50">
+            <mat-icon>edit_location_alt</mat-icon>
+            ویرایش انبار
+          </button>
+        </mat-menu>
+
+    </ng-template>
+
+
+</div>

@@ -1,0 +1,10 @@
+<mat-card class="h-100 overflow-auto d-flex flex-column" style="max-height: inherit; padding: 0!important;">
+
+<app-action-bar  class="p-3" (onAdd)="add()" ></app-action-bar>
+  <app-table
+
+    [tableConfigurations]="tableConfigurations"
+    [tableRows]="companyYears">
+
+  </app-table>
+</mat-card>

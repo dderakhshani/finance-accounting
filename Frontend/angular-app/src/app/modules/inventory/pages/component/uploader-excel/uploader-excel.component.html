@@ -1,0 +1,185 @@
+<mat-card>
+    <app-form-actions>
+        <button mat-raised-button color="primary" (click)="add()" [disabled]="_notificationService.isLoader">
+            <mat-icon>
+                add
+            </mat-icon>
+            جدید
+        </button>
+
+        <button mat-raised-button color="primary" matTooltip="خروجی به اکسل" (click)="exportexcel()"
+                [disabled]="_notificationService.isLoader">
+            <mat-icon>download</mat-icon>
+            خروجی به اکسل
+        </button>
+
+
+        <button mat-raised-button color="primary" matTooltip="بروز رسانی" (click)="get()"
+                [disabled]="_notificationService.isLoader">
+            <mat-icon>refresh</mat-icon>
+            بروز رسانی
+        </button>
+        <button mat-raised-button matTooltip=" بروز رسانی موقعیت کالا" (click)="repairLayout()"
+                [disabled]="_notificationService.isLoader">
+            <mat-icon>construction</mat-icon>
+            بروز رسانی موقعیت کالا
+        </button>
+        <button mat-raised-button matTooltip=" حذف کالا از انبار" (click)="removeCommodityFromWarehouse()"
+                [disabled]="_notificationService.isLoader">
+            <mat-icon>delete</mat-icon>
+            حذف کالا از انبار
+        </button>
+        <button mat-raised-button color="warn" matTooltip=" باز سازی موجودی" (click)="repair()"
+                [disabled]="_notificationService.isLoader"
+                *ngIf="Service.identityService.doesHavePermission('RepiarInventory')">
+            <mat-icon>construction</mat-icon>
+            باز سازی موجودی
+        </button>
+        <button mat-raised-button color="warn" matTooltip=" بروز رسانی قیمت  " (click)="updatePrice()"
+                [disabled]="_notificationService.isLoader"
+                *ngIf="Service.identityService.doesHavePermission('RepiarInventory')">
+            <mat-icon>construction</mat-icon>
+            بروز رسانی قیمت
+        </button>
+
+    </app-form-actions>
+
+  <div class="row">
+    <div class="col-md-4">
+      <mat-form-field>
+        <mat-label>سال مالی</mat-label>
+        <mat-select (selectionChange)="handleYearChange($event.value)" formControlName="yearId">
+          <mat-option *ngFor="let year of allowedYears"
+                      [value]="year.id">{{ 'سال مالی  ' + year.yearName }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="col-md-4">
+      <app-combo-warhouse-tree [DefaultId]="SearchForm.controls.warehouseId.value"
+                               (SelectId)="WarehouseIdSelect($event)"
+                               [lablelTitleCombo]="'انتخاب انبار'"
+                               [isLastLevel]="true">
+      </app-combo-warhouse-tree>
+    </div>
+    <div class="col-md-4">
+      <div class="p-2 d-flex overflow-auto border rounded uploader-container ">
+
+
+        <div *ngIf="(!singleFile) && allowFileUpload"
+             class="upload-area m-1 d-flex align-items-center justify-content-center" (click)="onClickUpload()">
+
+          <div class="content opacity-50" *ngIf="files.progressStatus=='empty'">
+            <mat-icon style="font-size: 2rem;">add_circle_outline</mat-icon>
+            <br>
+
+            افزودن فایل از نوع txt
+
+          </div>
+          <div class="content" *ngIf="files.progressStatus!='empty'">
+            <img src="/assets/images/Excel.png" width="100%"/>
+
+            {{ fileName }}
+
+          </div>
+
+        </div>
+
+        <a class="upload-area m-1 d-flex align-items-center justify-content-center"
+           href="/assets/images/SampleFile.xlsx">
+          <div class="content">
+            دریافت نمونه فایل
+            <div class="font-11">
+              دریافت موجودی انبار سیستم تدبیر بر اساس نمونه فایل با فرمت txt
+            </div>
+          </div>
+        </a>
+
+        <input #fileUpload type="file" name="fileUpload" id="fileUpload" style="display: none"/>
+      </div>
+    </div>
+  </div>
+
+</mat-card>
+<mat-card class="mt-2">
+
+
+  <div class="tableFixHead">
+    <table class="mas-table" id="table-tadbir-Quantity">
+      <thead>
+      <tr>
+        <th>ردیف</th>
+        <th>
+          کد کالا
+        </th>
+        <th>
+          نام کالا
+        </th>
+        <th>
+          موجودی انبار
+
+        </th>
+        <th>
+          موجودی تدبیر
+
+        </th>
+
+        <th>
+          موقعیت
+        </th>
+        <th>
+          انبار
+        </th>
+        <th>
+          قیمت
+        </th>
+        <th>
+          تاریخ ثبت
+        </th>
+
+
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let item of response ;let i=index">
+        <th>{{ i + 1 }}</th>
+        <td>
+          {{ item.commodityCode }}
+        </td>
+        <td>
+          {{ item.commodityTitle }}
+        </td>
+        <td>
+          {{ item.layoutQuantities  | money }}
+        </td>
+        <td>
+          {{ item.tadbirQuantity  | money }}
+        </td>
+
+        <td>
+          {{ item.warehouseLayoutTitle }}
+
+        </td>
+
+        <td>
+          {{ item.warehouseTitle }}
+        </td>
+        <td>
+          {{ item.price | money }}
+        </td>
+        <td>
+          {{ item.createDate }}
+        </td>
+
+      </tr>
+      </tbody>
+    </table>
+
+  </div>
+</mat-card>
+<!-------------------------------------------------------->
+<!-------------------------------------------------------->
+<mat-spinner style="top:30%;right:40%;position:absolute;z-index:1000"
+             *ngIf="_notificationService.isLoader"></mat-spinner>
+
+

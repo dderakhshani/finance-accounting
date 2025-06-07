@@ -1,0 +1,70 @@
+<div class="row">
+    <nav aria-label="Page navigation">
+
+        <ul class="pagination">
+            <li class="page-item btn-color">
+                تعداد سطر در صفحه
+            </li>
+            <li>
+                <div style="display:inline-block">
+
+                    <input type="number" class="form-control"
+                           [(ngModel)]="pageSize"
+                           min="1" max="10000"
+                           style="height: 34px;
+    width: 100px;
+    border-radius: 0px " />
+                </div>
+
+            </li>
+            <li class="page-item btn-color">
+                تعداد کل سطرها
+                <samp class="font-18 btn-purple">{{RowsCount}}</samp>
+            </li>
+            <li class="page-item btn-color">
+                صفحه
+                <samp class="font-22 btn-purple"> {{activePage}} </samp>
+                از
+                <samp class="font-22 btn-purple"> {{PageCount}} </samp> صفحه
+            </li>
+
+            <li class="page-item-select"
+                (click)="onSelectPage(activePage+1)">
+
+                <a> >> صفحه بعدی</a>
+            </li>
+
+            <li class="page-item-select"
+                (click)="onSelectPage(activePage-1)">
+
+                <a>  << صفحه قبلی</a>
+            </li>
+
+            <li class="page-item-select"
+                (click)="onSelectPage(1)">
+
+                <a> |<< اولین صفحه</a>
+            </li>
+            <li class="page-item-select"
+                (click)="onSelectPage(PageCount)">
+
+                <a> >>| آخرین صفحه</a>
+            </li>
+
+            <li *ngIf="this.PageCount>1" class="page-item-select" (click)="ExportToExcel()">
+
+
+                خروجی به اکسل تمام صفحات
+            </li>
+
+
+        </ul>
+
+
+
+    </nav>
+
+</div>
+
+<!--
+*ngIf="PageCount>=1" -->

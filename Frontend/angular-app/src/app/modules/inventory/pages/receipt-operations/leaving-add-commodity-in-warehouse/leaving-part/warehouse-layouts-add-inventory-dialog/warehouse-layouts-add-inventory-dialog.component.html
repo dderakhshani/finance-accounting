@@ -1,0 +1,109 @@
+<mat-dialog (onSubmit)="submit()" [showDeleteBtn]="false" >
+
+  <div dialog-header="">{{form.controls.layoutTitle.value}} ایجاد موقعیت</div>
+
+<div dialog-content="">
+  <mat-dialog-content class="mx-auto" [formGroup]="form">
+    
+      <div class="row">
+          <div class="col-md-4">
+              <mat-form-field>
+                  <mat-label>عنوان کالا </mat-label>
+                  <input formControlName="commodityTitle" type="text" matInput disabled>
+              </mat-form-field>
+          </div>
+          <div class="col-md-4">
+              <mat-form-field>
+                  <mat-label>کد کالا </mat-label>
+                  <input formControlName="commodityCode" type="text" matInput disabled>
+              </mat-form-field>
+          </div>
+
+
+          <div class="col-md-4">
+              <mat-form-field>
+                  <mat-label>تعداد </mat-label>
+                  <input formControlName="quantity"
+                         type="text"
+                         matInput
+                         disabled>
+              </mat-form-field>
+          </div>
+
+          <div class="col-md-6">
+
+              <app-combo-warhouse-tree [DefaultId]="form.controls.warehouseId.value"
+                                       (SelectId)="WarehouseIdSelect($event)"
+                                       [isRequired]="true"
+                                       [lablelTitleCombo]="'انتخاب انبار'"
+                                       [isFilterByCodeVoucher]="false"
+                                       [isLastLevel]="true">
+              </app-combo-warhouse-tree>
+
+
+
+          </div>
+          <div class="col-md-6">
+
+              <app-combo-tree [DefaultId]="form.controls.warehouseLayoutId.value"
+                              (SelectId)="getWarehouseLayoutId($event)"
+                              [isRequired]="true"
+                              [lablelTitleCombo]="'انتخاب محل در انبار'"
+                              [nodes]="WarehouseLayoutTree"
+                              [isFlatSource]="false"
+                              [isTree]="true">
+              </app-combo-tree>
+
+          </div>
+          <div class="col-md-4">
+
+
+              <app-combo-account-head-tree [DefaultId]="form.controls.debitAccountHeadId.value"
+                                           (SelectId)="debitAccountHeadIdSelect($event)"
+                                           [isRequired]="true"
+                                           [lablelTitleCombo]="'سرفصل حساب بدهکار'"
+                                           [isLastLevel]="true">
+              </app-combo-account-head-tree>
+
+          </div>
+          <div class="col-md-4">
+
+              <app-combo-account-refrence [DefaultId]="form.controls.debitAccountReferenceId.value"
+                                          (SelectId)="debitReferenceSelect($event)"
+                                          [lablelTitleCombo]="'حساب بدهکار'"
+                                          [isRequired]="true"
+                                          [accountReferencesGroupsId]="form.controls.debitAccountReferenceGroupId.value">
+              </app-combo-account-refrence>
+
+          </div>
+
+          <div class="col-md-4">
+
+              <app-combo-account-head-tree [DefaultId]="form.controls.creditAccountHeadId.value"
+                                           (SelectId)="creditAccountHeadIdSelect($event)"
+                                           [isRequired]="true"
+                                           [lablelTitleCombo]="'سرفصل حساب بستانکار'"
+                                           [isLastLevel]="true">
+              </app-combo-account-head-tree>
+
+          </div>
+          <div class="col-md-4">
+
+              <app-combo-account-refrence [DefaultId]="form.controls.creditAccountReferenceId.value"
+                                          (SelectId)="creditReferenceSelect($event)"
+                                          [lablelTitleCombo]="'حساب بستانکار'"
+                                          [isRequired]="true"
+                                          [accountReferencesGroupsId]="form.controls.creditAccountReferenceGroupId.value">
+              </app-combo-account-refrence>
+
+          </div>
+
+
+
+
+      </div>
+  </mat-dialog-content>
+</div>
+
+
+</mat-dialog>

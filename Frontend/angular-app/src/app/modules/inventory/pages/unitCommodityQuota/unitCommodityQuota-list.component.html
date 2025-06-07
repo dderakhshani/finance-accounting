@@ -1,0 +1,29 @@
+<div class="h-100 d-flex flex-column overflow-auto gap-3" style="max-height: inherit; padding: 0!important;">
+  <app-form-actions [actions]="listActions" (OnRefresh)="get()" (OnAdd)="add()"> </app-form-actions>
+
+  <mat-card class="h-100 overflow-auto p-0">
+
+
+    <app-table [tableConfigurations]="tableConfigurations"
+               [tableRows]="UnitCommodityQuotas"
+               (rowDoubleClicked)="update($event)"
+               (filtersChanged)="get()"
+               (paginationChanged)="get()"
+               (sortChanged)="get()">
+    </app-table>
+
+    <ng-template #buttonEdit let-element="row">
+
+      <button mat-icon-button matTooltip="ویرایش" class="btn-color" (click)="update(element)">
+        <mat-icon>edit</mat-icon>
+      </button>
+    </ng-template>
+
+
+
+
+
+    <mat-spinner style="top:30%;right:40%;position:absolute;z-index:1000" *ngIf="_notificationService.isLoader"></mat-spinner>
+
+  </mat-card>
+  </div>

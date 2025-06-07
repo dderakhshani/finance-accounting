@@ -1,0 +1,33 @@
+@import "/src/assets/scss/variables";
+.mat-card{
+  padding: 15px !important;
+}
+.disabled {
+  pointer-events: none;
+
+}
+.mat-label-header {
+  font-size: 14px;
+  color: color(primary,500);
+}
+.btn-color {
+  color: color(md-grey,500) !important;
+}
+::ng-deep {
+  .mat-form-field-appearance-fill .mat-form-field-flex {
+    background-color: unset !important;
+
+    border: 1px solid #ced4da !important;
+    border-radius:5px;
+  }
+}
+.debit-details-icon{
+  margin-right: -30px;
+  margin-top: -25px;
+  color: color(primary,600);
+  font-size: 40px;
+
+}
+.color-red {
+  color: red;
+}

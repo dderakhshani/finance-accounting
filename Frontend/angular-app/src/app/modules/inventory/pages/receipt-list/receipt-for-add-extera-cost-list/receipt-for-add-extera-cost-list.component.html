@@ -1,0 +1,173 @@
+<div class="h-100 d-flex flex-column overflow-auto gap-3" style="max-height: inherit; padding: 0!important;">
+
+    <app-form-actions [actions]="listActions" (OnRefresh)="get()">
+        <button mat-raised-button color="primary" (click)="print()" [disabled]="_notificationService.isLoader">
+            <mat-icon>
+                print
+            </mat-icon>
+            چاپ
+        </button>
+        <button mat-raised-button color="primary" type="button" (click)="onDeleteFilter(SearchForm,tableConfigurations)" [disabled]="_notificationService.isLoader">
+            <mat-icon>
+                delete_forever
+            </mat-icon>
+            حذف فیلترها
+        </button>
+    </app-form-actions>
+
+    <mat-card>
+        <form [formGroup]="SearchForm">
+            <div class="row">
+
+                <div class="col-md-3">
+                    <mat-form-field>
+                        <mat-label>از تاریخ مالی</mat-label>
+                        <input tabindex="0" matInput [matDatepicker]="pickerFrom" formControlName="fromDate">
+                        <mat-datepicker-toggle matSuffix [for]="pickerFrom">
+                            <mat-icon matDatepickerToggleIcon>
+                                <img class="mb-3" src="/assets/icons/calendar.svg" alt="">
+                            </mat-icon>
+                        </mat-datepicker-toggle>
+                        <mat-datepicker #pickerFrom></mat-datepicker>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-3">
+                    <mat-form-field>
+                        <mat-label>تا تاریخ مالی</mat-label>
+                        <input tabindex="1" matInput [matDatepicker]="picker" formControlName="toDate">
+                        <mat-datepicker-toggle matSuffix [for]="picker">
+                            <mat-icon matDatepickerToggleIcon>
+                                <img class="mb-3" src="/assets/icons/calendar.svg" alt="">
+                            </mat-icon>
+                        </mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+                </div>
+
+                <div class="col-md-3">
+
+                    <app-combo-account-refrence (SelectId)="creditReferenceSelect($event)"
+                                                [DefaultId]="SearchForm.controls.creditAccountReferenceId.value"
+                                                [lablelTitleCombo]="'حساب بستانکار'"
+                                                [isRequired]="false" [tabindex]="2">
+                    </app-combo-account-refrence>
+                </div>
+
+
+                <div class="col-md-3" >
+                    <button mat-raised-button color="primary" (click)="get()" [disabled]="_notificationService.isLoader" tabindex="3">
+                        <mat-icon>
+                            search
+                        </mat-icon>
+                        جستجو
+                    </button>
+
+                </div>
+            </div>
+        </form>
+
+    </mat-card>
+    <mat-card class="h-100 overflow-auto p-0">
+
+        <app-table [tableConfigurations]="tableConfigurations"
+                   [tableRows]="Receipts"
+                   (rowDoubleClicked)="navigateToReceipt($event)"
+                   (filtersChanged)="get()"
+                   (paginationChanged)="get()"
+                   (sortChanged)="get()">
+
+        </app-table>
+        <ng-template #buttonTagArray let-element="row">
+            <button mat-icon-button [matMenuTriggerFor]="beforeMenu" matTooltip="برچسب ها" *ngIf="element.tagClass">
+                <mat-icon class="btn-warn">sticky_note_2</mat-icon>
+            </button>
+            <mat-menu #beforeMenu="matMenu">
+                <ol>
+                    <li *ngFor="let item of element.tagClass" style="padding-right:10px;">
+                        ✔  {{item.key}}
+                    </li>
+                </ol>
+            </mat-menu>
+        </ng-template>
+
+        <ng-template #txtDocumentId let-element="row">
+
+            <p class="btn-link" (click)="navigateToRialReceipt(element)" matTooltip="مشاهده و ویرایش جزئیات ریالی رسید">
+                {{element.documentId}}
+            </p>
+        </ng-template>
+
+        <ng-template #txtCodeVoucherGroupTitle let-element="row">
+
+            <p class="font-10">
+                {{element.codeVoucherGroupTitle}}
+            </p>
+        </ng-template>
+        <ng-template #txtcreditReferenceTitle let-element="row">
+
+            <p class="font-12">
+                {{element.creditReferenceTitle}}
+
+            </p>
+        </ng-template>
+        <ng-template #txtdebitReferenceTitle let-element="row">
+
+            <p class="font-12">
+                {{element.debitReferenceTitle}}
+
+            </p>
+        </ng-template>
+        <ng-template #txtCurrencyPrice let-element="row">
+
+            <p class="font-13">
+                {{element.currencyPrice | money}}
+
+            </p>
+            <br />
+            <p class="font-10">
+                {{element.currencyBaseTitle}}
+
+            </p>
+
+        </ng-template>
+
+        <ng-template #txtCommodity let-element="row">
+            <span class="font-12">
+                {{element.commodityTitle}}
+            </span>
+            <br />
+            <span class="font-12">
+                {{element.commodityCode}}
+            </span>
+
+
+        </ng-template>
+        <ng-template #buttonMore let-element="row" style="text-align:center">
+
+            <button mat-icon-button [matMenuTriggerFor]="amenu">
+                <mat-icon>more_vert</mat-icon>
+            </button>
+
+            <mat-menu #amenu="matMenu">
+                <button mat-menu-item
+                        [matTooltipPosition]="'right'"
+                        matTooltip="ویرایش رسید ریالی"
+                        class="btn-color"
+                        (click)="navigateToReceipt(element)">
+                    <mat-icon>currency_exchange</mat-icon>
+                    ویرایش
+                </button>
+                <button mat-icon-button
+                        [matTooltipPosition]="'right'"
+                        matTooltip="بایگانی و حذف رسید ریالی"
+                        class="btn-color"
+                        (click)="archive(element)">
+                    <mat-icon>redo</mat-icon>
+                    حذف/بایگانی
+                </button>
+            </mat-menu>
+
+        </ng-template>
+        <mat-spinner style="top:30%;right:40%;position:absolute;z-index:1000" *ngIf="_notificationService.isLoader"></mat-spinner>
+    </mat-card>
+</div>

@@ -1,0 +1,112 @@
+<div class="app-sidebar" [class.app-sidebar-minimized]="isMinimized" [class]="currentYear ? 'back'+currentYear.yearName : ''">
+    <div class="logo-container">
+        <svg class="logo" xmlns="http://www.w3.org/2000/svg" width="107.378" height="21.931"
+             viewBox="0 0 107.378 21.931">
+            <g id="Group_544" data-name="Group 544" transform="translate(-1722 -21.035)">
+                <g id="Group_288" data-name="Group 288" transform="translate(-13)">
+                    <path id="Path_118" data-name="Path 118"
+                          d="M280.051,21.667h-3.219c-.431,0-1.074-.266-.492-1.552,2.125-4.692,8.5-18.492,9.139-19.852.142-.3.064-.266.391-.266h6.652c.119,0,.09-.009.148.1q5.423,10.425,10.849,20.851c.11.208.012.718-.3.718h-8.623a2.044,2.044,0,0,1-.918-.376,30.7,30.7,0,0,1-1.963-3.6c-.113-.223-.055-.2-.3-.2h-8.427c-.353,0-.287-.061-.452.243l-2,3.65c-.185.339-.1.284-.486.284Zm4.414-8.16c-.31.585.009.611.214.611h5.014c.362,0-2.3-6.07-2.307-6.07h-.252C287.062,8.047,284.732,13.006,284.465,13.507Z"
+                          transform="translate(1538.816 21.039)" fill-rule="evenodd" />
+                    <path id="Path_119" data-name="Path 119"
+                          d="M10.191,3.132h11.1c.718-.029.758-3.158-.261-3.132H.01V21.93l22.961-.006c.747,0,.813-3.375,0-3.375l-12.78-.014V11.486h9.26c.984,0,.993-3.419.02-3.416l-9.281.02V3.129Z"
+                          transform="translate(1734.99 21.035)" fill-rule="evenodd" />
+                    <path id="Path_120" data-name="Path 120"
+                          d="M107.051,3.132h11.1c.718-.029.758-3.158-.261-3.132H96.87V21.93l22.961-.006c.747,0,.813-3.375,0-3.375l-12.78-.014V11.486h9.26c.984,0,.993-3.419.02-3.416l-9.281.02V3.129Z"
+                          transform="translate(1666.17 21.035)" fill-rule="evenodd" />
+                    <path id="Path_121" data-name="Path 121"
+                          d="M203.911,3.132h11.1c.718-.029.758-3.158-.261-3.132H193.73V21.93l10.184-.006V11.489h9.26c.984,0,.993-3.419.02-3.416l-9.281.02V3.132Z"
+                          transform="translate(1597.348 21.035)" fill-rule="evenodd" />
+                </g>
+            </g>
+        </svg>
+
+
+    </div>
+
+    <nav>
+        <app-sidebar-item [isToggled]="isMinimized"
+                          (sidebarItemClick)="itemClicked($event)" [sidebarItem]="baseNavigation"
+                          (collapseSiblings)="collapseOtherSiblings($event)"
+                          *ngFor="let baseNavigation of navigations"
+                          (unMinimize)="toggle($event)"></app-sidebar-item>
+    </nav>
+    <div class="user-wrapper">
+        <div class="user-details col-12">
+            <h1>{{applicationUserFullName}}</h1>
+            <img [matMenuTriggerFor]="accountInfo" [src]="avatarUrl" alt="">
+            <mat-menu #accountInfo="matMenu">
+                <button mat-menu-item (click)="identityService.logout()" class="d-flex">
+                    <span>خروج</span>
+                    <mat-icon style="margin: auto auto auto 0" color="primary">logout</mat-icon>
+                </button>
+            </mat-menu>
+        </div>
+        <div class="date">
+            {{currentDay ? (currentDate + ' ' + currentDay + ' ' + currentHour) : ''}}
+        </div>
+
+        <div class="current-year" *ngIf="currentYear">
+            سال مالی {{currentYear.yearName}}
+        </div>
+    </div>
+    <div class="actions">
+        <mat-icon class="settings-icon item-icon" [matMenuTriggerFor]="menu" style="">settings</mat-icon>
+
+        <mat-menu [formGroup]="form" #menu="matMenu">
+            <div class="col-12" style="height: fit-content!important;" mat-menu-item (click)="$event.stopPropagation()">
+                <mat-form-field class="p-0">
+                    <mat-label>نقش</mat-label>
+                    <mat-select (selectionChange)="handleRoleChange($event.value)" formControlName="roleId">
+                        <mat-option *ngFor="let role of allowedRoles" [value]="role.roleId">{{role.title}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-12" style="height: fit-content!important;" mat-menu-item (click)="$event.stopPropagation()">
+                <mat-form-field class="p-0">
+                    <mat-label>زبان</mat-label>
+                    <mat-select (selectionChange)="handleLanguageChange($event.value)" formControlName="languageId">
+                        <mat-option *ngFor="let language of languages" [value]="language.id">{{language.title}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-12" style="height: fit-content!important;" mat-menu-item (click)="$event.stopPropagation()">
+                <mat-form-field class="p-0">
+                    <mat-label>سال مالی</mat-label>
+                    <mat-select (selectionChange)="handleYearChange($event.value)" formControlName="yearId">
+                        <mat-option *ngFor="let year of allowedYears"
+                                    [value]="year.id">{{'سال مالی  ' + year.yearName}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </mat-menu>
+
+        <mat-icon class="apps-icon item-icon" [matMenuTriggerFor]="menuApps" style="" *ngIf="!isMinimized" matTooltip="سیستم های مرتبط">apps</mat-icon>
+
+      <mat-menu  #menuApps="matMenu">
+        <div class="col-12 " style="height: fit-content!important;" mat-menu-item (click)="$event.stopPropagation()">
+          <button class="button-menu"  mat-menu-item (click)="openLink('kasra')">
+            <img  class="button-menu-img"src="assets/images/kasra.png" alt="Logo" >
+
+            <span>کسری</span>
+          </button>
+        </div>
+        <div class="col-12" style="height: fit-content!important;" mat-menu-item (click)="$event.stopPropagation()">
+          <button class="button-menu"  mat-menu-item (click)="openLink('sina')">
+            <img  class="button-menu-img" src="assets/images/sina.png" alt="Logo" >
+
+            <span>سینا</span>
+          </button>
+        </div>
+        <div class="col-12" style="height: fit-content!important;" mat-menu-item (click)="$event.stopPropagation()">
+          <button  class="button-menu"  mat-menu-item (click)="openLink('ERP')">
+            <img class="button-menu-img" src="assets/images/ERP.png" alt="Logo" >
+            <span>ERP</span>
+          </button>
+        </div>
+      </mat-menu>
+        <mat-icon style="" class="me-auto toggle-menu-icon item-icon" (click)="toggled.emit(isMinimized)">menu</mat-icon>
+
+    </div>
+
+</div>
+

@@ -1,0 +1,141 @@
+<mat-card class="h-100 d-flex flex-column overflow-hidden" style="max-height: inherit; padding: 0!important;">
+  <div class=" card-detail" *ngIf="bankAccount">
+    <p>
+      بانک :  {{ bankAccount.bankTitle }}
+    </p>
+    <p>
+      شعبه : {{ bankAccount.bankBranchTitle }}
+    </p>
+    <p>
+      تفصیل :   {{ bankAccount.title }} <span>({{ bankAccount.referenceId }})</span>
+    </p>
+    <p>
+      حساب : {{ bankAccount.accountNumber }} <span> ({{ bankAccount.accountTypeBaseTitle }})</span>
+    </p>
+  </div>
+  <div class=" card-detail" *ngIf="chequeBook">
+    <p>
+      شناسه دسته چک :  {{ chequeBook.id }}
+    </p>
+    <p>
+      ش.سریال : {{ chequeBook.serial }}
+    </p>
+    <p>
+      تعداد برگه :   {{ chequeBook.sheetsCount }}
+    </p>
+    <p>
+      شروع از شماره : {{ chequeBook.startNumber }}
+    </p>
+  </div>
+
+  <div class="h-100 overflow-auto">
+    <app-table-virtual-scrolling
+      [tableRows]="chequeBooks"
+      [requestsIndex]="requestsIndex"
+      [tableConfigurations]="tableConfigurations"
+      (sortChanged)="get()"
+      (refreshEvent)="get()"
+      (filtersChanged)="get()"
+      (paginationChanged)="get()"
+      (rowDoubleClicked)="update($event)"
+      (expandedRowIndexEvent)="handleExpandedRowIndex($event)"
+      (rowsSelected)="handleRowsSelected($event)"
+      (optionSelectedEvent)="handleOptionSelected($event)"
+      (restorePreviousFilterEvent)="handleRestorePreviousFilter($event)"
+      (removeAllFiltersAndSortsEvent)="handleRemoveAllFiltersAndSorts($event)"
+      (tableConfigurationsChangeEvent)="handleTableConfigurationsChange($event)"
+
+    ></app-table-virtual-scrolling>
+  </div>
+
+</mat-card>
+<ng-template #rowBtn1 let-row="row" let-column="column">
+
+  <button mat-raised-button color="primary" (click)="updateChequeSheet(row)"
+          matTooltip=" ثبت شماره صیادی "
+
+  >
+    ثبت شماره صیادی
+
+  </button>
+  <button *ngIf="!row.isCanceled" mat-raised-button color="warn"
+          (click)="cancelChequeSheet(row)" matTooltip="ابطال"
+
+  >
+    ابطال
+  </button>
+  <button *ngIf="row.isCanceled" mat-raised-button color="warn"
+          (click)="unCancelChequeSheet(row)" matTooltip="ابطال"
+
+  >
+    رفع ابطال
+  </button>
+
+
+</ng-template>
+<ng-template #expandRowTable let-row="row" let-column="column" let-columns="columns">
+
+
+  <div *ngIf="chequeBookSheet">
+    <div class="expand-table-container">
+      <table
+        class="expand-table ">
+        <thead>
+        <tr>
+          <!--        <th class="border border-gray-700 "  style="width: 3%">#</th>-->
+          <th class="border border-gray-700 " style="width: 3%">ردیف</th>
+          <th class="border border-gray-700 " style="width: 14%">شماره چک</th>
+          <th class="border border-gray-700 " style="width: 20%">شماره صیادی</th>
+          <th class="border border-gray-700 " style="width: 20%">وضعیت</th>
+          <th class="border border-gray-700 " style="width: 20%">مبلغ</th>
+          <th class="border border-gray-700 " style="width: 10%">باطل شده</th>
+          <th class="border border-gray-700 " style="width: 10%">تاریخ ابطال</th>
+          <th class="border border-gray-700 " style="width: 20%">دلیل ابطال</th>
+          <th class="border border-gray-700 " style="width: 20%">عملیات</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        <tr class="expand_table-body-row"  *ngFor="let chequeSheet of chequeBookSheet ; let i = index">
+          <!--        <td class="border border-gray-700 "   >-->
+          <!--          <mat-checkbox style="padding-right: 8px" color="warn"-->
+          <!--                    tabindex="-1"-->
+          <!--                    (change)="selectItem(chequeSheet )"></mat-checkbox></td>-->
+          <td class="border border-gray-700  ">{{ i + 1 }}</td>
+          <td class="border border-gray-700 ">{{ chequeSheet.chequeSheetNo }}</td>
+          <td class="border border-gray-700 ">{{ chequeSheet.sayyadNo }}</td>
+          <td class="border border-gray-700 ">{{ chequeSheet.statusName }}</td>
+          <td class="border border-gray-700 ">{{ chequeSheet.amount }}</td>
+          <td class="border border-gray-700 ">{{ chequeSheet.isCanceled ? 'بله' : 'خیر' }}</td>
+          <td class="border border-gray-700  ">{{ chequeSheet.cancelDate | toPersianDate }}</td>
+          <td class="border border-gray-700 ">{{ chequeSheet.cancelDescp }}</td>
+          <td class="border border-gray-700 ">
+            <button mat-raised-button color="primary" (click)="updateChequeSheet(chequeSheet)"
+                    matTooltip=" ثبت شماره صیادی "
+
+            >
+              ثبت شماره صیادی
+
+            </button>
+            <button *ngIf="!chequeSheet.isCanceled" mat-raised-button color="warn"
+                    (click)="cancelChequeSheet(chequeSheet)" matTooltip="ابطال"
+
+            >
+              ابطال
+            </button>
+            <button *ngIf="chequeSheet.isCanceled" mat-raised-button color="warn"
+                    (click)="unCancelChequeSheet(chequeSheet)" matTooltip="ابطال"
+
+            >
+              رفع ابطال
+            </button>
+          </td>
+
+        </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+
+</ng-template>

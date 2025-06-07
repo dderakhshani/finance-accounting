@@ -1,0 +1,2 @@
+<app-action-bar class="p-3" (onAdd)="add()" (onEdit)="update()" (onDelete)="delete()"></app-action-bar>
+<app-table (rowDoubleClicked)="update($event.getRawValue().id)" [tableRows]="form" [tableConfigurations]="tableConfigurations" height="40vh"></app-table>
