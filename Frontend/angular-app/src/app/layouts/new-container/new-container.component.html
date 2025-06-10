@@ -1,0 +1,23 @@
+<mat-drawer-container class="example-container" hasBackdrop="false">
+
+  <!-- sidebar  -->
+  <mat-drawer class="p-5 bg-secondary text-light" mode="side" [opened]="isShowSidebar">
+    <app-sidebar [isShowSidebar]="isShowSidebar" (sidebarItemClicked)="navigateToRoute($event)"
+                 [navigations]="navigations" [flatNavigations]="flatNavigations"
+                 (toggled)="isShowSidebar = !$event">
+
+    </app-sidebar>
+  </mat-drawer>
+
+
+  <mat-drawer-content class="p-0">
+
+    <!--  header  -->
+    <app-header (toggleSidebar)="onToggleSidebar()" class="w-100"></app-header>
+
+    <!--   content-->
+    <app-content [tabManagerService]="tabManagerService" class="w-100 h-100 p-3"></app-content>
+
+  </mat-drawer-content>
+
+</mat-drawer-container>

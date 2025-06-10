@@ -1,0 +1,15 @@
+<div>
+
+  <!--  side items  -->
+  <nav>
+    <app-sidebar-item [isToggled]="isShowSidebar"
+                      (sidebarItemClick)="itemClicked($event)" [sidebarItem]="baseNavigation"
+                      (collapseSiblings)="collapseOtherSiblings($event)"
+                      *ngFor="let baseNavigation of navigations"
+                      (unMinimize)="toggle(!$event)">
+
+    </app-sidebar-item>
+  </nav>
+
+</div>
+

@@ -2,8 +2,9 @@
   <div class="container-sidebar" [class.container-sidebar-minimized]="isToggled">
     <app-sidebar [isMinimized]="isToggled" (sidebarItemClicked)="navigateToRoute($event)"
                  [navigations]="navigations" [flatNavigations]="flatNavigations"
-                 (toggled)="isToggled = !$event"
-    ></app-sidebar>
+                 (toggled)="isToggled = !$event">
+
+    </app-sidebar>
   </div>
   <div class="app-container-wrapper">
     <!--      <div class="container-header">-->
