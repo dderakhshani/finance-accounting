@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import {NavigationItem} from "../../../main-container/models/navigation-item";
 
 @Component({
@@ -9,6 +9,7 @@ import {NavigationItem} from "../../../main-container/models/navigation-item";
 export class SidebarItemComponent implements OnInit {
 
   rtl:boolean= false;
+  @Input() currentRoute! : string;
   @Input()  sidebarItem!: NavigationItem;
   @Input() isSubSidebar: boolean = false;
   @Input() subLevelCounter: number = 0;
@@ -17,11 +18,7 @@ export class SidebarItemComponent implements OnInit {
   @Output() unMinimize: EventEmitter<boolean> = new EventEmitter<boolean>()
   @Output() collapseSiblings: EventEmitter<NavigationItem> = new EventEmitter<NavigationItem>();
 
-  constructor() {
-  }
-
   ngOnInit(): void {
-    console.log(this.sidebarItem)
     this.rtl=document.getElementsByTagName("html")[0].getAttribute('dir') === 'rtl';
   }
 

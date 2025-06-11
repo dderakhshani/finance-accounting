@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 
 @Component({
   selector: 'app-header',
@@ -7,11 +7,9 @@ import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 })
 export class HeaderComponent implements OnInit {
 
-  @Output() toggleSidebar = new EventEmitter<void>();
+  @Input() isMinimized : boolean = false;
 
-  onClickToggle(): void {
-    this.toggleSidebar.emit();
-  }
+  @Output() toggled: EventEmitter<boolean> = new EventEmitter<boolean>()
 
   constructor() { }
 

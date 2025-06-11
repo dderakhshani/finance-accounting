@@ -13,6 +13,7 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatMenuModule} from "@angular/material/menu";
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {SidebarItemComponent} from "./sidebar/sidebar-item/sidebar-item.component";
+import {TabsComponent} from "./tabs/tabs.component";
 
 
 
@@ -22,6 +23,7 @@ import {SidebarItemComponent} from "./sidebar/sidebar-item/sidebar-item.componen
     SidebarComponent,
     ContentComponent,
     SidebarItemComponent ,
+    TabsComponent,
     NewContainerComponent,
   ],
   imports: [

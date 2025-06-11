@@ -1,0 +1,12 @@
+
+  <div class="app-tabs" *ngIf="tabManagerService.tabs.length > 0">
+    <div class="app-tabs-wrapper" >
+      <div  [ngClass]="{ 'active-tab' : tab.active }"
+            (mouseup)="+$event.button == 4 || +$event.which == 2 ? tabManagerService.closeTab(tab) : tabManagerService.openTab(tab)"
+            class="tab"
+            *ngFor="let tab of tabManagerService.tabs;">
+          <h5 class="font-10" matTooltip='{{tab.title}}'>{{tab.title}}</h5>
+        <span (click)="tabManagerService.closeTab(tab)" id="myTab">+</span>
+      </div>
+    </div>
+</div>

@@ -27,7 +27,7 @@
           <a class="nav-link disabled" aria-disabled="true">Link</a>
         </li>
       </ul>
-      <mat-icon class="toggle-menu-icon item-icon" (click)="onClickToggle()">menu</mat-icon>
+      <mat-icon class="toggle-menu-icon item-icon" (click)="toggled.emit(!isMinimized)">menu</mat-icon>
     </div>
   </div>
 </nav>

@@ -1,8 +1,8 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output} from '@angular/core';
 import {IdentityService} from "../../../modules/identity/repositories/identity.service";
 import {TableSettingsService} from "../../../core/components/custom/table/table-details/Service/table-settings.service";
 import {Mediator} from "../../../core/services/mediator/mediator.service";
-import {Router} from "@angular/router";
+import {NavigationEnd, Router} from "@angular/router";
 import {UserYear} from "../../../modules/identity/repositories/models/user-year";
 import {UserRole} from "../../../modules/identity/repositories/models/user-role";
 import {Language} from "../../../modules/admin/entities/language";
@@ -10,13 +10,19 @@ import {FormControl, FormGroup} from "@angular/forms";
 import {NavigationItem} from "../../main-container/models/navigation-item";
 import {GetLanguagesQuery} from "../../../modules/admin/repositories/languages/queries/get-languages-query";
 import * as moment from "jalali-moment";
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.scss']
 })
-export class SidebarComponent implements OnInit{
+export class SidebarComponent implements OnInit {
+
+
+  // for route changes
+  currentRoute: string = '';
+
 
   @Input() navigations!: NavigationItem[];
 
@@ -32,10 +38,7 @@ export class SidebarComponent implements OnInit{
 
   @Output() sidebarItemClicked: EventEmitter<NavigationItem> = new EventEmitter<NavigationItem>();
 
-  @Input() isShowSidebar: boolean = false;
-
-  @Output() toggled: EventEmitter<boolean> = new EventEmitter<boolean>()
-
+  @Input() isMinimized: boolean = false;
 
   currentDate!: string;
   currentDay!: string;
@@ -60,6 +63,15 @@ export class SidebarComponent implements OnInit{
     private _mediator: Mediator,
     private router: Router,
   ) {
+
+
+     // listening to route changes
+    this.router.events
+      .pipe(filter(event => event instanceof NavigationEnd))
+      .subscribe((event: any) => {
+        this.currentRoute = (event as NavigationEnd).urlAfterRedirects.split('?')[0];
+        console.log(this.currentRoute);
+      });
 
     identityService._applicationUser.subscribe(res => {
       if (res.isAuthenticated) {
@@ -136,7 +148,26 @@ export class SidebarComponent implements OnInit{
     await this.identityService.refreshToken(undefined, undefined, yearId)
   }
 
+  async handleRoleChange(roleId: number) {
+    // this.tableSettingsService.deleteEntireDatabase();
+    await this.identityService.refreshToken(undefined, roleId, undefined)
+  }
+
+  async handleLanguageChange(languageId: number) {
+    await this.identityService.refreshToken(undefined, undefined, undefined, languageId)
+  }
+
+  closeAllMenus(items: NavigationItem[]) {
+    items.forEach(item => {
+      item.showChildren = false;
+      if (item.children && item.children.length > 0) {
+        this.closeAllMenus(item.children);
+      }
+    });
+  }
+
   itemClicked(item: NavigationItem) {
+    this.closeAllMenus(this.navigations);
     this.sidebarItemClicked.emit(item)
   }
 
@@ -144,11 +175,28 @@ export class SidebarComponent implements OnInit{
     this.navigations.filter(x => x.id != navItem.id).forEach(x => x.showChildren = false)
   }
 
-  toggle(ev: boolean) {
-    if (!ev){
-      this.isShowSidebar = !ev
-      this.toggled.emit(!ev)
+  // toggle(ev: boolean) {
+  //   if (!ev){
+  //     this.isMinimized = !ev
+  //     this.toggled.emit(!ev)
+  //   }
+  // }
+  openLink( ref: string) {
+
+    const urls: { [key: string]: string } = {
+      'kasra': 'http://192.168.2.246/lego.web/Kevlar/Account/Login?ReturnUrl=%2Flego.web%2F',
+      'sina': 'http://sina.eefaceram.com/prime/User/LoginView',
+      'ERP': 'https://erp.eefaceram.com/'
+    };
+
+    const url = urls[ref];
+
+    if (url) {
+      window.open(url, '_blank');
+    } else {
+      console.warn('Invalid reference passed to openLink:', ref);
     }
+
   }
 
 }

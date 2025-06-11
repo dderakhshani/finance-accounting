@@ -1,4 +1,13 @@
-import {ChangeDetectorRef, Component, Input, OnInit} from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges
+} from '@angular/core';
 import {TabManagerService} from "../main-container/tab-manager.service";
 import {NavigationItem} from "../main-container/models/navigation-item";
 import {IdentityService} from "../../modules/identity/repositories/identity.service";
@@ -14,14 +23,9 @@ import {HelpComponent} from "../../modules/admin/components/help/help.component"
 })
 export class NewContainerComponent implements OnInit {
 
-  @Input() isShowSidebar: boolean = false;
-
-  onToggleSidebar(): void {
-    this.isShowSidebar = !this.isShowSidebar;
-  }
-
   navigations:NavigationItem[] = [];
   flatNavigations:NavigationItem[] = [];
+  isToggled: boolean = false;
 
   // @ts-ignore
   constructor(
