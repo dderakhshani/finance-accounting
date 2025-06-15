@@ -67,10 +67,9 @@ h2 {
 
 /* استایل منوی فرزند */
 .app-sidebar-item-children {
-  padding-top: 80px;
   position: absolute;
   top: 0;
-  z-index: 100;
+  z-index: 910;
   text-wrap: nowrap;
   min-width: 250px;
   background-color: #0F172A;

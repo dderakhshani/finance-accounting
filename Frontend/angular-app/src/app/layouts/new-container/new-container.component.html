@@ -1,40 +1,15 @@
 <div class="app-container">
-  <div class="container-sidebar" [class.container-sidebar-minimized]="isToggled">
-    <app-sidebar [isMinimized]="isToggled" (sidebarItemClicked)="navigateToRoute($event)"
-                 [navigations]="navigations" [flatNavigations]="flatNavigations">
+  <app-sidebar
+    [isToggled]="isToggled"
+    (sidebarItemClicked)="navigateToRoute($event)"
+    [navigations]="navigations"
+    [flatNavigations]="flatNavigations"
+  >
+  </app-sidebar>
 
-    </app-sidebar>
-  </div>
-  <app-header  [isMinimized]="isToggled" (toggled)="isToggled = $event"  class="w-100"></app-header>
-<!--    <div class="app-container-wrapper">-->
-<!--      &lt;!&ndash;      <div class="container-header">&ndash;&gt;-->
-<!--      &lt;!&ndash;        <app-header [isToggled]="isToggled" (toggled)="sidenav.toggle(); isToggled = !isToggled"></app-header>&ndash;&gt;-->
-<!--      &lt;!&ndash;      </div>&ndash;&gt;-->
-<!--  &lt;!&ndash;    <mat-icon class="help-view-btn" (click)="openCurrentTabHelp()" color="primary">help</mat-icon>&ndash;&gt;-->
-
-<!--      <div class="container-view">-->
-<!--        <div class="container-tabs">-->
-<!--          <app-tabs></app-tabs>-->
-<!--        </div>-->
-<!--        <div class="route-content">-->
-
-<!--          <ng-container *ngFor="let tab of tabManagerService.tabs">-->
-<!--            <div class="tab-spinner" *ngIf="tab.active && tab.isLoading">-->
-<!--              <mat-spinner></mat-spinner>-->
-<!--            </div>-->
-<!--            <div @fadeAnimation class="tab-content" [class.hideTabContent]="!tab.active"-->
-<!--                 [ngClass]="{ 'current-tab' : tab.active }">-->
-<!--              &lt;!&ndash;              <div&ndash;&gt;-->
-<!--              &lt;!&ndash;                style="z-index:9999;position: absolute;left:0;bottom: -10; right: 0;background: rgba(0,0,0,0.3);"&ndash;&gt;-->
-<!--              &lt;!&ndash;                class="d-flex align-items-center justify-content-center">&ndash;&gt;-->
-<!--              &lt;!&ndash;                <mat-spinner></mat-spinner>&ndash;&gt;-->
-<!--              &lt;!&ndash;              </div>&ndash;&gt;-->
-<!--              <ng-container *ngComponentOutlet="tab.component"></ng-container>-->
-<!--            </div>-->
-<!--          </ng-container>-->
-<!--        </div>-->
-<!--      </div>-->
-
-
-<!--    </div>-->
+  <app-header
+    [isMinimized]="isToggled"
+    (toggled)="isToggled = $event"
+    class="w-100">
+  </app-header>
 </div>

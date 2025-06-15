@@ -1,196 +1,78 @@
 @import "../../../../assets/scss/variables";
 
 .app-sidebar {
-  //padding: 5%;
-  //width: 100%;
-  position: relative;
-  height: 100%;
+  width: $sidebar-width;
+  height: 100vh;
   background-color: #0F172A;
   display: flex;
   flex-direction: column;
+  top: 0;
   right: 0;
-  //box-shadow: 0 0 5px 2px rgba(black ,0.1);
-  //border-left: 1px solid rgba(black, 0.1);
-  //margin-left: 3px;
+  z-index: 1000;
+  transition: transform 0.3s ease-in-out, width 0.3s ease;
+  transform: translateX(0);
 
+  &.app-sidebar-minimized {
+    width: $sidebar-width-minimized;
+    position: inherit;
+  }
+
+  &.app-sidebar-hidden {
+    transform: translateX(-100%);
+  }
 
   .logo-container {
-    height: $header-height + 2px;
-    padding: 5px 10px;
+    min-height: 80px;
     border-bottom: 0.5px solid rgba(white, 0.12);
     display: flex;
-    position: relative;
-    min-height: 50px;
-    .logo {
-      margin: auto;
-      width: 100px;
-
-      path {
-        fill: white;
-      }
-    }
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 1.25rem;
+    color: white;
   }
 
   nav {
-    //position: inherit;
-    grid-area: navbar;
-    margin-top: auto;
-    width: 100%;
-    height: 100%;
-    //max-height: calc(100vh);
-    //overflow-y: auto;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    color: white !important;
-    //border-radius: 8px;
+    flex: 1;
+    overflow-y: auto;
+    padding: 0.5rem;
+    color: white;
   }
 
   .user-wrapper {
-    align-items: center;
-    width: 100%;
-    //height: 100%;
-    display: flex;
-    grid-gap: 10px;
-    flex-direction: column;
-    margin: auto auto auto 0;
+    padding: 1rem;
     border-top: 0.5px solid rgba(white, 0.12);
-    float: bottom;
-    padding: 0.5rem 0;
+    color: white;
 
     .user-details {
-      grid-area: avatar;
-      display: flex;
-      flex-direction: column-reverse;
-      align-content: center;
-      gap: 10px;
-
-      h1 {
-        font-size: calc(8px + 0.3vw);
-        text-align: center;
-        margin: auto 10px;
-        font-family: IRANYekanExtraBold, sans-serif;
-        color: white;
-      }
-
-      img {
-        width: 45px !important;
-        height: 45px !important;
-        box-shadow: 0 0 5px 1px rgba(black, 0.3);
-        object-fit: cover;
-        border-radius: 50%;
-        cursor: pointer;
-        margin: auto;
-      }
-    }
-
-
-    .date {
-      grid-area: date;
-      width: fit-content;
       text-align: center;
-      padding: 0 1rem;
-      margin: auto;
-      color: white;
-      font-size: calc(7px + 0.3vw);
-    }
-
-    .current-year {
-      color: white;
-      font-size: calc(10px + 0.3vw);
-    }
-  }
-
-  .actions {
-    display: flex;
-    align-content: center;
-    border-top: 0.5px solid rgba(white, 0.12);
-    padding: .5rem;
-
-    .item-icon {
-      transform: scale(1) !important;
-      height: 24px;
-      cursor: pointer;
-      color: white
-    }
-
-    .toggle-menu-icon {
-      transform: scale(1) !important;
-    }
-  }
-}
-
-img.button-menu-img {
-  width: 27px;
-  height: 27px;
-  margin-left: 9px;
-}
-
-button.button-menu {
-  display: flex !important;
-  align-items: center !important;
-  justify-content: space-between !important;
-
-
-  &:hover {
-    background-color: rgba(white, 0.1);
-  }
-}
-
-.app-sidebar-minimized {
-  .logo-container {
-    svg {
-      display: none;
-    }
-  }
-
-  .user-wrapper {
-    .user-details {
-      h1 {
-        display: none;
-      }
 
       img {
-        width: 25px !important;
-        height: 25px !important;
-        box-shadow: 0 0 5px 1px rgba(black, 0.3);
-        object-fit: cover;
+        width: 45px;
+        height: 45px;
         border-radius: 50%;
-        cursor: pointer;
-        margin: auto;
+        object-fit: cover;
       }
     }
-
-    .date {
-      display: none;
-    }
-
-    .current-year {
-      display: none;
-    }
-  }
-
-  .actions {
-    display: flex;
-    flex-direction: column;
-
-    .settings-icon {
-      margin: auto auto;
-    }
-
-    .toggle-menu-icon {
-      margin: auto auto;
-      transform: scale(1) !important;
-    }
   }
 }
 
-.back1402 {
-  background: #8f0b0b;
-  color: black !important;
+.sidebar-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 900;
+  animation: fadeIn 0.3s ease forwards;
 }
 
-.back1403 {
-  background: #000080;
-  color: black !important;
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }

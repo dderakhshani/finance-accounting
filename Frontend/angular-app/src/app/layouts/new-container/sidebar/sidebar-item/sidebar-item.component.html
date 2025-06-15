@@ -20,6 +20,7 @@
     [class.app-sidebar-item-children-show]="sidebarItem.showChildren"
     [class.app-sidebar-item-children-hide]="!sidebarItem.showChildren || isToggled"
   >
+    <div style="height: 80px !important; " class="d-flex align-items-center justify-content-start px-3 fw-bold fs-6 border-bottom border-secondary text-white">{{sidebarItem.title}}</div>
     <app-sidebar-item
       *ngFor="let subSidebarItem of sidebarItem.children"
       [sidebarItem]="subSidebarItem"

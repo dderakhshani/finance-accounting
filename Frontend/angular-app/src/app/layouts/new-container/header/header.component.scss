@@ -1,0 +1,76 @@
+// ---------------- Navbar (Top Navigation Bar) ----------------
+
+nav.navbar {
+  background-color: #f8f9fa;
+  padding: 0.5rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+  z-index: 800;
+
+  .actions {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
+
+    .item-icon {
+      cursor: pointer;
+      color: #1f2937; // رنگ تیره‌تر برای آیکون‌ها
+      font-size: 24px;
+      transition: color 0.2s;
+
+      &:hover {
+        color: #0d6efd;
+      }
+    }
+
+    .settings-icon {
+      font-size: 24px;
+    }
+
+    .apps-icon {
+      font-size: 24px;
+    }
+  }
+
+  .toggle-menu-icon {
+    font-size: 24px;
+  }
+}
+
+// ---------------- Dropdown Menu Items (Mat Menu) ----------------
+
+img.button-menu-img {
+  width: 27px;
+  height: 27px;
+  margin-left: 9px;
+}
+
+button.button-menu {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  gap: 10px;
+  width: 100%;
+
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+  }
+
+  span {
+    font-size: 14px;
+    color: #212529;
+    white-space: nowrap;
+  }
+
+  img {
+    flex-shrink: 0;
+  }
+}
+
+.mat-select-panel {
+  z-index: 2000 !important;
+  max-height: 300px !important; // یا هر مقداری که لازم داری
+}

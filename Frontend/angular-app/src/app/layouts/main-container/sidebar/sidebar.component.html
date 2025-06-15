@@ -36,86 +36,86 @@
     </nav>
 
 
-<!--    &lt;!&ndash;  user info  &ndash;&gt;-->
-<!--    <div class="user-wrapper">-->
-<!--        <div class="user-details col-12">-->
-<!--            <h1>{{applicationUserFullName}}</h1>-->
-<!--            <img [matMenuTriggerFor]="accountInfo" [src]="avatarUrl" alt="">-->
-<!--            <mat-menu #accountInfo="matMenu">-->
-<!--                <button mat-menu-item (click)="identityService.logout()" class="d-flex">-->
-<!--                    <span>خروج</span>-->
-<!--                    <mat-icon style="margin: auto auto auto 0" color="primary">logout</mat-icon>-->
-<!--                </button>-->
-<!--            </mat-menu>-->
-<!--        </div>-->
-<!--        <div class="date">-->
-<!--            {{currentDay ? (currentDate + ' ' + currentDay + ' ' + currentHour) : ''}}-->
-<!--        </div>-->
+    <!--  user info  -->
+    <div class="user-wrapper">
+        <div class="user-details col-12">
+            <h1>{{applicationUserFullName}}</h1>
+            <img [matMenuTriggerFor]="accountInfo" [src]="avatarUrl" alt="">
+            <mat-menu #accountInfo="matMenu">
+                <button mat-menu-item (click)="identityService.logout()" class="d-flex">
+                    <span>خروج</span>
+                    <mat-icon style="margin: auto auto auto 0" color="primary">logout</mat-icon>
+                </button>
+            </mat-menu>
+        </div>
+        <div class="date">
+            {{currentDay ? (currentDate + ' ' + currentDay + ' ' + currentHour) : ''}}
+        </div>
 
-<!--        <div class="current-year" *ngIf="currentYear">-->
-<!--            سال مالی {{currentYear.yearName}}-->
-<!--        </div>-->
-<!--    </div>-->
+        <div class="current-year" *ngIf="currentYear">
+            سال مالی {{currentYear.yearName}}
+        </div>
+    </div>
 
-<!--    &lt;!&ndash;  actions  &ndash;&gt;-->
-<!--    <div class="actions">-->
-<!--        <mat-icon class="settings-icon item-icon" [matMenuTriggerFor]="menu" style="">settings</mat-icon>-->
+    <!--  actions  -->
+    <div class="actions">
+        <mat-icon class="settings-icon item-icon" [matMenuTriggerFor]="menu" style="">settings</mat-icon>
 
-<!--        <mat-menu [formGroup]="form" #menu="matMenu">-->
-<!--            <div class="col-12" style="height: fit-content!important;" mat-menu-item (click)="$event.stopPropagation()">-->
-<!--                <mat-form-field class="p-0">-->
-<!--                    <mat-label>نقش</mat-label>-->
-<!--                    <mat-select (selectionChange)="handleRoleChange($event.value)" formControlName="roleId">-->
-<!--                        <mat-option *ngFor="let role of allowedRoles" [value]="role.roleId">{{role.title}}</mat-option>-->
-<!--                    </mat-select>-->
-<!--                </mat-form-field>-->
-<!--            </div>-->
-<!--            <div class="col-12" style="height: fit-content!important;" mat-menu-item (click)="$event.stopPropagation()">-->
-<!--                <mat-form-field class="p-0">-->
-<!--                    <mat-label>زبان</mat-label>-->
-<!--                    <mat-select (selectionChange)="handleLanguageChange($event.value)" formControlName="languageId">-->
-<!--                        <mat-option *ngFor="let language of languages" [value]="language.id">{{language.title}}</mat-option>-->
-<!--                    </mat-select>-->
-<!--                </mat-form-field>-->
-<!--            </div>-->
-<!--            <div class="col-12" style="height: fit-content!important;" mat-menu-item (click)="$event.stopPropagation()">-->
-<!--                <mat-form-field class="p-0">-->
-<!--                    <mat-label>سال مالی</mat-label>-->
-<!--                    <mat-select (selectionChange)="handleYearChange($event.value)" formControlName="yearId">-->
-<!--                        <mat-option *ngFor="let year of allowedYears"-->
-<!--                                    [value]="year.id">{{'سال مالی  ' + year.yearName}}</mat-option>-->
-<!--                    </mat-select>-->
-<!--                </mat-form-field>-->
-<!--            </div>-->
-<!--        </mat-menu>-->
+        <mat-menu [formGroup]="form" #menu="matMenu">
+            <div class="col-12" style="height: fit-content!important;" mat-menu-item (click)="$event.stopPropagation()">
+                <mat-form-field class="p-0">
+                    <mat-label>نقش</mat-label>
+                    <mat-select (selectionChange)="handleRoleChange($event.value)" formControlName="roleId">
+                        <mat-option *ngFor="let role of allowedRoles" [value]="role.roleId">{{role.title}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-12" style="height: fit-content!important;" mat-menu-item (click)="$event.stopPropagation()">
+                <mat-form-field class="p-0">
+                    <mat-label>زبان</mat-label>
+                    <mat-select (selectionChange)="handleLanguageChange($event.value)" formControlName="languageId">
+                        <mat-option *ngFor="let language of languages" [value]="language.id">{{language.title}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-12" style="height: fit-content!important;" mat-menu-item (click)="$event.stopPropagation()">
+                <mat-form-field class="p-0">
+                    <mat-label>سال مالی</mat-label>
+                    <mat-select (selectionChange)="handleYearChange($event.value)" formControlName="yearId">
+                        <mat-option *ngFor="let year of allowedYears"
+                                    [value]="year.id">{{'سال مالی  ' + year.yearName}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </mat-menu>
 
-<!--        <mat-icon class="apps-icon item-icon" [matMenuTriggerFor]="menuApps" style="" *ngIf="!isMinimized" matTooltip="سیستم های مرتبط">apps</mat-icon>-->
+        <mat-icon class="apps-icon item-icon" [matMenuTriggerFor]="menuApps" style="" *ngIf="!isMinimized" matTooltip="سیستم های مرتبط">apps</mat-icon>
 
-<!--      <mat-menu  #menuApps="matMenu">-->
-<!--        <div class="col-12 " style="height: fit-content!important;" mat-menu-item (click)="$event.stopPropagation()">-->
-<!--          <button class="button-menu"  mat-menu-item (click)="openLink('kasra')">-->
-<!--            <img  class="button-menu-img"src="assets/images/kasra.png" alt="Logo" >-->
+      <mat-menu  #menuApps="matMenu">
+        <div class="col-12 " style="height: fit-content!important;" mat-menu-item (click)="$event.stopPropagation()">
+          <button class="button-menu"  mat-menu-item (click)="openLink('kasra')">
+            <img  class="button-menu-img"src="assets/images/kasra.png" alt="Logo" >
 
-<!--            <span>کسری</span>-->
-<!--          </button>-->
-<!--        </div>-->
-<!--        <div class="col-12" style="height: fit-content!important;" mat-menu-item (click)="$event.stopPropagation()">-->
-<!--          <button class="button-menu"  mat-menu-item (click)="openLink('sina')">-->
-<!--            <img  class="button-menu-img" src="assets/images/sina.png" alt="Logo" >-->
+            <span>کسری</span>
+          </button>
+        </div>
+        <div class="col-12" style="height: fit-content!important;" mat-menu-item (click)="$event.stopPropagation()">
+          <button class="button-menu"  mat-menu-item (click)="openLink('sina')">
+            <img  class="button-menu-img" src="assets/images/sina.png" alt="Logo" >
 
-<!--            <span>سینا</span>-->
-<!--          </button>-->
-<!--        </div>-->
-<!--        <div class="col-12" style="height: fit-content!important;" mat-menu-item (click)="$event.stopPropagation()">-->
-<!--          <button  class="button-menu"  mat-menu-item (click)="openLink('ERP')">-->
-<!--            <img class="button-menu-img" src="assets/images/ERP.png" alt="Logo" >-->
-<!--            <span>ERP</span>-->
-<!--          </button>-->
-<!--        </div>-->
-<!--      </mat-menu>-->
+            <span>سینا</span>
+          </button>
+        </div>
+        <div class="col-12" style="height: fit-content!important;" mat-menu-item (click)="$event.stopPropagation()">
+          <button  class="button-menu"  mat-menu-item (click)="openLink('ERP')">
+            <img class="button-menu-img" src="assets/images/ERP.png" alt="Logo" >
+            <span>ERP</span>
+          </button>
+        </div>
+      </mat-menu>
 
 
-<!--    </div>-->
+    </div>
 
 </div>
 

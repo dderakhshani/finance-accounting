@@ -1,33 +1,64 @@
-<nav dir="ltr" class="navbar navbar-expand-lg bg-body-tertiary bg-primary">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="#">Navbar scroll</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarScroll">
-      <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Home</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Link</a>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Link
-          </a>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">Action</a></li>
-            <li><a class="dropdown-item" href="#">Another action</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li>
-          </ul>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link disabled" aria-disabled="true">Link</a>
-        </li>
-      </ul>
-      <mat-icon class="toggle-menu-icon item-icon" (click)="toggled.emit(!isMinimized)">menu</mat-icon>
-    </div>
+<nav class="navbar navbar-expand-lg bg-body-tertiary shadow-sm d-flex flex-row-reverse justify-content-between align-items-center gap-1">
+  <div class="actions mt-1">
+    <mat-icon class="settings-icon item-icon" [matMenuTriggerFor]="menu" style="">settings</mat-icon>
+
+    <mat-menu [formGroup]="form" #menu="matMenu">
+      <div class="col-12" style="height: fit-content!important;" mat-menu-item (click)="$event.stopPropagation()">
+        <mat-form-field class="p-0">
+          <mat-label>نقش</mat-label>
+          <mat-select (selectionChange)="handleRoleChange($event.value)" formControlName="roleId">
+            <mat-option *ngFor="let role of allowedRoles" [value]="role.roleId">{{role.title}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-12" style="height: fit-content!important;" mat-menu-item (click)="$event.stopPropagation()">
+        <mat-form-field class="p-0">
+          <mat-label>زبان</mat-label>
+          <mat-select (selectionChange)="handleLanguageChange($event.value)" formControlName="languageId">
+            <mat-option *ngFor="let language of languages" [value]="language.id">{{language.title}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-12" style="height: fit-content!important;" mat-menu-item (click)="$event.stopPropagation()">
+        <mat-form-field class="p-0">
+          <mat-label>سال مالی</mat-label>
+          <mat-select (selectionChange)="handleYearChange($event.value)" formControlName="yearId">
+            <mat-option *ngFor="let year of allowedYears"
+                        [value]="year.id">{{'سال مالی  ' + year.yearName}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </mat-menu>
+
+    <mat-icon class="apps-icon item-icon" [matMenuTriggerFor]="menuApps" matTooltip="سیستم های مرتبط">apps</mat-icon>
+
+    <mat-menu  #menuApps="matMenu">
+      <div class="col-12 " style="height: fit-content!important;" mat-menu-item (click)="$event.stopPropagation()">
+        <button class="button-menu"  mat-menu-item (click)="openLink('kasra')">
+          <img  class="button-menu-img"src="assets/images/kasra.png" alt="Logo" >
+
+          <span>کسری</span>
+        </button>
+      </div>
+      <div class="col-12" style="height: fit-content!important;" mat-menu-item (click)="$event.stopPropagation()">
+        <button class="button-menu"  mat-menu-item (click)="openLink('sina')">
+          <img  class="button-menu-img" src="assets/images/sina.png" alt="Logo" >
+
+          <span>سینا</span>
+        </button>
+      </div>
+      <div class="col-12" style="height: fit-content!important;" mat-menu-item (click)="$event.stopPropagation()">
+        <button  class="button-menu"  mat-menu-item (click)="openLink('ERP')">
+          <img class="button-menu-img" src="assets/images/ERP.png" alt="Logo" >
+          <span>ERP</span>
+        </button>
+      </div>
+    </mat-menu>
+
+
   </div>
+  <mat-icon class= "toggle-menu-icon item-icon" (click)="toggled.emit(!isMinimized)">menu</mat-icon>
 </nav>
+
+
+

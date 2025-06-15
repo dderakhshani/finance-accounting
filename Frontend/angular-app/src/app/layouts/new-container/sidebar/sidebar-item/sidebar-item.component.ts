@@ -15,6 +15,7 @@ export class SidebarItemComponent implements OnInit {
   @Input() subLevelCounter: number = 0;
   @Output() sidebarItemClick: EventEmitter<NavigationItem> = new EventEmitter<NavigationItem>();
   @Input() isToggled: boolean = false
+  @Input() isToggledSubmenu: boolean = false
   @Output() unMinimize: EventEmitter<boolean> = new EventEmitter<boolean>()
   @Output() collapseSiblings: EventEmitter<NavigationItem> = new EventEmitter<NavigationItem>();
 
@@ -33,6 +34,6 @@ export class SidebarItemComponent implements OnInit {
       // this.router.navigateByUrl(navItem.Route);
       this.sidebarItemClick.emit(navItem)
     }
-    if(this.sidebarItem.children?.length > 0) this.unMinimize.emit(!this.isToggled)
+    if(this.sidebarItem.children?.length > 0) this.unMinimize.emit(!this.isToggledSubmenu)
   }
 }
