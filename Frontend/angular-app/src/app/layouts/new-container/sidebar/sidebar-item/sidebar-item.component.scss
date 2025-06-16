@@ -28,10 +28,11 @@
 }
 
 .app-sidebar-item {
-  padding: 10px;
-  margin: 6px;
+  padding: 8px 10px;
+  margin: 4px;
   display: flex;
   align-items: center;
+  justify-content: center;
   cursor: pointer;
   transition: background 0.2s ease;
   border-radius: 8px;
@@ -45,12 +46,6 @@
   background-color: #007bff;
   color: white;
   font-weight: bold;
-}
-
-.nav-icon {
-  width: 24px;
-  height: 24px;
-  margin-right: 10px;
 }
 
 h2 {

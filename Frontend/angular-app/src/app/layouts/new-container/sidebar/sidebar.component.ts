@@ -9,7 +9,7 @@ import { filter } from 'rxjs/operators';
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.scss']
 })
-export class SidebarComponent {
+export class SidebarComponent{
 
   // for route changes
   currentRoute: string = '';
@@ -22,7 +22,6 @@ export class SidebarComponent {
 
   @Input() set flatNavigations(navItems: NavigationItem[]) {
     this._flatNavigations = navItems;
-    this.activateCurrentMenu()
   };
 
   @Output() closeSidebar : EventEmitter<boolean> = new EventEmitter();
@@ -46,40 +45,10 @@ export class SidebarComponent {
       });
   }
 
-  activateCurrentMenu() {
-    if (this.router.url !== '/') {
-      let activeNavigation = this.flatNavigations.find(x => x.route === this.router.url.split('?')[0]);
-      if (activeNavigation) {
-        let ids: number[] = [];
-        // @ts-ignore
-        ids.push(activeNavigation.id);
-        // @ts-ignore
-        while (activeNavigation?.parentId) {
-          // @ts-ignore
-          ids.unshift(activeNavigation.parentId);
-          // @ts-ignore
-          activeNavigation = this.flatNavigations.find(x => x.id === activeNavigation.parentId);
-        }
-        let baseNavigation = this.navigations.find(x => x.id === ids[0]);
-        // @ts-ignore
-        baseNavigation.showChildren = true;
-        // @ts-ignore
-        ids.splice(0,1)
-
-        while (ids.length > 0) {
-          // @ts-ignore
-          baseNavigation = baseNavigation.children.find(x => x.id === ids[0]);
-          // @ts-ignore
-          baseNavigation?.children?.length > 0 ? baseNavigation.showChildren = true : ''
-          // @ts-ignore
-          ids.splice(0,1)
-        }
-
-      }
-    }
+  itemClicked(item: NavigationItem) {
+    this.closeAllMenus(this.navigations);
+    this.sidebarItemClicked.emit(item)
   }
-
-
 
   closeAllMenus(items: NavigationItem[]) {
     items.forEach(item => {
@@ -87,19 +56,11 @@ export class SidebarComponent {
       if (item.children && item.children.length > 0) {
         this.closeAllMenus(item.children);
       }
+      this.isToggledSubmenu = false;
     });
-  }
-
-  itemClicked(item: NavigationItem) {
-    this.closeAllMenus(this.navigations);
-    this.sidebarItemClicked.emit(item)
-    this.isToggledSubmenu = false;
   }
 
   collapseOtherSiblings(navItem: NavigationItem) {
     this.navigations.filter(x => x.id != navItem.id).forEach(x => x.showChildren = false)
   }
-
-
-
 }

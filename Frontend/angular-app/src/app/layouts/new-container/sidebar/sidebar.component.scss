@@ -1,6 +1,7 @@
 @import "../../../../assets/scss/variables";
 
 .app-sidebar {
+  position: relative;
   width: $sidebar-width;
   height: 100vh;
   background-color: #0F172A;
@@ -58,7 +59,7 @@
 }
 
 .sidebar-backdrop {
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   width: 100vw;

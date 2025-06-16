@@ -13,31 +13,30 @@ nav.navbar {
     display: flex;
     flex-direction: row;
     align-items: center;
-    gap: 1rem;
+  }
+  .item-icon {
+    cursor: pointer;
+    color: #1f2937; // رنگ تیره‌تر برای آیکون‌ها
+    font-size: 24px;
+    transition: color 0.2s;
 
-    .item-icon {
-      cursor: pointer;
-      color: #1f2937; // رنگ تیره‌تر برای آیکون‌ها
-      font-size: 24px;
-      transition: color 0.2s;
-
-      &:hover {
-        color: #0d6efd;
-      }
+    &:hover {
+      color: #0d6efd;
     }
+  }
 
-    .settings-icon {
-      font-size: 24px;
-    }
+  .settings-icon {
+    font-size: 24px;
+  }
 
-    .apps-icon {
-      font-size: 24px;
-    }
+  .apps-icon {
+    font-size: 24px;
   }
 
   .toggle-menu-icon {
     font-size: 24px;
   }
+
 }
 
 // ---------------- Dropdown Menu Items (Mat Menu) ----------------

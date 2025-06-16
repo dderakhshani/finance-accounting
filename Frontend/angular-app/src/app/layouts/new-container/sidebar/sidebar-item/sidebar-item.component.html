@@ -9,7 +9,7 @@
     (click)="toggleSidebarItem(sidebarItem)"
     [class.active]="sidebarItem.showChildren"
   >
-    <img *ngIf="!sidebarItem.parentId" src="{{sidebarItem.imageUrl}}" class="nav-icon"/>
+    <mat-icon class="fs-3" *ngIf="!sidebarItem.parentId">{{sidebarItem.imageUrl}}</mat-icon>
     <h2>{{ sidebarItem.title }}</h2>
     <mat-icon id="arrow_icon" *ngIf="sidebarItem.children && sidebarItem.children.length > 0">navigate_before</mat-icon>
   </div>

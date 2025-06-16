@@ -8,32 +8,39 @@ import {NavigationItem} from "../../../main-container/models/navigation-item";
 })
 export class SidebarItemComponent implements OnInit {
 
-  rtl:boolean= false;
-  @Input() currentRoute! : string;
-  @Input()  sidebarItem!: NavigationItem;
+  rtl: boolean = false;
+  // inputs
   @Input() isSubSidebar: boolean = false;
-  @Input() subLevelCounter: number = 0;
-  @Output() sidebarItemClick: EventEmitter<NavigationItem> = new EventEmitter<NavigationItem>();
   @Input() isToggled: boolean = false
   @Input() isToggledSubmenu: boolean = false
+  @Input() currentRoute!: string;
+  @Input() subLevelCounter: number = 0;
+  @Input() sidebarItem!: NavigationItem;
+
+  // outputs
+  @Output() sidebarItemClick: EventEmitter<NavigationItem> = new EventEmitter<NavigationItem>();
   @Output() unMinimize: EventEmitter<boolean> = new EventEmitter<boolean>()
   @Output() collapseSiblings: EventEmitter<NavigationItem> = new EventEmitter<NavigationItem>();
 
   ngOnInit(): void {
-    this.rtl=document.getElementsByTagName("html")[0].getAttribute('dir') === 'rtl';
+    this.rtl = document.getElementsByTagName("html")[0].getAttribute('dir') === 'rtl';
   }
 
-  collapseAllChildsExceptActiveItem(navItem:NavigationItem) {
+  collapseAllChildsExceptActiveItem(navItem: NavigationItem) {
     this.sidebarItem.children.filter(x => x.id != navItem.id).forEach(x => x.showChildren = false)
   }
+
   toggleSidebarItem(navItem: NavigationItem) {
-    if(navItem.children.length > 0) {
+    if (navItem.children.length > 0) {
       navItem.showChildren = !navItem.showChildren;
       this.collapseSiblings.emit(navItem)
     } else {
       // this.router.navigateByUrl(navItem.Route);
       this.sidebarItemClick.emit(navItem)
     }
-    if(this.sidebarItem.children?.length > 0) this.unMinimize.emit(!this.isToggledSubmenu)
+    if (this.sidebarItem.showChildren) this.unMinimize.emit(true)
+    else {
+      this.unMinimize.emit(false)
+    }
   }
 }

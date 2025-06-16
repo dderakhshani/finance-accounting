@@ -1,13 +1,17 @@
-<nav class="navbar navbar-expand-lg bg-body-tertiary shadow-sm d-flex flex-row-reverse justify-content-between align-items-center gap-1">
-  <div class="actions mt-1">
-    <mat-icon class="settings-icon item-icon" [matMenuTriggerFor]="menu" style="">settings</mat-icon>
+<nav
+  class="navbar navbar-expand-lg bg-body-tertiary shadow-sm d-flex flex-row-reverse justify-content-between align-items-center gap-1">
+  <div class="actions">
+
+    <button  [matMenuTriggerFor]="menu" mat-icon-button class="d-flex justify-content-center align-items-center">
+      <mat-icon class="settings-icon item-icon">settings</mat-icon>
+    </button>
 
     <mat-menu [formGroup]="form" #menu="matMenu">
       <div class="col-12" style="height: fit-content!important;" mat-menu-item (click)="$event.stopPropagation()">
         <mat-form-field class="p-0">
           <mat-label>نقش</mat-label>
           <mat-select (selectionChange)="handleRoleChange($event.value)" formControlName="roleId">
-            <mat-option *ngFor="let role of allowedRoles" [value]="role.roleId">{{role.title}}</mat-option>
+            <mat-option *ngFor="let role of allowedRoles" [value]="role.roleId">{{ role.title }}</mat-option>
           </mat-select>
         </mat-form-field>
       </div>
@@ -15,7 +19,7 @@
         <mat-form-field class="p-0">
           <mat-label>زبان</mat-label>
           <mat-select (selectionChange)="handleLanguageChange($event.value)" formControlName="languageId">
-            <mat-option *ngFor="let language of languages" [value]="language.id">{{language.title}}</mat-option>
+            <mat-option *ngFor="let language of languages" [value]="language.id">{{ language.title }}</mat-option>
           </mat-select>
         </mat-form-field>
       </div>
@@ -24,32 +28,35 @@
           <mat-label>سال مالی</mat-label>
           <mat-select (selectionChange)="handleYearChange($event.value)" formControlName="yearId">
             <mat-option *ngFor="let year of allowedYears"
-                        [value]="year.id">{{'سال مالی  ' + year.yearName}}</mat-option>
+                        [value]="year.id">{{ 'سال مالی  ' + year.yearName }}
+            </mat-option>
           </mat-select>
         </mat-form-field>
       </div>
     </mat-menu>
 
-    <mat-icon class="apps-icon item-icon" [matMenuTriggerFor]="menuApps" matTooltip="سیستم های مرتبط">apps</mat-icon>
+    <button  [matMenuTriggerFor]="menuApps" mat-icon-button class="d-flex justify-content-center align-items-center">
+      <mat-icon class="apps-icon item-icon" matTooltip="سیستم های مرتبط">apps</mat-icon>
+    </button>
 
-    <mat-menu  #menuApps="matMenu">
+    <mat-menu #menuApps="matMenu">
       <div class="col-12 " style="height: fit-content!important;" mat-menu-item (click)="$event.stopPropagation()">
-        <button class="button-menu"  mat-menu-item (click)="openLink('kasra')">
-          <img  class="button-menu-img"src="assets/images/kasra.png" alt="Logo" >
+        <button class="button-menu" mat-menu-item (click)="openLink('kasra')">
+          <img class="button-menu-img" src="assets/images/kasra.png" alt="Logo">
 
           <span>کسری</span>
         </button>
       </div>
       <div class="col-12" style="height: fit-content!important;" mat-menu-item (click)="$event.stopPropagation()">
-        <button class="button-menu"  mat-menu-item (click)="openLink('sina')">
-          <img  class="button-menu-img" src="assets/images/sina.png" alt="Logo" >
+        <button class="button-menu" mat-menu-item (click)="openLink('sina')">
+          <img class="button-menu-img" src="assets/images/sina.png" alt="Logo">
 
           <span>سینا</span>
         </button>
       </div>
       <div class="col-12" style="height: fit-content!important;" mat-menu-item (click)="$event.stopPropagation()">
-        <button  class="button-menu"  mat-menu-item (click)="openLink('ERP')">
-          <img class="button-menu-img" src="assets/images/ERP.png" alt="Logo" >
+        <button class="button-menu" mat-menu-item (click)="openLink('ERP')">
+          <img class="button-menu-img" src="assets/images/ERP.png" alt="Logo">
           <span>ERP</span>
         </button>
       </div>
@@ -57,7 +64,10 @@
 
 
   </div>
-  <mat-icon class= "toggle-menu-icon item-icon" (click)="toggled.emit(!isMinimized)">menu</mat-icon>
+
+  <button (click)="toggled.emit(!isMinimized)" mat-icon-button class="d-flex justify-content-center align-items-center">
+    <mat-icon class="toggle-menu-icon item-icon" >menu</mat-icon>
+  </button>
 </nav>
 
 
