@@ -1,8 +1,8 @@
 import {EventEmitter, Injectable} from '@angular/core';
 import {ActivatedRoute, ActivatedRouteSnapshot, NavigationEnd, Router} from "@angular/router";
-import {Tab} from "./models/tab";
+import {Tab} from "../models/tab";
 import {filter, map, pairwise} from "rxjs/operators";
-import {IdentityService} from "../../modules/identity/repositories/identity.service";
+import {IdentityService} from "../../../modules/identity/repositories/identity.service";
 import {tr} from "date-fns/locale";
 
 @Injectable({

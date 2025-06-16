@@ -1,5 +1,6 @@
 <div
   class="app-sidebar-item-container"
+  style="width: 100%"
   [class.app-sidebar-item-minimized]="isToggled"
   [dir]="this.rtl ? 'rtl' : 'ltr' ">
 
@@ -9,18 +10,35 @@
     (click)="toggleSidebarItem(sidebarItem)"
     [class.active]="sidebarItem.showChildren"
   >
-    <mat-icon class="fs-3" *ngIf="!sidebarItem.parentId">{{sidebarItem.imageUrl}}</mat-icon>
-    <h2>{{ sidebarItem.title }}</h2>
-    <mat-icon id="arrow_icon" *ngIf="sidebarItem.children && sidebarItem.children.length > 0">navigate_before</mat-icon>
+    <!-- icon -->
+    <mat-icon
+      [ngClass]="{'fs-4':sidebarItem.parentId , 'fs-3':isToggled}"
+      class="fs-2"
+      *ngIf="sidebarItem.imageUrl"
+    >
+      {{ sidebarItem.imageUrl }}
+    </mat-icon>
+
+    <!-- title -->
+    <h2 [ngClass]="{'d-block':sidebarItem.parentId}">{{ sidebarItem.title }}</h2>
+
+    <!-- arrow icon -->
+    <mat-icon
+      id="arrow_icon"
+      [ngClass]="{'d-block' :  sidebarItem.parentId}"
+      *ngIf="sidebarItem.children && sidebarItem.children.length > 0">navigate_before
+    </mat-icon>
   </div>
 
   <!-- sub_menu -->
   <div
     class="app-sidebar-item-children"
     [class.app-sidebar-item-children-show]="sidebarItem.showChildren"
-    [class.app-sidebar-item-children-hide]="!sidebarItem.showChildren || isToggled"
+    [class.app-sidebar-item-children-hide]="!sidebarItem.showChildren"
   >
-    <div style="height: 80px !important; " class="d-flex align-items-center justify-content-start px-3 fw-bold fs-6 border-bottom border-secondary text-white">{{sidebarItem.title}}</div>
+    <div style="height: 80px !important; "
+         class="d-flex align-items-center justify-content-start px-3 fw-bold fs-6 border-bottom border-secondary text-white">{{ sidebarItem.title }}
+    </div>
     <app-sidebar-item
       *ngFor="let subSidebarItem of sidebarItem.children"
       [sidebarItem]="subSidebarItem"

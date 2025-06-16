@@ -1,4 +1,6 @@
 <div class="app-container">
+
+  <!-- sidebar -->
   <app-sidebar
     [isToggled]="isToggled"
     (sidebarItemClicked)="navigateToRoute($event)"
@@ -7,9 +9,17 @@
   >
   </app-sidebar>
 
-  <app-header
-    [isMinimized]="isToggled"
-    (toggled)="isToggled = $event"
-    class="w-100">
-  </app-header>
+  <div class="d-flex flex-column w-100">
+    <!-- header -->
+    <app-header
+      [isMinimized]="isToggled"
+      (toggled)="isToggled = $event"
+      class="w-100">
+    </app-header>
+
+    <!-- content -->
+    <app-content
+      class="w-100 h-100">
+    </app-content>
+  </div>
 </div>

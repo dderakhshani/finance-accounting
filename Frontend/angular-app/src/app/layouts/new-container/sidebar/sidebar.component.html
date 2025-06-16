@@ -7,6 +7,7 @@
   >
   </div>
 
+  <!-- sidebar backdrop -->
   <div class="app-sidebar" [class.app-sidebar-minimized]="isToggled">
 
     <!-- eefa logo  -->
@@ -23,7 +24,7 @@
                         (collapseSiblings)="collapseOtherSiblings($event)"
                         *ngFor="let baseNavigation of navigations"
                         [currentRoute]="currentRoute"
-                        (unMinimize)="isToggledSubmenu = $event"
+                        (unToggledSubmenu)="isToggledSubmenu = $event"
       ></app-sidebar-item>
       <!--    <mat-icon class="me-auto toggle-menu-icon item-icon" (click)="toggled.emit(isMinimized)">menu</mat-icon>-->
     </nav>

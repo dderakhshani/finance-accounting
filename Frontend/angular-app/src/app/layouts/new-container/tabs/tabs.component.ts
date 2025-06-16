@@ -2,7 +2,7 @@ import { Component, HostListener, OnInit } from '@angular/core';
 import { ActivatedRoute, ActivatedRouteSnapshot, NavigationEnd, Router, RoutesRecognized } from "@angular/router";
 import { Tab } from "../models/tab";
 import { filter, map } from "rxjs/operators";
-import { TabManagerService } from "../tab-manager.service";
+import { TabManagerService } from "../content/tab-manager.service";
 
 @Component({
   selector: 'app-tabs',

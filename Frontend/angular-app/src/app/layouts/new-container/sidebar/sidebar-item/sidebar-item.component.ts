@@ -19,7 +19,7 @@ export class SidebarItemComponent implements OnInit {
 
   // outputs
   @Output() sidebarItemClick: EventEmitter<NavigationItem> = new EventEmitter<NavigationItem>();
-  @Output() unMinimize: EventEmitter<boolean> = new EventEmitter<boolean>()
+  @Output() unToggledSubmenu: EventEmitter<boolean> = new EventEmitter<boolean>()
   @Output() collapseSiblings: EventEmitter<NavigationItem> = new EventEmitter<NavigationItem>();
 
   ngOnInit(): void {
@@ -38,9 +38,9 @@ export class SidebarItemComponent implements OnInit {
       // this.router.navigateByUrl(navItem.Route);
       this.sidebarItemClick.emit(navItem)
     }
-    if (this.sidebarItem.showChildren) this.unMinimize.emit(true)
+    if (this.sidebarItem.showChildren) this.unToggledSubmenu.emit(true)
     else {
-      this.unMinimize.emit(false)
+      this.unToggledSubmenu.emit(false)
     }
   }
 }
