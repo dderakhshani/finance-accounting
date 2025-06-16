@@ -1,13 +1,12 @@
 // ---------------- Navbar (Top Navigation Bar) ----------------
 
 nav.navbar {
-  background-color: #f8f9fa;
-  padding: 0.5rem 1rem;
+  padding: 0.2rem 1rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
-  z-index: 800;
+  //box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+  z-index: 5;
 
   .actions {
     display: flex;
