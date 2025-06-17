@@ -8,4 +8,8 @@
     <ProjectReference Include="..\..\..\Core\Eefa.Common\Eefa.Common.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Entities\" />
+  </ItemGroup>
+
 </Project>

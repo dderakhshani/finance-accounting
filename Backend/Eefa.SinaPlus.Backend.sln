@@ -56,7 +56,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Eefa.Sale.WebApi", "Microse
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Eefa.Sale.Infrastructure", "Microservices\Sale\Eefa.Sale.Infrastructure\Eefa.Sale.Infrastructure.csproj", "{5111C8A4-19F3-4BDA-A879-0C3154D1C5E8}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Eefa.Sale.Domain", "Microservices\Sale\Eefa.Sale.Domain\Eefa.Sale.Domain.csproj", "{2335BD9B-7B79-4004-BD36-F26CBD80A9E2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Eefa.Sale.Data", "Microservices\Sale\Eefa.Sale.Data\Eefa.Sale.Data.csproj", "{2335BD9B-7B79-4004-BD36-F26CBD80A9E2}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "FileTransfer", "FileTransfer", "{C60B57E7-8749-43DA-B58E-5E53C7B48BBA}"
 EndProject
