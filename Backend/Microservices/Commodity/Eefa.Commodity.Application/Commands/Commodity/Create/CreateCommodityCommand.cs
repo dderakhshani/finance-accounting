@@ -114,7 +114,7 @@ namespace Eefa.Commodity.Application.Commands.Commodity.Create
             {
                 throw new ValidationError("کالایی قبلا با این کد در سیستم ثبت شده است");
             }
-            var com2 = await _commodityRepository.GetAll().Where(a => a.TadbirCode.ToLower() == request.TadbirCode.ToLower()).ToListAsync();
+            var com2 = await _commodityRepository.GetAll().Where(a => a.SecondaryCode.ToLower() == request.SecondaryCode.ToLower()).ToListAsync();
             if (com2.Any())
             {
                 throw new ValidationError("کالایی قبلا با این کد تدبیر در سیستم ثبت شده است");

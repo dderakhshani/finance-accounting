@@ -93,7 +93,7 @@ namespace Eefa.Commodity.Application.Commands.Bom.Update
 
                     bomItem.SubCategoryId = items.SubCategoryId;
                     bomItem.CommodityId = items.CommodityId;
-                    bom.AddItem(bomItem);
+                    //bom.AddItem(bomItem);
                 }
                 //-----------ویرایش شده
                 if (items.Id > 0)

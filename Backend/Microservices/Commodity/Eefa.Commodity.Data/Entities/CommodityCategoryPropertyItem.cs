@@ -43,4 +43,5 @@ public class CommodityCategoryPropertyItem : BaseEntity , IHierarchical
     public virtual ICollection<CommodityPropertyValue> CommodityPropertyValues { get; set; } = new List<CommodityPropertyValue>();
     public virtual ICollection<CommodityCategoryPropertyItem> InverseParent { get; set; } = new List<CommodityCategoryPropertyItem>();
     public virtual CommodityCategoryPropertyItem? Parent { get; set; }
+    public string LevelCode { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 }

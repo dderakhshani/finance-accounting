@@ -39,6 +39,8 @@ namespace Eefa.Commodity.Data.Context
         public DbSet<MeasureUnit> MeasureUnits { get; set; }
 
         public  DbSet<MeasureUnitConversion> MeasureUnitConversions { get; set; }
+        DbSet<CommoditeisView> CommoditeisView { get; set; }
+        DbSet<BomsView> BomsView { get; set; }
 
 
     }

@@ -44,6 +44,7 @@ public class CommodityCategory : BaseEntity , IHierarchical
     /// </summary>
   public bool IsReadOnly { get; set; }
   public byte[]? RowVersion { get; set; }
+    public virtual ICollection<Commodity> Commodities { get; set; } = new List<Commodity>();
     public virtual ICollection<CommodityCategoryProperty> CommodityCategoryProperties { get; set; } = new List<CommodityCategoryProperty>();
     public virtual ICollection<CommodityCategory> InverseParent { get; set; } = new List<CommodityCategory>();
     public virtual MeasureUnit? Measure { get; set; }

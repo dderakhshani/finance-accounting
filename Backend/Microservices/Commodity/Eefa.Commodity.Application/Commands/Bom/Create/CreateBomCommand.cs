@@ -81,7 +81,7 @@ namespace Eefa.Commodity.Application.Commands.Bom.Create
 
                 bomItem.SubCategoryId = items.SubCategoryId;
                 bomItem.CommodityId = items.CommodityId;
-                bom.AddItem(bomItem);
+                //bom.AddItem(bomItem);
 
 
             }

@@ -44,8 +44,8 @@ namespace Eefa.Commodity.Application.Commands.Commodity.Update
         /// کد محصول
         /// </summary>
         public string? Code { get; set; }
-        public string? TadbirCode { get; set; }
-        public string? CompactCode { get; set; }
+        public string? SecondaryCode { get; set; }
+        public string? ThirdCode { get; set; }
 
 
         /// <summary>
@@ -76,11 +76,6 @@ namespace Eefa.Commodity.Application.Commands.Commodity.Update
         public double? MaximumQuantity { get; set; }
 
         /// <summary>
-        /// تعداد سفارش
-        /// </summary>
-        public double? OrderQuantity { get; set; }
-
-        /// <summary>
         /// نوع محاسبه قیمت
         /// </summary>
         public int? PricingTypeBaseId { get; set; }
@@ -88,18 +83,8 @@ namespace Eefa.Commodity.Application.Commands.Commodity.Update
         /// عنوان کد ملی کالا
         /// </summary>
         public string CommodityNationalTitle { get; set; }
-        public bool? IsConsumable { get; set; }
-        /// <summary>
-        ///داغی دارد
-        /// </summary>
-        public bool? IsHaveWast { get; set; }
-        /// <summary>
-        ///اموال
-        /// </summary>
-        /// 
-        public bool? IsAsset { get; set; }
+        public bool? InventoryType { get; set; }
 
-        public bool? IsHaveForceWast { get; set; }
         public bool? IsActive { get; set; }
         public List<CreateCommodityPropertyValueCommand> PropertyValues { get; set; }
 
@@ -159,11 +144,11 @@ namespace Eefa.Commodity.Application.Commands.Commodity.Update
                 }
                 if (item.Id > 0)
                 {
-                    //var itemToModify = entity.CommodityPropertyValues.Where(x => x.Id == item.Id).FirstOrDefault();
-                    //_commodityPropertyValue.Update(
-                    //    _mapper.Map<CreateCommodityPropertyValueCommand, Data.Entities.CommodityPropertyValue>(item, itemToModify)
-                    //    ); ;
-                    //_commodityPropertyValue.Update(itemToModify);
+                    var itemToModify = entity.CommodityPropertyValues.Where(x => x.Id == item.Id).FirstOrDefault();
+                    _commodityPropertyValue.Update(
+                        _mapper.Map<CreateCommodityPropertyValueCommand, Data.Entities.CommodityPropertyValue>(item, itemToModify)
+                        ); ;
+                    _commodityPropertyValue.Update(itemToModify);
                 }
             }
 

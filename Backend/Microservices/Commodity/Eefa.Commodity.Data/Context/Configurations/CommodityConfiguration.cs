@@ -12,9 +12,9 @@ using System.Collections.Generic;
 
 namespace Eefa.Commodity.Data.Context.Configurations
 {
-    public partial class CommodityConfiguration : IEntityTypeConfiguration<Commodity>
+    public partial class CommodityConfiguration : IEntityTypeConfiguration<Entities.Commodity>
     {
-        public void Configure(EntityTypeBuilder<Commodity> entity)
+        public void Configure(EntityTypeBuilder<Entities.Commodity> entity)
         {
             entity.HasKey(e => e.Id).HasName("PK_Items");
 
@@ -77,9 +77,13 @@ namespace Eefa.Commodity.Data.Context.Configurations
                 .HasComment("عنوان");
             entity.Property(e => e.YearId).HasComment("کد سال");
 
+            entity.HasOne(d => d.CommodityCategory).WithMany(p => p.Commodities)
+                .HasForeignKey(d => d.CommodityCategoryId)
+                .HasConstraintName("FK_Commodities_CommodityCategories");
+
             OnConfigurePartial(entity);
         }
 
-        partial void OnConfigurePartial(EntityTypeBuilder<Commodity> entity);
+        partial void OnConfigurePartial(EntityTypeBuilder<Entities.Commodity> entity);
     }
 }

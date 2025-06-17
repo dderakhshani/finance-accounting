@@ -75,5 +75,6 @@ public class Commodity : BaseEntity , IHierarchical
   public byte[]? RowVersion { get; set; }
     public virtual ICollection<BomItem> BomItems { get; set; } = new List<BomItem>();
     public virtual ICollection<BomValue> BomValues { get; set; } = new List<BomValue>();
+    public virtual CommodityCategory? CommodityCategory { get; set; }
     public virtual ICollection<CommodityPropertyValue> CommodityPropertyValues { get; set; } = new List<CommodityPropertyValue>();
 }

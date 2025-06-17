@@ -46,6 +46,8 @@ public partial class CommodityUnitOfWork : AuditableDbContext, ICommodityUnitOfW
     public virtual DbSet<MeasureUnit> MeasureUnits { get; set; }
 
     public virtual DbSet<MeasureUnitConversion> MeasureUnitConversions { get; set; }
+    public virtual DbSet<CommoditeisView> CommoditeisView { get; set; } = default!;
+    public virtual DbSet<BomsView> BomsView { get; set; } = default!;
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

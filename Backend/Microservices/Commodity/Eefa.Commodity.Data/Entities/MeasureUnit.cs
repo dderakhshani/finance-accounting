@@ -25,4 +25,5 @@ public class MeasureUnit : BaseEntity , IHierarchical
     public virtual ICollection<MeasureUnitConversion> MeasureUnitConversionDestinationMeasureUnits { get; set; } = new List<MeasureUnitConversion>();
     public virtual ICollection<MeasureUnitConversion> MeasureUnitConversionSourceMeasureUnits { get; set; } = new List<MeasureUnitConversion>();
     public virtual MeasureUnit? Parent { get; set; }
+    public string LevelCode { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 }
