@@ -8,26 +8,39 @@ namespace Eefa.Commodity.Data.Context
 {
     public interface ICommodityUnitOfWork : IUnitOfWork
     {
-        DbSet<BaseValue> BaseValues { get; set; }
-        DbSet<BaseValueType> BaseValueTypes { get; set; }
-        DbSet<BomItem> BomItems { get; set; }
-        DbSet<Bom> Boms { get; set; }
-        DbSet<BomValue> BomValues { get; set; }
-        DbSet<BomValueHeader> BomValueHeaders { get; set; }
-        DbSet<CategoryPropertyMapping> CategoryPropertyMappings { get; set; }
-        DbSet<Entities.Commodity> Commodities { get; set; }
-        DbSet<CommodityCategory> CommodityCategories { get; set; }
-        DbSet<CommodityCategoryProperty> CommodityCategoryProperties { get; set; }
-        DbSet<CommodityCategoryPropertyItem> CommodityCategoryPropertyItems { get; set; }
-        DbSet<CommodityPropertyValue> CommodityPropertyValues { get; set; }
-        DbSet<MeasureUnit> MeasureUnits { get; set; }
-        DbSet<MeasureUnitConversion> MeasureUnitConversions { get; set; }
-        DbSet<BomsView> BomsView { get; set; }
-        DbSet<DocumentItem> DocumentItems { get; set; }
-       DbSet<CommoditeisView> CommoditeisView { get; set; }
+        public  DbSet<BaseValue> BaseValues { get; set; }
+
+        public  DbSet<BaseValueType> BaseValueTypes { get; set; }
+
+        public  DbSet<Bom> Boms { get; set; }
+
+        public DbSet<BomItem> BomItems { get; set; }
+
+        public  DbSet<BomValue> BomValues { get; set; }
+
+        public  DbSet<BomValueHeader> BomValueHeaders { get; set; }
+
+        public  DbSet<BomsView> BomsViews { get; set; }
+
+        public DbSet<CategoryPropertyMapping> CategoryPropertyMappings { get; set; }
+
+        public DbSet<Entities.Commodity> Commodities { get; set; }
+
+        public DbSet<CommodityCategory> CommodityCategories { get; set; }
+
+        public DbSet<CommodityCategoryProperty> CommodityCategoryProperties { get; set; }
+
+        public DbSet<CommodityCategoryPropertyItem> CommodityCategoryPropertyItems { get; set; }
+
+        public DbSet<CommodityPropertyValue> CommodityPropertyValues { get; set; }
+
+        public DbSet<DocumentItem> DocumentItems { get; set; }
+
+        public DbSet<MeasureUnit> MeasureUnits { get; set; }
+
+        public  DbSet<MeasureUnitConversion> MeasureUnitConversions { get; set; }
 
 
     }
-
 
 }

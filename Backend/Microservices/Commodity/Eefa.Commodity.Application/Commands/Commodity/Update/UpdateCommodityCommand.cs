@@ -14,6 +14,7 @@ using Eefa.Commodity.Application.Commands.CommodityCategoryProperty.Update;
 using Eefa.Commodity.Application.Commands.CommodityCategoryPropertyItem.Update;
 using Eefa.Commodity.Application.Commands.CommodityPropertyValue.Create;
 using Microsoft.EntityFrameworkCore;
+using Eefa.Commodity.Data.Entities;
 
 namespace Eefa.Commodity.Application.Commands.Commodity.Update
 {
@@ -158,11 +159,11 @@ namespace Eefa.Commodity.Application.Commands.Commodity.Update
                 }
                 if (item.Id > 0)
                 {
-                    var itemToModify = entity.CommodityPropertyValues.Where(x => x.Id == item.Id).FirstOrDefault();
-                    _commodityPropertyValue.Update(
-                        _mapper.Map<CreateCommodityPropertyValueCommand, Data.Entities.CommodityPropertyValue>(item, itemToModify)
-                        ); ;
-                    _commodityPropertyValue.Update(itemToModify);
+                    //var itemToModify = entity.CommodityPropertyValues.Where(x => x.Id == item.Id).FirstOrDefault();
+                    //_commodityPropertyValue.Update(
+                    //    _mapper.Map<CreateCommodityPropertyValueCommand, Data.Entities.CommodityPropertyValue>(item, itemToModify)
+                    //    ); ;
+                    //_commodityPropertyValue.Update(itemToModify);
                 }
             }
 

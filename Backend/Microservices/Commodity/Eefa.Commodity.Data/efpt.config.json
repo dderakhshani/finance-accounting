@@ -1,24 +1,69 @@
 ﻿{
-   "CodeGenerationMode": 0,
+   "CodeGenerationMode": 4,
    "ContextClassName": "CommodityUnitOfWork",
    "ContextNamespace": null,
-   "DefaultDacpacSchema": null,
    "FilterSchemas": false,
    "IncludeConnectionString": false,
    "ModelNamespace": null,
-   "OutputContextPath": null,
-   "OutputPath": "Entities\/reverse",
+   "OutputContextPath": ".\/Context",
+   "OutputPath": "Entities",
+   "PreserveCasingWithRegex": true,
    "ProjectRootNamespace": "Eefa.Commodity.Data",
    "Schemas": null,
-   "SelectedHandlebarsLanguage": 0,
-   "SelectedToBeGenerated": 2,
+   "SelectedHandlebarsLanguage": 2,
+   "SelectedToBeGenerated": 0,
+   "T4TemplatePath": null,
    "Tables": [
       {
-         "Name": "[admin].[Roles]",
+         "Name": "[admin].[BaseValues]",
          "ObjectType": 0
       },
       {
-         "Name": "[admin].[Users]",
+         "Name": "[admin].[BaseValueTypes]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[common].[BomItems]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[common].[Boms]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[common].[BomValueHeaders]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[common].[BomValues]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[common].[CategoryPropertyMappings]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[common].[Commodities]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[common].[CommodityCategories]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[common].[CommodityCategoryProperties]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[common].[CommodityCategoryPropertyItems]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[common].[CommodityPropertyValues]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[common].[DocumentItems]",
          "ObjectType": 0
       },
       {
@@ -28,24 +73,37 @@
       {
          "Name": "[common].[MeasureUnits]",
          "ObjectType": 0
+      },
+      {
+         "Name": "[common].[BomsView]",
+         "ObjectType": 3
       }
    ],
-   "UiHint": "PROGRAMMING-SRV\\SQL2019.EefaDev",
+   "UiHint": null,
+   "UncountableWords": null,
+   "UseAsyncStoredProcedureCalls": true,
    "UseBoolPropertiesWithoutDefaultSql": false,
    "UseDatabaseNames": true,
+   "UseDatabaseNamesForRoutines": true,
+   "UseDateOnlyTimeOnly": false,
    "UseDbContextSplitting": true,
+   "UseDecimalDataAnnotationForSprocResult": true,
    "UseFluentApiOnly": true,
-   "UseHandleBars": true,
+   "UseHandleBars": false,
    "UseHierarchyId": false,
    "UseInflector": true,
+   "UseInternalAccessModifiersForSprocsAndFunctions": false,
    "UseLegacyPluralizer": true,
    "UseManyToManyEntity": false,
-   "UseNoConstructor": true,
    "UseNoDefaultConstructor": false,
    "UseNoNavigations": false,
    "UseNoObjectFilter": false,
    "UseNodaTime": false,
    "UseNullableReferences": true,
+   "UsePrefixNavigationNaming": false,
    "UseSchemaFolders": false,
-   "UseSpatial": false
+   "UseSchemaNamespaces": false,
+   "UseSpatial": false,
+   "UseT4": true,
+   "UseT4Split": false
 }

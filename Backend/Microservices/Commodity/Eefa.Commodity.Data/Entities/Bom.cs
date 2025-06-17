@@ -1,39 +1,26 @@
-﻿using Eefa.Common.Domain;
+﻿using System;
 using System.Collections.Generic;
+using Eefa.Common;
+using Eefa.Common.Data;
+namespace Eefa.Commodity.Data.Entities;
 
-namespace Eefa.Commodity.Data.Entities
+/// <summary>
+/// فرمول های ساخت
+/// </summary>
+public class Bom : BaseEntity 
 {
-    public partial class Bom : DomainBaseEntity
-    {
-
-        /// <summary>
-        /// کد والد
-        /// </summary>
-        public int? RootId { get; set; }
-        public string Title { get; set; } = default!;
-        public string Description { get; set; } = default!;
-        public bool IsActive { get; set; } = default!;
-
-        /// <summary>
-        /// کد سطح
-        /// </summary>
-        public string LevelCode { get; set; } = default!;
-
-        /// <summary>
-        /// کد گروه کالا
-        /// </summary>
-        public int CommodityCategoryId { get; set; } = default!;
-
-        public virtual CommodityCategory CommodityCategory { get; set; } = default!;
-        public virtual ICollection<BomItem> Items { get; set; } = default!;
-        public virtual ICollection<BomValueHeader> BomValueHeaders { get; set; } = default!;
-        
-        public BomItem AddItem(BomItem bomItem)
-        {
-            Items ??= new List<BomItem>();
-            this.Items.Add(bomItem);
-            return bomItem;
-        }
-    }
-  
+  public int? RootId { get; set; }
+  public string Title { get; set; } = null!;
+  public string Description { get; set; } = null!;
+  public bool IsActive { get; set; }
+    /// <summary>
+    /// کد سطح
+    /// </summary>
+  public string LevelCode { get; set; } = null!;
+    /// <summary>
+    /// کد گروه کالا
+    /// </summary>
+  public int CommodityCategoryId { get; set; }
+    public virtual ICollection<BomItem> BomItems { get; set; } = new List<BomItem>();
+    public virtual ICollection<BomValueHeader> BomValueHeaders { get; set; } = new List<BomValueHeader>();
 }
