@@ -5,12 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Repositories\_Repository.cs" />
+    <ProjectReference Include="..\..\..\Core\Eefa.Common\Eefa.Common.csproj" />
+    <ProjectReference Include="..\Eefa.Sale.Application\Eefa.Sale.Application.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Core\Eefa.Common\Eefa.Common.csproj" />
-    <ProjectReference Include="..\Eefa.Sale.Application\Eefa.Sale.Application.csproj" />
+    <Folder Include="Data\" />
   </ItemGroup>
 
 </Project>
