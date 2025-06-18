@@ -11,6 +11,7 @@ using Newtonsoft.Json;
 
 namespace Eefa.Sale.Infrastructure.CrmServices
 {
+
     public class CrmServices : ICrmServices
     {
         private readonly ICustomerRepository _repository;
