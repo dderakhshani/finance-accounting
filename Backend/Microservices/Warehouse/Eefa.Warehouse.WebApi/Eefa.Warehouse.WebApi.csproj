@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Core\Eefa.Common\Eefa.Common.csproj" />
+    <ProjectReference Include="..\..\..\Core\SharedCode\SharedCode.csproj" />
+    <ProjectReference Include="..\Eefa.Warehouse.Application\Eefa.Warehouse.Application.csproj" />
+    <ProjectReference Include="..\Eefa.Warehouse.Infrastructure\Eefa.Warehouse.Infrastructure.csproj" />
+  </ItemGroup>
+  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+    <Exec Command="copy ..\..\..\Core\SharedCode\appsettings-shared.json $(OutDir)\appsettings-shared.json /Y&#xD;&#xA;copy ..\..\..\Core\SharedCode\appsettings-shared.json $(ProjectDir)\appsettings-shared.json /Y" />
+    <Exec Command="copy ..\..\..\Core\SharedCode\appsettings-shared.Development.json $(OutDir)\appsettings-shared.Development.json /Y&#xD;&#xA;copy ..\..\..\Core\SharedCode\appsettings-shared.Development.json $(ProjectDir)\appsettings-shared.Development.json /Y" />
+  </Target>
+</Project>
