@@ -23,6 +23,8 @@ using Microsoft.EntityFrameworkCore;
 
 using NLog;
 using NLog.Web;
+using Eefa.Common.Domain;
+using System.Configuration;
 
 
 namespace SharedCode
@@ -31,6 +33,38 @@ namespace SharedCode
     {
         public static void SetupRun<TContext>(WebApplicationBuilder builder, IConfiguration configuration) where TContext : DbContext
         {
+            builder.Configuration.AddJsonFile("appsettings-shared.json");
+            if (builder.Environment.IsDevelopment())
+            {
+                builder.Configuration.AddJsonFile($"appsettings-shared.{builder.Environment.EnvironmentName}.json");
+            }
+
+            builder.Services.AddDbContext<TContext>(options => options.UseSqlServer(new ConfigurationAccessor(configuration).GetConnectionString().DefaultString));
+            builder.Services.IncludeBaseServices(configuration);
+            builder.Services.IncludeDataServices(typeof(TContext));
+
+            builder.Services.Configure<CookiePolicyOptions>(options =>
+            {
+                // This lambda determines whether user consent for non-essential cookies is needed for a given request.
+                options.CheckConsentNeeded = Context => false;
+                options.MinimumSameSitePolicy = SameSiteMode.None;
+            });
+            builder.Services.AddMemoryCache();
+
+            builder.Services.AddScoped<ClickRateLimiterAttribute>(sp =>
+            {
+                int allowedClickIntervalSeconds = 3;
+                int allowedClickCount = 3;
+                return new ClickRateLimiterAttribute(allowedClickIntervalSeconds, allowedClickCount);
+            });
+
+            var app = builder.Build();
+
+            StartupConfig.Initialize(new ConfigurationAccessor(configuration));
+
+            app.IncludeAll();
+
+            app.Run();
         }
 
         public static void SetupRunOld<TContext, TStartup>(string[] args)
