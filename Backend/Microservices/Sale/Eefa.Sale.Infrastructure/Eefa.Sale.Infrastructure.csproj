@@ -7,7 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Data\" />
+    <Folder Include="Data\Entities\" />
+    <ProjectReference Include="..\..\..\Core\Eefa.Common\Eefa.Common.csproj" />
+    <ProjectReference Include="..\Eefa.Sale.Application\Eefa.Sale.Application.csproj" />
   </ItemGroup>
 
 </Project>
