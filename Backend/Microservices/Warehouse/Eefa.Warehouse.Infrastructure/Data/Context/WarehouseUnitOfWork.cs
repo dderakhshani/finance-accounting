@@ -1,11 +1,11 @@
-﻿using Eefa.Common;
+﻿
+using Eefa.Common;
 using Eefa.Common.Data;
 using Eefa.Warehouse.Infrastructure.Data.Context.Configurations;
-using Eefa.Warehouse.Infrastructure.Data;
+using Eefa.Warehouse.Infrastructure.Data.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using Eefa.Commodity.Data.Entities;
 namespace Eefa.Warehouse.Infrastructure.Data.Context;
 
 public partial class WarehouseUnitOfWork : AuditableDbContext, IWarehouseUnitOfWork

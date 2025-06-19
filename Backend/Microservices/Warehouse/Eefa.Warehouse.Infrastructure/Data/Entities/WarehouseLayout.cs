@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Eefa.Common;
 using Eefa.Common.Data;
-namespace Eefa.Commodity.Data.Entities;
+namespace Eefa.Warehouse.Infrastructure.Data.Entities;
 
 /// <summary>
 /// موقعیت های انبار

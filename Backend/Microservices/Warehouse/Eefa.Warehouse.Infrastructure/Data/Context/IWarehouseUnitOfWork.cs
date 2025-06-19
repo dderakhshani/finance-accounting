@@ -1,5 +1,5 @@
-﻿using Eefa.Commodity.Data.Entities;
-using Eefa.Common.Data;
+﻿using Eefa.Common.Data;
+using Eefa.Warehouse.Infrastructure.Data.Entities;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 
