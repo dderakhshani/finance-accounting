@@ -1,132 +1,25 @@
 ﻿{
-   "CodeGenerationMode": 0,
-   "ContextClassName": "SaleContext",
+   "CodeGenerationMode": 4,
+   "ContextClassName": "SaleUnitOfWork",
    "ContextNamespace": null,
-   "DefaultDacpacSchema": null,
    "FilterSchemas": false,
    "IncludeConnectionString": false,
    "ModelNamespace": null,
-   "OutputContextPath": null,
-   "OutputPath": "Context\/Configurations",
+   "OutputContextPath": "Data\/Context",
+   "OutputPath": "Data\/Entities",
+   "PreserveCasingWithRegex": true,
    "ProjectRootNamespace": "Eefa.Sale.Infrastructure",
    "Schemas": null,
-   "SelectedHandlebarsLanguage": 0,
-   "SelectedToBeGenerated": 1,
+   "SelectedHandlebarsLanguage": 2,
+   "SelectedToBeGenerated": 0,
+   "T4TemplatePath": null,
    "Tables": [
       {
-         "Name": "[accounting].[AccountHead]",
+         "Name": "[Sale].[Customers]",
          "ObjectType": 0
       },
       {
-         "Name": "[accounting].[AccountReferences]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[accounting].[VouchersDetail]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[accounting].[VouchersHead]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[admin].[BankBranches]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[admin].[Banks]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[admin].[BaseValues]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[admin].[BaseValueTypes]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[common].[CategoryPropertyMappings]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[common].[Commodities]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[common].[CommodityCategories]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[common].[CommodityCategoryProperties]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[common].[CommodityCategoryPropertyItems]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[common].[CommodityPropertyValues]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[common].[DocumentHeads]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[common].[DocumentItems]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[common].[DocumentNumberingFormats]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[common].[DocumentPayments]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[common].[MeasureUnitConversions]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[common].[MeasureUnits]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[common].[UserCompany]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[common].[UserYear]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[common].[Years]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[inventory].[Stocks]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[logistic].[Drivers]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[logistic].[Freights]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[logistic].[TurnDocuments]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[logistic].[Turns]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[Sale].[FixedPrice]",
+         "Name": "[Sale].[FixedPriceHistory]",
          "ObjectType": 0
       },
       {
@@ -138,22 +31,31 @@
          "ObjectType": 0
       }
    ],
-   "UiHint": "PROGRAMMING-SRV\\SQL2019.Eefa",
+   "UiHint": null,
+   "UncountableWords": null,
+   "UseAsyncStoredProcedureCalls": true,
    "UseBoolPropertiesWithoutDefaultSql": false,
    "UseDatabaseNames": true,
+   "UseDatabaseNamesForRoutines": true,
+   "UseDateOnlyTimeOnly": false,
    "UseDbContextSplitting": true,
+   "UseDecimalDataAnnotationForSprocResult": true,
    "UseFluentApiOnly": true,
-   "UseHandleBars": true,
+   "UseHandleBars": false,
    "UseHierarchyId": false,
    "UseInflector": true,
+   "UseInternalAccessModifiersForSprocsAndFunctions": false,
    "UseLegacyPluralizer": true,
    "UseManyToManyEntity": false,
-   "UseNoConstructor": true,
    "UseNoDefaultConstructor": false,
    "UseNoNavigations": false,
    "UseNoObjectFilter": false,
    "UseNodaTime": false,
    "UseNullableReferences": true,
+   "UsePrefixNavigationNaming": false,
    "UseSchemaFolders": false,
-   "UseSpatial": false
+   "UseSchemaNamespaces": false,
+   "UseSpatial": false,
+   "UseT4": true,
+   "UseT4Split": false
 }
