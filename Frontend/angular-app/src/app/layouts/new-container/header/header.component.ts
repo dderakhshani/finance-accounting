@@ -21,10 +21,12 @@ export class HeaderComponent implements OnInit {
 
   @Output() toggled: EventEmitter<boolean> = new EventEmitter<boolean>()
 
+  applicationUserFullName!: string;
+  avatarUrl!: string;
+
   currentDate!: string;
   currentDay!: string;
   currentHour!: string;
-  avatarUrl!: string;
   allowedYears: UserYear[] = [];
   allowedRoles: UserRole[] = [];
   languages: Language[] = []
@@ -44,7 +46,7 @@ export class HeaderComponent implements OnInit {
     identityService._applicationUser.subscribe(res => {
       if (res.isAuthenticated) {
 
-        // this.applicationUserFullName = res.fullName;
+        this.applicationUserFullName = res.fullName;
         // this.avatarUrl = res.photoUrl;
         this.avatarUrl = '/assets/images/avatar-placeholder.jpg';
         this.allowedRoles = res.roles;
@@ -88,8 +90,12 @@ export class HeaderComponent implements OnInit {
     await this.identityService.refreshToken(undefined, roleId, undefined)
   }
 
-  async handleLanguageChange(languageId: number) {
-    await this.identityService.refreshToken(undefined, undefined, undefined, languageId)
+  getAbbreviationName(fullName: string): string {
+    if (!fullName) return '';
+    const parts = fullName.trim().split(' ');
+    const first = parts[0]?.charAt(0).toUpperCase() || '';
+    const last = parts[1]?.charAt(0).toUpperCase() || '';
+    return first + "." +  last;
   }
 
   openLink( ref: string) {
