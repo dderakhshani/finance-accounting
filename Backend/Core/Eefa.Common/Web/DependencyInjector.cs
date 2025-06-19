@@ -243,10 +243,6 @@ namespace Eefa.Common.Web
                         new string[] {}
                     }
                 });
-
-                var xmlFile = $"{Assembly.GetEntryAssembly()?.GetName().Name}.xml";
-                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
-              //  c.IncludeXmlComments(xmlPath);
             });
         }
 
