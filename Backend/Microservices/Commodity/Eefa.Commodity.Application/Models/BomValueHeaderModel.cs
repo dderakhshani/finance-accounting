@@ -33,7 +33,7 @@ namespace Eefa.Commodity.Application.Queries.Bom
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<Eefa.Commodity.Data.Entities.BomValueHeader, BomValueHeaderModel>().ForMember(o => o.Title, opt => opt.MapFrom(src => src.Commodity.Title + "🔅" + src.Commodity.Code + "🔅" + src.Bom.Title + "🔅" + src.Name));
+            //profile.CreateMap<Eefa.Commodity.Data.Entities.BomValueHeader, BomValueHeaderModel>().ForMember(o => o.Title, opt => opt.MapFrom(src => src.Commodity.Title + "🔅" + src.Commodity.Code + "🔅" + src.Bom.Title + "🔅" + src.Name));
 
         }
     }

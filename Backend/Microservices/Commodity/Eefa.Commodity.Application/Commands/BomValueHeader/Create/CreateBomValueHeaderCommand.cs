@@ -100,7 +100,7 @@ namespace Eefa.Commodity.Application.Commands.BomValueHeader.Create
                 bomItem.Value = items.Value;
                 bomItem.UsedCommodityId = items.UsedCommodityId;
                 bomItem.BomWarehouseId = items.BomWarehouseId;
-                bomValueHeader.AddItem(bomItem);
+                //bomValueHeader.AddItem(bomItem);
             }
 
             var entity = _repository.Insert(bomValueHeader);

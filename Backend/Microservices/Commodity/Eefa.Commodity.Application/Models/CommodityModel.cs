@@ -29,8 +29,8 @@ namespace Eefa.Commodity.Application.Queries.Commodity
         /// کد محصول
         /// </summary>
         public string? Code { get; set; }
-        public string? TadbirCode { get; set; }
-        public string? CompactCode { get; set; }
+        public string? SecondaryCode { get; set; }
+        public string? ThirdCode { get; set; }
 
         /// <summary>
         /// عنوان
@@ -65,11 +65,6 @@ namespace Eefa.Commodity.Application.Queries.Commodity
         public double? MaximumQuantity { get; set; }
 
         /// <summary>
-        /// تعداد سفارش
-        /// </summary>
-        public double? OrderQuantity { get; set; }
-
-        /// <summary>
         /// نوع محاسبه قیمت
         /// </summary>
         public int? PricingTypeBaseId { get; set; }
@@ -77,20 +72,10 @@ namespace Eefa.Commodity.Application.Queries.Commodity
         /// عنوان کد ملی کالا
         /// </summary>
         public string CommodityNationalTitle { get; set; }
-        public bool? IsConsumable { get; set; }
-        /// <summary>
-        ///داغی دارد
-        /// </summary>
-        public bool? IsHaveWast { get; set; }
-        /// <summary>
-        ///اموال
-        /// </summary>
-        /// 
-        public bool? IsAsset { get; set; }
+        public bool? InventoryType { get; set; }
 
         public bool? IsWrongMeasure { get; set; }
         public int ? BomsCount { get; set; }
-        public bool? IsHaveForceWast { get; set; }
         public bool? IsActive { get; set; }
 
         public List<CommodityPropertyValueModel> PropertyValues { get; set; }

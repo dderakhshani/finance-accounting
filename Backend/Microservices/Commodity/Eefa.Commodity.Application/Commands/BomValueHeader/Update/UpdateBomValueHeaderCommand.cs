@@ -98,7 +98,7 @@ namespace Eefa.Commodity.Application.Commands.BomValueHeader.Update
                     bomValue.Value = items.Value;
                     bomValue.UsedCommodityId = items.UsedCommodityId;
                     bomValue.BomWarehouseId = items.BomWarehouseId;
-                    entity.AddItem(bomValue);
+                    //entity.AddItem(bomValue);
                 }
                 //-----------ویرایش شده
                 if (items.Id > 0)
