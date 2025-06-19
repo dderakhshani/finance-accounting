@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Eefa.Common.Web;
+using Eefa.Common;
 
 namespace Eefa.Warehouse.WebApi.Controllers
 {
@@ -8,5 +9,6 @@ namespace Eefa.Warehouse.WebApi.Controllers
     [ApiController]
     public class WarehouseBaseControlle : ApiControllerBase
     {
+
     }
 }
