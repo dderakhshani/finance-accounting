@@ -1,0 +1,184 @@
+<#@ template hostSpecific="true" #>
+<#@ assembly name="Microsoft.EntityFrameworkCore" #>
+<#@ assembly name="Microsoft.EntityFrameworkCore.Design" #>
+<#@ assembly name="Microsoft.EntityFrameworkCore.Relational" #>
+<#@ assembly name="Microsoft.Extensions.DependencyInjection.Abstractions" #>
+<#@ parameter name="EntityType" type="Microsoft.EntityFrameworkCore.Metadata.IEntityType" #>
+<#@ parameter name="Options" type="Microsoft.EntityFrameworkCore.Scaffolding.ModelCodeGenerationOptions" #>
+<#@ parameter name="NamespaceHint" type="System.String" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="System.ComponentModel.DataAnnotations" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="Microsoft.EntityFrameworkCore" #>
+<#@ import namespace="Microsoft.EntityFrameworkCore.Design" #>
+<#@ import namespace="Microsoft.Extensions.DependencyInjection" #>
+<#
+    // Template version: 800 - please do NOT remove this line
+    if (EntityType.IsSimpleManyToManyJoinEntityType())
+    {
+        // Don't scaffold these
+        return "";
+    }
+
+    var services = (IServiceProvider)Host;
+    var annotationCodeGenerator = services.GetRequiredService<IAnnotationCodeGenerator>();
+    var code = services.GetRequiredService<ICSharpHelper>();
+
+    var usings = new List<string>
+    {
+        "System",
+        "System.Collections.Generic",
+        "Eefa.Common",
+        "Eefa.Common.Data",
+    };
+
+    if (Options.UseDataAnnotations)
+    {
+        usings.Add("System.ComponentModel.DataAnnotations");
+        usings.Add("System.ComponentModel.DataAnnotations.Schema");
+        usings.Add("Microsoft.EntityFrameworkCore");
+    }
+
+    if (!string.IsNullOrEmpty(NamespaceHint))
+    {
+#>
+namespace Eefa.Commodity.Data.Entities;
+
+<#
+    }
+
+    if (!string.IsNullOrEmpty(EntityType.GetComment()))
+    {
+#>
+/// <summary>
+/// <#= code.XmlComment(EntityType.GetComment()) #>
+/// </summary>
+<#
+    }
+
+    if (Options.UseDataAnnotations)
+    {
+        foreach (var dataAnnotation in EntityType.GetDataAnnotations(annotationCodeGenerator))
+        {
+#>
+<#= code.Fragment(dataAnnotation) #>
+<#
+        }
+    }
+#>
+public class <#= EntityType.Name #> : BaseEntity <#= EntityType.GetProperties().Any(x=> x.Name=="ParentId")?", IHierarchical":"" #>
+{
+<#
+    var firstProperty = true;
+    foreach (var property in EntityType.GetProperties().OrderBy(p => p.GetColumnOrder() ?? -1))
+    {
+       
+
+        if (property.Name=="Id" || property.Name=="CreatedAt" || property.Name=="ModifiedById" || property.Name=="ModifiedAt" || property.Name=="IsDeleted" || property.Name=="OwnerRoleId" || property.Name=="CreatedById" )
+        {
+           continue;
+        }
+
+        if (!firstProperty)
+        {
+           
+        }
+              
+
+        if (!string.IsNullOrEmpty(property.GetComment()))
+        {
+#>
+    /// <summary>
+    /// <#= code.XmlComment(property.GetComment(), indent: 1) #>
+    /// </summary>
+<#
+        }
+
+        if (Options.UseDataAnnotations)
+        {
+            var dataAnnotations = property.GetDataAnnotations(annotationCodeGenerator)
+                .Where(a => !(a.Type == typeof(RequiredAttribute) && Options.UseNullableReferenceTypes && !property.ClrType.IsValueType));
+            foreach (var dataAnnotation in dataAnnotations)
+            {
+#>
+    <#= code.Fragment(dataAnnotation) #>
+<#
+            }
+        }
+
+        usings.AddRange(code.GetRequiredUsings(property.ClrType));
+
+        var needsNullable = (Options.UseNullableReferenceTypes && property.IsNullable && property.ClrType.IsValueType==false) || (property.IsNullable && property.Name.EndsWith("Enum"));
+        var needsInitializer = Options.UseNullableReferenceTypes && !property.IsNullable && !property.ClrType.IsValueType;
+
+        
+#>
+  public <#=  property.Name.EndsWith("Enum")? property.Name.Replace("Enum","") :(property.Name.EndsWith("StrJson")? $"IList<{property.Name.Replace("StrJson","")}Complex>":(property.Name.EndsWith("NumJson")? "IList<int>":  code.Reference(property.ClrType))) #><#= needsNullable ? "?" : "" #> <#= property.Name.EndsWith("StrJson")? property.Name.Replace("StrJson","") :(property.Name.EndsWith("NumJson")? property.Name.Replace("NumJson",""): property.Name)  #> { get; set; }<#= needsInitializer ? " = null!;" : "" #>
+<#
+        firstProperty = false;
+    }
+
+    foreach (var navigation in EntityType.GetNavigations())
+    {
+        
+        if (Options.UseDataAnnotations)
+        {
+            foreach (var dataAnnotation in navigation.GetDataAnnotations(annotationCodeGenerator))
+            {
+#>
+    <#= code.Fragment(dataAnnotation) #>
+<#
+            }
+        }
+
+        var targetType = navigation.TargetEntityType.Name;
+        if (EntityType.Name!="BaseValueItem" || targetType=="BaseValue")
+        if (navigation.IsCollection  )
+        {
+#>
+    public virtual ICollection<<#= targetType #>> <#= navigation.Name #> { get; set; } = new List<<#= targetType #>>();
+<#
+        }
+        else
+        {
+            var needsNullable = Options.UseNullableReferenceTypes && !(navigation.ForeignKey.IsRequired && navigation.IsOnDependent);
+            var needsInitializer = Options.UseNullableReferenceTypes && navigation.ForeignKey.IsRequired && navigation.IsOnDependent;
+#>
+    public virtual <#= targetType #><#= needsNullable ? "?" : "" #> <#= navigation.Name #> { get; set; }<#= needsInitializer ? " = null!;" : "" #>
+<#
+        }
+    }
+
+    foreach (var skipNavigation in EntityType.GetSkipNavigations())
+    {
+       if (Options.UseDataAnnotations)
+        {
+            foreach (var dataAnnotation in skipNavigation.GetDataAnnotations(annotationCodeGenerator))
+            {
+#>
+    <#= code.Fragment(dataAnnotation) #>
+<#
+            }
+        }
+#>
+    public virtual ICollection<<#= skipNavigation.TargetEntityType.Name #>> <#= skipNavigation.Name #> { get; set; } = new List<<#= skipNavigation.TargetEntityType.Name #>>();
+<#
+    }
+#>
+}
+<#
+    var previousOutput = GenerationEnvironment;
+    GenerationEnvironment = new StringBuilder();
+
+    foreach (var ns in usings.Distinct().OrderBy(x => x, new NamespaceComparer()))
+    {
+#>
+using <#= ns #>;
+<#
+    }
+
+  
+
+    GenerationEnvironment.Append(previousOutput);
+#>
