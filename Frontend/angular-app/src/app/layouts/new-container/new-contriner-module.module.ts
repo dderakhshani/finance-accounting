@@ -16,6 +16,7 @@ import {SidebarItemComponent} from "./sidebar/sidebar-item/sidebar-item.componen
 import {TabsComponent} from "./tabs/tabs.component";
 import {MatButtonModule} from "@angular/material/button";
 import {MatListModule} from "@angular/material/list";
+import {MatChipsModule} from "@angular/material/chips";
 
 
 
@@ -40,7 +41,8 @@ import {MatListModule} from "@angular/material/list";
     MatTooltipModule,
     ReactiveFormsModule,
     MatButtonModule,
-    MatListModule
+    MatListModule,
+    MatChipsModule
   ],
   exports: [NewContainerComponent]
 })
