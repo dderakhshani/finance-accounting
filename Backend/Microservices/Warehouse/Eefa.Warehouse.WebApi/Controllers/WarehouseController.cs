@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Eefa.Warehouse.Application.Commands;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Eefa.Warehouse.WebApi.Controllers
@@ -6,11 +7,8 @@ namespace Eefa.Warehouse.WebApi.Controllers
     public class WarehouseController : WarehouseBaseControlle
     {
 
-        [HttpGet]
-        public async Task<IActionResult> Get()
-        {
-            return Ok(true);
-        }
+        [HttpPost]
+        public async Task<IActionResult> Add([FromBody] CreateWarehousCommand model)=>Ok(await Mediator.Send(model));
 
     }
 }
