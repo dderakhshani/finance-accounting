@@ -5,11 +5,8 @@
   display: grid;
   height: 100%;
   width: 100%;
-  min-height: 100vh;
-  max-height: 100vh;
   overflow: auto;
-  grid-template-areas:
-                         "view";
+  grid-template-areas:"view";
   grid-template-columns:  1fr;
   grid-template-rows: 1fr;
 
@@ -30,8 +27,6 @@
     grid-area: view;
     width: 100%;
     height: 100%;
-    max-height: 100%;
-    max-width: 100%;
     overflow: hidden;
     margin: auto;
     display: grid;
@@ -41,7 +36,7 @@
     .route-content {
       overflow: auto;
       width: 100%;
-      max-height: calc(100% - 51.5px);
+      height: 100%;
       max-width: 100vw;
       //background-color: rgba(color(primary, 50), 0.7);
       position: relative;
@@ -86,8 +81,9 @@
         transition: 0.5s all;
         width: 100%;
         max-width: 100%;
-        height: calc(100vh - #{$tabs-height}) !important;
-        max-height: calc(100vh - #{$tabs-height}) !important;
+        height: 100%;
+        //height: calc(100vh - #{$tabs-height}) !important;
+        //max-height: calc(100vh - #{$tabs-height}) !important;
 
         ::ng-deep > :first-child {
           height: calc(100vh - #{$tabs-height}) !important;
