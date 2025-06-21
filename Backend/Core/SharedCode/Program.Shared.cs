@@ -39,24 +39,31 @@ namespace SharedCode
                 builder.Configuration.AddJsonFile($"appsettings-shared.{builder.Environment.EnvironmentName}.json");
             }
 
+           
+
             builder.Services.AddDbContext<TContext>(options => options.UseSqlServer(new ConfigurationAccessor(configuration).GetConnectionString().DefaultString));
             builder.Services.IncludeBaseServices(configuration);
             builder.Services.IncludeDataServices(typeof(TContext));
-
-            builder.Services.Configure<CookiePolicyOptions>(options =>
+            builder.Services.IncludeMediator(new List<Type>
             {
-                // This lambda determines whether user consent for non-essential cookies is needed for a given request.
-                options.CheckConsentNeeded = Context => false;
-                options.MinimumSameSitePolicy = SameSiteMode.None;
+                //typeof(RequestValidationBehavior<,>),
+                //typeof(RepositoryBehavior<,>)
             });
-            builder.Services.AddMemoryCache();
 
-            builder.Services.AddScoped<ClickRateLimiterAttribute>(sp =>
-            {
-                int allowedClickIntervalSeconds = 3;
-                int allowedClickCount = 3;
-                return new ClickRateLimiterAttribute(allowedClickIntervalSeconds, allowedClickCount);
-            });
+            //builder.Services.Configure<CookiePolicyOptions>(options =>
+            //{
+            //    // This lambda determines whether user consent for non-essential cookies is needed for a given request.
+            //    options.CheckConsentNeeded = Context => false;
+            //    options.MinimumSameSitePolicy = SameSiteMode.None;
+            //});
+            //builder.Services.AddMemoryCache();
+
+            //builder.Services.AddScoped<ClickRateLimiterAttribute>(sp =>
+            //{
+            //    int allowedClickIntervalSeconds = 3;
+            //    int allowedClickCount = 3;
+            //    return new ClickRateLimiterAttribute(allowedClickIntervalSeconds, allowedClickCount);
+            //});
 
             var app = builder.Build();
 
