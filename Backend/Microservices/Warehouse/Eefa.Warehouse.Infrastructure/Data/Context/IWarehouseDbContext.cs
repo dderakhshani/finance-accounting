@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Eefa.Warehouse.Infrastructure.Data.Context
 {
-    public interface IWarehouseDbContext:IUnitOfWork
+    public interface IWarehouseDbContext : IUnitOfWork
     {
         public DbSet<Warehous> Warehouses { get; set; }
 

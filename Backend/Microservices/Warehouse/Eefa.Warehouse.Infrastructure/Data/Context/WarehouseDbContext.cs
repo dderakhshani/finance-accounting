@@ -11,7 +11,7 @@ namespace Eefa.Warehouse.Infrastructure.Data.Context;
 public partial class WarehouseDbContext : AuditableDbContext, IWarehouseDbContext
 {
     public WarehouseDbContext(DbContextOptions<WarehouseDbContext> options, ICurrentUserAccessor currentUserAccessor)
-        : base(options,currentUserAccessor)
+        : base(options, currentUserAccessor)
     {
     }
 

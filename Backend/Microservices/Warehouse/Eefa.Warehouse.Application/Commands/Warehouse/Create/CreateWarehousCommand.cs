@@ -1,12 +1,51 @@
-﻿using System;
+﻿using AutoMapper;
+using Eefa.Common;
+using Eefa.Common.Data;
+using Eefa.Warehouse.Infrastructure.Data.Entities;
+using Eefa.Warehouse.Infrastructure.Data.Context;
+using MediatR;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Eefa.Warehouse.Application.Commands.Warehouse.Create
+namespace Eefa.Warehouse.Application.Commands
 {
-    internal class CreateWarehousCommand
+    public class CreateWarehousCommand : IRequest<bool>, IMapFrom<Warehous>
     {
+        public int? ParentId { get; set; }
+        public string? LevelCode { get; set; }
+        public int AccountHeadId { get; set; }
+        public int? AccountRererenceGroupId { get; set; }
+        public int? AccountReferenceId { get; set; }
+        public string Title { get; set; } = null!;
+        public bool IsActive { get; set; }
+        public int? CommodityCategoryId { get; set; }
+        public int? Sort { get; set; }
+        public bool? Countable { get; set; }
+        public byte[]? RowVersion { get; set; }
+    }
+
+    public class CreateWarehousCommandHandler : IRequestHandler<CreateWarehousCommand, bool>
+    {
+        private readonly IMapper _mapper;
+        private readonly IWarehouseDbContext _dbContext;
+
+        public CreateWarehousCommandHandler(IMapper mapper, IWarehouseDbContext dbContext)
+        {
+            _mapper = mapper;
+            _dbContext = dbContext;
+        }
+
+        public async Task<bool> Handle(CreateWarehousCommand request, CancellationToken cancellationToken)
+        {
+
+            var warehouse = _mapper.Map<Warehous>(request);
+            _dbContext.Warehouses.Add(warehouse);
+            await _dbContext.SaveChangesAsync(cancellationToken);
+
+            return true;
+        }
     }
 }

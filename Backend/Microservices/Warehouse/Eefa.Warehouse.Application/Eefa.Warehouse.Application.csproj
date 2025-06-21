@@ -13,6 +13,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\Core\Eefa.Common\Eefa.Common.csproj" />
+    <ProjectReference Include="..\Eefa.Warehouse.Infrastructure\Eefa.Warehouse.Infrastructure.csproj" />
   </ItemGroup>
-
 </Project>
