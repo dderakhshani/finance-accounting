@@ -1,4 +1,5 @@
 ﻿using Eefa.Common.Web;
+using Eefa.Sale.Application.Commands;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,6 +9,5 @@ namespace Eefa.Sale.WebApi.Controllers
     [ApiController]
     public class SaleBaseControlle : ApiControllerBase
     {
-        //gfghfgh
     }
 }
