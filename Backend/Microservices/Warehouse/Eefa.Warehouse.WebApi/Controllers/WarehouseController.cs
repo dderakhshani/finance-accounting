@@ -10,6 +10,7 @@ namespace Eefa.Warehouse.WebApi.Controllers
         public async Task<IActionResult> Get()
         {
             return Ok(true);
+
         }
 
     }
