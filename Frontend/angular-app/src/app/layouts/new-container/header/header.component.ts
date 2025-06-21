@@ -26,7 +26,7 @@ export class HeaderComponent implements OnInit {
 
   currentDate!: string;
   currentDay!: string;
-  currentHour!: string;
+  currentTime!: string;
   allowedYears: UserYear[] = [];
   allowedRoles: UserRole[] = [];
   languages: Language[] = []
@@ -71,7 +71,7 @@ export class HeaderComponent implements OnInit {
 
   setTime() {
     this.currentDate = moment(new Date()).locale('fa').format('YYYY/M/D');
-    this.currentHour = moment(new Date()).locale('fa').format('HH:mm:ss');
+    this.currentTime = moment(new Date()).locale('fa').format('HH:mm');
     this.currentDay = moment(new Date()).locale('fa').format('dddd');
 
     let that = this;
