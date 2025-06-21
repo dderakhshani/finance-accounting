@@ -52,7 +52,7 @@ namespace Eefa.Commodity.Application.Queries.Bom
                                select new BomItemModel()
                                {
                                    Id = rep.Id,
-                                   CommodityId = rep.CommodityId,
+                                   //CommodityId = rep.CommodityId,
                                    
                                    SubCategoryId = rep.SubCategoryId,
                                    CommodityCode = com.Code,

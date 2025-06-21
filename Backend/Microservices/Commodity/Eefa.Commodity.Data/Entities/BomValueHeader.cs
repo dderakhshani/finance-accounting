@@ -1,37 +1,27 @@
-﻿using Eefa.Common.Domain;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using Eefa.Common;
+using Eefa.Common.Data;
+namespace Eefa.Commodity.Data.Entities;
 
-namespace Eefa.Commodity.Data.Entities
+/// <summary>
+/// مواد فرمول ساخت
+/// </summary>
+public class BomValueHeader : BaseEntity 
 {
-    public partial class BomValueHeader : DomainBaseEntity
-    {
-
-        /// <summary>
-        /// کد فرمول ساخت
-        /// </summary>
-        public int BomId { get; set; } = default!;
-
-        /// <summary>
-        /// کد کالا
-        /// </summary>
-        public int CommodityId { get; set; } = default!;
-
-        public string Name { get; set; } = default!;
-
-        /// <summary>
-        /// تاریخ فرمول ساخت
-        /// </summary>
-        public DateTime BomDate { get; set; } = default!;
-
-        public virtual Bom Bom { get; set; } = default!;
-        public virtual Commodity Commodity { get; set; } = default!;
-        public virtual ICollection<BomValue> BomValues { get; set; } = default!;
-        public BomValue AddItem(BomValue bomItem)
-        {
-            BomValues ??= new List<BomValue>();
-            this.BomValues.Add(bomItem);
-            return bomItem;
-        }
-    }
+    /// <summary>
+    /// کد فرمول ساخت
+    /// </summary>
+  public int BomId { get; set; }
+  public string? Name { get; set; }
+    /// <summary>
+    /// کد کالا
+    /// </summary>
+  public int CommodityId { get; set; }
+    /// <summary>
+    /// تاریخ فرمول ساخت
+    /// </summary>
+  public DateTime BomDate { get; set; }
+    public virtual Bom Bom { get; set; } = null!;
+    public virtual ICollection<BomValue> BomValues { get; set; } = new List<BomValue>();
 }
