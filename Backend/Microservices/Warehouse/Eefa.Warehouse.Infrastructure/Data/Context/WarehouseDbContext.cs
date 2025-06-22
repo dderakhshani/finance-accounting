@@ -8,7 +8,7 @@ using System;
 using System.Collections.Generic;
 namespace Eefa.Warehouse.Infrastructure.Data.Context;
 
-public partial class WarehouseDbContext : AuditableDbContext, IWarehouseDbContext
+public partial class WarehouseDbContext : AuditableDbContext
 {
     public WarehouseDbContext(DbContextOptions<WarehouseDbContext> options, ICurrentUserAccessor currentUserAccessor)
         : base(options, currentUserAccessor)
