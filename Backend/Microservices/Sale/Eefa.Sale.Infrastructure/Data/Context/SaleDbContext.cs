@@ -6,6 +6,7 @@ using Eefa.Sale.Infrastructure.Data.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 namespace Eefa.Sale.Infrastructure.Data.Context;
 
 public partial class SaleDbContext : AuditableDbContext, ISaleDbContext
@@ -25,16 +26,19 @@ public partial class SaleDbContext : AuditableDbContext, ISaleDbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.ApplyConfiguration(new Configurations.CustomerConfiguration());
-        modelBuilder.ApplyConfiguration(new Configurations.FixedPriceHistoryConfiguration());
-        modelBuilder.ApplyConfiguration(new Configurations.SalePriceListConfiguration());
-        modelBuilder.ApplyConfiguration(new Configurations.SalePriceListDetailConfiguration());
 
-        modelBuilder.HasSequence("SeqPayment", "bursary");
-        modelBuilder.HasSequence("SeqReceive", "bursary");
+        modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
 
         OnModelCreatingPartial(modelBuilder);
+
+        base.OnModelCreating(modelBuilder);
+
+     
+       
     }
+
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    => optionsBuilder.LogTo(Console.WriteLine);
 
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
 }

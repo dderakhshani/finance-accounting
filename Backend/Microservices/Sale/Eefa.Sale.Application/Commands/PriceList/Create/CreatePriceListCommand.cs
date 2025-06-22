@@ -43,10 +43,8 @@ namespace Eefa.Sale.Application.Commands
         public async Task<bool> Handle(CreatePriceListCommand request, CancellationToken cancellationToken)
         {
             var priceList = mapper.Map<SalePriceList>(request);
-
             dbContext.SalePriceLists.Add(priceList);
             await dbContext.SaveChangesAsync(cancellationToken);
-
             return true;
         }
     }
