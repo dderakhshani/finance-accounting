@@ -34,13 +34,13 @@ namespace SharedCode
         public static void SetupRun<TContext>(WebApplicationBuilder builder, IConfiguration configuration) where TContext : DbContext
         {
             builder.Configuration.AddJsonFile("appsettings-shared.json");
+            builder.Configuration.AddJsonFile("appsettings.json");
             if (builder.Environment.IsDevelopment())
             {
                 builder.Configuration.AddJsonFile($"appsettings-shared.{builder.Environment.EnvironmentName}.json");
+                builder.Configuration.AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json");
             }
-
-           
-
+      
             builder.Services.AddDbContext<TContext>(options => options.UseSqlServer(new ConfigurationAccessor(configuration).GetConnectionString().DefaultString));
             builder.Services.IncludeBaseServices(configuration);
             builder.Services.IncludeDataServices(typeof(TContext));
