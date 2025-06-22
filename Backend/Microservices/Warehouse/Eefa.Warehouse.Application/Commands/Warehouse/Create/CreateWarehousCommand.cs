@@ -30,9 +30,9 @@ namespace Eefa.Warehouse.Application.Commands
     public class CreateWarehousCommandHandler : IRequestHandler<CreateWarehousCommand, bool>
     {
         private readonly IMapper _mapper;
-        private readonly IWarehouseDbContext _dbContext;
+        private readonly WarehouseDbContext _dbContext;
 
-        public CreateWarehousCommandHandler(IMapper mapper, IWarehouseDbContext dbContext)
+        public CreateWarehousCommandHandler(IMapper mapper, WarehouseDbContext dbContext)
         {
             _mapper = mapper;
             _dbContext = dbContext;
