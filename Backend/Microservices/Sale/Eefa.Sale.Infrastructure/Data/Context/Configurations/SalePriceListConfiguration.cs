@@ -16,21 +16,18 @@ namespace Eefa.Sale.Infrastructure.Data.Context.Configurations
     {
         public void Configure(EntityTypeBuilder<SalePriceList> entity)
         {
-            entity.ToTable("SalePriceList", "Sale", tb =>
-                {
-                    tb.HasComment("لیست قیمت محصولات");
-                    tb.HasTrigger("SalePriceListInsertTrriger");
-                });
+            entity.ToTable("SalePriceList", "Sale", tb => tb.HasComment("لیست قیمت محصولات"));
 
-        
+            entity.Property(e => e.Id).HasComment("شناسه");
+            entity.Property(e => e.AccountReferenceGroupId).HasComment("نوع لیست قیمتی ");
             entity.Property(e => e.CreatedAt)
                 .HasDefaultValueSql("(getdate())")
                 .HasComment("تاریخ و زمان ایجاد");
-          
+            entity.Property(e => e.CreatedById).HasComment("ایجاد کننده");
             entity.Property(e => e.Descriptions)
                 .HasMaxLength(500)
                 .HasComment("توضیحات");
-
+            entity.Property(e => e.IsDeleted).HasComment("آیا حذف شده است؟");
             entity.Property(e => e.LevelCode)
                 .HasMaxLength(50)
                 .IsUnicode(false)
@@ -38,7 +35,10 @@ namespace Eefa.Sale.Infrastructure.Data.Context.Configurations
             entity.Property(e => e.ModifiedAt)
                 .HasDefaultValueSql("(getdate())")
                 .HasComment("تاریخ و زمان اصلاح");
-         
+            entity.Property(e => e.ModifiedById).HasComment("اصلاح کننده");
+            entity.Property(e => e.OwnerRoleId).HasComment("نقش صاحب سند");
+            entity.Property(e => e.ParentId).HasComment("کد والد");
+            entity.Property(e => e.StartDate).HasComment("تاریخ شروع");
             entity.Property(e => e.Title)
                 .HasMaxLength(200)
                 .HasComment("عنوان");

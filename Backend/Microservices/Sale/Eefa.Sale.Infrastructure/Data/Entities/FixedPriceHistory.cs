@@ -16,7 +16,8 @@ public class FixedPriceHistory : BaseEntity
     /// <summary>
     /// قیمت
     /// </summary>
-  public long Price { get; set; }
+  public long? Price { get; set; }
+  public double? DollarPrice { get; set; }
     /// <summary>
     /// تاریخ شروع
     /// </summary>
