@@ -31,10 +31,6 @@ public class Warehous : BaseEntity , IHierarchical
     /// </summary>
   public string Title { get; set; } = null!;
     /// <summary>
-    /// مجوز دسترسی به انبار
-    /// </summary>
-  public string? AccessPermission { get; set; }
-    /// <summary>
     /// فعال
     /// </summary>
   public bool IsActive { get; set; }
@@ -46,10 +42,6 @@ public class Warehous : BaseEntity , IHierarchical
     /// ترتیب نمایش
     /// </summary>
   public int? Sort { get; set; }
-    /// <summary>
-    /// کد تدبیر
-    /// </summary>
-  public int? TadbirCode { get; set; }
     /// <summary>
     /// قابل شمارش 
     /// </summary>
