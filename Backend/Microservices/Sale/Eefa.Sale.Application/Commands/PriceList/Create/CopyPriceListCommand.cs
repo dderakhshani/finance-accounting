@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Azure.Core;
 using Eefa.Common;
 using Eefa.Sale.Application.Queries.PriceList;
 using Eefa.Sale.Infrastructure.Data.Context;
@@ -9,7 +10,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
+using static StackExchange.Redis.Role;
 
 namespace Eefa.Sale.Application.Commands.PriceList.Copy
 {
@@ -17,8 +20,6 @@ namespace Eefa.Sale.Application.Commands.PriceList.Copy
     {
 
         public string Title { get; set; } = null!;
-
-        public int Id { get; set; }
 
         public class CopyPriceListCommandHandler : IRequestHandler<CopyPriceListCommand, bool>
         {
@@ -35,73 +36,88 @@ namespace Eefa.Sale.Application.Commands.PriceList.Copy
 
             public async Task<bool> Handle(CopyPriceListCommand request, CancellationToken cancellationToken)
             {
-                var srcPriceList = await _priceListQueries.GetById(request.Id);
-                var newPriceList = new SalePriceList
-                {
-                    StartDate = DateTime.Now,
-                    IsDeleted = false,
-                    Title = request.Title
-                };
-                _dbContext.Add(newPriceList);
-                var children = _priceListQueries.GetAll().Result.Where(x => x.RootId == request.Id).ToList();
-                var newchildren = children.Where(x => x.ParentId == request.Id).ToList();
+                var currentDateTime = DateTime.Now;
+                var allListPrice = _priceListQueries.GetAll().Result;
+                var srcPriceList = allListPrice.Where(x => x.RootId == null).OrderByDescending(x => x.Id).First();
+
+                var newPriceList = _mapper.Map<SalePriceList>(srcPriceList);
+                newPriceList.StartDate = currentDateTime;
+                newPriceList.Title = request.Title;
+                _dbContext.SalePriceLists.Add(newPriceList);
+
+                var allChildren = allListPrice.Where(x => x.RootId == newPriceList.Id).ToList();
+                var levelOneChildrens = allChildren.Where(x => x.ParentId == newPriceList.Id).ToList();
+
+
+                CopyPriceListChildren(currentDateTime, levelOneChildrens, allListPrice, newPriceList.Id, _mapper, _dbContext);
+
 
                 return true;
             }
 
 
-            public static void CopyPriceListChildren(SalePriceList root, SalePriceList parent, List<SalePriceList> children, List<SalePriceList> allChildren, SaleDbContext context)
+            public static void CopyPriceListChildren(DateTime currentDateTime, List<SalePriceList> levelOneChildrens, List<SalePriceList> allListPrice, int parentId, IMapper mapper, SaleDbContext _dbContext)
             {
-                foreach (var child in children)
+
+                foreach (var children in levelOneChildrens)
                 {
-                    var newPriceList = new SalePriceList
+                    var newPriceListChildren = mapper.Map<SalePriceList>(children);
+                    newPriceListChildren.StartDate = currentDateTime;
+                    newPriceListChildren.ParentId = parentId;
+                    _dbContext.SalePriceLists.Add(newPriceListChildren);
+                    var subchildren = allListPrice.Where(x => x.ParentId == children.Id).ToList();
+                    if (subchildren.Any())
                     {
-                        StartDate = DateTime.Now,
-                        IsDeleted = child.IsDeleted,
-                        Title = child.Title,
-                        Descriptions = child.Descriptions,
-                        DollarPrice = child.DollarPrice,
-                        Price = child.Price,
-                        
-                    };
-                    context.Add(newPriceList);
+                        CopyPriceListChildren(currentDateTime, subchildren, allListPrice, newPriceListChildren.Id, mapper, _dbContext);
+                    }
 
-
-                    //foreach (var child in children)
-                    //{
-                    //    var newPriceList = new PriceList
-                    //    {
-                    //        Date = DateTime.Now,
-                    //        IsDeleted = child.IsDeleted,
-                    //        ListName = child.ListName,
-                    //        Description = child.Description,
-                    //        DollarPrice = child.DollarPrice,
-                    //        //PriceList1= root,
-                    //        PriceList2 = parent,
-                    //        Price = child.Price,
-                    //    };
-                    //    context.PriceLists.Add(newPriceList);
-
-                    //    var items = context.PriceListItems.Where(x => x.PriceListId == child.Id && x.IsDeleted != true).ToList();
-                    //    foreach (var item in items)
-                    //    {
-                    //        var newPriceListItem = new PriceListItem
-                    //        {
-                    //            IsDeleted = item.IsDeleted,
-                    //            Price = item.Price,
-                    //            PriceList = newPriceList,
-                    //            SaleProduct2Id = item.SaleProduct2Id,
-                    //            CustomerTypeBaseId = item.CustomerTypeBaseId,
-
-                    //        };
-                    //        context.PriceListItems.Add(newPriceListItem);
-                    //    }
-                    //    var newChildren = allChildren.Where(x => x.ParentId == child.Id).ToList();
-
-                    //    if (newChildren.Count > 0)
-                    //        CopyPriceListChildren(root, newPriceList, newChildren, allChildren, context);
-                    //}
                 }
+
+                //foreach (var child in children)
+                //{
+                //    var newPriceList = new PriceList
+                //    {
+                //        Date = DateTime.Now,
+                //        IsDeleted = child.IsDeleted,
+                //        ListName = child.ListName,
+                //        Description = child.Description,
+                //        DollarPrice = child.DollarPrice,
+                //        Price = child.Price,
+                //        RootId = rootId,
+                //        ParentId = parentId
+                //    };
+
+                //    context.PriceLists.Add(newPriceList);
+                //    context.SaveChanges(); // برای دسترسی به newPriceList.Id در ادامه
+
+                //    var items = context.PriceListItems
+                //        .Where(x => x.PriceListId == child.Id && !x.IsDeleted)
+                //        .ToList();
+
+                //    foreach (var item in items)
+                //    {
+                //        var newItem = new PriceListItem
+                //        {
+                //            IsDeleted = item.IsDeleted,
+                //            Price = item.Price,
+                //            PriceListId = newPriceList.Id,
+                //            SaleProduct2Id = item.SaleProduct2Id,
+                //            CustomerTypeBaseId = item.CustomerTypeBaseId
+                //        };
+
+                //        context.PriceListItems.Add(newItem);
+                //    }
+
+                //    var subChildren = allChildren
+                //        .Where(x => x.ParentId == child.Id)
+                //        .ToList();
+
+                //    if (subChildren.Any())
+                //    {
+                //        CopyPriceListChildren(rootId, newPriceList.Id, subChildren, allChildren, context);
+                //    }
+                //}
+
             }
         }
     }
