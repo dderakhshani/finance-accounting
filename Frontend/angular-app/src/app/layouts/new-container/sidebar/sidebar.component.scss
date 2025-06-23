@@ -12,6 +12,7 @@
   z-index: 200;
   transition: transform 0.3s ease-in-out, width 0.3s ease;
   transform: translateX(0);
+  padding: 0 10px;
 
   &.app-sidebar-minimized {
     width: $sidebar-width-minimized;
@@ -30,7 +31,14 @@
     justify-content: center;
     font-weight: bold;
     font-size: 1.25rem;
-    color: white;
+    .logo {
+      margin: auto;
+      width: 100px;
+
+      path {
+        fill: white;
+      }
+    }
   }
 
   nav {

@@ -26,6 +26,7 @@ export class NewContainerComponent implements OnInit {
   navigations:NavigationItem[] = [];
   flatNavigations:NavigationItem[] = [];
   isToggled: boolean = false;
+  isSettingToggled: boolean = false;
 
   // @ts-ignore
   constructor(

@@ -1,0 +1,10 @@
+.sidebar-backdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 500;
+  animation: fadeIn 0.3s ease forwards;
+}

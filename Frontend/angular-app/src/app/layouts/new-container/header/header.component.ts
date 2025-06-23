@@ -19,6 +19,10 @@ export class HeaderComponent implements OnInit {
 
   @Input() isMinimized : boolean = false;
 
+  @Input() isSettingToggled : boolean = false;
+
+  @Output() settingToggled = new EventEmitter<boolean>();
+
   @Output() toggled: EventEmitter<boolean> = new EventEmitter<boolean>()
 
   applicationUserFullName!: string;

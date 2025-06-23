@@ -17,6 +17,7 @@ import {TabsComponent} from "./tabs/tabs.component";
 import {MatButtonModule} from "@angular/material/button";
 import {MatListModule} from "@angular/material/list";
 import {MatChipsModule} from "@angular/material/chips";
+import { SettingsComponent } from './settings/settings.component';
 
 
 
@@ -28,6 +29,7 @@ import {MatChipsModule} from "@angular/material/chips";
     SidebarItemComponent ,
     TabsComponent,
     NewContainerComponent,
+    SettingsComponent,
   ],
   imports: [
     CommonModule,

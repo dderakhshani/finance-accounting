@@ -14,18 +14,16 @@ export class SidebarComponent{
   // for route changes
   currentRoute: string = '';
 
+  // inputs
   @Input() isToggled: boolean = false;
-
   @Input() isToggledSubmenu: boolean = false;
-
   @Input() navigations!: NavigationItem[];
-
   @Input() set flatNavigations(navItems: NavigationItem[]) {
     this._flatNavigations = navItems;
   };
 
+  // outputs
   @Output() closeSidebar : EventEmitter<boolean> = new EventEmitter();
-
   @Output() sidebarItemClicked: EventEmitter<NavigationItem> = new EventEmitter<NavigationItem>();
 
   _flatNavigations: NavigationItem[] = []
