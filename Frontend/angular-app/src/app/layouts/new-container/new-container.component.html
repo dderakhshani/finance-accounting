@@ -11,8 +11,6 @@
   <!--  settings  -->
   <app-settings
     *ngIf="isSettingToggled"
-    style="z-index: 1200"
-    class="h-full w-full fixed top-0 left-0"
     [isSettingToggled]="isSettingToggled"
     (clickHandler)="isSettingToggled=!$event">
   </app-settings>

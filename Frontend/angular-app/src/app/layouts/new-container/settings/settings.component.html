@@ -1,15 +1,34 @@
-<div>
-  <!-- Backdrop -->
+<div class="h-screen w-full z-[1200] fixed top-0 left-0">
+
+  <!-- Setting Backdrop -->
   <div
-    *ngIf="isSettingToggled"
-    class="sidebar-backdrop"
+    class="w-full h-full bg-black bg-opacity-50 animate-fadeIn"
     (click)="clickHandler.emit(isSettingToggled)"
   >
   </div>
 
-  <!-- sidebar -->
-  <div class="app-sidebar">
+  <!-- Setting Menu -->
+  <div class="w-64 absolute top-0 left-0 bg-white shadow-lg h-full p-4 transform transition-transform duration-300 ease-in-out" [ngClass]="{'translate-x-0': isSettingToggled, '-translate-x-full': !isSettingToggled}">
+    <h2 class="text-lg font-semibold mb-4">تنظیمات</h2>
 
-    <!-- eefa logo  -->
+    <div class="mb-4">
+      <h3 class="font-medium mb-2">انتخاب تم:</h3>
+      <button class="flex items-center w-full text-left p-2 hover:bg-gray-200">
+        <i class="fas fa-sun mr-2"></i> تم روشن
+      </button>
+      <button class="flex items-center w-full text-left p-2 hover:bg-gray-200" >
+        <i class="fas fa-moon mr-2"></i> تم تیره
+      </button>
+    </div>
+
+    <div>
+      <h3 class="font-medium mb-2">چیدمان:</h3>
+      <button class="flex items-center w-full text-left p-2 hover:bg-gray-200" >
+        <i class="fas fa-th mr-2"></i> چیدمان شبکه‌ای
+      </button>
+      <button class="flex items-center w-full text-left p-2 hover:bg-gray-200">
+        <i class="fas fa-list mr-2"></i> چیدمان لیستی
+      </button>
+    </div>
   </div>
 </div>
