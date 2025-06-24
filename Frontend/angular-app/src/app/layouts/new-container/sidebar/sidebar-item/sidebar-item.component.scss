@@ -1,86 +1,9 @@
-.app-sidebar-item-container {
-  position: inherit;
-}
-
-.app-sidebar-item-minimized{
-  //display: flex;
-  //justify-content: center;
-  //align-items: center;
-
-  &:hover {
-    img {
-      transform: scale(1.3);
-    }
-  }
-  h2{
+.app-sidebar-item-minimized {
+  h2 {
     display: none;
   }
-  #arrow_icon{
+
+  #arrow_icon {
     display: none;
   }
-}
-
-.app-sidebar-item {
-  opacity: 0.7;
-  padding: 8px 10px;
-  margin: 4px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: background 0.2s ease;
-  border-radius: 8px;
-
-  &:hover {
-    opacity: 1;
-  }
-}
-
-.app-sidebar-item:hover {
-  background-color: #2C3344;
-}
-
-.app-sidebar-item.active {
-  background-color: #007bff;
-  color: white;
-}
-
-h2 {
-  font-size: 14px;
-  margin: 0;
-  flex-grow: 1;
-}
-
-.arrow-icon {
-  width: 16px;
-  height: 16px;
-  fill: #999;
-}
-
-/* استایل منوی فرزند */
-.app-sidebar-item-children {
-  position: absolute;
-  top: 0;
-  z-index: 150 ;
-  text-wrap: nowrap;
-  min-width: 250px;
-  background-color: #0F172A;
-  display: none;
-  height: 100vh;
-  border-right: 0.2px solid #666;
-}
-
-.app-sidebar-item-children-show {
-  display: block;
-  background-color: #555;
-}
-
-.app-sidebar-item-children-hide {
-  display: none;
-}
-
-
-[dir="rtl"] .app-sidebar-item-children {
-  left: auto;
-  right: 100%;
 }

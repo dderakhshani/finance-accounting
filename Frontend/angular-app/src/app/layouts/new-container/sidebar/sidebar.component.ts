@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnChanges, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {IdentityService} from "../../../modules/identity/repositories/identity.service";
 import {NavigationEnd, Router} from "@angular/router";
 import {NavigationItem} from "../../main-container/models/navigation-item";
@@ -7,7 +7,6 @@ import { filter } from 'rxjs/operators';
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
-  styleUrls: ['./sidebar.component.scss']
 })
 export class SidebarComponent{
 
