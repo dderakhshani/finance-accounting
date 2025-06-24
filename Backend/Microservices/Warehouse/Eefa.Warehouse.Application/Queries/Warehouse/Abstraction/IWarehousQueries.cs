@@ -7,11 +7,12 @@ using System.Text;
 using System.Threading.Tasks;
 using Eefa.Common.CommandQuery;
 using Eefa.Warehouse.Infrastructure.Data.Entities;
+using Eefa.Warehouse.Application.Models;
 
 namespace Eefa.Warehouse.Application.Queries
 {
     public interface IWarehousQueries : IQuery
     {
-        //Task<Warehous> GetById(int id);
+        Task<PagedList<WarehouseModel>> GetAll(PaginatedQueryModel query);
     }
 }
