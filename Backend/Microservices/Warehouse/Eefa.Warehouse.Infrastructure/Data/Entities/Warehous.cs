@@ -50,4 +50,5 @@ public class Warehous : BaseEntity , IHierarchical
     public virtual ICollection<Warehous> InverseParent { get; set; } = new List<Warehous>();
     public virtual Warehous? Parent { get; set; }
     public virtual ICollection<WarehouseLayout> WarehouseLayouts { get; set; } = new List<WarehouseLayout>();
+    public virtual ICollection<WarehouseStock> WarehouseStocks { get; set; } = new List<WarehouseStock>();
 }

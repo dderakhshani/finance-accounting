@@ -8,21 +8,27 @@ using System;
 using System.Collections.Generic;
 namespace Eefa.Warehouse.Infrastructure.Data.Context;
 
-public partial class WarehouseDbContext : AuditableDbContext
+public partial class WarehouseDbContext : AuditableDbContext, IWarehouseDbContext
 {
     public WarehouseDbContext(DbContextOptions<WarehouseDbContext> options, ICurrentUserAccessor currentUserAccessor)
-        : base(options, currentUserAccessor)
+        : base(options,currentUserAccessor)
     {
     }
 
     public virtual DbSet<Warehous> Warehouses { get; set; }
 
+    public virtual DbSet<WarehouseHistory> WarehouseHistories { get; set; }
+
     public virtual DbSet<WarehouseLayout> WarehouseLayouts { get; set; }
+
+    public virtual DbSet<WarehouseStock> WarehouseStocks { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfiguration(new Configurations.WarehousConfiguration());
+        modelBuilder.ApplyConfiguration(new Configurations.WarehouseHistoryConfiguration());
         modelBuilder.ApplyConfiguration(new Configurations.WarehouseLayoutConfiguration());
+        modelBuilder.ApplyConfiguration(new Configurations.WarehouseStockConfiguration());
 
         modelBuilder.HasSequence("SeqPayment", "bursary");
         modelBuilder.HasSequence("SeqReceive", "bursary");
