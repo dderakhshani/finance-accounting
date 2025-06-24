@@ -41,7 +41,7 @@ namespace Eefa.Warehouse.Application.Commands.Warehouse.Update
 
         public async Task<bool> Handle(UpdateWarehousCommand request, CancellationToken cancellationToken)
         {
-            var entity = await _dbContext.Warehouses.FirstAsync(w => w.Id == request.Id);
+            var entity = await _dbContext.Warehouses.FirstAsync(w => w.Id == request.Id && !w.IsDeleted);
             _mapper.Map(request, entity);
 
             await _dbContext.SaveChangesAsync(cancellationToken);
