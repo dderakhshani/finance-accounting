@@ -32,23 +32,20 @@ namespace Eefa.Sale.Application.Commands.PriceList.Update
     {
         SaleDbContext _dbContext;
         IMapper _mapper;
-        IPriceListQueries _priceListQueries;
 
         public UpdatePriceListCommandHandler(SaleDbContext dbContext, IMapper mapper, IPriceListQueries priceListQueries)
         {
             _dbContext = dbContext;
             _mapper = mapper;
-            _priceListQueries = priceListQueries;
 
         }
 
 
         public async Task<bool> Handle(UpdatePriceListCommand request, CancellationToken cancellationToken)
         {
-            SalePriceList currentPriceList = _priceListQueries.GetById(request.Id).Result;
+            var currentPriceList = _dbContext.SalePriceLists.Where(x => x.Id == request.Id && x.IsDeleted != true).FirstOrDefault();
             _mapper.Map(request, currentPriceList);
             await _dbContext.SaveChangesAsync(cancellationToken);
-
             return true;
         }
     }

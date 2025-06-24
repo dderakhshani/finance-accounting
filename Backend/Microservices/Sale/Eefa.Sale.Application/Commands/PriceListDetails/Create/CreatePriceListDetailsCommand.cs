@@ -18,25 +18,36 @@ namespace Eefa.Sale.Application.Commands.PriceListDetails.Create
 
         public int CommodityId { get; set; }
 
-        public int? _ChildAccountReferenceGroupId { get; set; }
-
         public class CreatePriceListDetailsCommandHandler : IRequestHandler<CreatePriceListDetailsCommand, bool>
         {
-            SaleDbContext dbContext;
-            IMapper mapper;
+            SaleDbContext _dbContext;
+            IMapper _mapper;
             public CreatePriceListDetailsCommandHandler(SaleDbContext dbContext, IMapper mapper)
             {
-                this.dbContext = dbContext;
-                this.mapper = mapper;
+                _dbContext = dbContext;
+                _mapper = mapper;
             }
             public async Task<bool> Handle(CreatePriceListDetailsCommand request, CancellationToken cancellationToken)
             {
-                var priceListDetail = mapper.Map<SalePriceListDetail>(request);
+                var priceListDetail = _mapper.Map<SalePriceListDetail>(request);
 
                 if (priceListDetail != null)
                 {
-                    dbContext.SalePriceListDetails.Add(priceListDetail);
-                    await dbContext.SaveChangesAsync(cancellationToken);
+                    _dbContext.SalePriceListDetails.Add(priceListDetail);
+                    var priceList = _dbContext.SalePriceLists.Where(x => x.Id == request.SalePriceListId && x.IsDeleted != true).FirstOrDefault();
+
+                    if (priceList != null)
+                    {
+                        var priceHistory = new FixedPriceHistory
+                        {
+                            CommodityId = priceListDetail.CommodityId,
+                            Price = priceList.Price.HasValue ? (long?)priceList.Price.Value : null,
+                            DollarPrice = priceList.DollarPrice.HasValue ? (long?)priceList.DollarPrice.Value : null,
+                            StartDate = priceList.StartDate
+                        };
+                        _dbContext.FixedPriceHistories.Add(priceHistory);
+                    }
+                    await _dbContext.SaveChangesAsync(cancellationToken);
                     return true;
                 }
                 else
