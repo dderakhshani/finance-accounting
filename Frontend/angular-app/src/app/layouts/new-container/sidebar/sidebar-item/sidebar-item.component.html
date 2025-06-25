@@ -1,0 +1,65 @@
+<div
+  style="position: inherit"
+  class=" w-full"
+>
+
+  <!-- menu items -->
+  <div
+    class="flex items-center justify-center gap-2 opacity-70 px-2 py-2 m-1 rounded-md cursor-pointer transition-all duration-200 hover:opacity-100 hover:bg-[#2C3344] hover:scale-105"
+    (click)="toggleSidebarItem(sidebarItem)"
+    [ngClass]="{'app-sidebar-item-minimized':isToggled , 'bg-gray-600':sidebarItem.showChildren} "
+  >
+    <!-- icon -->
+    <mat-icon
+      [ngClass]="{
+        'text-lg': sidebarItem.parentId,
+        'text-xl': isToggled
+      }"
+      class="text-2xl sidebar-icon transition-transform duration-200"
+      *ngIf="sidebarItem.imageUrl"
+    >
+      {{ sidebarItem.imageUrl }}
+    </mat-icon>
+
+    <!-- title -->
+    <h2
+      class="text-nowrap text-sm flex-grow m-0"
+      [ngClass]="{'!block': sidebarItem.parentId && isToggled }"
+    >
+      {{ sidebarItem.title }}
+    </h2>
+
+    <!-- arrow icon -->
+    <div
+      id="arrow_icon"
+      [ngClass]="{'!block': sidebarItem.parentId && isToggled}">
+      <mat-icon
+        *ngIf="sidebarItem.children.length > 0">
+        navigate_before
+      </mat-icon>
+    </div>
+  </div>
+
+  <!-- sub menu -->
+  <div
+    class="absolute top-0 z-[150] min-w-[260px] p-2 h-screen border-r border-gray-600 bg-[#0F172A] text-nowrap"
+    [class.hidden]="!sidebarItem.showChildren"
+    [class.block]="sidebarItem.showChildren"
+    [class.bg-gray-700]="sidebarItem.showChildren"
+    [ngClass]="rtl ? 'right-full' : 'left-full'"
+  >
+    <div class="h-[72px] text-lg flex items-center justify-start px-3 font-bold border-b border-gray-500 text-white">
+      {{ sidebarItem.title }}
+    </div>
+
+    <app-sidebar-item
+      *ngFor="let subSidebarItem of sidebarItem.children"
+      [sidebarItem]="subSidebarItem"
+      [isToggled]="isToggled"
+      [subLevelCounter]="subLevelCounter + 1"
+      [isSubSidebar]="true"
+      (sidebarItemClick)="sidebarItemClick.emit($event)"
+      (collapseSiblings)="collapseAllChildsExceptActiveItem($event)"
+    ></app-sidebar-item>
+  </div>
+</div>
