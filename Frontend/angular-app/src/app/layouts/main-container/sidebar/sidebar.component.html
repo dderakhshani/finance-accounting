@@ -1,6 +1,4 @@
-<div class="app-sidebar">
-
-    <!-- eefa logo  -->
+<div class="app-sidebar" [class.app-sidebar-minimized]="isMinimized" [class]="currentYear ? 'back'+currentYear.yearName : ''">
     <div class="logo-container">
         <svg class="logo" xmlns="http://www.w3.org/2000/svg" width="107.378" height="21.931"
              viewBox="0 0 107.378 21.931">
@@ -25,18 +23,13 @@
 
     </div>
 
-    <!--  side items  -->
     <nav>
         <app-sidebar-item [isToggled]="isMinimized"
                           (sidebarItemClick)="itemClicked($event)" [sidebarItem]="baseNavigation"
                           (collapseSiblings)="collapseOtherSiblings($event)"
                           *ngFor="let baseNavigation of navigations"
                           (unMinimize)="toggle($event)"></app-sidebar-item>
-      <mat-icon class="me-auto toggle-menu-icon item-icon" (click)="toggled.emit(isMinimized)">menu</mat-icon>
     </nav>
-
-
-    <!--  user info  -->
     <div class="user-wrapper">
         <div class="user-details col-12">
             <h1>{{applicationUserFullName}}</h1>
@@ -56,8 +49,6 @@
             سال مالی {{currentYear.yearName}}
         </div>
     </div>
-
-    <!--  actions  -->
     <div class="actions">
         <mat-icon class="settings-icon item-icon" [matMenuTriggerFor]="menu" style="">settings</mat-icon>
 
@@ -113,7 +104,7 @@
           </button>
         </div>
       </mat-menu>
-
+        <mat-icon style="" class="me-auto toggle-menu-icon item-icon" (click)="toggled.emit(isMinimized)">menu</mat-icon>
 
     </div>
 

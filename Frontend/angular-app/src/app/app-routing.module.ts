@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
-// import { MainContainerComponent } from "./layouts/main-container/main-container.component";
-import { NewContainerComponent } from "./layouts/new-container/new-container.component";
+import { MainContainerComponent } from "./layouts/main-container/main-container.component";
 import { VersionUpdateGuard } from "./core/gaurds/version-update.guard";
 import { IdentityResolver } from "./modules/identity/IdentityResolver/identity.resolver";
 import { environment } from "../environments/environment";
@@ -9,7 +8,7 @@ import { environment } from "../environments/environment";
 const routes: Routes = [
     {
         path: '',
-        component: NewContainerComponent,
+        component: MainContainerComponent,
         resolve: { init: IdentityResolver },
         canActivate: [VersionUpdateGuard,],
         data: {

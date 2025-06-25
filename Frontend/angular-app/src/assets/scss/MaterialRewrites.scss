@@ -68,11 +68,13 @@ $eefaceram-typography-config: mat.define-typography-config(
 .mat-form-field {
   width: 100%!important;
 }
+
 .mat-button-base {
   border-radius: 1rem !important;
-  //padding: 0 1rem !important;
+  padding: 0 1rem !important;
   line-height: 30px !important;
-  //margin-right: 3px !important;
+  margin-right: 3px !important;
+
 }
 .mat-form-field-label {
   // add important to make disabled fields black too

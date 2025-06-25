@@ -3,6 +3,7 @@ import {ActivatedRoute, ActivatedRouteSnapshot, NavigationEnd, Router} from "@an
 import {Tab} from "./models/tab";
 import {filter, map, pairwise} from "rxjs/operators";
 import {IdentityService} from "../../modules/identity/repositories/identity.service";
+import {tr} from "date-fns/locale";
 
 @Injectable({
   providedIn: 'root'
