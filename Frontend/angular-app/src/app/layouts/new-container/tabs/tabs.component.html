@@ -1,12 +1,14 @@
-
-  <div class="app-tabs" *ngIf="tabManagerService.tabs.length > 0">
-    <div class="app-tabs-wrapper" >
-      <div  [ngClass]="{ 'active-tab' : tab.active }"
-            (mouseup)="+$event.button == 4 || +$event.which == 2 ? tabManagerService.closeTab(tab) : tabManagerService.openTab(tab)"
-            class="tab"
-            *ngFor="let tab of tabManagerService.tabs;">
-          <h5 class="font-10" matTooltip='{{tab.title}}'>{{tab.title}}</h5>
-        <span (click)="tabManagerService.closeTab(tab)" id="myTab">+</span>
-      </div>
+<div class="w-full h-full " *ngIf="tabManagerService.tabs.length > 0">
+    <div class="flex gap-1 w-full h-full px-4">
+        <div
+                *ngFor="let tab of tabManagerService.tabs;"
+                [ngClass]="{ 'border-primary text-bold': tab.active, 'border-primary/50': !tab.active }"
+                (mouseup)="+$event.button == 4 || +$event.which == 2 ? tabManagerService.closeTab(tab) : tabManagerService.openTab(tab)"
+                matTooltip="{{tab.title}}"
+                class="flex gap-2 items-center justify-between text-primary text-[10px] text-nowrap truncate max-w-[150px] px-2 cursor-pointer transition-colors duration-200 border-b-2 ">
+            <h5 class="font-medium truncate">{{ tab.title }}</h5>
+            <mat-icon (click)="tabManagerService.closeTab(tab)" id="myTab" class="!text-primary mr-auto">close</mat-icon>
+        </div>
     </div>
 </div>
+

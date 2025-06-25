@@ -7,7 +7,6 @@ import { TabManagerService } from "../content/tab-manager.service";
 @Component({
   selector: 'app-tabs',
   templateUrl: './tabs.component.html',
-  styleUrls: ['./tabs.component.scss']
 })
 
 
