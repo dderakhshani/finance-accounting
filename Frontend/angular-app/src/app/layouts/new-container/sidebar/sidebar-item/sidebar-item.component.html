@@ -7,7 +7,7 @@
   <div
     class="flex items-center justify-center gap-2 opacity-70 px-2 py-2 m-1 rounded-md cursor-pointer transition-all duration-200 hover:opacity-100 hover:bg-[#2C3344] hover:scale-105"
     (click)="toggleSidebarItem(sidebarItem)"
-    [ngClass]="{'app-sidebar-item-minimized':isToggled }"
+    [ngClass]="{'app-sidebar-item-minimized':isToggled , 'bg-gray-600':sidebarItem.showChildren} "
   >
     <!-- icon -->
     <mat-icon
