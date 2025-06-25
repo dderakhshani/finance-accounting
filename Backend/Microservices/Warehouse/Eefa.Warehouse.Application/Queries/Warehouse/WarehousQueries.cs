@@ -26,24 +26,15 @@ namespace Eefa.Warehouse.Application.Queries
 
         public async Task<PagedList<WarehouseModel>> GetAll(PaginatedQueryModel query)
         {
-            var entities = _dbContext.Warehouses
-                       .Where(a => !a.IsDeleted)
-                       .FilterQuery(query.Conditions)
-                       .OrderByMultipleColumns(query.OrderByProperty);
+            var projected = _dbContext.Warehouses
+                .Select(w => new WarehouseModel
+                {
+                    Id = w.Id,
+                    Title = w.Title,
+                });
 
-            var projected = entities.Select(w => new WarehouseModel
-            {
-                Id = w.Id,
-               Title = w.Title,
-            });
-
-            return new PagedList<WarehouseModel>
-            {
-                Data = await projected.Paginate(query.Paginator()).ToListAsync(),
-                TotalCount = query.PageIndex <= 1
-                    ? await entities.CountAsync()
-                    : 0
-            };
+            return await projected.ToPagedList(query);
         }
+
     }
 }
