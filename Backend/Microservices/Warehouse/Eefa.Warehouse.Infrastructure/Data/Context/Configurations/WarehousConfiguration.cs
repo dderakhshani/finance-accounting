@@ -26,9 +26,6 @@ namespace Eefa.Warehouse.Infrastructure.Data.Context.Configurations
             entity.HasIndex(e => e.ParentId, "IX_Warehouses_ParentId");
 
             entity.Property(e => e.Id).HasComment("شناسه");
-            entity.Property(e => e.AccessPermission)
-                .HasMaxLength(100)
-                .HasComment("مجوز دسترسی به انبار");
             entity.Property(e => e.AccountHeadId).HasComment("سرفصل حساب ");
             entity.Property(e => e.AccountReferenceId).HasComment("تفصیل شناور ");
             entity.Property(e => e.CommodityCategoryId).HasComment("کد گروه کالا");
@@ -55,7 +52,6 @@ namespace Eefa.Warehouse.Infrastructure.Data.Context.Configurations
                 .IsRowVersion()
                 .IsConcurrencyToken();
             entity.Property(e => e.Sort).HasComment("ترتیب نمایش");
-            entity.Property(e => e.TadbirCode).HasComment("کد تدبیر");
             entity.Property(e => e.Title)
                 .HasMaxLength(200)
                 .HasComment("عنوان");

@@ -9,7 +9,6 @@
   <ItemGroup>
     <Folder Include="Data\Entities\" />
     <ProjectReference Include="..\..\..\Core\Eefa.Common\Eefa.Common.csproj" />
-    <ProjectReference Include="..\Eefa.Warehouse.Application\Eefa.Warehouse.Application.csproj" />
   </ItemGroup>
 
 
