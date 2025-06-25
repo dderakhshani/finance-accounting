@@ -16,7 +16,7 @@ namespace Eefa.Warehouse.Application.Commands.Warehouse.Update
     public record UpdateWarehousCommand : IRequest<bool>, IMapFrom<Warehous>
     {
         public int Id { get; set; }
-        public int? ParentId { get; set; }
+        public int TypeBaseId { get; set; }
         public string? LevelCode { get; set; }
         public int AccountHeadId { get; set; }
         public int? AccountRererenceGroupId { get; set; }
