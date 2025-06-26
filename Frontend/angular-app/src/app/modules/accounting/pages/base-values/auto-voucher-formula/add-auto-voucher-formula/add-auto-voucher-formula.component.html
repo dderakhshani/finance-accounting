@@ -17,7 +17,7 @@
 
             <mat-autocomplete autoActiveFirstOption #voucherTypeIdAuto="matAutocomplete"
                               [displayWith]="accountManagerService.codeVoucherGroupDisplayFn.bind(accountManagerService)">
-              <mat-option *ngFor="let voucherType of voucherTypes | arrayFilter: form?.controls['voucherTypeId'].value : ['title','code']; let i = index"
+              <mat-option class="!text-xs font-light" *ngFor="let voucherType of voucherTypes | arrayFilter: form?.controls['voucherTypeId'].value : ['title','code']; let i = index"
                           [value]="voucherType.id">
                 {{ voucherType.code + ' - ' + voucherType.title }}
               </mat-option>
@@ -32,7 +32,7 @@
 
             <mat-autocomplete autoActiveFirstOption #sourceVoucherTypeId="matAutocomplete"
                               [displayWith]="accountManagerService.codeVoucherGroupDisplayFn.bind(accountManagerService)">
-              <mat-option *ngFor="let sourceVoucherType of sourceVoucherTypes | arrayFilter: form?.controls['sourceVoucherTypeId'].value : ['title','code']; let i = index"
+              <mat-option class="!text-xs font-light" *ngFor="let sourceVoucherType of sourceVoucherTypes | arrayFilter: form?.controls['sourceVoucherTypeId'].value : ['title','code']; let i = index"
                           [value]="sourceVoucherType.id">
                 {{ sourceVoucherType.code + ' - ' + sourceVoucherType.title }}
               </mat-option>
@@ -47,7 +47,7 @@
 
             <mat-autocomplete autoActiveFirstOption #accountHeadId="matAutocomplete"
                               [displayWith]="accountManagerService.accountHeadDisplayFn.bind(accountManagerService)">
-              <mat-option *ngFor="let accountHead of accountHeads | arrayFilter: form?.controls['accountHeadId'].value : ['title','code']; let i = index"
+              <mat-option class="!text-xs font-light" *ngFor="let accountHead of accountHeads | arrayFilter: form?.controls['accountHeadId'].value : ['title','code']; let i = index"
                           [value]="accountHead.id">
                 {{ accountHead.code + ' - ' + accountHead.title }}
               </mat-option>
@@ -59,7 +59,7 @@
           <mat-form-field>
             <mat-label>وضعیت مانده حساب</mat-label>
             <mat-select formControlName="debitCreditStatus">
-              <mat-option *ngFor="let debitCreditStatus of debitCreditStatuses" [value]="debitCreditStatus.id">
+              <mat-option class="!text-xs font-light" *ngFor="let debitCreditStatus of debitCreditStatuses" [value]="debitCreditStatus.id">
                 {{ debitCreditStatus.id + ' - ' + debitCreditStatus.title }}
               </mat-option>
             </mat-select>

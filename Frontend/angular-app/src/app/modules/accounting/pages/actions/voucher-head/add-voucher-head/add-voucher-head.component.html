@@ -1,12 +1,13 @@
-<div class="h-full flex flex-column gap-3" style="max-height: inherit;">
+<div class="h-full flex flex-col gap-3" style="max-height: inherit;">
   <div *ngIf="isLoading"
-    style="z-index:9999;position: absolute;left:0;top:0;bottom: 0; right: 0;background: rgba(0,0,0,0.3);"
-    class="flex items-center justify-center">
+       style="z-index:9999;position: absolute;left:0;top:0;bottom: 0; right: 0;background: rgba(0,0,0,0.3);"
+       class="flex items-center justify-center">
     <mat-spinner></mat-spinner>
   </div>
 
-  <app-action-bar (onList)="navigateToVoucherHeadsList()" (onAdd)="reset()" (onSave)="submitCheck()" (onDelete)="delete()"
-    (onRefresh)="initialize()" (onCustomClick)="handleCustomAction($event)">
+  <app-action-bar (onList)="navigateToVoucherHeadsList()" (onAdd)="reset()" (onSave)="submitCheck()"
+                  (onDelete)="delete()"
+                  (onRefresh)="initialize()" (onCustomClick)="handleCustomAction($event)">
     <div class="flex gap-3">
       <button mat-raised-button color="primary" [matMenuTriggerFor]="goToVoucherByNumberMenu">
         <mat-label>برو به سند</mat-label>
@@ -14,9 +15,12 @@
       <mat-menu #goToVoucherByNumberMenu class="px-3">
         <mat-form-field>
           <mat-label>شماره سند</mat-label>
-          <input tabindex="1" type="text" matInput [formControl]="goToVoucherByNumberFormControl" (click)="$event.stopPropagation()" (keyup.enter)="goToVoucherByNumber()">
+          <input tabindex="1" type="text" matInput [formControl]="goToVoucherByNumberFormControl"
+                 (click)="$event.stopPropagation()" (keyup.enter)="goToVoucherByNumber()">
         </mat-form-field>
-        <button #goToVoucherButton class="mx-auto" mat-raised-button color="primary" (click)="goToVoucherByNumber()">تایید</button>
+        <button #goToVoucherButton class="mx-auto" mat-raised-button color="primary" (click)="goToVoucherByNumber()">
+          تایید
+        </button>
       </mat-menu>
 
 
@@ -28,14 +32,16 @@
         <button mat-menu-item (click)="printVoucherHead()">روکش سند</button>
         <button mat-menu-item (click)="printSimpleVoucherHead()">ساده</button>
       </mat-menu>
-      <button *ngIf="identityService.doesHavePermission('VoucherHead-Delete')" mat-raised-button class="bg-red-500" style="color: white" (click)="delete()">حذف</button>
+      <button *ngIf="identityService.doesHavePermission('VoucherHead-Delete')" mat-raised-button class="bg-red-500"
+              style="color: white" (click)="delete()">حذف
+      </button>
 
     </div>
 
   </app-action-bar>
   <mat-accordion>
     <mat-expansion-panel expanded="false" (opened)="voucherHeadPanelState = true"
-      (closed)="voucherHeadPanelState = false">
+                         (closed)="voucherHeadPanelState = false">
       <mat-expansion-panel-header style="height: unset; min-height: 48px">
 
         <mat-panel-description style="width: 100%" *ngIf="!voucherHeadPanelState">
@@ -45,7 +51,7 @@
                 شماره:
               </span>
               <span style="color: black">
-                {{this.form.get('voucherNo')?.value}}
+                {{ this.form.get('voucherNo')?.value }}
               </span>
             </button>
             <button mat-stroked-button>
@@ -53,7 +59,7 @@
                 شماره روزانه:
               </span>
               <span style="color: black">
-                {{this.form.get('voucherDailyId')?.value}}
+                {{ this.form.get('voucherDailyId')?.value }}
               </span>
             </button>
             <button mat-stroked-button>
@@ -61,7 +67,7 @@
                 به تاریخ:
               </span>
               <span style="color: black">
-                {{this.form.get('voucherDate')?.value | toPersianDate}}
+                {{ this.form.get('voucherDate')?.value | toPersianDate }}
               </span>
             </button>
             <button mat-stroked-button>
@@ -70,7 +76,7 @@
                 نوع سند:
               </span>
               <span style="color: black">
-                {{getCodeVoucherGroupTitle(this.form.get('codeVoucherGroupId')?.value ?? 0)}}
+                {{ getCodeVoucherGroupTitle(this.form.get('codeVoucherGroupId')?.value ?? 0) }}
               </span>
             </button>
             <button mat-stroked-button>
@@ -79,7 +85,7 @@
                 وضعیت سند:
               </span>
               <span style="color: black">
-                {{getVoucherStateTitle(this.form.get('voucherStateId')?.value ?? 0)}}
+                {{ getVoucherStateTitle(this.form.get('voucherStateId')?.value ?? 0) }}
               </span>
             </button>
             <button mat-stroked-button>
@@ -88,7 +94,7 @@
                 ایجاد کننده:
               </span>
               <span style="color: black">
-                {{this.form.get('creator')?.value}}
+                {{ this.form.get('creator')?.value }}
               </span>
             </button>
             <button mat-stroked-button>
@@ -106,23 +112,23 @@
       </mat-expansion-panel-header>
 
       <form [formGroup]="form">
-        <div class="col-12">
-          <div class="row">
-            <div class="col-11">
-              <div class="row">
-                <div class="col-2">
+        <div class="w-full">
+          <div class="grid grid-cols-12">
+            <div class="col-span-11">
+              <div class="grid grid-cols-12 gap-3">
+                <div class="col-span-2">
                   <mat-form-field>
                     <mat-label>شماره سند حسابداری</mat-label>
                     <input formControlName="voucherNo" type="text" matInput>
                   </mat-form-field>
                 </div>
-                <div class="col-2">
+                <div class="col-span-2">
                   <mat-form-field>
                     <mat-label>شماره سند روزانه</mat-label>
                     <input formControlName="voucherDailyId" type="text" matInput>
                   </mat-form-field>
                 </div>
-                <div class="col-2">
+                <div class="col-span-2">
                   <mat-form-field>
                     <mat-label>تاریخ سند</mat-label>
                     <input matInput [matDatepicker]="picker" formControlName="voucherDate">
@@ -134,28 +140,28 @@
                     <mat-datepicker #picker></mat-datepicker>
                   </mat-form-field>
                 </div>
-                <div class="col-2">
+                <div class="col-span-2">
                   <mat-form-field>
                     <mat-label> نوع سند</mat-label>
                     <mat-select (selectionChange)="handleVoucherGroupChange($event.value)"
-                      formControlName="codeVoucherGroupId">
+                                formControlName="codeVoucherGroupId">
                       <mat-option *ngFor="let codeVoucherGroup of codeVoucherGroups" [value]="codeVoucherGroup.id">
-                        {{[codeVoucherGroup.code, codeVoucherGroup.title].join(' ')}}
+                        {{ [codeVoucherGroup.code, codeVoucherGroup.title].join(' ') }}
                       </mat-option>
                     </mat-select>
                   </mat-form-field>
                 </div>
-                <div class="col-2">
+                <div class="col-span-2">
                   <mat-form-field>
                     <mat-label> وضعیت سند</mat-label>
                     <mat-select formControlName="voucherStateId">
                       <mat-option *ngFor="let voucherState of voucherStates" [value]="voucherState.id">
-                        {{voucherState.title}}
+                        {{ voucherState.title }}
                       </mat-option>
                     </mat-select>
                   </mat-form-field>
                 </div>
-                <div class="col-2">
+                <div class="col-span-2">
                   <mat-form-field>
                     <mat-label>ایجاد کننده سند</mat-label>
                     <input formControlName="creator" type="text" matInput>
@@ -170,8 +176,8 @@
             <!--            </div>-->
 
           </div>
-          <div class="row">
-            <div class="col-12">
+          <div class="w-full">
+            <div class="w-full">
               <mat-form-field>
                 <mat-label>شرح سند</mat-label>
                 <input formControlName="voucherDescription" type="text" matInput>
@@ -184,38 +190,41 @@
     </mat-expansion-panel>
   </mat-accordion>
 
-  <mat-card class="h-full overflow-auto" style="transition: height 0.225s; padding: 0!important;">
+  <mat-card class="h-full overflow-auto !p-0 transition-all duration-200">
     <!--    <mat-drawer-container>-->
     <!--      <mat-drawer style="width: 100%" #drawer mode="over">-->
     <!--        <app-voucher-attachments-list-->
     <!--          [formSetter]="form.controls['voucherAttachmentsList']"></app-voucher-attachments-list>-->
     <!--      </mat-drawer>-->
     <ng-container>
-      <app-voucher-details-list [voucherHeadForm]="form" (voucherDetailAdded)="addVoucherDetail($event)"
-        (voucherDetailUpdated)="updateVoucherDetail($event)" (voucherDetailsDeleted)="deleteVoucherDetail($event)"
+      <app-voucher-details-list
+        [voucherHeadForm]="form" (voucherDetailAdded)="addVoucherDetail($event)"
+        (voucherDetailUpdated)="updateVoucherDetail($event)"
+        (voucherDetailsDeleted)="deleteVoucherDetail($event)"
         (voucherDetailSelected)="handleVoucherDetailSelection($event)"
-        [formSetter]="form.controls['vouchersDetailsList']" [codeVoucherGroups]="codeVoucherGroups"
+        [formSetter]="form.controls['vouchersDetailsList']"
+        [codeVoucherGroups]="codeVoucherGroups"
         [codeVoucherGroupId]="form.controls['codeVoucherGroupId'].value"
-        [pageMode]="pageMode"></app-voucher-details-list>
+        [pageMode]="pageMode">
+      </app-voucher-details-list>
     </ng-container>
     <!--    </mat-drawer-container>-->
   </mat-card>
 
   <mat-accordion>
-
     <mat-expansion-panel expanded="false" (opened)="voucherDetailSumPanelState = true"
-      (closed)="voucherDetailSumPanelState = false">
+                         (closed)="voucherDetailSumPanelState = false">
       <mat-expansion-panel-header style="height: 90px">
 
-        <mat-panel-description style="width: 100%" *ngIf="!voucherDetailSumPanelState">
-          <div class="flex flex-column gap-2 w-full">
+        <mat-panel-description class="w-full" *ngIf="!voucherDetailSumPanelState">
+          <div class="flex flex-col gap-2 w-full">
             <div class="flex flex-row gap-3 w-full">
               <button class="bg-blue-100" mat-stroked-button style="width: 15%">
                 <mat-label style="font-size: 10px">
                   گروه:
                 </mat-label>
                 <span class="text-black" style="font-size: 14px;">
-                  {{selectedVoucherDetail.levelName1}}
+                  {{ selectedVoucherDetail.levelName1 }}
                 </span>
               </button>
               <button class="bg-blue-200" mat-stroked-button style="width: 15%">
@@ -223,7 +232,7 @@
                   کل:
                 </mat-label>
                 <span class="text-black" style="font-size: 14px;">
-                  {{selectedVoucherDetail.levelName2}}
+                  {{ selectedVoucherDetail.levelName2 }}
                 </span>
               </button>
               <button class="bg-blue-300" mat-stroked-button style="width: 20%">
@@ -232,7 +241,7 @@
                   معین:
                 </mat-label>
                 <span class="text-black" style="font-size: 14px;">
-                  {{selectedVoucherDetail.levelName3}}
+                  {{ selectedVoucherDetail.levelName3 }}
                 </span>
               </button>
               <button class="bg-red-200" mat-stroked-button style="width: 20%">
@@ -241,7 +250,7 @@
                   گروه تفصیل:
                 </mat-label>
                 <span class="text-black" style="font-size: 14px;">
-                  {{selectedVoucherDetail.accountReferencesGroupTitle}}
+                  {{ selectedVoucherDetail.accountReferencesGroupTitle }}
                 </span>
               </button>
 
@@ -251,7 +260,7 @@
                   تفصیل:
                 </mat-label>
                 <span class="text-black" style="font-size: 14px;">
-                  {{selectedVoucherDetail.referenceTitle1}}
+                  {{ selectedVoucherDetail.referenceTitle1 }}
                 </span>
               </button>
 
@@ -264,7 +273,7 @@
                   جمع بدهکار:
                 </mat-label>
                 <span style="color: black">
-                  {{debit | money}}
+                  {{ debit | money }}
                 </span>
               </button>
               <button mat-stroked-button style="width: 15%">
@@ -273,54 +282,54 @@
                   جمع بستانکار:
                 </mat-label>
                 <span style="color: black">
-                  {{credit | money}}
+                  {{ credit | money }}
                 </span>
               </button>
               <button mat-stroked-button style="width: 15%"
-                [ngClass]="remain < 0 ? 'bg-green-400' : (remain > 0 ? 'bg-red-400' : '')">
+                      [ngClass]="remain < 0 ? 'bg-green-400' : (remain > 0 ? 'bg-red-400' : '')">
 
                 <mat-label style="font-size: 10px">
                   مانده:
                 </mat-label>
                 <span style="color: black">
-                  {{(remain | money) ?? 0}}
+                  {{ (remain | money) ?? 0 }}
                 </span>
               </button>
             </div>
           </div>
         </mat-panel-description>
       </mat-expansion-panel-header>
-      <div class="row">
-        <div class="col-9">
-          <div class="row">
-            <div class="col-6">
-              <div class="col-12">
+      <div class="grid grid-cols-12 gap-3">
+        <div class="col-span-9">
+          <div class="grid grid-cols-12 gap-3">
+            <div class="col-span-6">
+              <div class="col-sapn-12">
                 <mat-form-field>
                   <mat-label>گروه حساب</mat-label>
                   <input disabled [(ngModel)]="selectedVoucherDetail.levelName1" type="text" matInput>
                 </mat-form-field>
               </div>
-              <div class="col-12">
+              <div class="col-span-12">
                 <mat-form-field>
                   <mat-label> حساب کل</mat-label>
                   <input disabled [(ngModel)]="selectedVoucherDetail.levelName2" type="text" matInput>
                 </mat-form-field>
               </div>
-              <div class="col-12">
+              <div class="col-span-12">
                 <mat-form-field>
                   <mat-label>حساب معین</mat-label>
                   <input disabled [(ngModel)]="selectedVoucherDetail.levelName3" type="text" matInput>
                 </mat-form-field>
               </div>
             </div>
-            <div class="col-6 mb-auto">
+            <div class="col-span-6 mb-auto">
               <div class="col-12">
                 <mat-form-field>
                   <mat-label>عنوان تفصیل شناور</mat-label>
                   <input disabled [(ngModel)]="selectedVoucherDetail.referenceTitle1" type="text" matInput>
                 </mat-form-field>
               </div>
-              <div class="col-12">
+              <div class="col-span-12">
                 <mat-form-field>
                   <mat-label>گروه تفصیل</mat-label>
                   <input disabled [(ngModel)]="selectedVoucherDetail.accountReferencesGroupTitle" type="text" matInput>
@@ -331,22 +340,22 @@
           </div>
         </div>
 
-        <div class="col-3">
-          <mat-card style="width: 100%; height: 100%">
-            <div class="row">
-              <div class="col-6">
+        <div class="col-span-3">
+          <mat-card class="w-full h-full">
+            <div class="grid grid-cols-12 gap-3">
+              <div class="col-span-6">
                 <mat-form-field>
                   <mat-label>جمع بستانکار</mat-label>
                   <input currencyMask disabled type="text" [value]="credit ?? 0" matInput>
                 </mat-form-field>
               </div>
-              <div class="col-6">
+              <div class="col-span-6">
                 <mat-form-field>
                   <mat-label>جمع بدهکار</mat-label>
                   <input currencyMask disabled type="text" [value]="debit ?? 0" matInput>
                 </mat-form-field>
               </div>
-              <div class="col-12">
+              <div class="col-span-12">
                 <mat-form-field [ngClass]="{'mat-danger-input': remain && remain < 0}">
                   <mat-label> مانده</mat-label>
                   <input currencyMask disabled type="text" dir="ltr" [value]="remain ?? 0" matInput>
