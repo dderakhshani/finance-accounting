@@ -1,4 +1,4 @@
-<div class="d-flex flex-column h-100 gap-3">
+<div class="flex flex-column h-full gap-3">
   <mat-card>
     <h1 class="mat-subheading-1">محدوده اسناد</h1>
     <div class="row" [formGroup]="form">
@@ -24,8 +24,8 @@
   </mat-card>
 
 
-  <mat-card class="h-100" style="padding: 0!important;">
-    <mat-tab-group class="h-100">
+  <mat-card class="h-full" style="padding: 0!important;">
+    <mat-tab-group class="h-full">
       <mat-tab label="انتخاب شده">
         <app-table
           (rowDoubleClicked)="navigateToVoucherHead($event)"

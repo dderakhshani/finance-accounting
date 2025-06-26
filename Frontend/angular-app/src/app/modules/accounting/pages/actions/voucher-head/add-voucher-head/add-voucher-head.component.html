@@ -1,13 +1,13 @@
-<div class="h-100 d-flex flex-column gap-3" style="max-height: inherit;">
+<div class="h-full flex flex-column gap-3" style="max-height: inherit;">
   <div *ngIf="isLoading"
     style="z-index:9999;position: absolute;left:0;top:0;bottom: 0; right: 0;background: rgba(0,0,0,0.3);"
-    class="d-flex align-items-center justify-content-center">
+    class="flex items-center justify-center">
     <mat-spinner></mat-spinner>
   </div>
 
   <app-action-bar (onList)="navigateToVoucherHeadsList()" (onAdd)="reset()" (onSave)="submitCheck()" (onDelete)="delete()"
     (onRefresh)="initialize()" (onCustomClick)="handleCustomAction($event)">
-    <div class="d-flex gap-3">
+    <div class="flex gap-3">
       <button mat-raised-button color="primary" [matMenuTriggerFor]="goToVoucherByNumberMenu">
         <mat-label>برو به سند</mat-label>
       </button>
@@ -39,7 +39,7 @@
       <mat-expansion-panel-header style="height: unset; min-height: 48px">
 
         <mat-panel-description style="width: 100%" *ngIf="!voucherHeadPanelState">
-          <div class="d-flex flex-row gap-3 w-100">
+          <div class="flex flex-row gap-3 w-full">
             <button mat-stroked-button>
               <span>
                 شماره:
@@ -184,7 +184,7 @@
     </mat-expansion-panel>
   </mat-accordion>
 
-  <mat-card class="h-100 overflow-auto" style="transition: height 0.225s; padding: 0!important;">
+  <mat-card class="h-full overflow-auto" style="transition: height 0.225s; padding: 0!important;">
     <!--    <mat-drawer-container>-->
     <!--      <mat-drawer style="width: 100%" #drawer mode="over">-->
     <!--        <app-voucher-attachments-list-->
@@ -208,8 +208,8 @@
       <mat-expansion-panel-header style="height: 90px">
 
         <mat-panel-description style="width: 100%" *ngIf="!voucherDetailSumPanelState">
-          <div class="d-flex flex-column gap-2 w-100">
-            <div class="d-flex flex-row gap-3 w-100">
+          <div class="flex flex-column gap-2 w-full">
+            <div class="flex flex-row gap-3 w-full">
               <button class="bg-blue-100" mat-stroked-button style="width: 15%">
                 <mat-label style="font-size: 10px">
                   گروه:
@@ -256,7 +256,7 @@
               </button>
 
             </div>
-            <div class="d-flex flex-row gap-3 w-100">
+            <div class="flex flex-row gap-3 w-full">
 
               <button mat-stroked-button style="width: 15%" class="me-auto">
 

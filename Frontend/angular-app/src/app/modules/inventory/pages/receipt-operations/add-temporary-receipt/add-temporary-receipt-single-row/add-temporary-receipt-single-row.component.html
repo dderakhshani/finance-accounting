@@ -1,5 +1,5 @@
 
-<div [formGroup]="form" class="h-100 d-flex flex-column overflow-auto gap-3" style="max-height: inherit; padding: 0!important;">
+<div [formGroup]="form" class="h-full flex flex-column overflow-auto gap-3" style="max-height: inherit; padding: 0!important;">
 
     <app-form-actions [actions]="formActions" (OnShowList)="navigateToReceiptList()" (OnAdd)="reset()">
         <button mat-raised-button color="primary" matTooltip="ذخیره کامل اطلاعات" (click)="add()" [disabled]="_notificationService.isLoader" *ngIf="!isSubmitForm && !pageModeTypeUpdate" id="Save">
@@ -45,9 +45,9 @@
 
   <mat-card class="p-0">
 
-      
+
       <div class="row">
-         
+
           <div class="col-md-3" *ngIf="(form.controls.documentStauseBaseValue.value==Service.CodeTemporaryReceipt || !form.controls.documentStauseBaseValue.value) && EditType !=3">
 
               <app-combo-code-voucher-groups [DefaultId]="form.controls.codeVoucherGroupId.value"
@@ -209,7 +209,7 @@
 
   </mat-card>
 
-      <div class="h-100 overflow-auto p-0">
+      <div class="h-full overflow-auto p-0">
 
           <app-temporary-receipt-items-single-row [formSetter]="form?.controls['receiptDocumentItems']"
                                                   [receipt]="_TemporaryReceipt"

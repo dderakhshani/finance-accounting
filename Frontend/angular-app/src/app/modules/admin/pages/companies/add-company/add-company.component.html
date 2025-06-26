@@ -1,7 +1,7 @@
-<div class="h-100 d-flex flex-column">
+<div class="h-full flex flex-column">
 
   <app-action-bar class="p-3" (onAdd)="reset()" (onSave)="add()" (onList)="navigateToCompaniesList()" ></app-action-bar>
-  <div class="h-100 d-flex flex-column gap-3">
+  <div class="h-full flex flex-column gap-3">
 
     <mat-card>
 
@@ -49,7 +49,7 @@
 
     </mat-card>
 
-    <app-company-years-list class="h-100" [form]="form.controls['yearsId']"></app-company-years-list>
+    <app-company-years-list class="h-full" [form]="form.controls['yearsId']"></app-company-years-list>
 
 
   </div>

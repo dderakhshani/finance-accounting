@@ -1,9 +1,9 @@
 
 <mat-drawer-container class="example-container" [formGroup]="form">
   <mat-drawer class="side-bar" mode="side" opened>
-    <div class="d-flex flex-column h-100">
+    <div class="flex flex-column h-full">
       <div class="header p-2">
-        <div class="d-flex">
+        <div class="flex">
         <h1 class="nav-title flex-fill">اطلاعات رسید </h1>
         <app-counter-date-time  *ngIf="form.get('voucherHeadId')?.value != null" [startTime]="form.get('documentDate')?.value"></app-counter-date-time>
       </div>
@@ -61,7 +61,7 @@
           <input matInput type="text" value="تعداد تکرار" formControlName="repeatNo" />
         </mat-form-field>
 
-<!-- 
+<!--
         <mat-checkbox color="primary" formControlName="isBursaryDocument">
           <mat-label>ثبت سند آنی</mat-label>
         </mat-checkbox> -->
@@ -84,10 +84,10 @@
 
   <mat-drawer-content style="background-color: #f2f3fe">
 
-    <div class="header p-2 d-flex bg-white">
+    <div class="header p-2 flex bg-white">
 
-       <h5 class="flex-fill nav-title" style="font-size: small;">({{lastReceiptInfo?.amount | number: '2.'}}) {{lastReceiptInfo?.creditAccountReferenceTitle}} ({{lastReceiptInfo?.createName}})</h5>  
- 
+       <h5 class="flex-fill nav-title" style="font-size: small;">({{lastReceiptInfo?.amount | number: '2.'}}) {{lastReceiptInfo?.creditAccountReferenceTitle}} ({{lastReceiptInfo?.createName}})</h5>
+
       <h3 class="flex-fill nav-title">جمع مبالغ : {{getFinancialRequestDetailsSum()}}</h3>
 
       <button mat-flat-button type="button" (click)="addReceipt()" color="primary">

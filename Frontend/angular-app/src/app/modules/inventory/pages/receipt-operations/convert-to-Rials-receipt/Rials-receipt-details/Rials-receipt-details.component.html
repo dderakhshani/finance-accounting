@@ -1,5 +1,5 @@
 
-<div  class="h-100 d-flex flex-column overflow-auto gap-3" style="max-height: inherit; padding: 0!important;" *ngIf="form">
+<div  class="h-full flex flex-column overflow-auto gap-3" style="max-height: inherit; padding: 0!important;" *ngIf="form">
 
     <app-form-actions [actions]="formActions" (OnSave)="submit()" (OnAdd)="reset()" (OnRefresh)="initialize()">
         <button mat-raised-button color="primary" (click)="print()" [disabled]="_notificationService.isLoader" *ngIf="!allowNotEditInvoice">
@@ -248,7 +248,7 @@
 
                 <div class="col-md-3">
 
-                    <app-uploader class="d-flex justify-content-center"
+                    <app-uploader class="flex justify-center"
                                   [autoUpload]="true"
                                   (filesChange)="files=$event"
                                   (isUploadingChange)="isUploading"
@@ -260,7 +260,7 @@
             </div>
 
         </mat-card>
-       
+
 
         <app-Rials-receipt-items [formSetter]="form?.controls['receiptDocumentItems']"
                                  [receipt]="receipt"
@@ -273,6 +273,6 @@
             <mat-spinner style="top:30%;right:40%;position:absolute;z-index:1000" *ngIf="_notificationService.isLoader"></mat-spinner>
         </div>
 
-  
+
 </div>
 

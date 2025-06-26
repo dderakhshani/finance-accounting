@@ -1,6 +1,6 @@
-<mat-card class="h-100 d-flex flex-column overflow-auto" style="max-height: inherit; padding: 0!important;">
+<mat-card class="h-full !flex flex-col !p-0" style="max-height: inherit">
 
-  <app-action-bar class="p-3" (onRefresh)="get()" (onAdd)="add()">
+  <app-action-bar class="p-3" (onRefresh)="get()" (onAdd)="add()" >
 
     <button mat-raised-button color="primary" (click)="setDepositIdForCustomerByReferenceCode()">
       <mat-icon>
@@ -10,9 +10,9 @@
     </button>
 
   </app-action-bar>
-  <div class="h-100 overflow-auto">
-
+  <div class="h-full rounded-b-lg overflow-auto ">
     <app-table
+      class="h-full"
       [tableRows]="accountReferences"
       [tableConfigurations]="tableConfigurations"
       (rowDoubleClicked)="navigateToAccountReferenceDetail($event)"

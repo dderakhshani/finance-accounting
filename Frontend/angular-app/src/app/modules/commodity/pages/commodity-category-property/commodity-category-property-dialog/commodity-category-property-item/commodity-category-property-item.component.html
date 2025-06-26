@@ -1,4 +1,4 @@
-<div class="d-flex flex-column">
+<div class="flex flex-column">
     <app-action-bar class="p-3" (onAdd)="add()"></app-action-bar>
     <app-table [tableConfigurations]="tableConfigurations"
                (selectedRowChange)="handleRowChanges($event)"
@@ -45,14 +45,14 @@
     </ng-template>
     <ng-template #txtParentId let-rowFg="row" >
 
-        
-           
+
+
             <mat-select [formControl]="rowFg.get('parentId')" >
                 <mat-option *ngFor="let type of items" [value]="type.id">
                     {{type.title}}
                 </mat-option>
             </mat-select>
-       
+
     </ng-template>
     <ng-template #btnDelete let-rowFg="row" let-Index="i">
         <button mat-icon-button matTooltip="حذف" class="btn-color" (click)="onDelete(rowFg)">

@@ -1,5 +1,5 @@
-<div class="h-100 d-flex flex-column overflow-hidden gap-3">
-  <mat-card class="h-75 overflow-auto">
+<div class="h-full flex flex-col gap-3">
+  <mat-card class="min-h-[75%] overflow-auto">
     <app-tree
       [useNew]="true"
       levelCodeKey="orderIndex"
@@ -14,7 +14,7 @@
     </app-tree>
   </mat-card>
 
-  <div class="h-75 overflow-hidden p-0 w-100">
+  <div class="max-h-[75%] p-0 w-full">
     <app-menu-item-roles-list [menuItemPermissionId]="menuItemPermissionId"
     ></app-menu-item-roles-list>
   </div>

@@ -1,5 +1,5 @@
 
-<div class="h-100 d-flex flex-column overflow-auto gap-3" style="max-height: inherit; padding: 0!important;">
+<div class="h-full flex flex-column overflow-auto gap-3" style="max-height: inherit; padding: 0!important;">
 
     <form [formGroup]="SearchForm">
         <div class="row">
@@ -98,7 +98,7 @@
                                                    [isRequired]="false"
                                                    [lablelTitleCombo]="'سرفصل حساب بدهکار'"
                                                    [isLastLevel]="true"
-                                                  
+
                                                    [tabindex]="0">
                       </app-combo-account-head-tree>
 
@@ -109,7 +109,7 @@
                                                    (SelectId)="creditAccountHeadIdSelect($event)"
                                                    [isRequired]="false"
                                                    [lablelTitleCombo]="'سرفصل حساب بستانکار'"
-                                                 
+
                                                    [isLastLevel]="true"
                                                    [tabindex]="2">
                       </app-combo-account-head-tree>
@@ -124,7 +124,7 @@
                         <input formControlName="documentNo" matInput type="text">
                       </mat-form-field>
                     </div>
-                    
+
                     <div class="col-md-3">
 
                       <mat-form-field tabindex="12">
@@ -217,7 +217,7 @@
         </div>
     </form>
     <mat-spinner style="top:30%;right:40%;position:absolute;z-index:1000" *ngIf="_notificationService.isLoader"></mat-spinner>
-    <div [ngClass]="{'modal-large-table':IslargeSize ,'modal-large-close': !IslargeSize}" class="h-100 overflow-auto p-0">
+    <div [ngClass]="{'modal-large-table':IslargeSize ,'modal-large-close': !IslargeSize}" class="h-full overflow-auto p-0">
 
         <div [ngClass]="{'modal-large-table-content':IslargeSize}">
 

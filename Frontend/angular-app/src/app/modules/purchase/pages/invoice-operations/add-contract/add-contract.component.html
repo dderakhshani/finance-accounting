@@ -1,5 +1,5 @@
 
-<div [formGroup]="form" class="h-100 d-flex flex-column overflow-auto" style="max-height: inherit; padding: 0!important;">
+<div [formGroup]="form" class="h-full flex flex-column overflow-auto" style="max-height: inherit; padding: 0!important;">
 
 
 
@@ -137,7 +137,7 @@
       </div>
       <div class="col-md-3">
 
-          <app-uploader class="d-flex justify-content-center"
+          <app-uploader class="flex justify-center"
                         [autoUpload]="true"
                         (filesChange)="files=$event"
                         (isUploadingChange)="isUploading"

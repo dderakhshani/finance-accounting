@@ -1,4 +1,4 @@
-<div class="h-100 d-flex flex-column" style="max-height: inherit; padding: 0!important;">
+<div class="h-full flex flex-column" style="max-height: inherit; padding: 0!important;">
 
 
   <app-action-bar class="py-3" (onList)="navigateToMoadianInvoiceHeadersList()" (onAdd)="reset()" (onSave)="submit()"
@@ -15,7 +15,7 @@
           سرفصل صورتحساب
         </mat-panel-title>
         <mat-panel-description style="width: 100%" *ngIf="!headerInfoPanelState">
-          <div class="d-flex flex-row gap-3 w-100">
+          <div class="flex flex-row gap-3 w-full">
             <button mat-stroked-button>
               <span>شماره ثبت مالیاتی: </span>
               <span style="color: black">{{ this.form.get('taxId')?.value }}</span>
@@ -224,7 +224,7 @@
           اطلاعات فروشنده
         </mat-panel-title>
         <mat-panel-description style="width: 100%" *ngIf="!buyerInfoPanelState">
-          <div class="d-flex flex-row gap-3 w-100">
+          <div class="flex flex-row gap-3 w-full">
             <button mat-stroked-button>
               <span>شماره اقتصادی: </span>
               <span style="color: black">{{ this.form.get('tins')?.value }}</span>
@@ -293,7 +293,7 @@
           اطلاعات خریدار
         </mat-panel-title>
         <mat-panel-description style="width: 100%" *ngIf="!sellerInfoPanelState">
-          <div class="d-flex flex-row gap-3 w-100">
+          <div class="flex flex-row gap-3 w-full">
             <button mat-stroked-button>
               <span>نام مشتری: </span>
               <span style="color: black">{{ this.form.get('personFullName')?.value }}</span>
@@ -413,7 +413,7 @@
   </mat-accordion>
 
 
-  <mat-card class="d-flex h-100" style="transition: height 0.225s; padding: 0!important;">
+  <mat-card class="flex h-full" style="transition: height 0.225s; padding: 0!important;">
 
     <app-moadian-invoice-details-list
       style="width: 100%"

@@ -3,7 +3,7 @@
 <div dialog-header="" >لیست مبالغ بدهکاری</div>
 <div dialog-content="">
   <div   class="col-md-12" style="width: 60vw;" >
-    <mat-card class="h-100 d-flex flex-column overflow-auto" style="max-height: inherit; padding: 0!important;">
+    <mat-card class="h-full flex flex-column overflow-auto" style="max-height: inherit; padding: 0!important;">
       <app-table  [tableConfigurations]="tableConfigurations"
                   [tableRows]="entities"
                   (filtersChanged)="get()"

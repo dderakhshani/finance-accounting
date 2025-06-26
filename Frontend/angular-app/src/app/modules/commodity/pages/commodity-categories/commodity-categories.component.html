@@ -1,7 +1,7 @@
 
 
 
-<mat-card class="h-100 d-flex flex-column overflow-hidden gap-3">
+<mat-card class="h-full flex flex-column overflow-hidden gap-3">
   <mat-card class="h-50 overflow-auto">
     <app-tree
       height="100%"
@@ -16,12 +16,12 @@
     </app-tree>
   </mat-card>
 
-  <mat-card class="h-50  overflow-hidden p-0 w-100">
-    <div class="d-flex h-10  py-1" *ngIf="hasCommodityChildren">
+  <mat-card class="h-50  overflow-hidden p-0 w-full">
+    <div class="flex h-10  py-1" *ngIf="hasCommodityChildren">
 
       <app-action-bar  (onAdd)="navigateToCommodity()" ></app-action-bar>
     </div>
-    <div [class]="hasCommodityChildren? 'h-90': 'h-100'">
+    <div [class]="hasCommodityChildren? 'h-90': 'h-full'">
       <app-commodity-table   [commodityCategoryId]="commodityCategoryId"></app-commodity-table>
     </div>
   </mat-card>

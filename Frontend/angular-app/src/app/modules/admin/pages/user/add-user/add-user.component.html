@@ -1,9 +1,9 @@
-<div class="d-flex flex-column h-100">
+<div class="flex flex-column h-full">
 
   <app-action-bar class="p-4" (onSave)="submit()" (onAdd)="reset()" (onList)="navigateToUserList()"></app-action-bar>
-  <div class="row g-2 h-100">
+  <div class="row g-2 h-full">
     <div class="col-6 h-50">
-      <mat-card class="h-100 d-flex flex-column">
+      <mat-card class="h-full flex flex-column">
         <form [formGroup]="form" class="row">
           <div class="col-md-12">
 
@@ -81,20 +81,20 @@
       </mat-card>
     </div>
     <div class="col-6 h-50">
-      <mat-card class="h-100 overflow-auto d-flex flex-column">
+      <mat-card class="h-full overflow-auto flex flex-column">
         <h6 class="border-bottom pb-2 pt-2 pe-3">نقش ها</h6>
         <app-table height="100%" [tableRows]="userRoles" [tableConfigurations]="tableConfigurations"></app-table>
       </mat-card>
     </div>
     <div class="col-12 h-50">
-      <mat-card class="p-0 h-100 overflow-auto">
-        <mat-tab-group class="h-100">
-          <mat-tab label="نقش ها" class="h-100">
+      <mat-card class="p-0 h-full overflow-auto">
+        <mat-tab-group class="h-full">
+          <mat-tab label="نقش ها" class="h-full">
             <app-tree height="100%" (onSelect)="handleRoleSelection($event)" [rawNodes]="roles" [useNew]="true"
                       [selectable]="true"></app-tree>
           </mat-tab>
 
-          <mat-tab label="شرکت ها" class="h-100">
+          <mat-tab label="شرکت ها" class="h-full">
             <app-user-year-list [userYears]="this.form.controls['userAllowedYears']"></app-user-year-list>
           </mat-tab>
         </mat-tab-group>

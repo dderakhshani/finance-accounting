@@ -48,7 +48,7 @@
       <h1>{{applicationUserFullName}}</h1>
       <img [matMenuTriggerFor]="accountInfo" [src]="avatarUrl" alt="">
       <mat-menu #accountInfo="matMenu">
-        <button mat-menu-item (click)="identityService.logout()" class="d-flex">
+        <button mat-menu-item (click)="identityService.logout()" class="flex">
           <span>خروج</span>
           <mat-icon style="margin: auto auto auto 0" color="primary">logout</mat-icon>
         </button>

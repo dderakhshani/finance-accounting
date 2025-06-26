@@ -1,4 +1,4 @@
-<div *ngIf="form.controls!=undefined" class="h-100 d-flex flex-column overflow-auto gap-3" style="max-height: inherit; padding: 0!important;">
+<div *ngIf="form.controls!=undefined" class="h-full flex flex-column overflow-auto gap-3" style="max-height: inherit; padding: 0!important;">
 
     <app-form-actions [actions]="formActions" (OnShowList)="navigateToReceiptList()" (OnAdd)="reset()">
         <button mat-raised-button color="primary" matTooltip="ذخیره کامل اطلاعات" (click)="add()" [disabled]="_notificationService.isLoader" *ngIf="!isSubmitForm" id="Save">
@@ -101,7 +101,7 @@
                 </app-combo-account-head-tree>
 
             </div>
-            
+
 
             <div class="col-md-3">
 
@@ -141,7 +141,7 @@
         </div>
 
     </mat-card>
-    <div class="h-100 overflow-auto p-0">
+    <div class="h-full overflow-auto p-0">
 
         <app-material-items [formSetter]="form?.controls['receiptDocumentItems']"
                             [receipt]="_Receipt"

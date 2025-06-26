@@ -1,11 +1,11 @@
-<div class="h-100 d-flex flex-column gap-3" style="max-height: inherit;" >
+<div class="h-full flex flex-column gap-3" style="max-height: inherit;" >
   <div *ngIf="isLoading"
        style="z-index:9999;position: absolute;left:0;top:0;bottom: 0; right: 0;background: rgba(0,0,0,0.3);"
-       class="d-flex align-items-center justify-content-center">
+       class="flex items-center justify-center">
     <mat-spinner></mat-spinner>
   </div>
 
-<mat-card class="d-flex flex-row gap-5">
+<mat-card class="flex flex-row gap-5">
   <div>
   <app-action-bar class="p-3" (onSave)="submit()" (onAdd)="reset()" (onList)="navigateToHelpsList()"></app-action-bar>
   </div>
@@ -29,8 +29,8 @@
     </div>
 </mat-card>
 
-  <mat-card class="h-100 overflow-auto">
-    <div class="h-100 overflow-auto">
+  <mat-card class="h-full overflow-auto">
+    <div class="h-full overflow-auto">
       <ckeditor [editor]="editor" [(ngModel)]="editorContent"> </ckeditor>
     </div>
   </mat-card>

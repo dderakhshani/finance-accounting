@@ -1,18 +1,18 @@
-<div class="h-100 d-flex flex-column overflow-auto" style="max-height: inherit; padding: 0!important;">
+<div class="h-full flex flex-column overflow-auto" style="max-height: inherit; padding: 0!important;">
 
-    <mat-card class="h-100 d-flex flex-column overflow-hidden" style="max-height: inherit; padding: 0!important;">
+    <mat-card class="h-full flex flex-column overflow-hidden" style="max-height: inherit; padding: 0!important;">
         <div *ngIf="isLoading"
             style="z-index:9999;position: absolute;left:0;top:0;bottom: 0; right: 0;background: rgba(0,0,0,0.3);"
-            class="d-flex align-items-center justify-content-center">
+            class="flex items-center justify-center">
             <mat-spinner></mat-spinner>
         </div>
 
-        <mat-tab-group [(selectedIndex)]="selectedTabIndex" class="h-100 d-flex flex-column">
-            <mat-tab class="h-100 d-flex flex-column" tabindex="0" label="گزارش" [formGroup]="form">
-                <div class="w-100 p-3">
-                    <div class="row w-100 p-0 m-0 ">
+        <mat-tab-group [(selectedIndex)]="selectedTabIndex" class="h-full flex flex-column">
+            <mat-tab class="h-full flex flex-column" tabindex="0" label="گزارش" [formGroup]="form">
+                <div class="w-full p-3">
+                    <div class="row w-full p-0 m-0 ">
                         <div class="card col-12 p-0">
-                            <div class="card-header d-flex flex-row gap-3">
+                            <div class="card-header flex flex-row gap-3">
                                 <div>فیلتر</div>
                             </div>
                             <div class="card-body">
@@ -59,13 +59,13 @@
                         </div>
                     </div>
                 </div>
-                <div class="h-100 overflow-auto">
+                <div class="h-full overflow-auto">
                     <app-table  [tableConfigurations]="tableConfigurations"
                         (exportData)="exportFile($event)" [tableRows]="result" (filtersChanged)="''"
                         (sortChanged)="''" (paginationChanged)=" ''">
 
                         <!-- <div footerContent>
-                            <div class="me-auto d-flex flex-row gap-1">
+                            <div class="me-auto flex flex-row gap-1">
                                 <button color="primary" mat-raised-button (click)="printstimul()">
                                     <mat-icon>print</mat-icon>
                                     <mat-label> چاپ</mat-label>

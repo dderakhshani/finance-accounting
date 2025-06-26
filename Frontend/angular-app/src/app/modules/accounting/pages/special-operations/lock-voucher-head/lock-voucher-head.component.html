@@ -1,4 +1,4 @@
-<div class="d-flex flex-column h-100 gap-3" style="max-height: inherit">
+<div class="flex flex-column h-full gap-3" style="max-height: inherit">
   <mat-card>
     <div [formGroup]="filtersForm" class="row align-items-start" *ngIf="filtersForm">
       <div class="row gap-3 align-items-start">
@@ -87,12 +87,12 @@
     </div>
   </mat-card>
 
-  <mat-card class="h-100 d-flex flex-column overflow-hidden" style="max-height: inherit; padding: 0!important;">
+  <mat-card class="h-full flex flex-column overflow-hidden" style="max-height: inherit; padding: 0!important;">
 
 
     <app-action-bar class="p-3" (onCustomClick)="handleCustomClick($event.uniqueName)"
                     (onRefresh)="get()"></app-action-bar>
-    <div class="h-100 overflow-auto">
+    <div class="h-full overflow-auto">
       <app-table [tableConfigurations]="tableConfigurations"
                  [tableRows]="voucherHeads"
                  (rowDoubleClicked)="navigateToVoucherHead($event)"

@@ -1,15 +1,15 @@
-<div class="h-100 d-flex flex-column overflow-auto" style="max-height: inherit; padding: 0!important;" *ngIf="form">
-  <mat-card class="h-100 d-flex flex-column overflow-hidden" style="max-height: inherit; padding: 0!important;">
+<div class="h-full flex flex-column overflow-auto" style="max-height: inherit; padding: 0!important;" *ngIf="form">
+  <mat-card class="h-full flex flex-column overflow-hidden" style="max-height: inherit; padding: 0!important;">
     <div *ngIf="isLoading"
          style="z-index:9999;position: absolute;left:0;top:0;bottom: 0; right: 0;background: rgba(0,0,0,0.3);"
-         class="d-flex align-items-center justify-content-center">
+         class="flex items-center justify-center">
       <mat-spinner></mat-spinner>
     </div>
 
-    <mat-tab-group [(selectedIndex)]="selectedTabIndex" class="h-100 d-flex flex-column">
-      <mat-tab class="h-100 d-flex flex-column" tabindex="0" label="گزارش" [formGroup]="form">
-        <div class="w-100 p-3">
-          <div class="row w-100 p-0 m-0 ">
+    <mat-tab-group [(selectedIndex)]="selectedTabIndex" class="h-full flex flex-column">
+      <mat-tab class="h-full flex flex-column" tabindex="0" label="گزارش" [formGroup]="form">
+        <div class="w-full p-3">
+          <div class="row w-full p-0 m-0 ">
             <div class="card col-12 p-0">
               <mat-accordion>
                 <mat-expansion-panel expanded="true" (opened)="accountReviewPanelState = true"
@@ -17,10 +17,10 @@
                   <mat-expansion-panel-header style="height: unset; min-height: 48px">
 
                     <mat-panel-description style="width: 100%" *ngIf="accountReviewPanelState">
-                      <div class="d-flex flex-row gap-3 w-100">
+                      <div class="flex flex-row gap-3 w-full">
                         <div>فیلترها:</div>
 
-                        <div class="d-flex flex-row gap-4">
+                        <div class="flex flex-row gap-4">
                           <span *ngIf="form.controls['accountHeadIds'].value.length>0" class="witch-filter">در حساب ها:
                             <span
                               *ngFor="let accountHeadId of form.controls['accountHeadIds'].value | slice:0:4; let i = index"
@@ -81,7 +81,7 @@
 
 
                     <mat-panel-description style="width: 100%" *ngIf="!accountReviewPanelState">
-                      <div class="d-flex flex-row gap-3 w-100">
+                      <div class="flex flex-row gap-3 w-full">
                         <button mat-stroked-button>
                           <span>
                             ستون:
@@ -354,7 +354,7 @@
 
           </div>
         </div>
-        <div class="h-100 overflow-auto">
+        <div class="h-full overflow-auto">
           <app-table-virtual-scrolling
 
             [tableConfigurations]="tableConfigurations"
@@ -379,9 +379,9 @@
           </app-table-virtual-scrolling>
         </div>
       </mat-tab>
-      <mat-tab class="h-100" tabindex="1" label="فیلتر پیشرفته" [formGroup]="form">
-        <div class="w-100 p-3">
-          <div class="row w-100 p-0 m-0 gap-3">
+      <mat-tab class="h-full" tabindex="1" label="فیلتر پیشرفته" [formGroup]="form">
+        <div class="w-full p-3">
+          <div class="row w-full p-0 m-0 gap-3">
             <div class="card col-12 p-0">
               <div class="card-header">فیلتر</div>
               <div class="card-body">

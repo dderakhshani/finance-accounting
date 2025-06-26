@@ -1,4 +1,4 @@
-<div class="h-100 d-flex flex-column overflow-auto gap-3" style="max-height: inherit; padding: 0!important;">
+<div class="h-full flex flex-column overflow-auto gap-3" style="max-height: inherit; padding: 0!important;">
 
 
   <!-- <app-action-bar class="p-3" (onCustomClick)="handleCustomAction($event)"></app-action-bar> -->
@@ -12,23 +12,23 @@
   </app-accounting-report-template> -->
 
 
-  <mat-card class="h-100 d-flex flex-column overflow-hidden" style="max-height: inherit; padding: 0!important;">
+  <mat-card class="h-full flex flex-column overflow-hidden" style="max-height: inherit; padding: 0!important;">
     <div *ngIf="isLoading"
       style="z-index:9999;position: absolute;left:0;top:0;bottom: 0; right: 0; background: transparent;"
-      class="d-flex align-items-center justify-content-center">
+      class="flex items-center justify-center">
       <span *ngIf="tableConfigurations.pagination.totalItems>1000 && isPrinting">
         برای دیتای بیشتر از 1000 رکورد خروجی اکسل داده میشود.
       </span>
     </div>
 
-    <mat-tab-group *ngIf="!isLoading" [(selectedIndex)]="selectedTabIndex" class="h-100 d-flex flex-column">
-      <mat-tab class="h-100 d-flex flex-column" tabindex="0" label="گزارش" [formGroup]="form" *ngIf="form">
-        <div class="w-100 p-3">
-          <div class="row w-100 p-0 m-0 ">
+    <mat-tab-group *ngIf="!isLoading" [(selectedIndex)]="selectedTabIndex" class="h-full flex flex-column">
+      <mat-tab class="h-full flex flex-column" tabindex="0" label="گزارش" [formGroup]="form" *ngIf="form">
+        <div class="w-full p-3">
+          <div class="row w-full p-0 m-0 ">
             <div class="card col-12 p-0">
-              <div class="card-header d-flex flex-row gap-3">
+              <div class="card-header flex flex-row gap-3">
                 <div>فیلتر</div>
-                <div class="d-flex flex-row gap-4">
+                <div class="flex flex-row gap-4">
                   <span *ngIf="selectedAccountHeads.length>0" class="witch-filter">در حساب(ها):
                     <span *ngFor="let accountHead of selectedAccountHeads | slice:0:4; let i = index" class="filter">
                       <span *ngIf="i>2">
@@ -220,7 +220,7 @@
             </div>
           </div>
         </div>
-        <div class="h-100 overflow-auto">
+        <div class="h-full overflow-auto">
 
           <app-table
             (excludeSelectedItemsEvent)="handleExcludeSelectedItemsEvent($event)"
@@ -270,9 +270,9 @@
             </div>
 
             <div footerContent>
-              <div class="me-auto d-flex flex-row gap-1">
+              <div class="me-auto flex flex-row gap-1">
 
-                <div class="d-flex flex-column" >
+                <div class="flex flex-column" >
                   <button class="bg-blue-300" mat-stroked-button>
                     <span>جمع بدهکار: </span>
                     <span style="color: black">{{ totalDebit.value | money }}</span>
@@ -284,7 +284,7 @@
 
 
                 </div>
-                <div class="d-flex flex-column">
+                <div class="flex flex-column">
                   <button class="bg-blue-300" mat-stroked-button>
                     <span>جمع بستانکار: </span>
                     <span style="color: black">{{ totalCredit.value | money }}</span>
@@ -295,7 +295,7 @@
                     <span style="color: black">{{ totalCurrencyCredit.value | money }}</span>
                   </button>
                 </div>
-                <div class="d-flex flex-column">
+                <div class="flex flex-column">
                   <button class="bg-blue-300" mat-stroked-button>
                     <span>مانده : </span>
 <!--                    [ngClass]="((totalDebit.value - totalCredit.value) >= 0) ? 'text-red-600' : 'text-green-900' "-->
@@ -323,9 +323,9 @@
           </app-table>
         </div>
       </mat-tab>
-      <mat-tab class="h-100" tabindex="1" label="فیلتر پیشرفته" [formGroup]="form">
-        <div class="w-100 p-3">
-          <div class="row w-100 p-0 m-0 gap-3">
+      <mat-tab class="h-full" tabindex="1" label="فیلتر پیشرفته" [formGroup]="form">
+        <div class="w-full p-3">
+          <div class="row w-full p-0 m-0 gap-3">
             <div class="card col-12 p-0">
               <div class="card-header">فیلتر</div>
               <div class="card-body">

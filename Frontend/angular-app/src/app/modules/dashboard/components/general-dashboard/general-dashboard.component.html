@@ -1,4 +1,4 @@
-<div #card_iframe class="h-100 overflow-auto card-iframe">
+<div #card_iframe class="h-full overflow-auto card-iframe">
     <iframe [src]="safeUrl"    [class]="largeSize ? 'iframe_largeSize' : 'iframe_normalSize'" ></iframe>
     <div>
         <button class="btn btn-outline-secondary btn-zoom" (click)="onIsLargeSize()"  [matTooltip]="largeSize ? 'کوچک کردن' : 'تمام صفحه'">

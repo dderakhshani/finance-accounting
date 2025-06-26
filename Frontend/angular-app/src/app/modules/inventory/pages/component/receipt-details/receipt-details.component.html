@@ -36,7 +36,7 @@
                       :
                       <label>{{receipt?.serialNumber}}</label>
                     </div>
-                    
+
 
                     <div class="col-md-4">
                       <mat-label>شماره رسید </mat-label>
@@ -237,7 +237,7 @@
           </div>
         </div>
         <div class="col-md-12" *ngIf="attachmentIds.length>0">
-          <app-uploader class="d-flex justify-content-center"
+          <app-uploader class="flex justify-center"
                         [autoUpload]="true"
                         (filesChange)="files=$event"
                         (isUploadingChange)="isUploading"
@@ -370,7 +370,7 @@
 </div>
 <hr />
 
-<!-- <mat-accordion class="h-100 overflow-auto p-0">
+<!-- <mat-accordion class="h-full overflow-auto p-0">
 
     <mat-expansion-panel (opened)="panelOpenState = true"
                          (closed)="panelOpenState = false">

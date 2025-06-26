@@ -1,5 +1,5 @@
 
-<div [formGroup]="form" class="h-100 d-flex flex-column overflow-auto" style="max-height: inherit; padding: 0!important;">
+<div [formGroup]="form" class="h-full flex flex-column overflow-auto" style="max-height: inherit; padding: 0!important;">
 
     <app-form-actions [actions]="formActions" (OnAdd)="reset()">
         <button mat-raised-button color="primary" matTooltip="بایگانی رسید / حواله کالا ها" (click)="archive()" [disabled]="_notificationService.isLoader">
@@ -65,7 +65,7 @@
 
                     </div>
                     </div>
-                    
+
 
             </mat-card>
         </div>

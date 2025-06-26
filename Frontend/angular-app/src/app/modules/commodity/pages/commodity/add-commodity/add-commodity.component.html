@@ -1,11 +1,11 @@
-<div class="h-100 gap-2 d-flex flex-column overflow-hidden" style="max-height: inherit; padding: 3px"
+<div class="h-full gap-2 flex flex-column overflow-hidden" style="max-height: inherit; padding: 3px"
      [formGroup]="form">
     <app-action-bar (onSave)="submit()" (onList)="navigateToCommoditiesList()" (onAdd)="reset()"></app-action-bar>
 
 
-    <mat-card class="d-flex flex-column" style="height:100px">
+    <mat-card class="flex flex-column" style="height:100px">
 
-        <div class="px-3 pt-2 d-flex gap-3 align-items-center ">
+        <div class="px-3 pt-2 flex gap-3 items-center ">
             <div class="col-3">
                 <app-combo-tree [nodes]="commodityCategories"
                                 (SelectId)="commodityCategorySelectionHandler($event)"
@@ -37,13 +37,13 @@
 
         </div>
 
-       
+
     </mat-card>
-    <mat-drawer-container class="h-100 p-2 d-flex border-top"
+    <mat-drawer-container class="h-full p-2 flex border-top"
                           *ngIf="(doesSelectedCategoryNeedsParentProduct && form.controls['parentId']?.value) || (selectedCommodityCategories.length > 0 )">
 
         <mat-drawer class="col-3" mode="side" opened>
-            <div class="mat-tab-label w-100 bg-grey-50">
+            <div class="mat-tab-label w-full bg-grey-50">
                 <span>مشخصات کالا</span>
                 <mat-divider class="bottom-0"></mat-divider>
             </div>
@@ -83,7 +83,7 @@
                 </mat-form-field>
 
                 <div class="row">
-                   
+
                     <div class="col-md-4">
                         <mat-checkbox color="primary" formControlName="isHaveWast"></mat-checkbox>
                         <mat-label class="mat-caption"> داغی دارد؟</mat-label>
@@ -161,7 +161,7 @@
                     </div>
 
                 </mat-tab>
-               
+
                 <mat-tab label="فرمول ساخت">
 
                     <app-bom-headers-headers class="pt-2"
@@ -172,7 +172,7 @@
                     </app-bom-headers-headers>
 
                 </mat-tab>
-              
+
 
                 <mat-tab label="موجودی در انبار ها" >
                     <app-warehouse-layouts-commodity-quantity *ngIf="!this.isAddMode"

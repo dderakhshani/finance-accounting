@@ -1,5 +1,5 @@
-<mat-card class="h-100 d-flex flex-column">
-<div class="h-100 overflow-auto">
+<mat-card class="h-full flex flex-column">
+<div class="h-full overflow-auto">
   <app-table-virtual-scrolling
     [tableRows]="WarehouseCountForms"
     [requestsIndex]="requestsIndex"
@@ -14,7 +14,7 @@
   ></app-table-virtual-scrolling>
 </div>
 <ng-template #rowBtn1 let-row="row" let-column="column">
-  <div class="d-flex justify-content-around align-items-center">
+  <div class="flex justify-content-around items-center">
     <mat-icon class="font-30 detail-icon" (click)="showDetail(row)"  matTooltip="نمایش لیست کالاها و موجودی ">
       list
     </mat-icon>
@@ -41,7 +41,7 @@
            <td class="border border-gray-300 " [style]="columns[7].style">{{ r.formStateMessage }}</td>
            <td class="border border-gray-300 " [style]="columns[8].style">
 
-             <div class="d-flex justify-content-around align-items-center">
+             <div class="flex justify-content-around items-center">
                <mat-icon class="font-30 detail-icon" (click)="showDetail(r)"  matTooltip="نمایش لیست کالاها و موجودی ">
                  list
                </mat-icon>

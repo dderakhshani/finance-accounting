@@ -1,5 +1,5 @@
 
-<div class="h-100 d-flex flex-column overflow-auto gap-3" style="max-height: inherit; padding: 0!important;">
+<div class="h-full flex flex-column overflow-auto gap-3" style="max-height: inherit; padding: 0!important;">
   <app-form-actions [actions]="listActions" (OnRefresh)="get()"> </app-form-actions>
   <mat-card>
     <div class="row">
@@ -61,7 +61,7 @@
       </div>
     </div>
   </mat-card>
-  <mat-card class="h-100 overflow-auto p-0">
+  <mat-card class="h-full overflow-auto p-0">
     <app-table [tableConfigurations]="tableConfigurations"
                [tableRows]="Invoices"
                (rowDoubleClicked)="navigateToInvoice($event)"

@@ -1,5 +1,5 @@
 
-<div class="h-100 d-flex flex-column overflow-auto gap-3" style="max-height: inherit; padding: 0!important;">
+<div class="h-full flex flex-column overflow-auto gap-3" style="max-height: inherit; padding: 0!important;">
 
     <mat-card>
         <form [formGroup]="SearchForm">
@@ -53,7 +53,7 @@
                                       [lablelTitleCombo]="'گروه محصول'"
                                       [nodes]="commodityCategoreis" [tabindex]="1">
                     </app-combo-search>
-                    
+
                 </div>
 
 
@@ -102,7 +102,7 @@
     </mat-card>
     <mat-spinner style="top:30%;right:40%;position:absolute;z-index:1000" *ngIf="_notificationService.isLoader"></mat-spinner>
 
-    <div [ngClass]="{'modal-large-table':IslargeSize ,'modal-large-close': !IslargeSize}" class="h-100 overflow-auto p-0">
+    <div [ngClass]="{'modal-large-table':IslargeSize ,'modal-large-close': !IslargeSize}" class="h-full overflow-auto p-0">
 
         <div [ngClass]="{'modal-large-table-content':IslargeSize}">
 
@@ -142,7 +142,7 @@
                                 <th resizable class="width-5" accessKey="serialNumber" abbr="number">
                                   سریال
                                 </th>
-                                
+
                                 <th resizable class="width-5" accessKey="documentNo" abbr="number">
                                   شماره رسید
                                 </th>
@@ -265,7 +265,7 @@
                                 <td accessKey="measureTitle" abbr="string">
                                 </td>
                                 <td accessKey="serialNumber" abbr="number">
-                                  
+
                                 </td>
                                 <td accessKey="documentNo" abbr="number">
                                 </td>

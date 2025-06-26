@@ -1,4 +1,4 @@
-<mat-card class="h-100 d-flex flex-column overflow-hidden gap-2" style="max-height: inherit; padding: 10px 0!important;">
+<mat-card class="h-full flex flex-column overflow-hidden gap-2" style="max-height: inherit; padding: 10px 0!important;">
   <app-action-bar class="px-2" (onRefresh)="get()" (onCustomClick)="handleCustomClick($event)"></app-action-bar>
   <div class="overflow-auto">
     <app-table [tableConfigurations]="tableConfigurations"

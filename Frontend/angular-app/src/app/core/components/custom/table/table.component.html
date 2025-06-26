@@ -22,8 +22,8 @@
 <!--</div>-->
 
 <div class="col-12 topSetting " *ngIf="tableConfigurations?.options?.showTopSettingMenu">
-  <div class="d-flex  justify-content-between col-12">
-    <div class=" d-flex ">
+  <div class="flex  justify-between col-span-12">
+    <div class=" flex ">
       <button (click)="removeAllFiltersAndSorts()" class="m-1" color="warn" mat-raised-button
               matTooltip="حذف تمامی فیلتر/مرتب سازی">
         <mat-icon>delete_outline</mat-icon>
@@ -47,7 +47,7 @@
       <!--    -->
 
     </div>
-    <div class="d-flex justify-content-center align-items-center px-2 ">
+    <div class="flex justify-center items-center px-2 ">
       <ng-content select="[headerBtn_topSetting]"></ng-content>
     </div>
   </div>
@@ -67,7 +67,7 @@
   <!--                             >-->
   <div *ngIf="isLoading"
        style="z-index:5;position: absolute;left:0;top:0;bottom: 0; right: 0;background: rgba(0,0,0,0.3);"
-       class="d-flex align-items-center justify-content-center">
+       class="flex items-center justify-center">
     <mat-spinner></mat-spinner>
   </div>
 
@@ -239,7 +239,7 @@
 
               </div>
 
-              <div class="my-1 mx-auto d-flex gap-2">
+              <div class="my-1 mx-auto flex gap-2">
                 <div>
                   <button mat-raised-button color="primary" (click)="updateFilters()">فیلتر</button>
                 </div>
@@ -296,7 +296,7 @@
               </mat-checkbox>
 
             </button>
-            <div class="w-100 d-flex align-items-center">
+            <div class="w-full flex items-center">
               <button mat-raised-button class="mx-auto" color="primary" (click)="updateColumnsShowStatus()">اعمال
               </button>
             </div>
@@ -523,8 +523,8 @@
     <!-- Footer -->
     <ng-container matColumnDef="footer">
       <td mat-footer-cell *matFooterCellDef [colSpan]="tableHeaders.length" class="border-top">
-        <div class="d-flex flex-row gap-1">
-          <div class="w-100">
+        <div class="flex flex-row gap-1">
+          <div class="w-full">
             <mat-paginator *ngIf="tableConfigurations?.options?.usePagination && tableConfigurations?.pagination"
                            style="margin-left: auto" [length]="tableConfigurations.pagination.totalItems"
                            [pageSize]="tableConfigurations.pagination.pageSize"
@@ -533,12 +533,12 @@
                            class="mat-paginator-sticky" showFirstLastButtons="true">
             </mat-paginator>
           </div>
-          <div class="d-grid align-items-center">
+          <div class="d-grid items-center">
             <ng-content select="[footerContent]"></ng-content>
           </div>
 
-          <div class="d-grid align-items-center">
-            <div class="d-flex flex-row align-items-center mx-auto w-100 gap-3" dir="ltr">
+          <div class="d-grid items-center">
+            <div class="flex flex-row items-center mx-auto w-full gap-3" dir="ltr">
               <button mat-raised-button color="primary" [matMenuTriggerFor]="exportActions"
                       *ngIf="tableConfigurations.options.exportOptions.showExportButton">
                 <mat-label> دانلود</mat-label>

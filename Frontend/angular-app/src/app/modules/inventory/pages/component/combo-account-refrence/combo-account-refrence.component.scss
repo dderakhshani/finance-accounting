@@ -25,7 +25,7 @@ input:read-only {
 
 .height-50 {
   ::ng-deep {
-    .mat-form-field-flex {
+    .mat-form-fielflex {
       max-height: 50px !important;
       padding-right: 20px !important;
     }
@@ -38,7 +38,7 @@ input:read-only {
 
 .height-40 {
   ::ng-deep {
-    .mat-form-field-flex {
+    .mat-form-fielflex {
       max-height: 40px !important;
       padding-right: 20px !important;
       padding-top: 5px !important;

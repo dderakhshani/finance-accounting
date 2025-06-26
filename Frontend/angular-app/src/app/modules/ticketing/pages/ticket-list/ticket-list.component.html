@@ -1,7 +1,7 @@
-<mat-card class="h-100 d-flex flex-column overflow-hidden" style="max-height: inherit; padding: 0!important;">
+<mat-card class="h-full flex flex-column overflow-hidden" style="max-height: inherit; padding: 0!important;">
 
   <app-action-bar class="p-3" (onAdd)="add()"  (onRefresh)="get()">
-    <div class="d-flex justify-content-end" [formGroup]="ticketForm">
+    <div class="flex justify-content-end" [formGroup]="ticketForm">
       <div class="col-md-3 mx-4">
         <mat-form-field>
           <mat-label>وضعیت</mat-label>
@@ -29,7 +29,7 @@
 
   </app-action-bar>
 
-  <div class="h-100 overflow-auto">
+  <div class="h-full overflow-auto">
     <app-table [tableConfigurations]="tableConfigurations" [tableRows]="entities"
                (rowDoubleClicked)="navigateToTicketDetails($event)" (filtersChanged)="get()" (sortChanged)="get()"
                (paginationChanged)="get()"></app-table>

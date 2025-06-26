@@ -1,6 +1,6 @@
-<div class="h-100 d-flex flex-column">
+<div class="h-full flex flex-column">
   <app-action-bar class="p-3" (onAdd)="add()" (onDelete)="delete()" (onCustomClick)="handleCustomActions($event)">
-      <div class="d-flex flex-row gap-2">
+      <div class="flex flex-row gap-2">
           <mat-checkbox color='primary' [(ngModel)]="autoFillNextArticle" [checked]="autoFillNextArticle">
               <mat-label class="mat-caption">کپی اتوماتیک</mat-label>
           </mat-checkbox>
@@ -18,7 +18,7 @@
       </div>
 
   </app-action-bar>
-  <div class="h-100 overflow-auto">
+  <div class="h-full overflow-auto">
     <app-table
       [tableConfigurations]="tableConfigurations"
       (rowClicked)="voucherDetailSelected.emit($event)"

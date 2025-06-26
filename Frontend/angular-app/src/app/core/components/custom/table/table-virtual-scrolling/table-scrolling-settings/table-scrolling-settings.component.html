@@ -29,7 +29,7 @@
       <!--    drag-index-->
 
       <td>
-        <div class="d-flex justify-content-around  w-100">
+        <div class="flex justify-content-around  w-full">
           {{ i + 1 }}
           <div class="flex-row-center mx-1" [style.cursor]="column.isDisableDrop ? 'not-allowed' : 'move'">
             <mat-icon *ngIf="column.isDisableDrop" class="drag-icon-disable  font-30">
@@ -181,7 +181,7 @@
 
 
   <div class="card-box">
-    <div class="flex-row-space-between px-2 w-100">
+    <div class="flex-row-space-between px-2 w-full">
 
       <div class="flex-row-space-between ">
         <span class="ml-1">

@@ -1,6 +1,6 @@
 
 
-<div class="h-100 d-flex flex-column overflow-auto gap-3" style="max-height: inherit; padding: 0!important;">
+<div class="h-full flex flex-column overflow-auto gap-3" style="max-height: inherit; padding: 0!important;">
     {{messsage}}
 
     <app-form-actions (onEdit)="update()" *ngIf="correctionRequest?.status==0">
@@ -75,7 +75,7 @@
     <!--Files-->
     <div class="row">
         <div *ngIf="attachmentIds.length>0">
-            <app-uploader class="d-flex justify-content-center"
+            <app-uploader class="flex justify-center"
                           [autoUpload]="true"
                           (filesChange)="files=$event"
                           (isUploadingChange)="isUploading"
@@ -86,7 +86,7 @@
         </div>
     </div>
     <!--آیتم های قابل تغییر--------------------------->
-    <mat-card *ngIf="receipt!=undefined" [formGroup]="form" class="h-100 overflow-auto p-0">
+    <mat-card *ngIf="receipt!=undefined" [formGroup]="form" class="h-full overflow-auto p-0">
 
 
         <div class="row">

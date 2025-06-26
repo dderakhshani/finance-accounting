@@ -1,6 +1,6 @@
 <app-action-bar class="p-3" (onAdd)="add()" (onRefresh)="get()" (onDelete)="delete()"></app-action-bar>
 
-<div class="h-100 overflow-auto">
+<div class="h-full overflow-auto">
   <app-table [tableConfigurations]="tempVoucherTableConfigurations"
              [tableRows]="tempVoucherHeads"
              (rowDoubleClicked)="navigateToTempVoucherHead($event)"

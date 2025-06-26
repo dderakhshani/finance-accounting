@@ -2,7 +2,7 @@
   <div dialog-header="">افزودن تیکت</div>
   <div dialog-content="">
 
-    <div class="d-flex">
+    <div class="flex">
       <div class="col-md-6">
         <span>ارسال کننده :  </span>
         <span> {{ user.fullName }}</span>
@@ -71,7 +71,7 @@
       </div>
       <div class="col-md-12">
 
-        <app-uploader class="d-flex justify-content-center" [autoUpload]="true" (filesChange)="files=$event"
+        <app-uploader class="flex justify-center" [autoUpload]="true" (filesChange)="files=$event"
                       (isUploadingChange)="isUploading" [attachmentsModel]="attachmentsModel"
                       [attachmentIds]="attachmentIds"
                       [allowFileUpload]="true">

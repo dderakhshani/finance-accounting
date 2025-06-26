@@ -3,7 +3,7 @@
   <mat-icon mat-dialog-close>close</mat-icon>
 </div>
 <mat-dialog-content class="mat-typography">
-  <div class="d-flex ">
+  <div class="flex ">
     <ng-container  *ngIf="config.icon!=ConfirmDialogIcons.basic">
       <mat-icon *ngIf="config.icon==ConfirmDialogIcons.info">info</mat-icon>
       <mat-icon *ngIf="config.icon==ConfirmDialogIcons.success">done</mat-icon>
@@ -13,7 +13,7 @@
       <mat-icon *ngIf="config.icon==ConfirmDialogIcons.error">dangerous</mat-icon>
     </ng-container>
 
-        
+
 
         <samp style="font-size:15px;" id="Modal_Message" >
             <!--View Html Message From .ts-->

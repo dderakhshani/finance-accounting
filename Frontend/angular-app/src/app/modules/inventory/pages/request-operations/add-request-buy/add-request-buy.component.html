@@ -1,5 +1,5 @@
 
-<div [formGroup]="form" class="h-100 d-flex flex-column overflow-auto" style="max-height: inherit; padding: 0!important;">
+<div [formGroup]="form" class="h-full flex flex-column overflow-auto" style="max-height: inherit; padding: 0!important;">
 
     <app-form-actions [actions]="formActions" (OnShowList)="navigateToReceiptList()" (OnAdd)="reset()">
         <button mat-raised-button color="primary" matTooltip="ذخیره کامل اطلاعات" (click)="add()" *ngIf="!pageModeTypeUpdate && !isSubmitForm" [disabled]="_notificationService.isLoader" id="Save">

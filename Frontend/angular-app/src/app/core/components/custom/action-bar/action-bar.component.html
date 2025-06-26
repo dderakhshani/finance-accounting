@@ -1,6 +1,6 @@
-<div class="action-bar  d-flex align-items-center gap-3 w-100" *ngIf="viewMode == 'default' ; else sliderView"  >
+<div class="action-bar  flex items-center gap-3 w-full" *ngIf="viewMode == 'default' ; else sliderView"  >
 <ng-content select="[before]"></ng-content>
-  <div class="d-flex gap-3">
+  <div class="flex gap-3">
     <button style="width: fit-content;padding: 0 3px 0 9px !important;" [class]="action.customClass"
             (click)="actionClickHandler(action)"
             *ngFor="let action of actions" mat-raised-button
@@ -9,7 +9,7 @@
       <span>{{action.title}}</span>
     </button>
   </div>
-  <div class="flex-fill">
+  <div class="flex-grow">
     <ng-content></ng-content>
   </div>
   <div>

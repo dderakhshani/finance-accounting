@@ -1,13 +1,13 @@
-<div class="app-container-wrapper">
+<div class="app-container-wrapper bg-gray-100">
   <!--      <div class="container-header">-->
   <!--        <app-header [isToggled]="isToggled" (toggled)="sidenav.toggle(); isToggled = !isToggled"></app-header>-->
   <!--      </div>-->
   <!--    <mat-icon class="help-view-btn" (click)="openCurrentTabHelp()" color="primary">help</mat-icon>-->
-  <div class="container-view ">
-    <div class="container-tabs gap-1">
+  <div class="container-view gap-1">
+    <div class="container-tabs">
       <app-tabs></app-tabs>
     </div>
-    <div class="route-content">
+    <div class="route-content  h-full">
 
       <ng-container *ngFor="let tab of tabManagerService.tabs">
         <div class="tab-spinner" *ngIf="tab.active && tab.isLoading">
@@ -17,7 +17,7 @@
              [ngClass]="{ 'current-tab' : tab.active }">
           <!--              <div-->
           <!--                style="z-index:9999;position: absolute;left:0;bottom: -10; right: 0;background: rgba(0,0,0,0.3);"-->
-          <!--                class="d-flex align-items-center justify-content-center">-->
+          <!--                class="flex items-center justify-center">-->
           <!--                <mat-spinner></mat-spinner>-->
           <!--              </div>-->
           <ng-container *ngComponentOutlet="tab.component"></ng-container>
