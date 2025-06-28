@@ -1,4 +1,4 @@
-<!--<div class="col-12 topSetting" *ngIf="tableConfigurations?.options?.showTopSettingMenu">-->
+<!--<div class="col-span-12 topSetting" *ngIf="tableConfigurations?.options?.showTopSettingMenu">-->
 <!--  <button (click)="removeAllFiltersAndSorts()" class="m-1" color="warn" mat-raised-button-->
 <!--          matTooltip="حذف تمامی فیلتر/مرتب سازی">-->
 <!--    <mat-icon>delete_outline</mat-icon>-->
@@ -21,56 +21,41 @@
 
 <!--</div>-->
 
-<div class="w-full p-2" *ngIf="tableConfigurations?.options?.showTopSettingMenu">
-  <div class="flex justify-between w-full">
+<div class="w-full flex flex-col bg-[#6d72ed]" *ngIf="tableConfigurations?.options?.showTopSettingMenu">
+  <div class="flex justify-between w-full p-2">
 
-    <!-- دکمه‌ها -->
-    <div class="flex flex-wrap">
-      <button
-        (click)="removeAllFiltersAndSorts()"
-        class="m-1 px-3 py-2 bg-red-100 text-red-600 rounded shadow hover:bg-red-200 transition"
-        color="warn"
-        mat-raised-button
-        matTooltip="حذف تمامی فیلتر/مرتب سازی">
+    <div class="flex gap-1">
+      <button (click)="removeAllFiltersAndSorts()" class="m-1" color="warn" mat-raised-button
+              matTooltip="حذف تمامی فیلتر/مرتب سازی">
         <mat-icon>delete_outline</mat-icon>
       </button>
 
-      <button
-        mat-raised-button
-        (click)="includeOnlySelectedItems()"
-        class="m-1 px-3 py-2 bg-blue-200 rounded shadow hover:bg-blue-300 transition"
-        matTooltip="فیلتر ردیف های انتخابی">
+      <button mat-raised-button (click)="includeOnlySelectedItems()" class="bg-blue-200 m-1" matTooltip="فیلتر ردیف های انتخابی">
         <mat-icon [ngClass]="{'text-red-500': isSelectedList, 'text-black': !isSelectedList}">archive</mat-icon>
       </button>
 
-      <button
-        mat-raised-button
-        (click)="excludeSelectedItems()"
-        class="m-1 px-3 py-2 bg-blue-200 rounded shadow hover:bg-blue-300 transition"
-        matTooltip="حذف ردیف های انتخابی">
+      <button mat-raised-button (click)="excludeSelectedItems()" class="bg-blue-200 m-1"
+              matTooltip="حذف ردیف های انتخابی">
         <mat-icon>remove_circle_outline</mat-icon>
-      </button>
 
-      <button
-        mat-raised-button
-        (click)="clearExcludedItems(); clearIncludeOnlySelectedItems()"
-        class="m-1 px-3 py-2 bg-blue-200 rounded shadow hover:bg-blue-300 transition"
-        matTooltip="نمایش همه">
+      </button>
+      <button mat-raised-button (click)="clearExcludedItems(); clearIncludeOnlySelectedItems()"
+              class="bg-blue-200 m-1"
+              matTooltip="نمایش همه">
         <mat-icon>list</mat-icon>
+
       </button>
     </div>
 
-    <!-- بخش دکمه‌های جایگذاری‌شده از بیرون -->
-    <div class="flex items-center px-2">
+    <div class="flex justify-center items-center">
       <ng-content select="[headerBtn_topSetting]"></ng-content>
     </div>
-
   </div>
-</div>
 
+</div>
 <!--(scroll)="tableConfigurations?.options?.lazyLoading? onTableScroll($event): ''"-->
 <div [style.height]="height ?? 'unset'" [style.overflow-y]="height ? 'auto' : 'unset'" id="appTableWrapper"
-     style="scroll-behavior: smooth;" [style.margin-top]="tableConfigurations?.options?.showTopSettingMenu?'38px':0"
+     style="scroll-behavior: smooth;"
      [style.max-height]="tableConfigurations?.options?.showTopSettingMenu?'94%':'unset'"
 >
   <!--  <button (click)="excludeSelectedItems()">exclude</button>-->
@@ -126,8 +111,8 @@
               <mat-label (click)="$event.stopPropagation()">
                 {{column.title}}
               </mat-label>
-              <div class="row" *ngFor="let filter of column.filter.filters; index as filterIndex; let isLast=last">
-                <div class="col-4 p-1" (click)="$event.stopPropagation()">
+              <div class="grid grid-cols-12 gap-3" *ngFor="let filter of column.filter.filters; index as filterIndex; let isLast=last">
+                <div class="col-span-4 p-1" (click)="$event.stopPropagation()">
                   <mat-form-field>
                     <mat-select #actualSearchConditions [panelClass]="'mat-elevation-z10'" placeholder=''
                                 [(value)]="filter.actualSearchCondition">
@@ -138,7 +123,7 @@
                   </mat-form-field>
                 </div>
 
-                <div class="col-4 p-1" (click)="$event.stopPropagation()" #searchInput>
+                <div class="col-span-4 p-1" (click)="$event.stopPropagation()" #searchInput>
                   <div *ngIf="filter.filterType === tableColumnFilterTypes.Text && filter.actualSearchCondition">
                     <mat-form-field>
                       <input autofocus (keydown.enter)="updateFilters(menuTrigger)" matInput
@@ -231,7 +216,7 @@
                   </div>
                 </div>
 
-                <div class="col-2 p-1" (click)="$event.stopPropagation()">
+                <div class="col-span-2 p-1" (click)="$event.stopPropagation()">
                   <mat-form-field>
                     <mat-select [panelClass]="'mat-elevation-z10'" placeholder='' [(value)]="filter.nextOperand">
                       <mat-option *ngFor="let operand of ['and', 'or']" [value]="operand">{{operand === 'and' ? 'و' :
@@ -240,19 +225,19 @@
                     </mat-select>
                   </mat-form-field>
                 </div>
-                <div *ngIf="column.filter.filters?.length > 1" class="col-1 p-1"
+
+                <div *ngIf="column.filter.filters?.length > 1" class="col-span-1 p-1"
                      (click)="$event.stopPropagation();column.filter.removeFilter(filterIndex)">
                   <button mat-icon-button color="primary" style="padding: 0!important;" class="mx-auto">
                     <mat-icon>delete</mat-icon>
                   </button>
                 </div>
-                <div *ngIf="isLast" class="col-1 p-0" (click)="$event.stopPropagation();column.filter.addFilter()">
+
+                <div *ngIf="isLast" class="col-span-1 p-0" (click)="$event.stopPropagation();column.filter.addFilter()">
                   <button mat-icon-button color="primary" style="padding: 0!important;" class="mx-auto">
                     <mat-icon>add</mat-icon>
                   </button>
                 </div>
-
-
               </div>
 
               <div class="my-1 mx-auto flex gap-2">
@@ -260,12 +245,11 @@
                   <button mat-raised-button color="primary" (click)="updateFilters()">فیلتر</button>
                 </div>
 
-                <div class="ml-1">
+                <div>
                   <button mat-raised-button color="warn" (click)="column.filter.setDefaultFilter(); updateFilters()">
                     حذف
                   </button>
                 </div>
-
               </div>
             </mat-menu>
           </div>
@@ -472,23 +456,25 @@
                 column.displayFn ? column.displayFn(element) : element[column.name] | truncate:column.truncateTextLimit}}</span>
 
             <div *ngIf="column.type === fieldTypes.Action">
-              <div class="flex">
+              <div class="grid grid-cols-12 gap-2">
 
-                <div class="w-1/2 flex justify-center">
-                  <button mat-icon-button class="mx-2">
-                    <mat-icon class="text-gray-400">edit</mat-icon>
+                <div class="col-span-6">
+                  <button mat-icon-button class=" mx-2">
+                    <mat-icon style="color: rgb(162,162,162)">
+                      edit
+                    </mat-icon>
                   </button>
                 </div>
 
-                <div class="w-1/2 flex justify-center">
+                <div class="col-span-6">
                   <button mat-icon-button>
-                    <mat-icon class="text-gray-400">delete</mat-icon>
+                    <mat-icon style="color: rgb(162,162,162)">
+                      delete
+                    </mat-icon>
                   </button>
                 </div>
-
               </div>
             </div>
-
 
           </ng-container>
           <ng-container *ngIf="column.type===fieldTypes.Template">
@@ -535,7 +521,7 @@
 
     <!-- Footer -->
     <ng-container matColumnDef="footer">
-      <td mat-footer-cell *matFooterCellDef [colSpan]="tableHeaders.length" class="border-t">
+      <td mat-footer-cell *matFooterCellDef [colSpan]="tableHeaders.length" class="border-top">
         <div class="flex flex-row gap-1">
           <div class="w-full">
             <mat-paginator *ngIf="tableConfigurations?.options?.usePagination && tableConfigurations?.pagination"
