@@ -9,10 +9,6 @@ namespace Eefa.Warehouse.Infrastructure.Data.Entities;
 /// </summary>
 public class Warehous : BaseEntity 
 {
-    /// <summary>
-    /// کد سطح
-    /// </summary>
-  public string? LevelCode { get; set; }
   public int TypeBaseId { get; set; }
     /// <summary>
     /// سرفصل حساب 

@@ -22,10 +22,10 @@ namespace Eefa.Warehouse.WebApi.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> Add([FromBody] CreateWarehousCommand model)=>Ok(await Mediator.Send(model));
+        public async Task<IActionResult> Add([FromBody] CreateWarehouseCommand model)=>Ok(await Mediator.Send(model));
 
         [HttpPost]
-        public async Task<IActionResult> Update([FromBody] UpdateWarehousCommand model) => Ok(await Mediator.Send(model));
+        public async Task<IActionResult> Update([FromBody] UpdateWarehouseCommand model) => Ok(await Mediator.Send(model));
 
         [HttpDelete]
         public async Task<IActionResult> Delete(int id)=> Ok(await Mediator.Send(new DeleteWarehouseCommand() { Id = id }));
