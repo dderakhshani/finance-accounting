@@ -29,8 +29,8 @@ namespace Eefa.Warehouse.Application.Commands.Warehouse.Delete
 
         public async Task<bool> Handle(DeleteWarehouseCommand request, CancellationToken cancellationToken)
         {
-            var entity = await _dbContext.Warehouses.FirstAsync(w => w.Id == request.Id && !w.IsDeleted);
-            entity.IsDeleted = true;
+            var entity = await _dbContext.Warehouses.FirstAsync(w => w.Id == request.Id);
+            _dbContext.RemoveEntity(entity);
             await _dbContext.SaveChangesAsync(cancellationToken);
 
             return true;

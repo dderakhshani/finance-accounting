@@ -31,10 +31,6 @@ namespace Eefa.Warehouse.Infrastructure.Data.Context.Configurations
             entity.Property(e => e.CreatedById).HasComment("ایجاد کننده");
             entity.Property(e => e.IsActive).HasComment("فعال");
             entity.Property(e => e.IsDeleted).HasComment("آیا حذف شده است؟");
-            entity.Property(e => e.LevelCode)
-                .HasMaxLength(50)
-                .IsUnicode(false)
-                .HasComment("کد سطح");
             entity.Property(e => e.ModifiedAt)
                 .HasDefaultValueSql("(getdate())")
                 .HasComment("تاریخ و زمان اصلاح");
