@@ -26,6 +26,8 @@ public class SalePriceList : BaseEntity , IHierarchical
     /// توضیحات
     /// </summary>
   public string? Descriptions { get; set; }
+  public double? Price { get; set; }
+  public double? DollarPrice { get; set; }
     /// <summary>
     /// نوع لیست قیمتی 
     /// </summary>

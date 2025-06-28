@@ -12,42 +12,41 @@ using System.Collections.Generic;
 
 namespace Eefa.Warehouse.Infrastructure.Data.Context.Configurations
 {
-    public partial class WarehousConfiguration : IEntityTypeConfiguration<Warehous>
+    public partial class WarehouseHistoryConfiguration : IEntityTypeConfiguration<WarehouseHistory>
     {
-        public void Configure(EntityTypeBuilder<Warehous> entity)
+        public void Configure(EntityTypeBuilder<WarehouseHistory> entity)
         {
-            entity.ToTable("Warehouses", "inventory", tb => tb.HasComment("انبارها"));
+            entity.HasKey(e => e.Id).HasName("PK_WarehouseHistory");
+
+            entity.ToTable("WarehouseHistories", "inventory", tb => tb.HasComment("تاریخچه انبار ها"));
+
+            entity.HasIndex(e => e.Commodityld, "IX_WarehouseHistories_CommodityId");
+
+            entity.HasIndex(e => e.IsDeleted, "IX_WarehouseHistories_IsDeleted");
+
+            entity.HasIndex(e => e.WarehousesId, "IX_WarehouseHistories_WarehouseId");
+
+            entity.HasIndex(e => e.DocumentItemId, "IX_WarehouseHistories_documentItemsId");
 
             entity.Property(e => e.Id).HasComment("شناسه");
-            entity.Property(e => e.AccountHeadId).HasComment("سرفصل حساب ");
-            entity.Property(e => e.AccountReferenceId).HasComment("تفصیل شناور ");
-            entity.Property(e => e.CommodityCategoryId).HasComment("کد گروه کالا");
-            entity.Property(e => e.Countable)
-                .HasDefaultValue(false)
-                .HasComment("قابل شمارش ");
+            entity.Property(e => e.Commodityld).HasComment("کد کالا");
             entity.Property(e => e.CreatedAt)
                 .HasDefaultValueSql("(getdate())")
                 .HasComment("تاریخ و زمان ایجاد");
             entity.Property(e => e.CreatedById).HasComment("ایجاد کننده");
-            entity.Property(e => e.IsActive).HasComment("فعال");
+            entity.Property(e => e.DocumentItemId).HasComment("شماره آیتم در سند");
             entity.Property(e => e.IsDeleted).HasComment("آیا حذف شده است؟");
+            entity.Property(e => e.Mode).HasComment("نوع عملیات");
             entity.Property(e => e.ModifiedAt)
                 .HasDefaultValueSql("(getdate())")
                 .HasComment("تاریخ و زمان اصلاح");
             entity.Property(e => e.ModifiedById).HasComment("اصلاح کننده");
             entity.Property(e => e.OwnerRoleId).HasComment("نقش صاحب سند");
-            entity.Property(e => e.RowVersion)
-                .IsRowVersion()
-                .IsConcurrencyToken();
-            entity.Property(e => e.Sort).HasComment("ترتیب نمایش");
-            entity.Property(e => e.Title)
-                .HasMaxLength(200)
-                .HasComment("عنوان");
-            entity.Property(e => e.TypeBaseId).HasDefaultValue(29364);
+            entity.Property(e => e.Quantity).HasComment("تعداد");
 
             OnConfigurePartial(entity);
         }
 
-        partial void OnConfigurePartial(EntityTypeBuilder<Warehous> entity);
+        partial void OnConfigurePartial(EntityTypeBuilder<WarehouseHistory> entity);
     }
 }

@@ -12,42 +12,40 @@ using System.Collections.Generic;
 
 namespace Eefa.Warehouse.Infrastructure.Data.Context.Configurations
 {
-    public partial class WarehousConfiguration : IEntityTypeConfiguration<Warehous>
+    public partial class WarehouseStockConfiguration : IEntityTypeConfiguration<WarehouseStock>
     {
-        public void Configure(EntityTypeBuilder<Warehous> entity)
+        public void Configure(EntityTypeBuilder<WarehouseStock> entity)
         {
-            entity.ToTable("Warehouses", "inventory", tb => tb.HasComment("انبارها"));
+            entity.HasKey(e => e.Id).HasName("PK_Stoks");
+
+            entity.ToTable("WarehouseStocks", "inventory");
+
+            entity.HasIndex(e => e.CommodityId, "IX_WarehouseStocks_CommodityId");
+
+            entity.HasIndex(e => e.WarehousId, "IX_WarehouseStocks_WarehouseId");
 
             entity.Property(e => e.Id).HasComment("شناسه");
-            entity.Property(e => e.AccountHeadId).HasComment("سرفصل حساب ");
-            entity.Property(e => e.AccountReferenceId).HasComment("تفصیل شناور ");
-            entity.Property(e => e.CommodityCategoryId).HasComment("کد گروه کالا");
-            entity.Property(e => e.Countable)
-                .HasDefaultValue(false)
-                .HasComment("قابل شمارش ");
+            entity.Property(e => e.CommodityId).HasComment("کد کالا");
             entity.Property(e => e.CreatedAt)
                 .HasDefaultValueSql("(getdate())")
                 .HasComment("تاریخ و زمان ایجاد");
             entity.Property(e => e.CreatedById).HasComment("ایجاد کننده");
-            entity.Property(e => e.IsActive).HasComment("فعال");
             entity.Property(e => e.IsDeleted).HasComment("آیا حذف شده است؟");
             entity.Property(e => e.ModifiedAt)
                 .HasDefaultValueSql("(getdate())")
                 .HasComment("تاریخ و زمان اصلاح");
             entity.Property(e => e.ModifiedById).HasComment("اصلاح کننده");
             entity.Property(e => e.OwnerRoleId).HasComment("نقش صاحب سند");
-            entity.Property(e => e.RowVersion)
-                .IsRowVersion()
-                .IsConcurrencyToken();
-            entity.Property(e => e.Sort).HasComment("ترتیب نمایش");
-            entity.Property(e => e.Title)
-                .HasMaxLength(200)
-                .HasComment("عنوان");
-            entity.Property(e => e.TypeBaseId).HasDefaultValue(29364);
+            entity.Property(e => e.Quantity).HasComment("تعداد");
+            entity.Property(e => e.WarehousId).HasComment("کد انبار");
+
+            entity.HasOne(d => d.Warehous).WithMany(p => p.WarehouseStocks)
+                .HasForeignKey(d => d.WarehousId)
+                .HasConstraintName("FK_Stoks_Warehouses");
 
             OnConfigurePartial(entity);
         }
 
-        partial void OnConfigurePartial(EntityTypeBuilder<Warehous> entity);
+        partial void OnConfigurePartial(EntityTypeBuilder<WarehouseStock> entity);
     }
 }
