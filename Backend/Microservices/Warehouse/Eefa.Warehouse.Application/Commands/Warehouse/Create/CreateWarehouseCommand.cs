@@ -12,10 +12,9 @@ using System.Threading.Tasks;
 
 namespace Eefa.Warehouse.Application.Commands
 {
-    public class CreateWarehousCommand : IRequest<bool>, IMapFrom<Warehous>
+    public class CreateWarehouseCommand : IRequest<bool>, IMapFrom<Warehous>
     {
         public int TypeBaseId { get; set; }
-        public string? LevelCode { get; set; }
         public int AccountHeadId { get; set; }
         public int? AccountRererenceGroupId { get; set; }
         public int? AccountReferenceId { get; set; }
@@ -24,21 +23,20 @@ namespace Eefa.Warehouse.Application.Commands
         public int? CommodityCategoryId { get; set; }
         public int? Sort { get; set; }
         public bool? Countable { get; set; }
-        public byte[]? RowVersion { get; set; }
     }
 
-    public class CreateWarehousCommandHandler : IRequestHandler<CreateWarehousCommand, bool>
+    public class CreateWarehouseCommandHandler : IRequestHandler<CreateWarehouseCommand, bool>
     {
         private readonly IMapper _mapper;
         private readonly WarehouseDbContext _dbContext;
 
-        public CreateWarehousCommandHandler(IMapper mapper, WarehouseDbContext dbContext)
+        public CreateWarehouseCommandHandler(IMapper mapper, WarehouseDbContext dbContext)
         {
             _mapper = mapper;
             _dbContext = dbContext;
         }
 
-        public async Task<bool> Handle(CreateWarehousCommand request, CancellationToken cancellationToken)
+        public async Task<bool> Handle(CreateWarehouseCommand request, CancellationToken cancellationToken)
         {
 
             var warehouse = _mapper.Map<Warehous>(request);
