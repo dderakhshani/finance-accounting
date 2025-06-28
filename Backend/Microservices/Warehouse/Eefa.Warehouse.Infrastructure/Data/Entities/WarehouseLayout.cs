@@ -34,27 +34,6 @@ public class WarehouseLayout : BaseEntity , IHierarchical
     /// </summary>
   public bool LastLevel { get; set; }
     /// <summary>
-    ///  0 NONE - 1 LIFO - 2 FIFO حالت ورود اطلاعات  
-    /// </summary>
-  public int EntryMode { get; set; }
-    /// <summary>
-    /// 0 آزاد 
-    /// 1 فقط ورودی 
-    /// 2 فقط خروجی 
-    /// 3 قفل موقت 
-    /// 4 قفل دائم 
-    /// 
-    /// </summary>
-  public int Status { get; set; }
-    /// <summary>
-    /// شماره شروع
-    /// </summary>
-  public int StartIndex { get; set; }
-    /// <summary>
-    /// شماره پایان
-    /// </summary>
-  public int? EndIndex { get; set; }
-    /// <summary>
     /// نوع واحد کالا
     /// </summary>
   public int? UnitBaseTypeId { get; set; }
@@ -62,14 +41,8 @@ public class WarehouseLayout : BaseEntity , IHierarchical
     /// ترتیب نمایش
     /// </summary>
   public int OrderIndex { get; set; }
-    /// <summary>
-    /// موقعیت پیش فرض
-    /// </summary>
-  public bool? IsDefault { get; set; }
-    /// <summary>
-    /// زیر مجموعه بصورت سریال است
-    /// </summary>
-  public bool IsChildSequncial { get; set; }
+  public int? CommodityId { get; set; }
+  public double? Quantity { get; set; }
     public virtual ICollection<WarehouseLayout> InverseParent { get; set; } = new List<WarehouseLayout>();
     public virtual WarehouseLayout? Parent { get; set; }
     public virtual Warehous? Warehouse { get; set; }

@@ -1,0 +1,135 @@
+<nav class="flex flex-row-reverse justify-between items-center w-full shadow-sm px-4 py-2">
+  <div class="flex flex-row-reverse items-center">
+    <!-- settings  -->
+    <button
+      (click)="settingToggled.emit(!isSettingToggled)"
+      mat-icon-button>
+      <mat-icon class="text-gray-800 !text-2xl  hover:text-blue-600 transition">settings</mat-icon>
+    </button>
+
+
+    <!--   Related systems   -->
+    <button
+      [matMenuTriggerFor]="menuApps"
+      mat-icon-button>
+      <mat-icon class="text-gray-800 !text-2xl hover:text-blue-600 transition" matTooltip="سیستم های مرتبط">apps
+      </mat-icon>
+    </button>
+    <mat-menu #menuApps="matMenu">
+      <div class="col-12 " style="height: fit-content!important;" mat-menu-item (click)="$event.stopPropagation()">
+        <button class="!flex !justify-center !items-center gap-1" (click)="openLink('kasra')">
+          <img class="w-5 h-5" src="assets/images/kasra.png" alt="Logo">
+
+          <span>کسری</span>
+        </button>
+      </div>
+      <div class="col-12" style="height: fit-content!important;" mat-menu-item (click)="$event.stopPropagation()">
+        <button class="!flex !justify-center !items-center gap-1" (click)="openLink('sina')">
+          <img class="w-5 h-5" src="assets/images/sina.png" alt="Logo">
+
+          <span>سینا</span>
+        </button>
+      </div>
+      <div class="col-12" style="height: fit-content!important;" mat-menu-item (click)="$event.stopPropagation()">
+        <button class="!flex !justify-center !items-center gap-1" (click)="openLink('ERP')">
+          <img class="w-5 h-5" src="assets/images/ERP.png" alt="Logo">
+          <span>ERP</span>
+        </button>
+      </div>
+    </mat-menu>
+
+    <!-- user info -->
+    <button
+      [matMenuTriggerFor]="userInfo"
+      mat-icon-button>
+      <mat-icon class="text-gray-800 !text-2xl hover:text-blue-600 transition">account_circle</mat-icon>
+    </button>
+    <mat-menu #userInfo="matMenu">
+      <div class="p-3 min-w-[260px] w-fit rounded flex items-center gap-3">
+        <div class="relative">
+          <div
+            class="bg-gray-500 flex justify-center items-center text-white font-bold rounded-full w-[50px] h-[50px] text-[12px]">
+            {{ getAbbreviationName(applicationUserFullName) }}
+          </div>
+          <span
+            class="absolute bottom-0 right-0 translate-middle p-1.5 bg-green-500 border border-white rounded-full"></span>
+        </div>
+
+        <div>
+          <div class="text-[16px]">{{ applicationUserFullName }}</div>
+          <div class="text-gray-500 text-sm">brian.hughes@company</div>
+        </div>
+      </div>
+      <button mat-menu-item disabled (click)="$event.stopPropagation()">
+        <span>نقش ها</span>
+      </button>
+
+      <div mat-menu-item *ngFor="let role of allowedRoles" (click)="handleRoleChange(role.roleId)">
+        <mat-icon class="text-[20px]">assignment_ind</mat-icon>
+
+        <span>نقش&nbsp;{{ role.title }}</span> (<span
+        *ngIf="form.get('roleId')?.value==role.roleId">نقش جاری</span>)
+      </div>
+
+      <mat-divider></mat-divider>
+
+      <button mat-menu-item>
+        <mat-icon class="text-[20px]">lock_reset</mat-icon>
+        <span>تغییر رمز عبور</span>
+      </button>
+
+
+      <mat-divider></mat-divider>
+
+      <button (click)="identityService.logout()" mat-menu-item>
+        <mat-icon class="text-[20px]">logout</mat-icon>
+        خروج
+      </button>
+    </mat-menu>
+
+    <!-- notifications  -->
+    <button
+      mat-icon-button>
+      <mat-icon class="text-gray-800 !text-2xl hover:text-blue-600 transition">notifications</mat-icon>
+    </button>
+
+    <!-- support_agent  -->
+    <button
+      mat-icon-button>
+      <mat-icon class="text-gray-800 !text-2xl hover:text-blue-600 transition">support_agent</mat-icon>
+    </button>
+  </div>
+
+  <div class="flex items-center gap-1">
+    <button
+      (click)="toggled.emit(!isMinimized)"
+      mat-icon-button
+    >
+      <mat-icon class="text-gray-800 text-[28px] hover:text-blue-600 transition">menu</mat-icon>
+    </button>
+
+    <!-- Vertical Divider -->
+    <div class="w-px h-6 bg-gray-300 mx-4"></div>
+
+
+    <div class="text-[11px] w-32">
+      {{ currentDay ? (currentDate + ' ' + currentDay + ' ' + currentTime) : '' }}
+    </div>
+
+    <!-- Vertical Divider -->
+    <div class="w-px h-6 bg-gray-300 mx-4"></div>
+
+
+    <div class="text-[11px]">
+      <mat-chip-list>
+        <mat-chip [matMenuTriggerFor]="menu">سال مالی {{ currentYear?.yearName }}</mat-chip>
+      </mat-chip-list>
+    </div>
+
+    <mat-menu [formGroup]="form" #menu="matMenu">
+      <div mat-menu-item *ngFor="let year of allowedYears" (click)="handleYearChange(year.id)">
+        {{ 'سال مالی  ' + year.yearName }}
+      </div>
+    </mat-menu>
+  </div>
+</nav>

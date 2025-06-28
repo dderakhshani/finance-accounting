@@ -131,6 +131,7 @@ namespace Eefa.Common.Data
                 else if (entity.State == EntityState.Modified)
                 {
                     baseEntity.ModifiedAt = DateTime.UtcNow;
+                    baseEntity.ModifiedById = _currentUserAccessor.GetId();
                 }
             }
 

@@ -36,12 +36,6 @@ namespace Eefa.Warehouse.Infrastructure.Data.Context.Configurations
                 .HasDefaultValueSql("(getdate())")
                 .HasComment("تاریخ و زمان ایجاد");
             entity.Property(e => e.CreatedById).HasComment("ایجاد کننده");
-            entity.Property(e => e.EndIndex).HasComment("شماره پایان");
-            entity.Property(e => e.EntryMode).HasComment(" 0 NONE - 1 LIFO - 2 FIFO حالت ورود اطلاعات  ");
-            entity.Property(e => e.IsChildSequncial).HasComment("زیر مجموعه بصورت سریال است");
-            entity.Property(e => e.IsDefault)
-                .HasDefaultValue(false)
-                .HasComment("موقعیت پیش فرض");
             entity.Property(e => e.IsDeleted).HasComment("آیا حذف شده است؟");
             entity.Property(e => e.LastLevel).HasComment("سطح آخر هست");
             entity.Property(e => e.LevelCode)
@@ -56,8 +50,6 @@ namespace Eefa.Warehouse.Infrastructure.Data.Context.Configurations
             entity.Property(e => e.OrderIndex).HasComment("ترتیب نمایش");
             entity.Property(e => e.OwnerRoleId).HasComment("نقش صاحب سند");
             entity.Property(e => e.ParentId).HasComment("کد والد");
-            entity.Property(e => e.StartIndex).HasComment("شماره شروع");
-            entity.Property(e => e.Status).HasComment("0 آزاد \r\n1 فقط ورودی \r\n2 فقط خروجی \r\n3 قفل موقت \r\n4 قفل دائم \r\n");
             entity.Property(e => e.Title)
                 .HasMaxLength(100)
                 .HasComment("عنوان");
