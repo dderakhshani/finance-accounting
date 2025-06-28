@@ -13,11 +13,10 @@ using System.Threading.Tasks;
 
 namespace Eefa.Warehouse.Application.Commands.Warehouse.Update
 {
-    public record UpdateWarehousCommand : IRequest<bool>, IMapFrom<Warehous>
+    public record UpdateWarehouseCommand : IRequest<bool>, IMapFrom<Warehous>
     {
         public int Id { get; set; }
         public int TypeBaseId { get; set; }
-        public string? LevelCode { get; set; }
         public int AccountHeadId { get; set; }
         public int? AccountRererenceGroupId { get; set; }
         public int? AccountReferenceId { get; set; }
@@ -26,22 +25,21 @@ namespace Eefa.Warehouse.Application.Commands.Warehouse.Update
         public int? CommodityCategoryId { get; set; }
         public int? Sort { get; set; }
         public bool? Countable { get; set; }
-        public byte[]? RowVersion { get; set; }
     }
-    public class UpdateWarehousCommandHandler : IRequestHandler<UpdateWarehousCommand, bool>
+    public class UpdateWarehouseCommandHandler : IRequestHandler<UpdateWarehouseCommand, bool>
     {
         private readonly IMapper _mapper;
         private readonly WarehouseDbContext _dbContext;
 
-        public UpdateWarehousCommandHandler(IMapper mapper, WarehouseDbContext dbContext)
+        public UpdateWarehouseCommandHandler(IMapper mapper, WarehouseDbContext dbContext)
         {
             _mapper = mapper;
             _dbContext = dbContext;
         }
 
-        public async Task<bool> Handle(UpdateWarehousCommand request, CancellationToken cancellationToken)
+        public async Task<bool> Handle(UpdateWarehouseCommand request, CancellationToken cancellationToken)
         {
-            var entity = await _dbContext.Warehouses.FirstAsync(w => w.Id == request.Id && !w.IsDeleted);
+            var entity = await _dbContext.Warehouses.FirstAsync(w => w.Id == request.Id);
             _mapper.Map(request, entity);
 
             await _dbContext.SaveChangesAsync(cancellationToken);
