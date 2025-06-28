@@ -4,7 +4,6 @@ using Eefa.Sale.Application.Commands.PriceList.Delete;
 using Eefa.Sale.Application.Commands.PriceList.Update;
 using Eefa.Sale.Application.Commands.PriceListDetails.Create;
 using Eefa.Sale.Application.Commands.PriceListDetails.Delete;
-using Eefa.Sale.Application.Commands.PriceListDetails.Update;
 using Eefa.Sale.Application.Queries.PriceList;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -38,9 +37,6 @@ namespace Eefa.Sale.WebApi.Controllers
 
         [HttpPost]
         public async Task<IActionResult> DeleteDetails([FromBody] DeletePriceListDetailsCommand model) => Ok(await Mediator.Send(model));
-
-        [HttpPost]
-        public async Task<IActionResult> EditDetails([FromBody] UpdatePriceListDetailsCommand model) => Ok(await Mediator.Send(model));
 
         [HttpGet]
         public async Task<IActionResult> GetPriceList() => Ok(await _priceListQueries.GetAll());

@@ -31,20 +31,20 @@ namespace Eefa.Sale.Application.Commands
 
     public class CreatePriceListCommandHandler : IRequestHandler<CreatePriceListCommand, bool>
     {
-        SaleDbContext dbContext;
-        IMapper mapper;
+        SaleDbContext _dbContext;
+        IMapper _mapper;
         public CreatePriceListCommandHandler(SaleDbContext dbContext, IMapper mapper) 
         {
-            this.dbContext = dbContext;
-            this.mapper = mapper;
+            _dbContext = dbContext;
+            _mapper = mapper;
         }
 
 
         public async Task<bool> Handle(CreatePriceListCommand request, CancellationToken cancellationToken)
         {
-            var priceList = mapper.Map<SalePriceList>(request);
-            dbContext.SalePriceLists.Add(priceList);
-            await dbContext.SaveChangesAsync(cancellationToken);
+            var priceList = _mapper.Map<SalePriceList>(request);
+            _dbContext.SalePriceLists.Add(priceList);
+            await _dbContext.SaveChangesAsync(cancellationToken);
             return true;
         }
     }

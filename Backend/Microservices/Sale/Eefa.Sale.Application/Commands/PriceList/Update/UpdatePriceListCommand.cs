@@ -4,6 +4,7 @@ using Eefa.Sale.Application.Queries.PriceList;
 using Eefa.Sale.Infrastructure.Data.Context;
 using Eefa.Sale.Infrastructure.Data.Entities;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -44,6 +45,21 @@ namespace Eefa.Sale.Application.Commands.PriceList.Update
         public async Task<bool> Handle(UpdatePriceListCommand request, CancellationToken cancellationToken)
         {
             var currentPriceList = _dbContext.SalePriceLists.Where(x => x.Id == request.Id && x.IsDeleted != true).FirstOrDefault();
+            var subCommodities = _dbContext.SalePriceListDetails.Where(x => x.SalePriceListId == request.Id && x.IsDeleted != true).ToList();
+            if (subCommodities.Count > 0)
+            {
+                foreach (var subCommodity in subCommodities)
+                {
+                    var priceHistory = new FixedPriceHistory
+                    {
+                        CommodityId = subCommodity.CommodityId,
+                        Price = request.Price.HasValue ? (long?)request.Price.Value : null,
+                        DollarPrice = request.DollarPrice.HasValue ? request.DollarPrice.Value : null,
+                        StartDate = DateTime.Now,
+                    };
+                    _dbContext.FixedPriceHistories.Add(priceHistory);
+                }
+            }
             _mapper.Map(request, currentPriceList);
             await _dbContext.SaveChangesAsync(cancellationToken);
             return true;

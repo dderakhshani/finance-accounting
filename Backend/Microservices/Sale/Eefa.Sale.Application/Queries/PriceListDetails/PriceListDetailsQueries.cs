@@ -12,18 +12,18 @@ namespace Eefa.Sale.Application.Queries.PriceListDetails
 {
     public class PriceListDetailsQueries : IPriceListDetailsQueries
     {
-        SaleDbContext dbContext;
-        IMapper mapper;
+        SaleDbContext _dbContext;
+        IMapper _mapper;
         public PriceListDetailsQueries(SaleDbContext dbContext, IMapper mapper)
         {
-            this.dbContext = dbContext;
-            this.mapper = mapper;
+            _dbContext = dbContext;
+            _mapper = mapper;
         }
 
 
         public Task<List<SalePriceListDetail>> GetAll()
         {
-            return dbContext.SalePriceListDetails.ToListAsync();
+            return _dbContext.SalePriceListDetails.ToListAsync();
         }
     }
 }
