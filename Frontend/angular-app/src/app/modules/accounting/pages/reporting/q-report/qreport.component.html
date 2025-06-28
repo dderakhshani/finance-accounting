@@ -19,8 +19,8 @@
       <mat-tab class="h-full flex flex-col" tabindex="0" label="گزارش" [formGroup]="form">
         <div class="w-full p-3">
           <div class="row w-full p-0 m-0 ">
-            <div class="card col-12 p-0">
-              <div class="card-header flex flex-row gap-3">
+            <div class="col-span-12 rounded-xl shadow p-0 border border-gray-200">
+              <div class="px-4 py-2 border-b border-gray-200 bg-gray-100 text-gray-700 font-semibold text-sm flex flex-row gap-3">
                 <div>فیلتر</div>
 
                 <div class="flex flex-row gap-4">
@@ -77,9 +77,9 @@
 
                 </div>
               </div>
-              <div class="card-body">
-                <div class="row">
-                  <!-- <div class="col-1">
+              <div class="p-4">
+                <div class="grid grid-cols-12 gap-3">
+                  <!-- <div class="col-span-1">
                         <mat-form-field>
                           <mat-label>در سطح</mat-label>
                           <mat-select (selectionChange)="resetAccountHeadIdsFilter()" formControlName="level">
@@ -89,7 +89,7 @@
                           </mat-select>
                         </mat-form-field>
                       </div> -->
-                  <div class="col-2">
+                  <div class="col-span-2">
                     <mat-form-field>
                       <mat-label>از تاریخ</mat-label>
                       <input matInput [matDatepicker]="picker1" formControlName="voucherDateFrom">
@@ -101,7 +101,7 @@
                       <mat-datepicker #picker1></mat-datepicker>
                     </mat-form-field>
                   </div>
-                  <div class="col-2">
+                  <div class="col-span-2">
                     <mat-form-field>
                       <mat-label>تا تاریخ</mat-label>
                       <input matInput [matDatepicker]="picker2" formControlName="voucherDateTo">
@@ -113,7 +113,7 @@
                       <mat-datepicker #picker2></mat-datepicker>
                     </mat-form-field>
                   </div>
-                  <div class="col-1" *ngIf="identityService.doesHavePermission('CurrencyFieldAccess')">
+                  <div class="col-span-1" *ngIf="identityService.doesHavePermission('CurrencyFieldAccess')">
                     <mat-form-field>
                       <mat-label>نوع ارز</mat-label>
                       <mat-select (selectionChange)="showCurrencyRelatedFields()" formControlName="currencyTypeBaseId">
@@ -124,77 +124,62 @@
                     </mat-form-field>
                   </div>
 
-                  <div class="col-2">
-                    <div class="row flex-col">
-                      <div>
-                        <mat-form-field>
-                          <mat-label>حساب</mat-label>
-                          <input matInput type="text" [formControl]="accountHeadControl"
-                            [matAutocomplete]="accountHeadAuto">
+                  <div class="col-span-2">
+                    <mat-form-field>
+                      <mat-label>حساب</mat-label>
+                      <input matInput type="text" [formControl]="accountHeadControl"
+                             [matAutocomplete]="accountHeadAuto">
 
-                          <mat-autocomplete autoActiveFirstOption #accountHeadAuto="matAutocomplete"
-                            (optionSelected)="handleAccountHeadSelection($event.option.value)"
-                            [displayWith]="accountHeadDisplayFn.bind(this)">
-                            <mat-option *ngFor="let accountHead of accountHeads;let i=index" [value]="accountHead.id">
-                              {{accountHead.fullCode + ' ' + accountHead.title}}
+                      <mat-autocomplete autoActiveFirstOption #accountHeadAuto="matAutocomplete"
+                                        (optionSelected)="handleAccountHeadSelection($event.option.value)"
+                                        [displayWith]="accountHeadDisplayFn.bind(this)">
+                        <mat-option class="!text-xs" *ngFor="let accountHead of accountHeads;let i=index" [value]="accountHead.id">
+                          {{accountHead.fullCode + ' ' + accountHead.title}}
 
-                            </mat-option>
-                          </mat-autocomplete>
-                        </mat-form-field>
-                      </div>
-
-                    </div>
+                        </mat-option>
+                      </mat-autocomplete>
+                    </mat-form-field>
                   </div>
 
-                  <div class="col-2">
-                    <div class="row flex-col">
-                      <div>
-                        <mat-form-field>
-                          <mat-label>گروه تفصیل</mat-label>
-                          <input matInput type="text" [formControl]="accountReferencesGroupControl"
-                            [matAutocomplete]="accountReferencesGroupAuto">
+                  <div class="col-span-2">
+                    <mat-form-field>
+                      <mat-label>گروه تفصیل</mat-label>
+                      <input matInput type="text" [formControl]="accountReferencesGroupControl"
+                             [matAutocomplete]="accountReferencesGroupAuto">
 
-                          <mat-autocomplete autoActiveFirstOption #accountReferencesGroupAuto="matAutocomplete"
-                            (optionSelected)="handleAccountReferencesGroupSelection($event.option.value)"
-                            [displayWith]="accountReferencesGroupDisplayFn.bind(this)">
-                            <mat-option *ngFor="let accountReferencesGroup of accountReferencesGroups"
-                              [value]="accountReferencesGroup.id">
-                              {{accountReferencesGroup.code + ' ' + accountReferencesGroup.title}}
-                            </mat-option>
-                          </mat-autocomplete>
-                        </mat-form-field>
-                      </div>
-
-                    </div>
+                      <mat-autocomplete autoActiveFirstOption #accountReferencesGroupAuto="matAutocomplete"
+                                        (optionSelected)="handleAccountReferencesGroupSelection($event.option.value)"
+                                        [displayWith]="accountReferencesGroupDisplayFn.bind(this)">
+                        <mat-option class="!text-xs" *ngFor="let accountReferencesGroup of accountReferencesGroups"
+                                    [value]="accountReferencesGroup.id">
+                          {{accountReferencesGroup.code + ' ' + accountReferencesGroup.title}}
+                        </mat-option>
+                      </mat-autocomplete>
+                    </mat-form-field>
                   </div>
 
-                  <div class="col-2">
-                    <div class="row">
-                      <div>
-                        <mat-form-field>
-                          <mat-label>تفصیل</mat-label>
-                          <input matInput type="text" [formControl]="accountReferenceControl"
-                            [matAutocomplete]="accountReferenceAuto">
+                  <div class="col-span-2">
+                    <mat-form-field>
+                      <mat-label>تفصیل</mat-label>
+                      <input matInput type="text" [formControl]="accountReferenceControl"
+                             [matAutocomplete]="accountReferenceAuto">
 
-                          <mat-autocomplete autoActiveFirstOption #accountReferenceAuto="matAutocomplete"
-                            (optionSelected)="handleAccountReferenceSelection($event.option.value)"
-                            [displayWith]="accountReferenceDisplayFn.bind(this)">
-                            <mat-option *ngFor="let accountReference of accountReferences"
-                              [value]="accountReference.id">
-                              {{accountReference.code + ' ' + accountReference.title}}
-                            </mat-option>
-                          </mat-autocomplete>
-                        </mat-form-field>
-                      </div>
-
-                    </div>
+                      <mat-autocomplete autoActiveFirstOption #accountReferenceAuto="matAutocomplete"
+                                        (optionSelected)="handleAccountReferenceSelection($event.option.value)"
+                                        [displayWith]="accountReferenceDisplayFn.bind(this)">
+                        <mat-option class="!text-xs" *ngFor="let accountReference of accountReferences"
+                                    [value]="accountReference.id">
+                          {{accountReference.code + ' ' + accountReference.title}}
+                        </mat-option>
+                      </mat-autocomplete>
+                    </mat-form-field>
                   </div>
 
-                  <div class="col-1">
-                    <div class="row">
-                      <button (click)="get(true)" class="col-12 " color="primary" mat-raised-button>دریافت
+                  <div class="col-span-1">
+                    <div class="flex flex-col gap-1">
+                      <button (click)="get(true)" class="col-span-12 " color="primary" mat-raised-button>دریافت
                         گزارش</button>
-                      <button (click)="removeAllFilters()" class="col-12 me-1 mt-1" color="primary"
+                      <button (click)="removeAllFilters()" class="col-span-12 mt-1" color="primary"
                         mat-raised-button>حذف فیلترها</button>
 
                     </div>
@@ -203,11 +188,11 @@
 
                 </div>
 
-                <div class="row">
-                  <div class="col-2"></div>
-                  <div class="col-2"></div>
-                  <div class="col-1"></div>
-                  <div class="col-2">
+                <div class="grid grid-cols-12 gap-3">
+                  <div class="col-span-2"></div>
+                  <div class="col-span-2"></div>
+                  <div class="col-span-1"></div>
+                  <div class="col-span-2">
                     <div>
                       <mat-chip-list>
                           <span *ngIf="form.controls['accountHeadIds'].value.length>0"
@@ -218,7 +203,7 @@
 
                     </div>
                   </div>
-                  <div class="col-2">
+                  <div class="col-span-2">
                     <div>
                       <mat-chip-list>
                           <span *ngIf="form.controls['referenceGroupIds'].value.length>0"
@@ -228,7 +213,7 @@
                       </mat-chip-list>
                     </div>
                   </div>
-                  <div class="col-2">
+                  <div class="col-span-2">
                     <div>
                       <mat-chip-list>
                           <span *ngIf="form.controls['referenceIds'].value.length>0"
@@ -239,7 +224,7 @@
                       </mat-chip-list>
                     </div>
                   </div>
-                  <div class="col-1"></div>
+                  <div class="col-span-1"></div>
 
                 </div>
               </div>
@@ -253,7 +238,7 @@
             (filtersChanged)="''" (sortChanged)="''" (paginationChanged)=" ''">
 
             <div footerContent>
-              <div class="me-auto flex flex-row gap-1">
+              <div class="flex flex-row gap-1">
                 <button color="primary" mat-raised-button (click)="printRial()">
                   <mat-icon>print</mat-icon>
                   <mat-label> چاپ</mat-label>
