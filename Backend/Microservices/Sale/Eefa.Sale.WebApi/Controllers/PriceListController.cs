@@ -1,4 +1,10 @@
 ﻿using Eefa.Sale.Application.Commands;
+using Eefa.Sale.Application.Commands.PriceList.Copy;
+using Eefa.Sale.Application.Commands.PriceList.Delete;
+using Eefa.Sale.Application.Commands.PriceList.Update;
+using Eefa.Sale.Application.Commands.PriceListDetails.Create;
+using Eefa.Sale.Application.Commands.PriceListDetails.Delete;
+using Eefa.Sale.Application.Queries.PriceList;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -6,8 +12,33 @@ namespace Eefa.Sale.WebApi.Controllers
 {
     public class PriceListController : SaleBaseControlle
     {
+        IPriceListQueries _priceListQueries;
 
-        [HttpPost("Pricelist")]
+
+        public PriceListController(IPriceListQueries priceListQueries)
+        {
+            _priceListQueries = priceListQueries;
+        }
+
+        [HttpPost]
         public async Task<IActionResult> Add([FromBody] CreatePriceListCommand model) => Ok(await Mediator.Send(model));
+
+        [HttpPost]
+        public async Task<IActionResult> Edit([FromBody] UpdatePriceListCommand model) => Ok(await Mediator.Send(model));
+
+        [HttpPost]
+        public async Task<IActionResult> Delete([FromBody] DeletePriceListCommand model) => Ok(await Mediator.Send(model));
+
+        [HttpPost]
+        public async Task<IActionResult> Copy([FromBody] CopyPriceListCommand model) => Ok(await Mediator.Send(model));
+
+        [HttpPost]
+        public async Task<IActionResult> AddDetails([FromBody] CreatePriceListDetailsCommand model) => Ok(await Mediator.Send(model));
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteDetails([FromBody] DeletePriceListDetailsCommand model) => Ok(await Mediator.Send(model));
+
+        [HttpGet]
+        public async Task<IActionResult> GetPriceList() => Ok(await _priceListQueries.GetAll());
     }
 }

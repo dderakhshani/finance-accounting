@@ -16,11 +16,7 @@ namespace Eefa.Sale.Infrastructure.Data.Context.Configurations
     {
         public void Configure(EntityTypeBuilder<SalePriceList> entity)
         {
-            entity.ToTable("SalePriceList", "Sale", tb =>
-                {
-                    tb.HasComment("لیست قیمت محصولات");
-                    tb.HasTrigger("SalePriceListInsertTrriger");
-                });
+            entity.ToTable("SalePriceList", "Sale", tb => tb.HasComment("لیست قیمت محصولات"));
 
             entity.Property(e => e.Id).HasComment("شناسه");
             entity.Property(e => e.AccountReferenceGroupId).HasComment("نوع لیست قیمتی ");

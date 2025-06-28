@@ -14,7 +14,6 @@
     <ProjectReference Include="..\..\..\Core\Eefa.Common\Eefa.Common.csproj" />
     <ProjectReference Include="..\..\..\Core\SharedCode\SharedCode.csproj" />
     <ProjectReference Include="..\Eefa.Sale.Application\Eefa.Sale.Application.csproj" />
-    <ProjectReference Include="..\Eefa.Sale.Infrastructure\Eefa.Sale.Infrastructure.csproj" />
   </ItemGroup>
   <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
     <Exec Command="copy ..\..\..\Core\SharedCode\appsettings-shared.json $(OutDir)\appsettings-shared.json /Y&#xD;&#xA;copy ..\..\..\Core\SharedCode\appsettings-shared.json $(ProjectDir)\appsettings-shared.json /Y" />
