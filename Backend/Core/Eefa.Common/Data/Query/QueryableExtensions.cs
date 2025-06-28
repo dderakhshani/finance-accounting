@@ -4,7 +4,6 @@ using System.Data;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
-using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 
 
@@ -511,30 +510,8 @@ namespace Eefa.Common.Data.Query
         //    return query;
         //}
 
-        public static async Task<PagedList<TSource>> ToPagedList<TSource>(
-       this IQueryable<TSource> query,
-       PaginatedQueryModel queryParam)
-        {
-            if (query == null)
-                throw new Exception("Query can't be null.");
 
-            query = query.FilterQuery(queryParam.Conditions);
-            query = query.OrderByMultipleColumns(queryParam.OrderByProperty);
 
-            var result = await query
-                .Paginate(queryParam.Paginator())
-                .ToListAsync();
-
-            int totalCount = queryParam.PageIndex <= 1
-                ? await query.CountAsync()
-                : 0;
-
-            return new PagedList<TSource>
-            {
-                Data = result,
-                TotalCount = totalCount
-            };
-        }
 
     }
 

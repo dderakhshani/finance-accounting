@@ -1,10 +1,11 @@
 ﻿using Eefa.Common.Data;
 using Eefa.Sale.Infrastructure.Data.Entities;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 
 namespace Eefa.Sale.Infrastructure.Data.Context
 {
-    public interface ISaleDbContext : IUnitOfWork
+    public interface ISaleUnitOfWork : IUnitOfWork
     {
         public DbSet<Customer> Customers { get; set; }
 

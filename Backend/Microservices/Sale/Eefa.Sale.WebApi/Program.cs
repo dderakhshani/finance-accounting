@@ -3,4 +3,4 @@ using SharedCode;
 
 var builder = WebApplication.CreateBuilder(args);
 
-SharedProgram.SetupRun<SaleDbContext>(builder, builder.Configuration);
+SharedProgram.SetupRun<SaleUnitOfWork>(builder, builder.Configuration);

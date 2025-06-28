@@ -7,9 +7,16 @@ namespace Eefa.Warehouse.Infrastructure.Data.Entities;
 /// <summary>
 /// انبارها
 /// </summary>
-public class Warehous : BaseEntity 
+public class Warehous : BaseEntity , IHierarchical
 {
-  public int TypeBaseId { get; set; }
+    /// <summary>
+    /// کد والد
+    /// </summary>
+  public int? ParentId { get; set; }
+    /// <summary>
+    /// کد سطح
+    /// </summary>
+  public string? LevelCode { get; set; }
     /// <summary>
     /// سرفصل حساب 
     /// </summary>
@@ -24,6 +31,10 @@ public class Warehous : BaseEntity
     /// </summary>
   public string Title { get; set; } = null!;
     /// <summary>
+    /// مجوز دسترسی به انبار
+    /// </summary>
+  public string? AccessPermission { get; set; }
+    /// <summary>
     /// فعال
     /// </summary>
   public bool IsActive { get; set; }
@@ -36,10 +47,15 @@ public class Warehous : BaseEntity
     /// </summary>
   public int? Sort { get; set; }
     /// <summary>
+    /// کد تدبیر
+    /// </summary>
+  public int? TadbirCode { get; set; }
+    /// <summary>
     /// قابل شمارش 
     /// </summary>
   public bool? Countable { get; set; }
   public byte[]? RowVersion { get; set; }
+    public virtual ICollection<Warehous> InverseParent { get; set; } = new List<Warehous>();
+    public virtual Warehous? Parent { get; set; }
     public virtual ICollection<WarehouseLayout> WarehouseLayouts { get; set; } = new List<WarehouseLayout>();
-    public virtual ICollection<WarehouseStock> WarehouseStocks { get; set; } = new List<WarehouseStock>();
 }

@@ -46,7 +46,7 @@ namespace Eefa.Common.Web
             services.AddHttpContextAccessor();
 
             services.AddScoped<ICurrentUserAccessor, CurrentUserAccessor>();
-            services.AddAutoMapper(typeof(MappingProfile));
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddScoped(typeof(IHierarchicalManager<>), typeof(HierarchicalManager<>));
             services.AddScoped<IValidationErrorManager, ValidationErrorManager>();
             services.AddHttpClient<INotificationClient,NotificationClient>();
@@ -84,6 +84,7 @@ namespace Eefa.Common.Web
 
         public static void IncludeMediator(this IServiceCollection services, List<Type> pipelines)
         {
+            services.AddMediatR(AppDomain.CurrentDomain.GetAssemblies());
             foreach (var pipeline in pipelines)
             {
                 services.AddTransient(typeof(IPipelineBehavior<,>), pipeline);
