@@ -149,7 +149,25 @@ namespace Eefa.Common.Data
             return await Database.BeginTransactionAsync(cancellationToken);
         }
 
+        public void RemoveEntity<TEntity>(TEntity entity) where TEntity : BaseEntity
+        {
+            entity.IsDeleted = true;
+            entity.ModifiedAt = DateTime.UtcNow;
+            entity.ModifiedById = _currentUserAccessor.GetId();
+            Entry(entity).State = EntityState.Modified;
+        }
 
+        public void RemoveEntities<TEntity>(IEnumerable<TEntity> entities) where TEntity : BaseEntity
+        {
+            foreach (var entity in entities)
+            {
+                entity.IsDeleted = true;
+                entity.ModifiedAt = DateTime.UtcNow;
+                entity.ModifiedById = _currentUserAccessor.GetId();
+                Entry(entity).State = EntityState.Modified;
+            }
+
+        }
         #region Audit 
 
         public async Task<int> _SaveAuditChanges(int menueId, CancellationToken cancellationToken)

@@ -34,7 +34,7 @@ namespace Eefa.Warehouse.WebApi.Controllers
         public async Task<IActionResult> GetAll(PaginatedQueryModel paginatedQuery)
         {
             var result = await _warehousQueries.GetAll(paginatedQuery);
-            return Ok(ServiceResult<PagedList<WarehouseModel>>.Success(result));
+            return Ok(ServiceResult.Success(result));
         }
 
     }
