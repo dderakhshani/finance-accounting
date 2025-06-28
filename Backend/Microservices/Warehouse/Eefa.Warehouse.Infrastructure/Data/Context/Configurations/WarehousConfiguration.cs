@@ -16,9 +16,19 @@ namespace Eefa.Warehouse.Infrastructure.Data.Context.Configurations
     {
         public void Configure(EntityTypeBuilder<Warehous> entity)
         {
-            entity.ToTable("Warehouses", "inventory", tb => tb.HasComment("انبارها"));
+            entity.ToTable("Warehouses", "inventory", tb =>
+                {
+                    tb.HasComment("انبارها");
+                    tb.HasTrigger("WarehousesInsertTrriger");
+                    tb.HasTrigger("Warehouses_Trigger");
+                });
+
+            entity.HasIndex(e => e.ParentId, "IX_Warehouses_ParentId");
 
             entity.Property(e => e.Id).HasComment("شناسه");
+            entity.Property(e => e.AccessPermission)
+                .HasMaxLength(100)
+                .HasComment("مجوز دسترسی به انبار");
             entity.Property(e => e.AccountHeadId).HasComment("سرفصل حساب ");
             entity.Property(e => e.AccountReferenceId).HasComment("تفصیل شناور ");
             entity.Property(e => e.CommodityCategoryId).HasComment("کد گروه کالا");
@@ -31,19 +41,28 @@ namespace Eefa.Warehouse.Infrastructure.Data.Context.Configurations
             entity.Property(e => e.CreatedById).HasComment("ایجاد کننده");
             entity.Property(e => e.IsActive).HasComment("فعال");
             entity.Property(e => e.IsDeleted).HasComment("آیا حذف شده است؟");
+            entity.Property(e => e.LevelCode)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasComment("کد سطح");
             entity.Property(e => e.ModifiedAt)
                 .HasDefaultValueSql("(getdate())")
                 .HasComment("تاریخ و زمان اصلاح");
             entity.Property(e => e.ModifiedById).HasComment("اصلاح کننده");
             entity.Property(e => e.OwnerRoleId).HasComment("نقش صاحب سند");
+            entity.Property(e => e.ParentId).HasComment("کد والد");
             entity.Property(e => e.RowVersion)
                 .IsRowVersion()
                 .IsConcurrencyToken();
             entity.Property(e => e.Sort).HasComment("ترتیب نمایش");
+            entity.Property(e => e.TadbirCode).HasComment("کد تدبیر");
             entity.Property(e => e.Title)
                 .HasMaxLength(200)
                 .HasComment("عنوان");
-            entity.Property(e => e.TypeBaseId).HasDefaultValue(29364);
+
+            entity.HasOne(d => d.Parent).WithMany(p => p.InverseParent)
+                .HasForeignKey(d => d.ParentId)
+                .HasConstraintName("FK_Warehouses_Warehouses");
 
             OnConfigurePartial(entity);
         }

@@ -1,6 +1,6 @@
 ﻿{
    "CodeGenerationMode": 4,
-   "ContextClassName": "WarehouseDbContext",
+   "ContextClassName": "WarehouseUnitOfWork",
    "ContextNamespace": null,
    "FilterSchemas": false,
    "IncludeConnectionString": false,
@@ -15,19 +15,11 @@
    "T4TemplatePath": null,
    "Tables": [
       {
-         "Name": "[inventory].[WarehouseHistories]",
-         "ObjectType": 0
-      },
-      {
          "Name": "[inventory].[WarehouseLayouts]",
          "ObjectType": 0
       },
       {
          "Name": "[inventory].[Warehouses]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[inventory].[WarehouseStocks]",
          "ObjectType": 0
       }
    ],

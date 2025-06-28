@@ -8,7 +8,7 @@ namespace Eefa.Common
 {
     public interface IMapFrom<T>
     {
-        void Mapping(Profile profile) => profile.CreateMap(typeof(T), GetType()).ReverseMap();
+        void Mapping(Profile profile) => profile.CreateMap(typeof(T), GetType());
     }
 
     public class MappingProfile : Profile
@@ -72,8 +72,6 @@ namespace Eefa.Common
             }
             return expression;
         }
-
-      
     }
 
    

@@ -8,9 +8,9 @@ using System;
 using System.Collections.Generic;
 namespace Eefa.Sale.Infrastructure.Data.Context;
 
-public partial class SaleDbContext : AuditableDbContext, ISaleDbContext
+public partial class SaleUnitOfWork : AuditableDbContext, ISaleUnitOfWork
 {
-    public SaleDbContext(DbContextOptions<SaleDbContext> options, ICurrentUserAccessor currentUserAccessor)
+    public SaleUnitOfWork(DbContextOptions<SaleUnitOfWork> options, ICurrentUserAccessor currentUserAccessor)
         : base(options,currentUserAccessor)
     {
     }
