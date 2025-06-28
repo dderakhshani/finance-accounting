@@ -33,6 +33,7 @@ namespace Eefa.Sale.Application.Commands.PriceListDetails.Delete
         public async Task<bool> Handle(DeletePriceListDetailsCommand request, CancellationToken cancellationToken)
         {
             var currentPriceListDetails = _dbContext.SalePriceListDetails.Where(x => x.Id == request.Id).FirstOrDefault();
+            _dbContext.RemoveEntity(currentPriceListDetails);
             await _dbContext.SaveChangesAsync(cancellationToken);
             return true;
         }
