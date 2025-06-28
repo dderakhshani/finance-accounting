@@ -25,7 +25,6 @@ namespace Eefa.Warehouse.Application.Commands.Warehouse.Update
         public int? CommodityCategoryId { get; set; }
         public int? Sort { get; set; }
         public bool? Countable { get; set; }
-        public byte[]? RowVersion { get; set; }
     }
     public class UpdateWarehouseCommandHandler : IRequestHandler<UpdateWarehouseCommand, bool>
     {
