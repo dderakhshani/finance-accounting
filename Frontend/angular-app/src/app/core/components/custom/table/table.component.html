@@ -21,37 +21,53 @@
 
 <!--</div>-->
 
-<div class="col-12 topSetting " *ngIf="tableConfigurations?.options?.showTopSettingMenu">
-  <div class="flex  justify-between col-span-12">
-    <div class=" flex ">
-      <button (click)="removeAllFiltersAndSorts()" class="m-1" color="warn" mat-raised-button
-              matTooltip="حذف تمامی فیلتر/مرتب سازی">
+<div class="w-full p-2" *ngIf="tableConfigurations?.options?.showTopSettingMenu">
+  <div class="flex justify-between w-full">
+
+    <!-- دکمه‌ها -->
+    <div class="flex flex-wrap">
+      <button
+        (click)="removeAllFiltersAndSorts()"
+        class="m-1 px-3 py-2 bg-red-100 text-red-600 rounded shadow hover:bg-red-200 transition"
+        color="warn"
+        mat-raised-button
+        matTooltip="حذف تمامی فیلتر/مرتب سازی">
         <mat-icon>delete_outline</mat-icon>
       </button>
 
-      <button mat-raised-button (click)="includeOnlySelectedItems()" class="bg-blue-200 m-1" matTooltip="فیلتر ردیف های انتخابی">
+      <button
+        mat-raised-button
+        (click)="includeOnlySelectedItems()"
+        class="m-1 px-3 py-2 bg-blue-200 rounded shadow hover:bg-blue-300 transition"
+        matTooltip="فیلتر ردیف های انتخابی">
         <mat-icon [ngClass]="{'text-red-500': isSelectedList, 'text-black': !isSelectedList}">archive</mat-icon>
       </button>
 
-      <button mat-raised-button (click)="excludeSelectedItems()" class="bg-blue-200 m-1"
-              matTooltip="حذف ردیف های انتخابی">
+      <button
+        mat-raised-button
+        (click)="excludeSelectedItems()"
+        class="m-1 px-3 py-2 bg-blue-200 rounded shadow hover:bg-blue-300 transition"
+        matTooltip="حذف ردیف های انتخابی">
         <mat-icon>remove_circle_outline</mat-icon>
-
       </button>
-      <button mat-raised-button (click)="clearExcludedItems(); clearIncludeOnlySelectedItems()"
-              class="bg-blue-200 m-1"
-              matTooltip="نمایش همه">
+
+      <button
+        mat-raised-button
+        (click)="clearExcludedItems(); clearIncludeOnlySelectedItems()"
+        class="m-1 px-3 py-2 bg-blue-200 rounded shadow hover:bg-blue-300 transition"
+        matTooltip="نمایش همه">
         <mat-icon>list</mat-icon>
-
       </button>
-      <!--    -->
-
     </div>
-    <div class="flex justify-center items-center px-2 ">
+
+    <!-- بخش دکمه‌های جایگذاری‌شده از بیرون -->
+    <div class="flex items-center px-2">
       <ng-content select="[headerBtn_topSetting]"></ng-content>
     </div>
+
   </div>
 </div>
+
 <!--(scroll)="tableConfigurations?.options?.lazyLoading? onTableScroll($event): ''"-->
 <div [style.height]="height ?? 'unset'" [style.overflow-y]="height ? 'auto' : 'unset'" id="appTableWrapper"
      style="scroll-behavior: smooth;" [style.margin-top]="tableConfigurations?.options?.showTopSettingMenu?'38px':0"
@@ -244,11 +260,12 @@
                   <button mat-raised-button color="primary" (click)="updateFilters()">فیلتر</button>
                 </div>
 
-                <div class="me-1">
+                <div class="ml-1">
                   <button mat-raised-button color="warn" (click)="column.filter.setDefaultFilter(); updateFilters()">
                     حذف
                   </button>
                 </div>
+
               </div>
             </mat-menu>
           </div>
@@ -455,27 +472,23 @@
                 column.displayFn ? column.displayFn(element) : element[column.name] | truncate:column.truncateTextLimit}}</span>
 
             <div *ngIf="column.type === fieldTypes.Action">
-              <div class="row">
+              <div class="flex">
 
-                <div class="col-6">
-                  <button mat-icon-button class=" mx-2">
-                    <mat-icon style="color: rgb(162,162,162)">
-
-                      edit
-                    </mat-icon>
+                <div class="w-1/2 flex justify-center">
+                  <button mat-icon-button class="mx-2">
+                    <mat-icon class="text-gray-400">edit</mat-icon>
                   </button>
                 </div>
-                <div class="col-6">
-                  <button mat-icon-button>
-                    <mat-icon style="color: rgb(162,162,162)">
-                      delete
-                    </mat-icon>
-                  </button>
 
+                <div class="w-1/2 flex justify-center">
+                  <button mat-icon-button>
+                    <mat-icon class="text-gray-400">delete</mat-icon>
+                  </button>
                 </div>
 
               </div>
             </div>
+
 
           </ng-container>
           <ng-container *ngIf="column.type===fieldTypes.Template">
@@ -522,7 +535,7 @@
 
     <!-- Footer -->
     <ng-container matColumnDef="footer">
-      <td mat-footer-cell *matFooterCellDef [colSpan]="tableHeaders.length" class="border-top">
+      <td mat-footer-cell *matFooterCellDef [colSpan]="tableHeaders.length" class="border-t">
         <div class="flex flex-row gap-1">
           <div class="w-full">
             <mat-paginator *ngIf="tableConfigurations?.options?.usePagination && tableConfigurations?.pagination"
@@ -533,11 +546,11 @@
                            class="mat-paginator-sticky" showFirstLastButtons="true">
             </mat-paginator>
           </div>
-          <div class="d-grid items-center">
+          <div class="grid items-center">
             <ng-content select="[footerContent]"></ng-content>
           </div>
 
-          <div class="d-grid items-center">
+          <div class="grid items-center">
             <div class="flex flex-row items-center mx-auto w-full gap-3" dir="ltr">
               <button mat-raised-button color="primary" [matMenuTriggerFor]="exportActions"
                       *ngIf="tableConfigurations.options.exportOptions.showExportButton">

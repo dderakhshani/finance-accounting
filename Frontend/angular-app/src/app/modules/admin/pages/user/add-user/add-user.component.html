@@ -1,9 +1,9 @@
-<div class="flex flex-column h-full">
+<div class="flex flex-col h-full">
 
   <app-action-bar class="p-4" (onSave)="submit()" (onAdd)="reset()" (onList)="navigateToUserList()"></app-action-bar>
   <div class="row g-2 h-full">
     <div class="col-6 h-50">
-      <mat-card class="h-full flex flex-column">
+      <mat-card class="h-full flex flex-col">
         <form [formGroup]="form" class="row">
           <div class="col-md-12">
 
@@ -81,7 +81,7 @@
       </mat-card>
     </div>
     <div class="col-6 h-50">
-      <mat-card class="h-full overflow-auto flex flex-column">
+      <mat-card class="h-full overflow-auto flex flex-col">
         <h6 class="border-bottom pb-2 pt-2 pe-3">نقش ها</h6>
         <app-table height="100%" [tableRows]="userRoles" [tableConfigurations]="tableConfigurations"></app-table>
       </mat-card>

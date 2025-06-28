@@ -1,4 +1,4 @@
-<mat-card class="h-full flex flex-column overflow-hidden" style="max-height: inherit; padding: 0!important;">
+<mat-card class="h-full flex flex-col overflow-hidden" style="max-height: inherit; padding: 0!important;">
 
   <div *ngIf="isLoading" style="z-index:9999;position: absolute;left:0;top:0;bottom: 0; right: 0;background: rgba(0,0,0,0.3);" class="flex items-center justify-center">
     <mat-spinner></mat-spinner>
@@ -26,7 +26,7 @@
     </div>
 
   </app-action-bar>
-  <div class="h-full overflow-auto">
+  <div class="h-[88.5%] overflow-auto">
     <app-table [tableConfigurations]="tableConfigurations"
                [tableRows]="entities"
                (rowDoubleClicked)="navigateToMoadianInvoiceHeader($event)"

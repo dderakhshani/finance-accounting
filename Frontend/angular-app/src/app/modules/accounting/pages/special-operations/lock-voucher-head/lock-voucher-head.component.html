@@ -1,14 +1,14 @@
-<div class="flex flex-column h-full gap-3" style="max-height: inherit">
+<div class="flex flex-col h-full gap-3" style="max-height: inherit">
   <mat-card>
-    <div [formGroup]="filtersForm" class="row align-items-start" *ngIf="filtersForm">
-      <div class="row gap-3 align-items-start">
-        <div class="col-2">
+    <div [formGroup]="filtersForm" class="row items-start" *ngIf="filtersForm">
+      <div class="grid grid-cols-12 gap-5 items-start">
+        <div class="col-span-2">
           <mat-form-field>
             <mat-label> شماره سند</mat-label>
             <input formControlName="voucherNo" type="text" matInput>
           </mat-form-field>
         </div>
-        <div class="col-2">
+        <div class="col-span-2">
           <mat-form-field>
             <mat-label> نوع سند</mat-label>
             <input tabindex="11"
@@ -24,7 +24,7 @@
             </mat-autocomplete>
           </mat-form-field>
         </div>
-        <div class="col-2">
+        <div class="col-span-2">
           <mat-form-field>
             <mat-label> وضعیت سند</mat-label>
             <mat-select formControlName="voucherStateId">
@@ -34,9 +34,9 @@
             </mat-select>
           </mat-form-field>
         </div>
-        <div class="col-2">
-          <div class="row">
-            <div class="col-12">
+        <div class="col-span-2">
+          <div class="grid grid-cols-12">
+            <div class="col-span-12">
               <mat-form-field>
                 <mat-label>از تاریخ</mat-label>
                 <input matInput [matDatepicker]="pickerFrom" formControlName="fromDate">
@@ -48,7 +48,7 @@
                 <mat-datepicker #pickerFrom></mat-datepicker>
               </mat-form-field>
             </div>
-            <div class="col-12">
+            <div class="col-span-12">
               <mat-form-field>
                 <mat-label>تا تاریخ</mat-label>
                 <input matInput [matDatepicker]="pickerTo" formControlName="toDate">
@@ -62,15 +62,15 @@
             </div>
           </div>
         </div>
-        <div class="col-2">
-          <div class="row">
-            <div class="col-12">
+        <div class="col-span-2">
+          <div class="grid grid-cols-12">
+            <div class="col-span-12">
               <mat-form-field>
                 <mat-label>از شماره سند</mat-label>
                 <input formControlName="fromVoucherNo" type="text" matInput>
               </mat-form-field>
             </div>
-            <div class="col-12">
+            <div class="col-span-12">
               <mat-form-field>
                 <mat-label>تا شماره سند</mat-label>
                 <input formControlName="toVoucherNo" type="text" matInput>
@@ -79,15 +79,15 @@
           </div>
         </div>
       </div>
-      <div class="row">
-        <div class="col-2 mx-auto mt-2">
+      <div class="grid grid-cols-12">
+        <div class="col-span-2 mt-2" >
           <button mat-raised-button color="primary" (click)="get()">اعمال فیلتر ها</button>
         </div>
       </div>
     </div>
   </mat-card>
 
-  <mat-card class="h-full flex flex-column overflow-hidden" style="max-height: inherit; padding: 0!important;">
+  <mat-card class="h-full flex flex-col overflow-hidden !p-0">
 
 
     <app-action-bar class="p-3" (onCustomClick)="handleCustomClick($event.uniqueName)"

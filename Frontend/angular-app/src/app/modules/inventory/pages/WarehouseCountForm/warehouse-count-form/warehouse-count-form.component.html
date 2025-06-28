@@ -1,4 +1,4 @@
-<div class="h-full flex flex-column">
+<div class="h-full flex flex-col">
 
   <mat-card class="radio-group">
     <mat-radio-group [(ngModel)]="selectedOptionValue"  aria-labelledby="example-radio-group-label"  class="gap-3 flex">
@@ -9,7 +9,7 @@
   <div *ngIf="selectedOptionValue==0">
     <app-warehouse-layout [warehouseCountShow]="true"></app-warehouse-layout>
   </div>
-  <mat-card *ngIf="selectedOptionValue==1" class="h-full flex flex-column"   >
+  <mat-card *ngIf="selectedOptionValue==1" class="h-full flex flex-col"   >
     <div class="row">
       <div class="col-4" style="height: fit-content!important;" mat-menu-item (click)="$event.stopPropagation()">
         <mat-form-field class="p-0">

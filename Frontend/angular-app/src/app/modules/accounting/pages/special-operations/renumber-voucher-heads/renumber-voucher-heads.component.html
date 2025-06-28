@@ -1,10 +1,10 @@
-<div class="flex flex-column h-full gap-3">
+<div class="flex flex-col h-full gap-3">
     <mat-card >
       <h1 class="mat-subheading-1 py-1">محدوده اسناد</h1>
-      <div class="row">
-        <div class="col-md-5">
-          <div [formGroup]="form" class="row">
-            <div class="col-md-12">
+      <div class="grid grid-cols-12">
+        <div class="col-span-6">
+          <div [formGroup]="form" class="grid grid-cols-12 gap-x-3">
+            <div class="col-span-12">
               <mat-form-field  >
                 <mat-label> نوع سند </mat-label>
                 <mat-select (selectionChange)="get()" formControlName="codeVoucherGroupId">
@@ -14,7 +14,7 @@
                 </mat-select>
               </mat-form-field>
             </div>
-            <div class="col-md-6">
+            <div class="col-span-6">
               <mat-form-field >
                 <mat-label>از تاریخ</mat-label>
                 <input (dateChange)="get()" matInput [matDatepicker]="pickerFrom" formControlName="fromDateTime">
@@ -26,7 +26,7 @@
                 <mat-datepicker #pickerFrom></mat-datepicker>
               </mat-form-field>
             </div>
-            <div class="col-md-6">
+            <div class="col-span-6">
               <mat-form-field >
                 <mat-label>تا تاریخ</mat-label>
                 <input (dateChange)="get()" matInput [matDatepicker]="pickerTo" formControlName="toDateTime">
@@ -38,36 +38,31 @@
                 <mat-datepicker #pickerTo></mat-datepicker>
               </mat-form-field>
             </div>
-            <div class="col-md-6">
+            <div class="col-span-6">
               <mat-form-field  >
                 <mat-label>از شماره سند </mat-label>
                 <input (change)="get()" formControlName="fromNo" type="text" matInput>
               </mat-form-field>
             </div>
-            <div class="col-md-6">
+            <div class="col-span-6">
               <mat-form-field  >
                 <mat-label>تا شماره سند </mat-label>
                 <input (change)="get()" formControlName="toNo" type="text" matInput>
               </mat-form-field>
             </div>
-            <div class="col-md-6"></div>
+            <div class="col-span-6"></div>
           </div>
         </div>
 
 
-        <div class="col-md-7">
-
-          <div class="col-md-12"></div>
-          <div class="col-md-12"></div>
-          <div class="col-md-4 mx-auto">
-            <button mat-raised-button color="primary" type="button" (click)="submit()">شماره گذاری مجدد اسناد</button>
-          </div>
+        <div class="col-span-6 flex items-center justify-center">
+          <button mat-raised-button color="primary" type="button" (click)="submit()">شماره گذاری مجدد اسناد</button>
         </div>
       </div>
     </mat-card>
 
     <mat-card class="h-full" >
-      <mat-tab-group style="height: 55vh;" >
+      <mat-tab-group class="h-[50%]" >
         <mat-tab label="انتخاب شده">
           <app-table
             (rowDoubleClicked)="navigateToVoucherHead($event)"

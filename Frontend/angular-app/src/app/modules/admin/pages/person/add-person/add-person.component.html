@@ -1,4 +1,4 @@
-<div class="flex flex-column h-full gap-3" style="max-height: inherit">
+<div class="flex flex-col h-full gap-3" style="max-height: inherit">
 
   <app-action-bar (onSave)="submit()" (onAdd)="reset()" (onList)="navigateToPersonList()"
                   (onCustomClick)="handleCustomAction($event)"></app-action-bar>
@@ -348,7 +348,7 @@
                 <img style="object-fit: contain; border-radius: inherit" mat-card-lg-image class="mx-auto"
                      [src]="form.get('signatureUrl')?.value" alt="">
               </div>
-              <div (click)="signatureInput.click()" class="col-6 items-center flex flex-column"
+              <div (click)="signatureInput.click()" class="col-6 items-center flex flex-col"
                    style="cursor:pointer;">
                 <img style="width: 30px" class="mx-3" src="/assets/icons/upload-image.svg" alt="">
                 <h5 mat-card-subtitle class="mt-1">بارگذازی امضا</h5>

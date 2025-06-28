@@ -1,5 +1,5 @@
 
-<div class="h-full flex flex-column overflow-auto gap-3" style="max-height: inherit; padding: 0!important;">
+<div class="h-full flex flex-col overflow-auto gap-3" style="max-height: inherit; padding: 0!important;">
 
     <app-form-actions [actions]="formActions" (OnShowList)="navigateToReceiptList()" (OnAdd)="reset()" (OnRefresh)="initialize()">
         <button mat-raised-button color="primary" matTooltip="جدید" (click)="AddNew()" [disabled]="_notificationService.isLoader">

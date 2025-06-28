@@ -44,7 +44,7 @@
             <mat-card (click)="photoInput.click()" class="flex" style="align-content: center">
               <img style="object-fit: cover; border-radius: inherit; width:100px; height: 100px " mat-card-lg-image class="mx-auto"
                    [src]="form.get('img')?.value ? fileServerAddress+addLanguageForm.get('flagImageUrl')?.value : ''" alt="">
-              <div (click)="photoInput.click()" class="col-md-6 items-center flex flex-column" style="cursor:pointer;">
+              <div (click)="photoInput.click()" class="col-md-6 items-center flex flex-col" style="cursor:pointer;">
                 <img style="width: 30px; object-fit: contain" class="my-3 mx2" src="/assets/icons/upload-image.svg" alt="">
                 <h5 mat-card-subtitle>بارگذازی عکس</h5>
               </div>

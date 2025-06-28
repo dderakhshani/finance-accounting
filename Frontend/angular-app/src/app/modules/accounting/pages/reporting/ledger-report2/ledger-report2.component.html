@@ -1,4 +1,4 @@
-<mat-card class="h-full flex flex-column overflow-hidden" style="max-height: inherit; padding: 0!important;">
+<mat-card class="h-full flex flex-col overflow-hidden" style="max-height: inherit; padding: 0!important;">
 
   <div class="h-full overflow-auto">
     <app-table-virtual-scrolling
@@ -69,7 +69,7 @@
       <div footerContent>
         <div class="me-auto flex flex-row gap-1">
 
-          <div class="flex flex-column">
+          <div class="flex flex-col">
             <div class="wrapper-btn bg-blue-300" >
 
               <p style="color: black"> جمع بدهکار:{{ totalDebit.value | money }}</p>
@@ -81,7 +81,7 @@
 
 
           </div>
-          <div class="flex flex-column">
+          <div class="flex flex-col">
             <div class=" wrapper-btn bg-blue-300" >
               <p style="color: black"> جمع بستانکار:{{ totalCredit.value | money }}</p>
             </div>
@@ -90,7 +90,7 @@
               <p style="color: black"> جمع بستانکار ارزی:{{  totalCurrencyCredit.value | money }}</p>
             </div>
           </div>
-          <div class="flex flex-column ">
+          <div class="flex flex-col ">
             <div class="wrapper-btn bg-blue-300" >
               <p>
                 مانده :  {{

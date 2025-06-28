@@ -1,4 +1,4 @@
-<div class="flex flex-column h-full gap-3" style="max-height: inherit" >
+<div class="flex flex-col h-full gap-3" style="max-height: inherit" >
   <app-action-bar (onSave)="submit()" (onAdd)="reset()"></app-action-bar>
 
   <mat-card [formGroup]="form">
@@ -48,7 +48,7 @@
       <button class="me-auto" mat-raised-button color="primary" *ngIf="!personForm.controls['id']?.value && personForm.controls['personTypeId']?.value && !showPersonPrompt" (click)="clearPerson()">ویرایش ماهیت حساب</button>
     </mat-card-header>
     <mat-card-content>
-      <div *ngIf="showPersonPrompt" class="col-3 mx-auto flex flex-column">
+      <div *ngIf="showPersonPrompt" class="col-3 mx-auto flex flex-col">
         <span class="text-center">برای وارد کردن اطلاعات شخص / شرکت ماهیت حساب را انتخاب کنید.</span>
 
         <mat-form-field>
