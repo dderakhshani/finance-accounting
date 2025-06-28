@@ -16,27 +16,24 @@ namespace Eefa.Sale.Application.Commands.PriceList.Delete
     public class DeletePriceListCommand : IRequest<bool>, IMapFrom<SalePriceList>
     {
         public int Id { get; set; }
-        public class DeletePriceListCommandHandler : IRequestHandler<DeletePriceListCommand, bool>
+    }
+    public class DeletePriceListCommandHandler : IRequestHandler<DeletePriceListCommand, bool>
+    {
+        SaleDbContext _dbContext;
+        IMapper _mapper;
+
+        public DeletePriceListCommandHandler(SaleDbContext dbContext, IMapper mapper, IPriceListQueries priceListQueries)
         {
-            SaleDbContext _dbContext;
-            IMapper _mapper;
+            _dbContext = dbContext;
+            _mapper = mapper;
 
-            public DeletePriceListCommandHandler(SaleDbContext dbContext, IMapper mapper, IPriceListQueries priceListQueries)
-            {
-                _dbContext = dbContext;
-                _mapper = mapper;
+        }
 
-            }
-
-
-            public async Task<bool> Handle(DeletePriceListCommand request, CancellationToken cancellationToken)
-            {
-                var currentPriceList = _dbContext.SalePriceLists.Where(x => x.Id == request.Id).FirstOrDefault();
-                currentPriceList.IsDeleted = true;
-                _mapper.Map(request, currentPriceList);
-                await _dbContext.SaveChangesAsync(cancellationToken);
-                return true;
-            }
+        public async Task<bool> Handle(DeletePriceListCommand request, CancellationToken cancellationToken)
+        {
+            var currentPriceList = _dbContext.SalePriceLists.Where(x => x.Id == request.Id).FirstOrDefault();
+            await _dbContext.SaveChangesAsync(cancellationToken);
+            return true;
         }
     }
 }

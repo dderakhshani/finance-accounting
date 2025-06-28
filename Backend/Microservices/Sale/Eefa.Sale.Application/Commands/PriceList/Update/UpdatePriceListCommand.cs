@@ -16,7 +16,6 @@ namespace Eefa.Sale.Application.Commands.PriceList.Update
     public class UpdatePriceListCommand : IRequest<bool>, IMapFrom<SalePriceList>
     {
         public int Id { get; set; }
-        public int? RootId { get; set; }
 
         public int? ParentId { get; set; }
 
@@ -44,22 +43,7 @@ namespace Eefa.Sale.Application.Commands.PriceList.Update
 
         public async Task<bool> Handle(UpdatePriceListCommand request, CancellationToken cancellationToken)
         {
-            var currentPriceList = _dbContext.SalePriceLists.Where(x => x.Id == request.Id && x.IsDeleted != true).FirstOrDefault();
-            var subCommodities = _dbContext.SalePriceListDetails.Where(x => x.SalePriceListId == request.Id && x.IsDeleted != true).ToList();
-            if (subCommodities.Count > 0)
-            {
-                foreach (var subCommodity in subCommodities)
-                {
-                    var priceHistory = new FixedPriceHistory
-                    {
-                        CommodityId = subCommodity.CommodityId,
-                        Price = request.Price.HasValue ? (long?)request.Price.Value : null,
-                        DollarPrice = request.DollarPrice.HasValue ? request.DollarPrice.Value : null,
-                        StartDate = DateTime.Now,
-                    };
-                    _dbContext.FixedPriceHistories.Add(priceHistory);
-                }
-            }
+            var currentPriceList = _dbContext.SalePriceLists.Where(x => x.Id == request.Id).FirstOrDefault();
             _mapper.Map(request, currentPriceList);
             await _dbContext.SaveChangesAsync(cancellationToken);
             return true;
