@@ -41,12 +41,8 @@ namespace Eefa.Warehouse.Application.Commands.Warehouse.Update
         {
             var entity = await _dbContext.Warehouses.FirstAsync(w => w.Id == request.Id);
             _mapper.Map(request, entity);
-
-            if (await _dbContext.SaveChangesAsync(cancellationToken) > 0)
-            {
-                return ServiceResult.Success();
-            }
-            return ServiceResult.Failed();
+            await _dbContext.SaveChangesAsync(cancellationToken);
+            return ServiceResult.Success();
         }
     }
 }

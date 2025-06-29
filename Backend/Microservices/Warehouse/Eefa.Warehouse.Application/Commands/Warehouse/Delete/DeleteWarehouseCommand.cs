@@ -31,11 +31,8 @@ namespace Eefa.Warehouse.Application.Commands.Warehouse.Delete
         {
             var entity = await _dbContext.Warehouses.FirstAsync(w => w.Id == request.Id);
             _dbContext.RemoveEntity(entity);
-            if (await _dbContext.SaveChangesAsync(cancellationToken) > 0)
-            {
-                return ServiceResult.Success();
-            }
-            return ServiceResult.Failed();
+            await _dbContext.SaveChangesAsync(cancellationToken);
+            return ServiceResult.Success();
         }
     }
 }

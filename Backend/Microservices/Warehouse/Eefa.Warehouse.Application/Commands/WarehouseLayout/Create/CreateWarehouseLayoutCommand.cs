@@ -39,11 +39,8 @@ namespace Eefa.Warehouse.Application.Commands
 
             var warehouseLayout = _mapper.Map<WarehouseLayout>(request);
             _dbContext.WarehouseLayouts.Add(warehouseLayout);
-            if (await _dbContext.SaveChangesAsync(cancellationToken) > 0)
-            {
-                return ServiceResult.Success();
-            }
-            return ServiceResult.Failed();
+            await _dbContext.SaveChangesAsync(cancellationToken);
+            return ServiceResult.Success();
         }
     }
 }
