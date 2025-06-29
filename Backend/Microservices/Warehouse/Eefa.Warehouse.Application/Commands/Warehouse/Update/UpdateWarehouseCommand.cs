@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace Eefa.Warehouse.Application.Commands.Warehouse.Update
 {
-    public record UpdateWarehouseCommand : IRequest<bool>, IMapFrom<Warehous>
+    public record UpdateWarehouseCommand : IRequest<ServiceResult>, IMapFrom<Warehous>
     {
         public int Id { get; set; }
         public int TypeBaseId { get; set; }
@@ -26,7 +26,7 @@ namespace Eefa.Warehouse.Application.Commands.Warehouse.Update
         public int? Sort { get; set; }
         public bool? Countable { get; set; }
     }
-    public class UpdateWarehouseCommandHandler : IRequestHandler<UpdateWarehouseCommand, bool>
+    public class UpdateWarehouseCommandHandler : IRequestHandler<UpdateWarehouseCommand, ServiceResult>
     {
         private readonly IMapper _mapper;
         private readonly WarehouseDbContext _dbContext;
@@ -37,14 +37,16 @@ namespace Eefa.Warehouse.Application.Commands.Warehouse.Update
             _dbContext = dbContext;
         }
 
-        public async Task<bool> Handle(UpdateWarehouseCommand request, CancellationToken cancellationToken)
+        public async Task<ServiceResult> Handle(UpdateWarehouseCommand request, CancellationToken cancellationToken)
         {
             var entity = await _dbContext.Warehouses.FirstAsync(w => w.Id == request.Id);
             _mapper.Map(request, entity);
 
-            await _dbContext.SaveChangesAsync(cancellationToken);
-
-            return true;
+            if (await _dbContext.SaveChangesAsync(cancellationToken) > 0)
+            {
+                return ServiceResult.Success();
+            }
+            return ServiceResult.Failed();
         }
     }
 }

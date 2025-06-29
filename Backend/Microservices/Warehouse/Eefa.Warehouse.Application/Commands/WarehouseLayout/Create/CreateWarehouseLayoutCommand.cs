@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Eefa.Warehouse.Application.Commands
 {
-    public class CreateWarehouseLayoutCommand : IRequest<bool>, IMapFrom<WarehouseLayout>
+    public class CreateWarehouseLayoutCommand : IRequest<ServiceResult>, IMapFrom<WarehouseLayout>
     {
         public int? WarehouseId { get; set; }
         public int? ParentId { get; set; }
@@ -23,7 +23,7 @@ namespace Eefa.Warehouse.Application.Commands
         public int OrderIndex { get; set; }
         public int? CommodityId { get; set; }
     }
-    public class CreateWarehouseLayoutCommandHandler : IRequestHandler<CreateWarehouseLayoutCommand, bool>
+    public class CreateWarehouseLayoutCommandHandler : IRequestHandler<CreateWarehouseLayoutCommand, ServiceResult>
     {
         private readonly IMapper _mapper;
         private readonly WarehouseDbContext _dbContext;
@@ -34,14 +34,16 @@ namespace Eefa.Warehouse.Application.Commands
             _dbContext = dbContext;
         }
 
-        public async Task<bool> Handle(CreateWarehouseLayoutCommand request, CancellationToken cancellationToken)
+        public async Task<ServiceResult> Handle(CreateWarehouseLayoutCommand request, CancellationToken cancellationToken)
         {
 
             var warehouseLayout = _mapper.Map<WarehouseLayout>(request);
             _dbContext.WarehouseLayouts.Add(warehouseLayout);
-            await _dbContext.SaveChangesAsync(cancellationToken);
-
-            return true;
+            if (await _dbContext.SaveChangesAsync(cancellationToken) > 0)
+            {
+                return ServiceResult.Success();
+            }
+            return ServiceResult.Failed();
         }
     }
 }

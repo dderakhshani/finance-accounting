@@ -12,11 +12,11 @@ using System.Threading.Tasks;
 
 namespace Eefa.Warehouse.Application.Commands.Warehouse.Delete
 {
-    public class DeleteWarehouseCommand : IRequest<bool>, IMapFrom<Warehous>
+    public class DeleteWarehouseCommand : IRequest<ServiceResult>, IMapFrom<Warehous>
     {
         public int Id { get; set; }
     }
-    public class DeleteWarehouseCommandHandler : IRequestHandler<DeleteWarehouseCommand, bool>
+    public class DeleteWarehouseCommandHandler : IRequestHandler<DeleteWarehouseCommand, ServiceResult>
     {
         private readonly IMapper _mapper;
         private readonly WarehouseDbContext _dbContext;
@@ -27,13 +27,15 @@ namespace Eefa.Warehouse.Application.Commands.Warehouse.Delete
             _dbContext = dbContext;
         }
 
-        public async Task<bool> Handle(DeleteWarehouseCommand request, CancellationToken cancellationToken)
+        public async Task<ServiceResult> Handle(DeleteWarehouseCommand request, CancellationToken cancellationToken)
         {
             var entity = await _dbContext.Warehouses.FirstAsync(w => w.Id == request.Id);
             _dbContext.RemoveEntity(entity);
-            await _dbContext.SaveChangesAsync(cancellationToken);
-
-            return true;
+            if (await _dbContext.SaveChangesAsync(cancellationToken) > 0)
+            {
+                return ServiceResult.Success();
+            }
+            return ServiceResult.Failed();
         }
     }
 }
