@@ -13,11 +13,11 @@ using System.Threading.Tasks;
 
 namespace Eefa.Sale.Application.Commands.PriceListDetails.Delete
 {
-    public class DeletePriceListDetailsCommand : IRequest<bool>, IMapFrom<SalePriceListDetail>
+    public class DeletePriceListDetailsCommand : IRequest<ServiceResult>, IMapFrom<SalePriceListDetail>
     {
         public int Id { get; set; }
     }
-    public class DeletePriceListDetailsCommandHandler : IRequestHandler<DeletePriceListDetailsCommand, bool>
+    public class DeletePriceListDetailsCommandHandler : IRequestHandler<DeletePriceListDetailsCommand, ServiceResult>
     {
         SaleDbContext _dbContext;
         IMapper _mapper;
@@ -30,12 +30,12 @@ namespace Eefa.Sale.Application.Commands.PriceListDetails.Delete
         }
 
 
-        public async Task<bool> Handle(DeletePriceListDetailsCommand request, CancellationToken cancellationToken)
+        public async Task<ServiceResult> Handle(DeletePriceListDetailsCommand request, CancellationToken cancellationToken)
         {
             var currentPriceListDetails = _dbContext.SalePriceListDetails.Where(x => x.Id == request.Id).FirstOrDefault();
             _dbContext.RemoveEntity(currentPriceListDetails);
             await _dbContext.SaveChangesAsync(cancellationToken);
-            return true;
+            return ServiceResult.Success();
         }
     }
 }
