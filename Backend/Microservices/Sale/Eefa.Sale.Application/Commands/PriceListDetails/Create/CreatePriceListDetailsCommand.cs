@@ -12,13 +12,13 @@ using System.Threading.Tasks;
 
 namespace Eefa.Sale.Application.Commands.PriceListDetails.Create
 {
-    public class CreatePriceListDetailsCommand : IRequest<bool>, IMapFrom<SalePriceListDetail>
+    public class CreatePriceListDetailsCommand : IRequest<ServiceResult>, IMapFrom<SalePriceListDetail>
     {
         public int SalePriceListId { get; set; }
 
-        public int CommodityId { get; set; }
+        public List<int> CommodityIds { get; set; }
     }
-    public class CreatePriceListDetailsCommandHandler : IRequestHandler<CreatePriceListDetailsCommand, bool>
+    public class CreatePriceListDetailsCommandHandler : IRequestHandler<CreatePriceListDetailsCommand, ServiceResult>
     {
         SaleDbContext _dbContext;
         IMapper _mapper;
@@ -27,17 +27,27 @@ namespace Eefa.Sale.Application.Commands.PriceListDetails.Create
             _dbContext = dbContext;
             _mapper = mapper;
         }
-        public async Task<bool> Handle(CreatePriceListDetailsCommand request, CancellationToken cancellationToken)
+        public async Task<ServiceResult> Handle(CreatePriceListDetailsCommand request, CancellationToken cancellationToken)
         {
-            var existingDetail = _dbContext.SalePriceListDetails.Where(x => x.SalePriceListId == request.SalePriceListId && x.CommodityId == request.CommodityId).FirstOrDefault();
-            if (existingDetail != null)
+
+            var existingDetails = _dbContext.SalePriceListDetails.Where(x => x.SalePriceListId == request.SalePriceListId).Select(x => x.CommodityId).ToList();
+
+            var newDetails = request.CommodityIds.Where(id => !existingDetails.Contains(id))
+                .Select(id => new SalePriceListDetail
+                {
+                    SalePriceListId = request.SalePriceListId,
+                    CommodityId = id
+                }).ToList();
+
+            if (newDetails.Count == 0)
             {
-                return false;
+                var errors = new Dictionary<string, List<string>> { { "error:", new List<string> { "هیچ کالای جدیدی برای افزودن وجود ندارد." } } };
+                return ServiceResult.Failed(errors);
             }
-            var priceListDetail = _mapper.Map<SalePriceListDetail>(request);
-            _dbContext.SalePriceListDetails.Add(priceListDetail);
+            _dbContext.SalePriceListDetails.AddRange(newDetails);
             await _dbContext.SaveChangesAsync(cancellationToken);
-            return true;
+            return ServiceResult.Success();
+
         }
     }
 

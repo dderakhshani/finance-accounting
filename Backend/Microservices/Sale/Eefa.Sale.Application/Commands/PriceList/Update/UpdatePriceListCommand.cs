@@ -13,22 +13,21 @@ using System.Threading.Tasks;
 
 namespace Eefa.Sale.Application.Commands.PriceList.Update
 {
-    public class UpdatePriceListCommand : IRequest<bool>, IMapFrom<SalePriceList>
+    public class UpdatePriceListCommand : IRequest<ServiceResult>, IMapFrom<SalePriceList>
     {
         public int Id { get; set; }
 
         public int? ParentId { get; set; }
 
         public string Title { get; set; } = null!;
-
+        public string LevelCode { get; set; } = null!;
         public string? Descriptions { get; set; }
-
         public int? AccountReferenceGroupId { get; set; }
         public double? Price { get; set; }
         public double? DollarPrice { get; set; }
     }
 
-    public class UpdatePriceListCommandHandler : IRequestHandler<UpdatePriceListCommand, bool>
+    public class UpdatePriceListCommandHandler : IRequestHandler<UpdatePriceListCommand, ServiceResult>
     {
         SaleDbContext _dbContext;
         IMapper _mapper;
@@ -41,12 +40,21 @@ namespace Eefa.Sale.Application.Commands.PriceList.Update
         }
 
 
-        public async Task<bool> Handle(UpdatePriceListCommand request, CancellationToken cancellationToken)
+        public async Task<ServiceResult> Handle(UpdatePriceListCommand request, CancellationToken cancellationToken)
         {
-            var currentPriceList = _dbContext.SalePriceLists.Where(x => x.Id == request.Id).FirstOrDefault();
+            var currentPriceList = await _dbContext.SalePriceLists.FirstAsync(x => x.Id == request.Id, cancellationToken);
+
+            if (currentPriceList.ParentId != null && request.ParentId == null)
+            {
+                var errors = new Dictionary<string, List<string>> { { "error:", new List<string> { "امکان تبدیل زیرمجموعه به ریشه وجود ندارد." } } };
+                return ServiceResult.Failed(errors);
+            }
             _mapper.Map(request, currentPriceList);
+
             await _dbContext.SaveChangesAsync(cancellationToken);
-            return true;
+
+            return ServiceResult.Success();
+
         }
     }
 }

@@ -16,12 +16,13 @@ using static StackExchange.Redis.Role;
 
 namespace Eefa.Sale.Application.Commands.PriceList.Copy
 {
-    public class CopyPriceListCommand : IRequest<bool>, IMapFrom<SalePriceList>
+    public class CopyPriceListCommand : IRequest<ServiceResult>, IMapFrom<SalePriceList>
     {
 
         public int SourcePriceListId { get; set; }
+        public string NewPriceListName { get; set; } = null!;
     }
-    public class CopyPriceListCommandHandler : IRequestHandler<CopyPriceListCommand, bool>
+    public class CopyPriceListCommandHandler : IRequestHandler<CopyPriceListCommand, ServiceResult>
     {
         SaleDbContext _dbContext;
         IMapper _mapper;
@@ -31,42 +32,60 @@ namespace Eefa.Sale.Application.Commands.PriceList.Copy
             _mapper = mapper;
         }
 
-
-        public async Task<bool> Handle(CopyPriceListCommand request, CancellationToken cancellationToken)
+        public async Task<ServiceResult> Handle(CopyPriceListCommand request, CancellationToken cancellationToken)
         {
+            var srcRoot = _dbContext.SalePriceLists.First(x => x.Id == request.SourcePriceListId); //پیدا کردن ریشه لیست قیمت
             var currentDateTime = DateTime.Now;
-            var allListPrice = _dbContext.SalePriceLists.ToList();
-            var srcPriceList = allListPrice.Where(x => x.RootId == request.SourcePriceListId).OrderByDescending(x => x.Id).First();
-
-            var newPriceList = _mapper.Map<SalePriceList>(srcPriceList);
-            newPriceList.StartDate = currentDateTime;
-            _dbContext.SalePriceLists.Add(newPriceList);
-
-            var allChildren = allListPrice.Where(x => x.RootId == newPriceList.Id).ToList();
-            var levelOneChildrens = allChildren.Where(x => x.ParentId == newPriceList.Id).ToList();
 
 
-            CopyPriceListChildren(currentDateTime, levelOneChildrens, allListPrice, newPriceList.Id, _mapper, _dbContext);
+            SalePriceList newRoot = new SalePriceList
+            {
+                Title = request.NewPriceListName,
+                StartDate = currentDateTime,
+                ParentId = null,
+                RootId = null,
+                LevelCode = "004",
+            };
 
-            await _dbContext.SaveChangesAsync(cancellationToken);
-            return true;
+
+            _dbContext.SalePriceLists.Add(newRoot);
+            await _dbContext.SaveChangesAsync(cancellationToken); // برای ثبت id newRoot
+            var allChildren = _dbContext.SalePriceLists.Where(x => x.RootId == request.SourcePriceListId).ToList();//پیدا کردن تمام فرزند های این ریشه
+
+            await CopyPriceListChildrenAsync(srcRoot.Id, newRoot, allChildren, currentDateTime, newRoot.Id, cancellationToken); //کپی فرزندان این ریشه
+
+            if (await _dbContext.SaveChangesAsync(cancellationToken) > 0)
+            {
+                return ServiceResult.Success();
+            }
+
+            return ServiceResult.Failed();
         }
 
-
-        public static void CopyPriceListChildren(DateTime currentDateTime, List<SalePriceList> levelOneChildrens, List<SalePriceList> allListPrice, int parentId, IMapper mapper, SaleDbContext _dbContext)
+        private async Task CopyPriceListChildrenAsync(int srcParentId, SalePriceList newParent, List<SalePriceList> allChildren, DateTime currentDateTime, int rootId, CancellationToken cancellationToken)
         {
-            foreach (var children in levelOneChildrens)
-            {
-                var newPriceListChildren = mapper.Map<SalePriceList>(children);
-                newPriceListChildren.StartDate = currentDateTime;
-                newPriceListChildren.ParentId = parentId;
-                _dbContext.SalePriceLists.Add(newPriceListChildren);
-                var subchildren = allListPrice.Where(x => x.ParentId == children.Id).ToList();
-                if (subchildren.Any())
-                {
-                    CopyPriceListChildren(currentDateTime, subchildren, allListPrice, newPriceListChildren.Id, mapper, _dbContext);
-                }
+            var children = allChildren
+                .Where(x => x.ParentId == srcParentId)
+                .ToList(); //پیدا کردن  فرزندان این والد
 
+            foreach (var child in children)
+            {
+
+                SalePriceList newChild = new SalePriceList
+                {
+                    Title = child.Title,
+                    StartDate = currentDateTime,
+                    ParentId = newParent.Id,
+                    RootId = rootId,
+                    LevelCode = "004",
+                    DollarPrice = child.Price,
+                    Price = child.Price,
+                };
+
+                _dbContext.SalePriceLists.Add(newChild);
+                await _dbContext.SaveChangesAsync(cancellationToken);
+
+                await CopyPriceListChildrenAsync(child.Id, newChild, allChildren, currentDateTime, rootId, cancellationToken); // درصورت فرزند داشتن والد خود تابع دوباره صدا مزنم
             }
         }
     }
