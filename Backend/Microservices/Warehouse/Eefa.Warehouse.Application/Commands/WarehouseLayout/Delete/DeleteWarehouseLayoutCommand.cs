@@ -10,26 +10,26 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Eefa.Warehouse.Application.Commands.Warehouse.Delete
+namespace Eefa.Warehouse.Application.Commands
 {
-    public class DeleteWarehouseCommand : IRequest<ServiceResult>, IMapFrom<Warehous>
+    public class DeleteWarehouseLayoutCommand : IRequest<ServiceResult>, IMapFrom<WarehouseLayout>
     {
         public int Id { get; set; }
     }
-    public class DeleteWarehouseCommandHandler : IRequestHandler<DeleteWarehouseCommand, ServiceResult>
+    public class DeleteWarehouseLayoutCommandHandler : IRequestHandler<DeleteWarehouseLayoutCommand, ServiceResult>
     {
         private readonly IMapper _mapper;
         private readonly WarehouseDbContext _dbContext;
 
-        public DeleteWarehouseCommandHandler(IMapper mapper, WarehouseDbContext dbContext)
+        public DeleteWarehouseLayoutCommandHandler(IMapper mapper, WarehouseDbContext dbContext)
         {
             _mapper = mapper;
             _dbContext = dbContext;
         }
 
-        public async Task<ServiceResult> Handle(DeleteWarehouseCommand request, CancellationToken cancellationToken)
+        public async Task<ServiceResult> Handle(DeleteWarehouseLayoutCommand request, CancellationToken cancellationToken)
         {
-            var entity = await _dbContext.Warehouses.FirstAsync(w => w.Id == request.Id);
+            var entity = await _dbContext.WarehouseLayouts.FirstAsync(w => w.Id == request.Id);
             _dbContext.RemoveEntity(entity);
             await _dbContext.SaveChangesAsync(cancellationToken);
             return ServiceResult.Success();

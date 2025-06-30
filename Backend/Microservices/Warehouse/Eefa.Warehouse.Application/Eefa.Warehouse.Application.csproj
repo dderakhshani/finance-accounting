@@ -10,4 +10,8 @@
     <ProjectReference Include="..\..\..\Core\Eefa.Common\Eefa.Common.csproj" />
     <ProjectReference Include="..\Eefa.Warehouse.Infrastructure\Eefa.Warehouse.Infrastructure.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Queries\WarehouseLayout\Abstraction\" />
+  </ItemGroup>
 </Project>

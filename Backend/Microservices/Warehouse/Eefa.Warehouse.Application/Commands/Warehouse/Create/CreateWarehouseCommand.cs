@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Eefa.Warehouse.Application.Commands
 {
-    public class CreateWarehouseCommand : IRequest<bool>, IMapFrom<Warehous>
+    public class CreateWarehouseCommand : IRequest<ServiceResult>, IMapFrom<Warehous>
     {
         public int TypeBaseId { get; set; }
         public int AccountHeadId { get; set; }
@@ -25,7 +25,7 @@ namespace Eefa.Warehouse.Application.Commands
         public bool? Countable { get; set; }
     }
 
-    public class CreateWarehouseCommandHandler : IRequestHandler<CreateWarehouseCommand, bool>
+    public class CreateWarehouseCommandHandler : IRequestHandler<CreateWarehouseCommand, ServiceResult>
     {
         private readonly IMapper _mapper;
         private readonly WarehouseDbContext _dbContext;
@@ -36,14 +36,13 @@ namespace Eefa.Warehouse.Application.Commands
             _dbContext = dbContext;
         }
 
-        public async Task<bool> Handle(CreateWarehouseCommand request, CancellationToken cancellationToken)
+        public async Task<ServiceResult> Handle(CreateWarehouseCommand request, CancellationToken cancellationToken)
         {
 
             var warehouse = _mapper.Map<Warehous>(request);
             _dbContext.Warehouses.Add(warehouse);
             await _dbContext.SaveChangesAsync(cancellationToken);
-
-            return true;
+            return ServiceResult.Success();
         }
     }
 }
