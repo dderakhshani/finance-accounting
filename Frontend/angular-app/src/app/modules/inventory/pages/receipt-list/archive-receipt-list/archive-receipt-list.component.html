@@ -1,5 +1,5 @@
 
-<div class="h-100 d-flex flex-column overflow-auto gap-3" style="max-height: inherit; padding: 0!important;">
+<div class="h-full flex flex-col overflow-auto gap-3" style="max-height: inherit; padding: 0!important;">
     <app-form-actions [actions]="listActions" (OnRefresh)="get()">
         <button mat-raised-button color="primary" (click)="print()" [disabled]="_notificationService.isLoader">
             <mat-icon>
@@ -73,14 +73,14 @@
                 <mat-icon>search</mat-icon>
                 جستجو
             </button>
-            
+
         </div>
 
       </div>
     </form>
   </mat-card>
 
-  <mat-card class="h-100 overflow-auto p-0">
+  <mat-card class="h-full overflow-auto p-0">
 
 
 

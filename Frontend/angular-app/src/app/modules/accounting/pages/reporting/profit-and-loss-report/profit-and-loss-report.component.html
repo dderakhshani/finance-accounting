@@ -1,20 +1,20 @@
-<div class="h-100 d-flex flex-column overflow-auto" style="max-height: inherit; padding: 0!important;">
+<div class="h-full flex flex-col overflow-auto" style="max-height: inherit; padding: 0!important;">
 
-  <mat-card class="h-100 d-flex flex-column overflow-hidden" style="max-height: inherit; padding: 0!important;" [formGroup]="form">
+  <mat-card class="h-full flex flex-col overflow-hidden" style="max-height: inherit; padding: 0!important;" [formGroup]="form">
     <div *ngIf="isLoading"
          style="z-index:9999;position: absolute;left:0;top:0;bottom: 0; right: 0;background: rgba(0,0,0,0.3);"
-         class="d-flex align-items-center justify-content-center">
+         class="flex items-center justify-center">
       <mat-spinner></mat-spinner>
     </div>
-        <div class="w-100 p-1" >
-          <div class="row w-100 p-0 m-0 ">
-            <div class="card col-12 p-0">
-              <div class="card-header d-flex flex-row gap-3">
+        <div class="w-full p-1" >
+          <div class="row w-full p-0 m-0 ">
+            <div class="col-span-12 rounded-xl shadow p-0 border border-gray-200">
+              <div class="px-4 py-2 border-b border-gray-200 bg-gray-100 text-gray-700 font-semibold text-sm flex flex-row gap-3">
                 <div>عملکرد</div>
 
-                <div class="card-body  p-0 ">
-                  <div class="row  p-0 ">
-                    <div class="col-3" >
+                <div class="p-4">
+                  <div class="grid grid-cols-12 gap-3 items-center">
+                    <div class="col-span-3" >
                       <mat-form-field>
                         <mat-label>از تاریخ</mat-label>
                         <input matInput [matDatepicker]="picker1" formControlName="voucherDateFrom">
@@ -26,7 +26,7 @@
                         <mat-datepicker #picker1></mat-datepicker>
                       </mat-form-field>
                     </div>
-                    <div class="col-3" >
+                    <div class="col-span-3" >
                       <mat-form-field>
                         <mat-label>تا تاریخ</mat-label>
                         <input matInput [matDatepicker]="picker2" formControlName="voucherDateTo">
@@ -38,11 +38,8 @@
                         <mat-datepicker #picker2></mat-datepicker>
                       </mat-form-field>
                     </div>
-                    <div class="col-3" >
-
-                    </div>
-                    <div class="col-3" >
-                      <button (click)="get()" class="col-12 me-2  mt-2" color="primary" mat-raised-button>دریافت گزارش</button>
+                    <div class="col-span-1" >
+                      <button (click)="get()" color="primary" mat-raised-button>دریافت گزارش</button>
                     </div>
                   </div>
                 </div>
@@ -51,7 +48,7 @@
             </div>
           </div>
         </div>
-        <div class="h-100 overflow-auto">
+        <div class="h-full overflow-auto">
           <app-table-virtual-scrolling
             [tableRows]="result"
             [requestsIndex]="requestsIndex"

@@ -1,7 +1,7 @@
-<div class="p-4 d-flex overflow-auto border rounded uploader-container ">
+<div class="p-4 flex overflow-auto border rounded uploader-container ">
 
     <div *ngIf="(!singleFile || files.length==0) && allowFileUpload"
-         class="upload-area m-1 d-flex align-items-center justify-content-center" (click)="onClickUpload()">
+         class="upload-area m-1 flex items-center justify-center" (click)="onClickUpload()">
 
         <div class="content opacity-50">
             <mat-icon style="font-size: 2rem;">add_circle_outline</mat-icon>

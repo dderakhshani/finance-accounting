@@ -1,7 +1,7 @@
 
-<div class="h-100 d-flex flex-column overflow-auto gap-3" style="max-height: inherit; padding: 0!important;">
+<div class="h-full flex flex-col overflow-auto gap-3" style="max-height: inherit; padding: 0!important;">
     <app-form-actions [actions]="listActions" (OnRefresh)="get()">
-        
+
         <button mat-raised-button color="primary" type="button" (click)="onDeleteFilter(SearchForm,tableConfigurations)" [disabled]="_notificationService.isLoader">
             <mat-icon>
                 delete_forever
@@ -38,7 +38,7 @@
             <mat-datepicker #picker></mat-datepicker>
           </mat-form-field>
         </div>
-        
+
         <div class="col-md-2">
             <mat-form-field tabindex="3">
                 <mat-label>شماره درخواست </mat-label>
@@ -46,20 +46,20 @@
             </mat-form-field>
         </div>
 
-        
+
         <div class="col-md-2">
             <button mat-raised-button color="primary" matTooltip="جستجو" (click)="get()" [disabled]="_notificationService.isLoader" tabindex="5">
                 <mat-icon>search</mat-icon>
                 جستجو
             </button>
-            
+
         </div>
 
       </div>
     </form>
   </mat-card>
 
-  <mat-card class="h-100 overflow-auto p-0">
+  <mat-card class="h-full overflow-auto p-0">
 
 
 

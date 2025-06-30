@@ -1,82 +1,80 @@
-<div class="h-100 d-flex flex-column gap-3" style="max-height: inherit;">
+<div class="h-full !flex flex-col gap-3">
   <div *ngIf="isLoading"
-       style="z-index:9999;position: absolute;left:0;top:0;bottom: 0; right: 0;background: rgba(0,0,0,0.3);"
-       class="d-flex align-items-center justify-content-center">
+       class="flex items-center justify-center absolute inset-0 bg-black/30 z-[9999]">
     <mat-spinner></mat-spinner>
   </div>
   <app-action-bar (onList)="navigateToAutoVoucherFormulaList()"
                   (onSave)="submit()"
                   (onCustomClick)="handleCustomClick($event)"></app-action-bar>
   <!-- (onSave)="submit()" -->
-  <div class="h-100 d-flex flex-column gap-3" *ngIf="form" [formGroup]="form">
+  <div class="h-full flex flex-col gap-3" *ngIf="form" [formGroup]="form">
     <mat-card>
-      <div class="row">
-        <div class="col-3">
+      <div class="grid grid-cols-12 gap-4">
+        <div class="col-span-3">
           <mat-form-field>
             <mat-label>کد نوع سند</mat-label>
-            <input matInput type="text" formControlName="voucherTypeId"
-                   [matAutocomplete]="voucherTypeIdAuto">
+            <input matInput type="text" formControlName="voucherTypeId" [matAutocomplete]="voucherTypeIdAuto">
 
             <mat-autocomplete autoActiveFirstOption #voucherTypeIdAuto="matAutocomplete"
                               [displayWith]="accountManagerService.codeVoucherGroupDisplayFn.bind(accountManagerService)">
-              <mat-option
-                *ngFor="let voucherType of voucherTypes | arrayFilter: form?.controls['voucherTypeId'].value : ['title','code'];let i=index"
-                [value]="voucherType.id">
+              <mat-option class="!text-xs font-light" *ngFor="let voucherType of voucherTypes | arrayFilter: form?.controls['voucherTypeId'].value : ['title','code']; let i = index"
+                          [value]="voucherType.id">
                 {{ voucherType.code + ' - ' + voucherType.title }}
               </mat-option>
             </mat-autocomplete>
           </mat-form-field>
         </div>
-        <div class="col-3">
+
+        <div class="col-span-3">
           <mat-form-field>
             <mat-label>کد نوع سند2</mat-label>
-            <input matInput type="text" formControlName="sourceVoucherTypeId"
-                   [matAutocomplete]="sourceVoucherTypeId">
+            <input matInput type="text" formControlName="sourceVoucherTypeId" [matAutocomplete]="sourceVoucherTypeId">
+
             <mat-autocomplete autoActiveFirstOption #sourceVoucherTypeId="matAutocomplete"
                               [displayWith]="accountManagerService.codeVoucherGroupDisplayFn.bind(accountManagerService)">
-              <mat-option
-                *ngFor="let sourceVoucherType of sourceVoucherTypes | arrayFilter: form?.controls['sourceVoucherTypeId'].value : ['title','code'];let i=index"
-                [value]="sourceVoucherType.id">
+              <mat-option class="!text-xs font-light" *ngFor="let sourceVoucherType of sourceVoucherTypes | arrayFilter: form?.controls['sourceVoucherTypeId'].value : ['title','code']; let i = index"
+                          [value]="sourceVoucherType.id">
                 {{ sourceVoucherType.code + ' - ' + sourceVoucherType.title }}
               </mat-option>
             </mat-autocomplete>
           </mat-form-field>
         </div>
-        <div class="col-3">
+
+        <div class="col-span-3">
           <mat-form-field>
             <mat-label>سرفصل حساب</mat-label>
-            <input matInput type="text" formControlName="accountHeadId"
-                   [matAutocomplete]="accountHeadId">
+            <input matInput type="text" formControlName="accountHeadId" [matAutocomplete]="accountHeadId">
+
             <mat-autocomplete autoActiveFirstOption #accountHeadId="matAutocomplete"
                               [displayWith]="accountManagerService.accountHeadDisplayFn.bind(accountManagerService)">
-              <mat-option
-                *ngFor="let accountHead of accountHeads | arrayFilter: form?.controls['accountHeadId'].value : ['title','code'];let i=index"
-                [value]="accountHead.id">
+              <mat-option class="!text-xs font-light" *ngFor="let accountHead of accountHeads | arrayFilter: form?.controls['accountHeadId'].value : ['title','code']; let i = index"
+                          [value]="accountHead.id">
                 {{ accountHead.code + ' - ' + accountHead.title }}
               </mat-option>
             </mat-autocomplete>
           </mat-form-field>
         </div>
-        <div class="col-2">
+
+        <div class="col-span-3">
           <mat-form-field>
             <mat-label>وضعیت مانده حساب</mat-label>
             <mat-select formControlName="debitCreditStatus">
-              <mat-option *ngFor="let debitCreditStatus of debitCreditStatuses"
-                          [value]="debitCreditStatus.id">
+              <mat-option class="!text-xs font-light" *ngFor="let debitCreditStatus of debitCreditStatuses" [value]="debitCreditStatus.id">
                 {{ debitCreditStatus.id + ' - ' + debitCreditStatus.title }}
               </mat-option>
             </mat-select>
           </mat-form-field>
         </div>
       </div>
-      <div class="row">
-        <div class="col-2">
+
+      <div class="grid grid-cols-12 gap-4">
+        <div class="col-span-3">
           <mat-form-field>
             <mat-label>ترتیب</mat-label>
             <input type="number" matInput formControlName="orderIndex">
           </mat-form-field>
         </div>
-        <div class="col-9">
+        <div class="col-span-9">
           <mat-form-field>
             <mat-label>توضیحات</mat-label>
             <input type="text" matInput formControlName="rowDescription">
@@ -112,9 +110,9 @@
           </mat-panel-description>
         </mat-expansion-panel-header>
         <app-create-formula [JsonFormulaSetter]="form.controls['formulaJson']"></app-create-formula>
-            </mat-expansion-panel>
+      </mat-expansion-panel>
     </mat-accordion>
-    <json-editor   [options]="editorOptions" [formControl]="jsonFormulaFormControl" (change)="showJson($event)">
+    <json-editor [options]="editorOptions" [formControl]="jsonFormulaFormControl" (change)="showJson($event)">
     </json-editor>
     <mat-accordion>
       <mat-expansion-panel>
@@ -130,7 +128,7 @@
 
       </mat-expansion-panel>
     </mat-accordion>
-    <json-editor   [options]="editorOptions" [formControl]="jsonConditionFormControl" (change)="showJson($event)">
+    <json-editor [options]="editorOptions" [formControl]="jsonConditionFormControl" (change)="showJson($event)">
     </json-editor>
 
   </div>

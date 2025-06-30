@@ -1,19 +1,19 @@
-<mat-card class="h-100 d-flex flex-column overflow-hidden" style="max-height: inherit; padding: 0!important;">
+<mat-card class="h-full flex flex-col overflow-hidden" style="max-height: inherit; padding: 0!important;">
   <div *ngIf="isLoading"
     style="z-index:9999;position: absolute;left:0;top:0;bottom: 0; right: 0;background: rgba(0,0,0,0.3);"
-    class="d-flex align-items-center justify-content-center">
+    class="flex items-center justify-center">
     <mat-spinner></mat-spinner>
   </div>
 
-  <mat-tab-group [(selectedIndex)]="selectedTabIndex" class="h-100 d-flex flex-column">
-    <mat-tab class="h-100 d-flex flex-column" tabindex="0" label="گزارش" [formGroup]="form">
-      <div class="w-100 p-3">
-        <div class="row w-100 p-0 m-0 ">
+  <mat-tab-group [(selectedIndex)]="selectedTabIndex" class="h-full flex flex-col">
+    <mat-tab class="h-full flex flex-col" tabindex="0" label="گزارش" [formGroup]="form">
+      <div class="w-full p-3">
+        <div class="row w-full p-0 m-0 ">
           <div class="card col-12 p-0">
-            <div class="card-header d-flex flex-row gap-3">
+            <div class="card-header flex flex-row gap-3">
               <div>فیلتر</div>
 
-              <div class="d-flex flex-row gap-4">
+              <div class="flex flex-row gap-4">
                 <span *ngIf="form.controls['accountHeadIds'].value.length>0" class="witch-filter">در حساب ها:
                   <span *ngFor="let accountHeadId of form.controls['accountHeadIds'].value | slice:0:4; let i = index"
                     class="filter">
@@ -115,7 +115,7 @@
                 </div>
 
                 <div class="col-2">
-                  <div class="row flex-column">
+                  <div class="row flex-col">
                     <div>
                       <mat-form-field>
                         <mat-label>حساب</mat-label>
@@ -145,7 +145,7 @@
                 </div>
 
                 <div class="col-2">
-                  <div class="row flex-column">
+                  <div class="row flex-col">
                     <div>
                       <mat-form-field>
                         <mat-label>گروه تفصیل</mat-label>
@@ -220,14 +220,14 @@
           </div>
         </div>
       </div>
-      <div class="h-100 overflow-auto">
+      <div class="h-full overflow-auto">
         <app-table (rowSelected)="updateTotalCreditAndTotalDebit()" (allRowsSelected)="updateTotalCreditAndTotalDebit()"
           (rowDoubleClicked)="onRowDoubleClicked($event)" [tableConfigurations]="tableConfigurations"
           (exportData)="exportFile($event)" [tableRows]="reportResult" (filtersChanged)="''" (sortChanged)="''"
           (paginationChanged)=" ''">
 
           <div footerContent>
-            <div class="me-auto d-flex flex-row gap-1">
+            <div class="me-auto flex flex-row gap-1">
               <button color="primary" mat-raised-button (click)="printRial()">
                 <mat-icon>print</mat-icon>
                 <mat-label> چاپ</mat-label>
@@ -240,7 +240,7 @@
               </button>
               <mat-menu #rialExportActions="matMenu">
                 <button mat-menu-item (click)="printRial()">چاپ </button>
-                <button mat-menu-item (click)="downloadRialExcel()">دانلود Excel</button> 
+                <button mat-menu-item (click)="downloadRialExcel()">دانلود Excel</button>
               </mat-menu> -->
 
 
@@ -249,9 +249,9 @@
         </app-table>
       </div>
     </mat-tab>
-    <mat-tab class="h-100" tabindex="1" label="فیلتر پیشرفته" [formGroup]="form">
-      <div class="w-100 p-3">
-        <div class="row w-100 p-0 m-0 gap-3">
+    <mat-tab class="h-full" tabindex="1" label="فیلتر پیشرفته" [formGroup]="form">
+      <div class="w-full p-3">
+        <div class="row w-full p-0 m-0 gap-3">
           <div class="card col-12 p-0">
             <div class="card-header">فیلتر</div>
             <div class="card-body">
@@ -301,11 +301,11 @@
           <div class="card col-12 p-0">
             <div class="card-header">حساب ها</div>
             <div class="card-body">
-              <div class="flex-column gap-5">
+              <div class="flex-col gap-5">
                 <div class="row">
 
                   <div class="col-5">
-                    <div class="row flex-column">
+                    <div class="row flex-col">
                       <div>
                         <mat-form-field>
                           <mat-label>حساب</mat-label>
@@ -335,7 +335,7 @@
                   </div>
 
                   <div class="col-3">
-                    <div class="row flex-column">
+                    <div class="row flex-col">
                       <div>
                         <mat-form-field>
                           <mat-label>گروه تفصیل</mat-label>

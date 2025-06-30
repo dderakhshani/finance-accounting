@@ -26,7 +26,6 @@ import {PrintOptions} from "../table/models/print_options";
 @Component({
   selector: 'app-tree',
   templateUrl: './tree.component.html',
-  styleUrls: ['./tree.component.scss']
 })
 export class TreeComponent implements OnInit ,OnChanges{
   // Old needs to be deleted

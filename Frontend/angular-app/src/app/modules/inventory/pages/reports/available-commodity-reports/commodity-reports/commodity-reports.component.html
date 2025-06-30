@@ -1,5 +1,5 @@
 
-<div class="h-100 d-flex flex-column overflow-auto gap-3" style="max-height: inherit; padding: 0!important;">
+<div class="h-full flex flex-col overflow-auto gap-3" style="max-height: inherit; padding: 0!important;">
 
 
     <mat-card>
@@ -94,7 +94,7 @@
 
     </mat-card>
     <mat-spinner style="top:30%;right:40%;position:absolute;z-index:1000;" *ngIf="_notificationService.isLoader"></mat-spinner>
-    <div [ngClass]="{'modal-large-table':IslargeSize ,'modal-large-close': !IslargeSize}" class="h-100 overflow-auto p-0">
+    <div [ngClass]="{'modal-large-table':IslargeSize ,'modal-large-close': !IslargeSize}" class="h-full overflow-auto p-0">
 
         <div [ngClass]="{'modal-large-table-content':IslargeSize}">
 

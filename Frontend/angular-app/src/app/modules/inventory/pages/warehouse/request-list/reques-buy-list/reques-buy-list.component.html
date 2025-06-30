@@ -1,5 +1,5 @@
 
-<div class="h-100 d-flex flex-column overflow-auto gap-3" style="max-height: inherit; padding: 0!important;">
+<div class="h-full flex flex-col overflow-auto gap-3" style="max-height: inherit; padding: 0!important;">
 
     <app-form-actions [actions]="listActions" (OnRefresh)="get()">
         <button mat-raised-button color="primary" (click)="print()" [disabled]="_notificationService.isLoader">
@@ -103,7 +103,7 @@
                 </mat-icon>
                 جستجو
             </button>
-            
+
         </div>
       </div>
     </form>
@@ -111,7 +111,7 @@
   </mat-card>
 
 
-  <mat-card class="h-100 overflow-auto p-0">
+  <mat-card class="h-full overflow-auto p-0">
 
 
       <app-table [tableConfigurations]="tableConfigurations"
@@ -121,7 +121,7 @@
                  (paginationChanged)="get()"
                  (sortChanged)="get()">
           <div footerContent>
-              <div class="me-auto d-flex flex-row gap-1">
+              <div class="me-auto flex flex-row gap-1">
                   <button mat-stroked-button>
                       <span>جمع درخواستی: </span>
                       <span style="color: black">{{totalQuantity}}</span>

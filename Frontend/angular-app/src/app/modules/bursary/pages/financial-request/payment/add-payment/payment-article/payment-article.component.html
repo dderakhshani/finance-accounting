@@ -1,6 +1,6 @@
 <mat-card [formGroup]="form">
 
-  <div class="d-flex justify-content-around">
+  <div class="flex justify-content-around">
     <div>
       <mat-label style="font-size: x-small">نوع سند </mat-label>
       <mat-button-toggle-group style="font-size: x-small" [formControl]="form.get('documentTypeBaseId')" formControlName="documentTypeBaseId" (click)="changeDocumentsType(form)" name="fontStyle" aria-label="Font Style">
@@ -51,7 +51,7 @@
   </div>
 
   <div class="col-12">
-    <div class="d-flex justify-content-around gap-3 mt-3">
+    <div class="flex justify-content-around gap-3 mt-3">
       <div class="col-md-3">
 
 
@@ -92,7 +92,7 @@
 
 
     <div class="col-12">
-      <div class="d-flex justify-content-around gap-3 mt-2">
+      <div class="flex justify-content-around gap-3 mt-2">
         <div class="col-md-3">
 
 
@@ -349,7 +349,7 @@
 
   <!-- نقدی -->
   <div *ngIf="form.get('documentTypeBaseId')?.value == documents.Cash" class="m-2 p-2">
-    <div class="d-flex justify-content-around gap-3 my-3">
+    <div class="flex justify-content-around gap-3 my-3">
 
 <div class="row col-12">
   <div class="col-3">
@@ -410,7 +410,7 @@
 
 
   <!-- <div class="p-2">
-    <app-uploader class="d-flex justify-content-center" [autoUpload]="true" (filesChange)="files=$event" (isUploadingChange)="isUploading" ></app-uploader>
+    <app-uploader class="flex justify-center" [autoUpload]="true" (filesChange)="files=$event" (isUploadingChange)="isUploading" ></app-uploader>
 
   </div> -->
 

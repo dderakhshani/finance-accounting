@@ -1,7 +1,7 @@
-<mat-card class="h-100 d-flex flex-column  overflow-auto p-2">
+<mat-card class="h-full flex flex-col  overflow-auto p-2">
   <app-action-bar class="pb-2" (onList)="navigateToPayableDocumentList()" (onAdd)="reset()" (onSave)="submitCheck()" (onDelete)="delete()"
                   (onRefresh)="initialize()" (onCustomClick)="handleCustomAction($event)">
-    <div class="d-flex gap-3">
+    <div class="flex gap-3">
       <p>{{titleHeader}}</p>
 <!--      <button mat-raised-button color="primary" [matMenuTriggerFor]="printActions">-->
 <!--        <mat-label> چاپ</mat-label>-->

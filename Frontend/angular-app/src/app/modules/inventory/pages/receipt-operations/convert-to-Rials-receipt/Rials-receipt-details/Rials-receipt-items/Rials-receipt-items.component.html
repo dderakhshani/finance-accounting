@@ -44,7 +44,7 @@
                (sortChanged)="get()"
                (paginationChanged)="get()">
         <div footerContent *ngIf="!allowNotEditInvoice">
-            <div class="me-auto d-flex flex-row gap-1">
+            <div class="me-auto flex flex-row gap-1">
                 <button mat-stroked-button *ngIf="isImportPurchase">
                     <span>جمع ارزی: </span>
                     <span style="color: black"> {{sumCurrencyPrice  | money}}</span>
@@ -117,7 +117,7 @@
                (input)="onInput($event, 'currencyPrice',rowFg)"
                (paste)="onPaste($event, 'currencyPrice', rowFg)"
                pattern="[0-9]*[.]?[0-9]*"
-               
+
                class="form-control">
     </ng-template>
     <ng-template #txtRatePrice let-rowFg="row">

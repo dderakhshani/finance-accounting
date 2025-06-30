@@ -1,4 +1,4 @@
-<div class="h-100 d-flex flex-column overflow-auto gap-3" style="max-height: inherit; padding: 0!important;">
+<div class="h-full flex flex-col overflow-auto gap-3" style="max-height: inherit; padding: 0!important;">
     <app-form-actions [actions]="listActions" (OnRefresh)="get()" (OnAdd)="add()">
         <button mat-raised-button color="primary" (click)="print()" [disabled]="_notificationService.isLoader">
             <mat-icon>
@@ -107,7 +107,7 @@
 
 
 
-  <mat-card class="h-100 overflow-auto p-0">
+  <mat-card class="h-full overflow-auto p-0">
 
       <app-table [tableConfigurations]="tableConfigurations"
                  [tableRows]="Receipts"
@@ -196,7 +196,7 @@
             </button>
 
             <button mat-menu-item
-                    
+
                     [matTooltipPosition]="'right'"
                     class="btn-color"
                     (click)="navigateToMaterail(element,5163)"
@@ -205,7 +205,7 @@
               خروج مواد اولیه
             </button>
             <button mat-menu-item
-                   
+
                     [matTooltipPosition]="'right'"
                     class="btn-color"
                     (click)="navigateToMaterail(element,5193)"
@@ -214,7 +214,7 @@
               انتقال مواد اولیه
             </button>
             <button mat-menu-item
-                   
+
                     [matTooltipPosition]="'right'"
                     class="btn-color"
                     (click)="navigateToMaterail(element,5334)"

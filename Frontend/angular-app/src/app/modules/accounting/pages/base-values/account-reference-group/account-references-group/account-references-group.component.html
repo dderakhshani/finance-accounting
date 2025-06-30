@@ -1,5 +1,5 @@
-<div class="h-100 d-flex flex-column gap-3">
-  <mat-card class="h-50 overflow-auto">
+<div class="h-full flex flex-col gap-3">
+  <mat-card class="max-h-[50%] overflow-auto">
     <app-tree
       [useNew]="true"
       [editable]="identityService.doesHavePermission('AccessToEditAccountRefrencGroups')"
@@ -12,5 +12,5 @@
       [rawNodes]="entities">
     </app-tree>
   </mat-card>
-  <app-account-references-list class="h-50" [groupId]="selectedGroupId"></app-account-references-list>
+  <app-account-references-list class="h-[50%]" [groupId]="selectedGroupId"></app-account-references-list>
 </div>

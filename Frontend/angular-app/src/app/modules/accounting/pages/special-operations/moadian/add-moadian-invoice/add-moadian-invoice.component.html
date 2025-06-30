@@ -1,4 +1,4 @@
-<div class="h-100 d-flex flex-column" style="max-height: inherit; padding: 0!important;">
+<div class="h-full flex flex-col" style="max-height: inherit; padding: 0!important;">
 
 
   <app-action-bar class="py-3" (onList)="navigateToMoadianInvoiceHeadersList()" (onAdd)="reset()" (onSave)="submit()"
@@ -15,7 +15,7 @@
           سرفصل صورتحساب
         </mat-panel-title>
         <mat-panel-description style="width: 100%" *ngIf="!headerInfoPanelState">
-          <div class="d-flex flex-row gap-3 w-100">
+          <div class="flex flex-row gap-3 w-full">
             <button mat-stroked-button>
               <span>شماره ثبت مالیاتی: </span>
               <span style="color: black">{{ this.form.get('taxId')?.value }}</span>
@@ -54,27 +54,27 @@
 
       <form [formGroup]="form">
 
-        <div class="col-12">
-          <div class="row">
-            <div class="col-2">
+        <div class="w-full">
+          <div class="grid grid-cols-12 gap-3">
+            <div class="col-span-2">
               <mat-form-field>
                 <mat-label>شماره ثبت مالیاتی</mat-label>
                 <input formControlName="taxId" type="text" matInput>
               </mat-form-field>
             </div>
-            <div class="col-2">
+            <div class="col-span-2">
               <mat-form-field>
                 <mat-label>شماره</mat-label>
                 <input formControlName="invoiceNumber" type="text" matInput>
               </mat-form-field>
             </div>
-            <div class="col-2">
+            <div class="col-span-2">
               <mat-form-field>
                 <mat-label>سریال</mat-label>
                 <input formControlName="inno" type="text" matInput>
               </mat-form-field>
             </div>
-            <div class="col-2">
+            <div class="col-span-2">
               <mat-form-field>
                 <mat-label>نوع</mat-label>
                 <mat-select formControlName="inty">
@@ -84,7 +84,7 @@
                 </mat-select>
               </mat-form-field>
             </div>
-            <div class="col-1">
+            <div class="col-span-1">
               <mat-form-field>
                 <mat-label>الگو</mat-label>
                 <mat-select formControlName="inp">
@@ -94,7 +94,7 @@
                 </mat-select>
               </mat-form-field>
             </div>
-            <div class="col-1">
+            <div class="col-span-1">
               <mat-form-field>
                 <mat-label>موضوع</mat-label>
                 <mat-select formControlName="ins">
@@ -104,7 +104,7 @@
                 </mat-select>
               </mat-form-field>
             </div>
-            <div class="col-2">
+            <div class="col-span-2">
               <mat-form-field>
                 <mat-label>تاریخ ثبت در سامانه</mat-label>
                 <input matInput [matDatepicker]="picker" formControlName="submissionDate">
@@ -116,7 +116,7 @@
                 <mat-datepicker #picker></mat-datepicker>
               </mat-form-field>
             </div>
-            <div class="col-2">
+            <div class="col-span-2">
               <mat-form-field>
                 <mat-label> وضعیت سند</mat-label>
                 <mat-select formControlName="status">
@@ -126,61 +126,61 @@
                 </mat-select>
               </mat-form-field>
             </div>
-            <div class="col-2">
+            <div class="col-span-2">
               <mat-form-field>
                 <mat-label>مجموع قبل تخفیف</mat-label>
                 <input currencyMask formControlName="tprdis" type="text" matInput>
               </mat-form-field>
             </div>
-            <div class="col-2">
+            <div class="col-span-2">
               <mat-form-field>
                 <mat-label>مجموع تخفیف</mat-label>
                 <input currencyMask formControlName="tdis" type="text" matInput>
               </mat-form-field>
             </div>
-            <div class="col-2">
+            <div class="col-span-2">
               <mat-form-field>
                 <mat-label>مجموع بعد تخفیف</mat-label>
                 <input currencyMask formControlName="tadis" type="text" matInput>
               </mat-form-field>
             </div>
-            <div class="col-2">
+            <div class="col-span-2">
               <mat-form-field>
                 <mat-label>مجموع مالیات</mat-label>
                 <input currencyMask formControlName="tvam" type="text" matInput>
               </mat-form-field>
             </div>
-            <div class="col-2">
+            <div class="col-span-2">
               <mat-form-field>
                 <mat-label>مجموع صورتحساب</mat-label>
                 <input currencyMask formControlName="tbill" type="text" matInput>
               </mat-form-field>
             </div>
-            <div class="col-2">
+            <div class="col-span-2">
               <mat-form-field>
                 <mat-label>مجموع وزن خالص</mat-label>
                 <input currencyMask [options]="{suffix:''}" formControlName="tonw" type="text" matInput>
               </mat-form-field>
             </div>
-            <div class="col-2">
+            <div class="col-span-2">
               <mat-form-field>
                 <mat-label>مجموع ارزش ارزی</mat-label>
                 <input formControlName="tocv" type="number" matInput>
               </mat-form-field>
             </div>
-            <div class="col-2">
+            <div class="col-span-2">
               <mat-form-field>
                 <mat-label>مجموع ارزش ریالی</mat-label>
                 <input currencyMask formControlName="torv" type="text" matInput>
               </mat-form-field>
             </div>
-            <div class="col-2">
+            <div class="col-span-2">
               <mat-form-field>
                 <mat-label>شماره کوتاژ</mat-label>
                 <input formControlName="cdcn" type="text" matInput>
               </mat-form-field>
             </div>
-            <div class="col-2">
+            <div class="col-span-2">
               <mat-form-field>
                 <mat-label>تاریخ کوتاژ</mat-label>
                 <input matInput [matDatepicker]="picker" formControlName="cdcd">
@@ -192,13 +192,13 @@
                 <mat-datepicker #picker></mat-datepicker>
               </mat-form-field>
             </div>
-            <div class="col-2">
+            <div class="col-span-2">
               <mat-form-field>
                 <mat-label>کد گمرک</mat-label>
                 <input formControlName="scc" type="text" matInput>
               </mat-form-field>
             </div>
-            <div class="col-2">
+            <div class="col-span-2">
               <mat-form-field>
                 <mat-label>شماره پروانه گمرکی</mat-label>
                 <input formControlName="scln" type="text" matInput>
@@ -224,7 +224,7 @@
           اطلاعات فروشنده
         </mat-panel-title>
         <mat-panel-description style="width: 100%" *ngIf="!buyerInfoPanelState">
-          <div class="d-flex flex-row gap-3 w-100">
+          <div class="flex flex-row gap-3 w-full">
             <button mat-stroked-button>
               <span>شماره اقتصادی: </span>
               <span style="color: black">{{ this.form.get('tins')?.value }}</span>
@@ -247,27 +247,27 @@
 
       <form [formGroup]="form">
 
-        <div class="col-12">
-          <div class="row">
-            <div class="col-2">
+        <div class="w-full">
+          <div class="grid grid-cols-12 gap-3">
+            <div class="col-span-2">
               <mat-form-field>
                 <mat-label>شماره اقتصادی</mat-label>
                 <input formControlName="tins" type="text" matInput>
               </mat-form-field>
             </div>
-            <div class="col-2">
+            <div class="col-span-2">
               <mat-form-field>
                 <mat-label>کد شعبه</mat-label>
                 <input formControlName="sbc" type="text" matInput>
               </mat-form-field>
             </div>
-            <div class="col-2">
+            <div class="col-span-2">
               <mat-form-field>
                 <mat-label>شماره پروانه گمرکی</mat-label>
                 <input formControlName="scln" type="text" matInput>
               </mat-form-field>
             </div>
-            <div class="col-2">
+            <div class="col-span-2">
               <mat-form-field>
                 <mat-label>شناسه یکتای ثبت قرارداد</mat-label>
                 <input formControlName="crn" type="text" matInput>
@@ -293,7 +293,7 @@
           اطلاعات خریدار
         </mat-panel-title>
         <mat-panel-description style="width: 100%" *ngIf="!sellerInfoPanelState">
-          <div class="d-flex flex-row gap-3 w-100">
+          <div class="flex flex-row gap-3 w-full">
             <button mat-stroked-button>
               <span>نام مشتری: </span>
               <span style="color: black">{{ this.form.get('personFullName')?.value }}</span>
@@ -316,57 +316,57 @@
 
       <form [formGroup]="form">
 
-        <div class="col-12">
-          <div class="row">
-            <div class="col-2">
+        <div class="w-full">
+          <div class="grid grid-cols-12 gap-3">
+            <div class="col-span-2">
               <mat-form-field>
                 <mat-label>نام مشتری</mat-label>
                 <input formControlName="personFullName" type="text" matInput>
               </mat-form-field>
             </div>
-            <div class="col-2">
+            <div class="col-span-2">
               <mat-form-field>
                 <mat-label>کد مشتری</mat-label>
                 <input formControlName="customerCode" type="text" matInput>
               </mat-form-field>
             </div>
-            <div class="col-2">
+            <div class="col-span-2">
               <mat-form-field>
                 <mat-label>کد تفصیل</mat-label>
                 <input formControlName="accountReferenceCode" type="text" matInput>
               </mat-form-field>
             </div>
-            <div class="col-2">
+            <div class="col-span-2">
               <mat-form-field>
                 <mat-label>شماره/شناسه ملی/شناسه مشارکت مدنی/کد فراگیر</mat-label>
                 <input formControlName="bid" type="text" matInput>
               </mat-form-field>
             </div>
-            <div class="col-2">
+            <div class="col-span-2">
               <mat-form-field>
                 <mat-label>شماره اقتصادی</mat-label>
                 <input formControlName="tinb" type="text" matInput>
               </mat-form-field>
             </div>
-            <div class="col-2">
+            <div class="col-span-2">
               <mat-form-field>
                 <mat-label>نوع شخص</mat-label>
                 <input formControlName="tob" type="text" matInput>
               </mat-form-field>
             </div>
-            <div class="col-2">
+            <div class="col-span-2">
               <mat-form-field>
                 <mat-label>کد پستی</mat-label>
                 <input formControlName="bpc" type="text" matInput>
               </mat-form-field>
             </div>
-            <div class="col-2">
+            <div class="col-span-2">
               <mat-form-field>
                 <mat-label>کد شعبه</mat-label>
                 <input formControlName="bbc" type="text" matInput>
               </mat-form-field>
             </div>
-            <div class="col-2">
+            <div class="col-span-2">
               <mat-form-field>
                 <mat-label>شماره گذرنامه</mat-label>
                 <input formControlName="bpn" type="text" matInput>
@@ -395,9 +395,9 @@
 
       <form [formGroup]="form">
 
-        <div class="col-12">
-          <div class="row">
-            <div class="col-12">
+        <div class="w-full">
+          <div class="grid grid-cols-12 gap-3">
+            <div class="col-span-12">
               <mat-form-field>
                 <mat-label>خطاها</mat-label>
                 <textarea formControlName="errors" rows="20" matInput></textarea>
@@ -413,7 +413,7 @@
   </mat-accordion>
 
 
-  <mat-card class="d-flex h-100" style="transition: height 0.225s; padding: 0!important;">
+  <mat-card class="flex h-full !p-0" style="transition: height 0.225s">
 
     <app-moadian-invoice-details-list
       style="width: 100%"

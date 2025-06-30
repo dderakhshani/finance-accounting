@@ -1,10 +1,10 @@
-<mat-card class="d-flex flex-column h-100 p-0 overflow-hidden">
+<mat-card class="flex flex-col h-full p-0 overflow-hidden">
   <div class="p-3">
     <app-action-bar (onRefresh)="get()">
 
     </app-action-bar>
 
-    <div class="d-flex gap-3 align-items-center" style="width: fit-content">
+    <div class="flex gap-3 items-center" style="width: fit-content">
       <mat-checkbox color="primary" [(ngModel)]="showLastLevelDetails" (change)="get()"><mat-label>نمایش جزئیات</mat-label></mat-checkbox>
 
       <mat-form-field style="width: fit-content">
@@ -25,7 +25,7 @@
     </div>
 
   </div>
-  <div class="h-100 overflow-auto">
+  <div class="h-full overflow-auto">
     <app-table
       [tableRows]="reportData"
       [tableConfigurations]="tableConfigurations"

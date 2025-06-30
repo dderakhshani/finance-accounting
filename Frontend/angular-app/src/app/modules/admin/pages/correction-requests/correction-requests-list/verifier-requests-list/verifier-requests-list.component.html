@@ -1,4 +1,4 @@
-<mat-card class=" h-100 d-flex flex-column " style=" padding: 0!important;">
+<mat-card class=" h-full flex flex-col " style=" padding: 0!important;">
 
   <app-action-bar    class="p-3" (onRefresh)="get()" (onAdd)="submitCorrectionRequest(true)"
                          (onDelete)="submitCorrectionRequest(false)">
@@ -16,7 +16,7 @@
   </app-action-bar>
 
 
-  <div class="h-100 overflow-auto">
+  <div class="h-full overflow-auto">
     <app-table
       [tableConfigurations]="tableConfigurations"
       [tableRows]="verifiersList"

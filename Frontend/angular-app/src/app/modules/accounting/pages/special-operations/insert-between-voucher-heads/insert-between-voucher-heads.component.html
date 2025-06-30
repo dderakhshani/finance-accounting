@@ -1,8 +1,8 @@
-<div class="d-flex flex-column h-100 gap-3">
+<div class="flex flex-col h-full gap-3">
   <mat-card>
     <h1 class="mat-subheading-1">محدوده اسناد</h1>
-    <div class="row" [formGroup]="form">
-      <div class="col-md-3">
+    <div class="grid grid-cols-12 gap-3" [formGroup]="form">
+      <div class="col-span-3">
 
         <mat-form-field>
           <mat-label>از شماره سند</mat-label>
@@ -10,13 +10,13 @@
         </mat-form-field>
 
       </div>
-      <div class="col-md-3">
+      <div class="col-span-3">
         <mat-form-field>
           <mat-label>تا شماره سند</mat-label>
           <input (change)="get()" formControlName="toNo" type="text" matInput>
         </mat-form-field>
       </div>
-      <div class="col-md-2 mx-auto">
+      <div class="col-span-2 m-auto">
         <button mat-raised-button color="primary" type="button" (click)="submit()"> درج میان اسناد</button>
       </div>
     </div>
@@ -24,8 +24,8 @@
   </mat-card>
 
 
-  <mat-card class="h-100" style="padding: 0!important;">
-    <mat-tab-group class="h-100">
+  <mat-card class="h-full !p-0" >
+    <mat-tab-group class="h-full">
       <mat-tab label="انتخاب شده">
         <app-table
           (rowDoubleClicked)="navigateToVoucherHead($event)"

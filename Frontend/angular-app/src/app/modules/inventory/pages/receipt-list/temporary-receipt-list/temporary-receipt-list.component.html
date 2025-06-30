@@ -1,6 +1,6 @@
 
 
-<div class="h-100 d-flex flex-column overflow-auto gap-3" style="max-height: inherit; padding: 0!important;">
+<div class="h-full flex flex-col overflow-auto gap-3" style="max-height: inherit; padding: 0!important;">
     <app-form-actions [actions]="listActions" (OnEdit)="update()" (OnAdd)="add()" (OnRefresh)="get()">
         <button mat-raised-button color="primary" (click)="print()" [disabled]="_notificationService.isLoader">
             <mat-icon>
@@ -91,7 +91,7 @@
                     <mat-icon>search</mat-icon>
                     جستجو
                 </button>
-                
+
 
                 <button mat-raised-button color="primary" matTooltip="چاپ و تایید رسید موقت توسط کارشناسان" (click)="ConfirmPageTemporaryReceiptALL()" tabindex="8">
                     <mat-icon>print</mat-icon>
@@ -118,7 +118,7 @@
 
 
 
-  <mat-card class="h-100 overflow-auto p-0">
+  <mat-card class="h-full overflow-auto p-0">
       <app-table [tableConfigurations]="tableConfigurations"
                  [tableRows]="Receipts"
                  (rowDoubleClicked)="Edit($event)"
@@ -191,7 +191,7 @@
           <div *ngIf="element.isAllowedInputOrOutputCommodity==false">
               <span>
                   <mat-icon style="color:red">block</mat-icon>
-                  
+
               </span>
           </div>
 

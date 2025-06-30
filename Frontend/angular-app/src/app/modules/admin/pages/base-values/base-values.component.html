@@ -1,4 +1,4 @@
-<div class="h-100 d-flex flex-column gap-3">
+<div class="h-full flex flex-col gap-3">
   <mat-card class="h-50 overflow-auto">
     <app-tree
       [useNew]="true"
@@ -13,7 +13,7 @@
     </app-tree>
 
   </mat-card>
-  <mat-card class="h-50 overflow-auto d-flex flex-column" style="max-height: inherit; padding: 0!important;">
+  <mat-card class="h-50 overflow-auto flex flex-col" style="max-height: inherit; padding: 0!important;">
 
       <app-action-bar  class="p-3" (onEdit)="update()" (onAdd)="add()">
         <span class="mat-caption">{{activeBaseValueType?.title}}</span>

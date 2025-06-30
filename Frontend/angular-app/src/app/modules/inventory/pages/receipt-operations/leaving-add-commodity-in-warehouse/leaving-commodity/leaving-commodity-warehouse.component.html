@@ -1,4 +1,4 @@
-<div class="h-100 d-flex flex-column overflow-auto" style="max-height: inherit; padding: 0!important;">
+<div class="h-full flex flex-col overflow-auto" style="max-height: inherit; padding: 0!important;">
 
   <mat-card>
     <form [formGroup]="form">
@@ -54,7 +54,7 @@
     </form>
   </mat-card>
   <mat-card>
-   
+
     <!--دریافت کالا از انبار--------------------------------------------->
     <p *ngIf="!_Request" class="btn-color-16">
 
@@ -172,7 +172,7 @@
               {{item?.remainQuantity | money}}  {{item?.commodity?.measureTitle}}
             </label>
           </div>
-          
+
         </div>
         <div class="row">
           <div class="col-md-12">

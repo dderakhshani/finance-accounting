@@ -1,4 +1,4 @@
-<div class="d-flex flex-column h-100 gap-3" style="max-height: inherit">
+<div class="flex flex-col h-full gap-3" style="max-height: inherit">
 
   <app-action-bar (onSave)="submit()" (onAdd)="reset()" (onList)="navigateToPersonList()"
                   (onCustomClick)="handleCustomAction($event)"></app-action-bar>
@@ -145,7 +145,7 @@
                   <mat-label class="d-block mb-1 mat-caption"> جنسیت</mat-label>
                   <mat-radio-group
                     tabindex="13"
-                    class="gap-4 d-flex"
+                    class="gap-4 flex"
                     aria-labelledby="example-radio-group-label"
                     formControlName="genderBaseId">
                     <mat-radio-button class="mat-caption" style="width: 50%;" color="primary"
@@ -276,7 +276,7 @@
                   <mat-label class="d-block mb-1 mat-caption"> ماهیت</mat-label>
                   <mat-radio-group
                     tabindex="11"
-                    class="gap-4 d-flex"
+                    class="gap-4 flex"
                     aria-labelledby="example-radio-group-label"
                     formControlName="governmentalBaseId">
                     <mat-radio-button class="mat-caption" style="width: 50%;" color="primary"
@@ -310,7 +310,7 @@
     </form>
 
   </mat-card>
-  <mat-card class="p-0 w-100 mx-auto h-100" [class.mat-disabled]="!this.form.get('id')?.value" *ngIf="form">
+  <mat-card class="p-0 w-full mx-auto h-full" [class.mat-disabled]="!this.form.get('id')?.value" *ngIf="form">
     <mat-tab-group>
       <mat-tab label="آدرس ها">
         <app-person-addresses-list [form]="form.controls['personAddressList']"
@@ -344,11 +344,11 @@
           <mat-card class="col-4 mx-auto">
             <div class="row">
               <div (click)="signatureInput.click()" style="width: fit-content; cursor: pointer"
-                   class="col-6 mx-auto align-items-center d-flex">
+                   class="col-6 mx-auto items-center flex">
                 <img style="object-fit: contain; border-radius: inherit" mat-card-lg-image class="mx-auto"
                      [src]="form.get('signatureUrl')?.value" alt="">
               </div>
-              <div (click)="signatureInput.click()" class="col-6 align-items-center d-flex flex-column"
+              <div (click)="signatureInput.click()" class="col-6 items-center flex flex-col"
                    style="cursor:pointer;">
                 <img style="width: 30px" class="mx-3" src="/assets/icons/upload-image.svg" alt="">
                 <h5 mat-card-subtitle class="mt-1">بارگذازی امضا</h5>

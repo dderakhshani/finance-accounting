@@ -1,7 +1,7 @@
-<div class="h-100 d-flex flex-column">
+<div class="h-full flex flex-col">
 
   <mat-card class="radio-group">
-    <mat-radio-group [(ngModel)]="selectedOptionValue"  aria-labelledby="example-radio-group-label"  class="gap-3 d-flex">
+    <mat-radio-group [(ngModel)]="selectedOptionValue"  aria-labelledby="example-radio-group-label"  class="gap-3 flex">
       <mat-radio-button  class="mat-caption" style="width: 50%;" color="primary" value="0">صدور فرم شمارش برای لوکیشن خاص</mat-radio-button>
       <mat-radio-button  class="mat-caption" style="width: 50%;" color="primary" value="1">صدور فرم شمارش بر اساس ارزش اقلام</mat-radio-button>
     </mat-radio-group>
@@ -9,7 +9,7 @@
   <div *ngIf="selectedOptionValue==0">
     <app-warehouse-layout [warehouseCountShow]="true"></app-warehouse-layout>
   </div>
-  <mat-card *ngIf="selectedOptionValue==1" class="h-100 d-flex flex-column"   >
+  <mat-card *ngIf="selectedOptionValue==1" class="h-full flex flex-col"   >
     <div class="row">
       <div class="col-4" style="height: fit-content!important;" mat-menu-item (click)="$event.stopPropagation()">
         <mat-form-field class="p-0">

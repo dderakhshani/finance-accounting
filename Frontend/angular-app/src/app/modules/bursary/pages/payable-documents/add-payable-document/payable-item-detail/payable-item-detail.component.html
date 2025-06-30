@@ -1,4 +1,4 @@
-<div class="h-100 d-flex flex-column  overflow-hidden p-1" style="max-height: inherit; margin: 0!important;"
+<div class="h-full flex flex-col  overflow-hidden p-1" style="max-height: inherit; margin: 0!important;"
      [formGroup]="form">
 
   <div class="flex ">
@@ -6,7 +6,7 @@
       <div class="col-3 ">
 
 
-        <div class=" d-flex justify-content-between align-items-center">
+        <div class=" flex justify-content-between items-center">
           <div *ngIf="form && payTypes">
             <mat-label class="ms-2">نوع سند</mat-label>
             <mat-button-toggle-group style="font-size: x-small" formControlName="payTypeId"

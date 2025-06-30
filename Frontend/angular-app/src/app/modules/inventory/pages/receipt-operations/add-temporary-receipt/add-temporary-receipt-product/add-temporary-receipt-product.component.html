@@ -1,5 +1,5 @@
 
-<div [formGroup]="form" class="h-100 d-flex flex-column overflow-auto gap-3" style="max-height: inherit; padding: 0!important;">
+<div [formGroup]="form" class="h-full flex flex-col overflow-auto gap-3" style="max-height: inherit; padding: 0!important;">
 
     <app-form-actions [actions]="formActions" (OnShowList)="navigateToReceiptList()" (OnAdd)="reset()">
         <button mat-raised-button color="primary" matTooltip="ذخیره کامل اطلاعات" (click)="add()" [disabled]="_notificationService.isLoader" *ngIf="!isSubmitForm" id="save">
@@ -114,7 +114,7 @@
     </div>
 
 
-    <div class="h-100 overflow-auto p-0">
+    <div class="h-full overflow-auto p-0">
 
         <app-temporary-receipt-items-product [formSetter]="form?.controls['receiptDocumentItems']"
                                              [receipt]="_TemporaryReceipt"

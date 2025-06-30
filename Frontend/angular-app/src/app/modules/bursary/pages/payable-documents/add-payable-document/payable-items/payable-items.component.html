@@ -1,10 +1,10 @@
-<div class="h-100 d-flex flex-column  overflow-hidden" style="max-height: inherit; padding: 0!important;position: relative">
+<div class="h-full flex flex-col  overflow-hidden" style="max-height: inherit; padding: 0!important;position: relative">
 
-  <table class="h-100" >
+  <table class="h-full" >
     <thead>
     <th class=" divider-left" resizable>
-      <div class="d-flex flex-row  justify-content-around  overflow-auto">
-        <app-action-bar  #actionBarG class="w-100" (onAdd)="addRowDebit()" (onDelete)="deleteRowDebit()"
+      <div class="flex flex-row  justify-content-around  overflow-auto">
+        <app-action-bar  #actionBarG class="w-full" (onAdd)="addRowDebit()" (onDelete)="deleteRowDebit()"
                         (onCustomClick)="handleCustomActions($event)">
           <p>گیرندگان</p>
           <div after>
@@ -14,8 +14,8 @@
       </div>
     </th>
     <th class=" divider-right " resizable>
-      <div class="d-flex flex-row  justify-content-around  overflow-auto">
-        <app-action-bar  #actionBarPayOrders class="w-100"  (onDelete)="deletePayOrder()"
+      <div class="flex flex-row  justify-content-around  overflow-auto">
+        <app-action-bar  #actionBarPayOrders class="w-full"  (onDelete)="deletePayOrder()"
                         (onCustomClick)="handleCustomActions($event)" >
           <p>دستور پرداخت </p>
           <div before>
@@ -68,7 +68,7 @@
     </thead>
     <tbody>
     <td class="divider-left">
-      <div class=" h-100 overflow-auto ">
+      <div class=" h-full overflow-auto ">
         <app-table-virtual-scrolling
           [tableRows]="rowData"
           [requestsIndex]="requestsIndex"
@@ -202,7 +202,7 @@
       </div>
     </td>
     <td class="divider-right">
-      <div class="  h-100 overflow-auto">
+      <div class="  h-full overflow-auto">
         <app-table-virtual-scrolling
           [tableRows]="rowDataPayOrders"
           [tableConfigurations]="tableConfigurationsPayOrders"

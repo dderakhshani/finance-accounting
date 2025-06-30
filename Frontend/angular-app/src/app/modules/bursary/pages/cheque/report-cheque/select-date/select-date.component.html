@@ -1,7 +1,7 @@
-<div class="d-flex justify-content-center">
+<div class="flex justify-center">
     <div class="p-2">
- 
-  
+
+
       <mat-form-field>
         <mat-label>تاریخ سند</mat-label>
         <input tabindex="6" matInput [matDatepicker]="picker" [(ngModel)]="documentDate">
@@ -12,12 +12,12 @@
         </mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
     </mat-form-field>
-  
-  
+
+
     </div>
-  
+
   </div>
-  <div class="d-flex justify-content-center">
+  <div class="flex justify-center">
     <div class="p-2">
       <button mat-raised-button color="primary" style="background: #68b0a9;" (click)="setReference()">
         <mat-icon>
@@ -27,4 +27,3 @@
       </button>
     </div>
   </div>
-  

@@ -10,7 +10,7 @@
   <!--  spinner-->
   <div *ngIf="tableConfigurations.options.isLoadingTable"
        style="z-index:9999;position: absolute;left:0;top:0;bottom: 0; right: 0;background: rgba(0,0,0,0.3);"
-       class="d-flex align-items-center justify-content-center">
+       class="flex items-center justify-center">
     <mat-spinner></mat-spinner>
   </div>
   <!-- table-toolbar and buttonTopContent-->
@@ -520,7 +520,7 @@
   </table>
   <div class="paginator-and-content"
        *ngIf="tableConfigurations?.options?.usePagination && tableConfigurations?.pagination">
-    <div class="d-flex justify-content-start align-items-center"
+    <div class="flex justify-content-start items-center"
          *ngIf="!tableConfigurations?.options?.isSelectedMode">
             <span class="span-pageIndex"
                   matTooltip=" صفحه :  {{ tableConfigurations.pagination.pageIndex + 1 }}"> {{ tableConfigurations.pagination.pageIndex + 1 }}
@@ -535,7 +535,7 @@
         class="mat-paginator-sticky" showFirstLastButtons="true">
       </mat-paginator>
     </div>
-    <div class="d-flex justify-content-start align-items-center"
+    <div class="flex justify-content-start items-center"
          *ngIf="tableConfigurations?.options?.isSelectedMode"
     >
             <span class="span-pageIndex"
@@ -548,11 +548,11 @@
         class="mat-paginator-sticky" showFirstLastButtons="true">
       </mat-paginator>
     </div>
-    <div class="d-flex align-items-center">
+    <div class="flex items-center">
       <ng-content select="[footerContent]"></ng-content>
 
-      <div class="d-grid align-items-center">
-        <div class="d-flex flex-row align-items-center mx-auto w-100 gap-3" dir="ltr">
+      <div class="grid items-center">
+        <div class="flex flex-row items-center mx-auto w-full gap-3" dir="ltr">
           <button mat-raised-button color="primary"
                   (click)="exportExcel()"
                   *ngIf="tableConfigurations.options.exportOptions.showExportButton">

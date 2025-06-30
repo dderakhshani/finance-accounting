@@ -1,7 +1,7 @@
-<mat-card class="h-100 d-flex flex-column overflow-hidden" style="max-height: inherit; padding: 0!important;">
+<mat-card class="h-full flex flex-col overflow-hidden" style="max-height: inherit; padding: 0!important;">
 
   <div class="d-inline p-3">
-    <div class="d-flex">
+    <div class="flex">
   <app-form-actions [actions]="formActions" (OnRefresh)="get()" class="flex-fill" (OnDelete)="delete()">
 
 
@@ -50,7 +50,7 @@
 
 
 </div>
-<div class="d-flex">
+<div class="flex">
 <div class="flex-fill" style="margin-top: 8px;margin-bottom: 8px;">
 
   <mat-label> وضعیت : </mat-label>
@@ -105,7 +105,7 @@
       <mat-label>همه</mat-label>
       <mat-icon class="text-success">account_balance</mat-icon>
     </mat-button-toggle>
- 
+
 
   </mat-button-toggle-group>
 
@@ -130,7 +130,7 @@
 
 </div>
 </div>
-<div class="h-100 overflow-auto">
+<div class="h-full overflow-auto">
   <app-table
   (rowDoubleClicked)="update($event)"
   [tableRows]="chequeSheets"
@@ -144,13 +144,13 @@
 </mat-card>
 
 <ng-template #buttonShowDetails let-element="row" >
-  <div class="d-flex gap-1" dir="ltr">
+  <div class="flex gap-1" dir="ltr">
     <mat-icon class="" color="warn" (click)="uploadAttachments(element)" style="cursor: pointer;font-size: xx-large;">cloud_upload</mat-icon>
     <mat-icon class="text-warning" (click)="showDetails(element)" style="cursor: pointer;font-size: xx-large;"> format_list_numbered</mat-icon>
     <mat-icon color="primary" (click)="showChequeAttachments(element)" style="cursor: pointer;font-size: xx-large;">perm_media</mat-icon>
   </div>
 </ng-template>
 
-<div  *ngIf="isLoading" style="position: absolute;left:0;top:0;bottom: 0; right: 0;background: #ffffff94;" class="d-flex align-items-center justify-content-center">
+<div  *ngIf="isLoading" style="position: absolute;left:0;top:0;bottom: 0; right: 0;background: #ffffff94;" class="flex items-center justify-center">
   <mat-spinner></mat-spinner>
 </div>

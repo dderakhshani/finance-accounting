@@ -1,5 +1,5 @@
 
-<div class="h-100 d-flex flex-column overflow-auto" style="max-height: inherit; padding: 0!important;">
+<div class="h-full flex flex-col overflow-auto" style="max-height: inherit; padding: 0!important;">
 
 
     <form [formGroup]="form">
@@ -53,7 +53,7 @@
                        </app-combo-account-head-tree>
 
                      </div>
-                     
+
                      <div class="col-md-4">
 
                        <app-combo-account-refrence [DefaultId]="form.controls.debitAccountReferenceId.value"
@@ -92,12 +92,12 @@
                  </mat-card>
 
              </div>
-           
-        
+
+
         </div>
 
 </form>
-  
+
 
     <mat-card *ngIf="requests!=undefined">
         <div class="row line">
@@ -121,7 +121,7 @@
                 :
                 <label>{{requests?.request?.requestDate_Jalali}}</label>
             </div>
-    
+
             <div class="col-md-4">
                 <mat-label>وضعیت</mat-label>
                 :
@@ -143,7 +143,7 @@
     </mat-card>
 
     <div class="p-1">
-        
+
             <mat-card *ngFor="let item of requests?.items">
 
                 <div class="row">
@@ -314,7 +314,7 @@
 
 </mat-card>
 
-      
+
 
     </div>
     <mat-spinner style="top:30%;right:40%;position:absolute;z-index:1000" *ngIf="_notificationService.isLoader"></mat-spinner>

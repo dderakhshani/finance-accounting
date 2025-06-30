@@ -1,8 +1,7 @@
-<div class="h-100 d-flex flex-column overflow-auto gap-3" style="max-height: inherit; padding: 0!important;">
+<div class="h-full flex flex-col overflow-auto gap-3" style="max-height: inherit; padding: 0!important;">
 
 
   <!-- <app-action-bar class="p-3" (onCustomClick)="handleCustomAction($event)"></app-action-bar> -->
-
 
 
   <!-- <app-accounting-report-template [fetchOnInit]="hasPassedInFilters" (rowDoubleClicked)="navigateToVoucherHead($event)"
@@ -12,30 +11,31 @@
   </app-accounting-report-template> -->
 
 
-  <mat-card class="h-100 d-flex flex-column overflow-hidden" style="max-height: inherit; padding: 0!important;">
+  <mat-card class="h-full flex flex-col overflow-hidden" style="max-height: inherit; padding: 0!important;">
     <div *ngIf="isLoading"
-      style="z-index:9999;position: absolute;left:0;top:0;bottom: 0; right: 0; background: transparent;"
-      class="d-flex align-items-center justify-content-center">
+         style="z-index:9999;position: absolute;left:0;top:0;bottom: 0; right: 0; background: transparent;"
+         class="flex items-center justify-center">
       <span *ngIf="tableConfigurations.pagination.totalItems>1000 && isPrinting">
         برای دیتای بیشتر از 1000 رکورد خروجی اکسل داده میشود.
       </span>
     </div>
 
-    <mat-tab-group *ngIf="!isLoading" [(selectedIndex)]="selectedTabIndex" class="h-100 d-flex flex-column">
-      <mat-tab class="h-100 d-flex flex-column" tabindex="0" label="گزارش" [formGroup]="form" *ngIf="form">
-        <div class="w-100 p-3">
-          <div class="row w-100 p-0 m-0 ">
-            <div class="card col-12 p-0">
-              <div class="card-header d-flex flex-row gap-3">
+    <mat-tab-group *ngIf="!isLoading" [(selectedIndex)]="selectedTabIndex" class="h-full flex flex-col">
+      <mat-tab class="h-full flex flex-col" tabindex="0" label="گزارش" [formGroup]="form" *ngIf="form">
+        <div class="w-full p-3">
+          <div class="row w-full p-0 m-0 ">
+            <div class="col-span-12 rounded-xl shadow p-0 border border-gray-200">
+              <div
+                class="px-4 py-2 border-b border-gray-200 bg-gray-100 text-gray-700 font-semibold text-sm flex flex-row gap-3">
                 <div>فیلتر</div>
-                <div class="d-flex flex-row gap-4">
+                <div class="flex flex-row gap-4">
                   <span *ngIf="selectedAccountHeads.length>0" class="witch-filter">در حساب(ها):
                     <span *ngFor="let accountHead of selectedAccountHeads | slice:0:4; let i = index" class="filter">
                       <span *ngIf="i>2">
-                        و {{form.controls['accountHeadIds'].value.length-3}} فیلتر دیگر
+                        و {{ form.controls['accountHeadIds'].value.length - 3 }} فیلتر دیگر
                       </span>
                       <span *ngIf="3>i">
-                        {{accountingManagerService.accountHeadDisplayFn(accountHead.id)}}،
+                        {{ accountingManagerService.accountHeadDisplayFn(accountHead.id) }}،
                       </span>
                     </span>
                   </span>
@@ -44,41 +44,41 @@
                       *ngFor="let accountReferencesGroup of selectedAccountReferencesGroups | slice:0:4; let i = index"
                       class="filter">
                       <span *ngIf="i>2">
-                        و {{form.controls['referenceGroupIds'].value.length-3}} فیلتر دیگر
+                        و {{ form.controls['referenceGroupIds'].value.length - 3 }} فیلتر دیگر
                       </span>
                       <span *ngIf="3>i">
-                        {{accountingManagerService.accountReferenceGroupDisplayFn(accountReferencesGroup.id)}}،
+                        {{ accountingManagerService.accountReferenceGroupDisplayFn(accountReferencesGroup.id) }}،
                       </span>
                     </span>
                   </span>
                   <span *ngIf="selectedAccountReferences.length>0" class="witch-filter">در تفصیل(ها):
                     <span *ngFor="let accountReference of selectedAccountReferences | slice:0:4; let i = index"
-                      class="filter">
+                          class="filter">
                       <span *ngIf="i>2">
-                        و {{form.controls['referenceIds'].value.length-3}} فیلتر دیگر
+                        و {{ form.controls['referenceIds'].value.length - 3 }} فیلتر دیگر
                       </span>
                       <span *ngIf="3>i">
-                        {{accountingManagerService.accountReferenceDisplayFn(accountReference.id)}}،
+                        {{ accountingManagerService.accountReferenceDisplayFn(accountReference.id) }}،
                       </span>
                     </span>
                   </span>
                   <span *ngIf="selectedCodeVoucherGroups.length>0" class="witch-filter">در نوع سند(ها):
                     <span *ngFor="let codeVoucherGroup of selectedCodeVoucherGroups | slice:0:4; let i = index"
-                      class="filter">
+                          class="filter">
                       <span *ngIf="i>2">
-                        و {{form.controls['codeVoucherGroupIds'].value.length-3}} فیلتر دیگر
+                        و {{ form.controls['codeVoucherGroupIds'].value.length - 3 }} فیلتر دیگر
                       </span>
                       <span *ngIf="3>i">
-                        {{codeVoucherGroup.title}}،
+                        {{ codeVoucherGroup.title }}،
                       </span>
                     </span>
                   </span>
 
                 </div>
               </div>
-              <div class="card-body">
-                <div class="row">
-                  <div style="flex: 0 0 auto;width: 9.666667%;">
+              <div class="p-4">
+                <div class="grid grid-cols-12 gap-3 items-center">
+                  <div class="col-span-1">
                     <mat-form-field>
                       <mat-label>از تاریخ</mat-label>
                       <input matInput [matDatepicker]="picker1" formControlName="voucherDateFrom">
@@ -90,7 +90,7 @@
                       <mat-datepicker #picker1></mat-datepicker>
                     </mat-form-field>
                   </div>
-                  <div style="flex: 0 0 auto;width: 9.666667%;">
+                  <div class="col-span-1">
                     <mat-form-field>
                       <mat-label>تا تاریخ</mat-label>
                       <input matInput [matDatepicker]="picker2" formControlName="voucherDateTo">
@@ -103,31 +103,33 @@
                     </mat-form-field>
                   </div>
 
-                  <div class="col-1">
+                  <div class="col-span-1">
 
                     <mat-form-field>
                       <mat-label>نوع ارز</mat-label>
                       <mat-select (selectionChange)="showCurrencyRelatedFields(true)"
-                        formControlName="currencyTypeBaseId">
+                                  formControlName="currencyTypeBaseId">
                         <mat-option *ngFor="let currency of currencyTypes" [value]="currency.id">
-                          {{currency.title}}
+                          {{ currency.title }}
                         </mat-option>
                       </mat-select>
                     </mat-form-field>
                   </div>
 
-                  <div class="col-2">
-                    <div class="row flex-column">
+                  <div class="col-span-2">
+                    <div class="flex flex-col">
                       <div>
                         <mat-form-field>
                           <mat-label>حساب</mat-label>
                           <input matInput type="text" [formControl]="accountHeadControl"
-                            [matAutocomplete]="accountHeadAuto">
+                                 [matAutocomplete]="accountHeadAuto">
                           <mat-autocomplete autoActiveFirstOption #accountHeadAuto="matAutocomplete"
-                            (optionSelected)="handleAccountHeadSelection($event.option.value)"
-                            [displayWith]="accountingManagerService.accountHeadDisplayFn.bind(accountingManagerService)">
-                            <mat-option *ngFor="let accountHead of accountingManagerService.accountHeadLastLevels | arrayFilter : accountHeadControl.value : ['title', 'code'] ;let i=index" [value]="accountHead.id">
-                              {{accountHead.fullCode + ' ' + accountHead.title}}
+                                            (optionSelected)="handleAccountHeadSelection($event.option.value)"
+                                            [displayWith]="accountingManagerService.accountHeadDisplayFn.bind(accountingManagerService)">
+                            <mat-option class="!text-xs"
+                                        *ngFor="let accountHead of accountingManagerService.accountHeadLastLevels | arrayFilter : accountHeadControl.value : ['title', 'code'] ;let i=index"
+                                        [value]="accountHead.id">
+                              {{ accountHead.fullCode + ' ' + accountHead.title }}
                             </mat-option>
                           </mat-autocomplete>
                         </mat-form-field>
@@ -135,28 +137,29 @@
                       <div>
                         <mat-chip-list>
                           <span *ngIf="form.controls['accountHeadIds'].value.length>0"
-                            style="color: #d51e1e;font-size: 13px;">تعداد فیلترها:
-                            {{form.controls['accountHeadIds'].value.length}}
+                                style="color: #d51e1e;font-size: 13px;">تعداد فیلترها:
+                            {{ form.controls['accountHeadIds'].value.length }}
                           </span>
                         </mat-chip-list>
                       </div>
                     </div>
                   </div>
 
-                  <div class="col-2">
-                    <div class="row flex-column">
+                  <div class="col-span-2">
+                    <div class="row flex-col">
                       <div>
                         <mat-form-field>
                           <mat-label>گروه تفصیل</mat-label>
                           <input matInput type="text" [formControl]="accountReferencesGroupControl"
-                            [matAutocomplete]="accountReferencesGroupAuto">
+                                 [matAutocomplete]="accountReferencesGroupAuto">
 
                           <mat-autocomplete autoActiveFirstOption #accountReferencesGroupAuto="matAutocomplete"
-                            (optionSelected)="handleAccountReferencesGroupSelection($event.option.value)"
-                            [displayWith]="accountingManagerService.accountReferenceGroupDisplayFn.bind(accountingManagerService)">
-                            <mat-option *ngFor="let accountReferencesGroup of accountingManagerService.accountReferenceGroups.value | arrayFilter : accountReferencesGroupControl.value : ['title', 'code'] "
-                              [value]="accountReferencesGroup.id">
-                              {{accountReferencesGroup.code + ' ' + accountReferencesGroup.title}}
+                                            (optionSelected)="handleAccountReferencesGroupSelection($event.option.value)"
+                                            [displayWith]="accountingManagerService.accountReferenceGroupDisplayFn.bind(accountingManagerService)">
+                            <mat-option class="!text-xs"
+                                        *ngFor="let accountReferencesGroup of accountingManagerService.accountReferenceGroups.value | arrayFilter : accountReferencesGroupControl.value : ['title', 'code'] "
+                                        [value]="accountReferencesGroup.id">
+                              {{ accountReferencesGroup.code + ' ' + accountReferencesGroup.title }}
                             </mat-option>
                           </mat-autocomplete>
                         </mat-form-field>
@@ -164,27 +167,28 @@
                       <div>
                         <mat-chip-list>
                           <span *ngIf="form.controls['referenceGroupIds'].value.length>0"
-                            style="color: #d51e1e;font-size: 13px;">تعداد فیلترها:
-                            {{form.controls['referenceGroupIds'].value.length}}
+                                style="color: #d51e1e;font-size: 13px;">تعداد فیلترها:
+                            {{ form.controls['referenceGroupIds'].value.length }}
                           </span>
                         </mat-chip-list>
                       </div>
                     </div>
                   </div>
-                  <div class="col-2">
+                  <div class="col-span-2">
                     <div class="row">
                       <div>
                         <mat-form-field>
                           <mat-label>تفصیل</mat-label>
                           <input matInput type="text" [formControl]="accountReferencesGroupControl"
-                            [matAutocomplete]="accountReferenceAuto">
+                                 [matAutocomplete]="accountReferenceAuto">
 
                           <mat-autocomplete autoActiveFirstOption #accountReferenceAuto="matAutocomplete"
-                            (optionSelected)="handleAccountReferenceSelection($event.option.value)"
-                            [displayWith]="accountingManagerService.accountReferenceDisplayFn.bind(accountingManagerService)">
-                            <mat-option *ngFor="let accountReference of accountingManagerService.accountReferences.value | arrayFilter : accountReferencesGroupControl.value : ['title', 'code'] "
-                              [value]="accountReference.id">
-                              {{accountReference.code + ' ' + accountReference.title}}
+                                            (optionSelected)="handleAccountReferenceSelection($event.option.value)"
+                                            [displayWith]="accountingManagerService.accountReferenceDisplayFn.bind(accountingManagerService)">
+                            <mat-option class="!text-xs"
+                                        *ngFor="let accountReference of accountingManagerService.accountReferences.value | arrayFilter : accountReferencesGroupControl.value : ['title', 'code'] "
+                                        [value]="accountReference.id">
+                              {{ accountReference.code + ' ' + accountReference.title }}
                             </mat-option>
                           </mat-autocomplete>
                         </mat-form-field>
@@ -192,25 +196,25 @@
                       <div>
                         <mat-chip-list>
                           <span *ngIf="form.controls['referenceIds'].value.length>0"
-                            style="color: #d51e1e;font-size: 13px;">تعداد فیلترها:
-                            {{form.controls['referenceIds'].value.length}}
+                                style="color: #d51e1e;font-size: 13px;">تعداد فیلترها:
+                            {{ form.controls['referenceIds'].value.length }}
                           </span>
                         </mat-chip-list>
                       </div>
                     </div>
                   </div>
 
-                  <div class="col-1">
-                    <div class="row">
-                      <button (click)="get()" class="col-12 me-1" color="primary" mat-raised-button>دریافت
-                        گزارش</button>
-                      <button (click)="removeAllFilters()" class="col-12 me-1 mt-1" color="primary"
-                        mat-raised-button>حذف فیلترها</button>
-
+                  <div class="col-span-1">
+                    <div class="flex flex-col gap-1">
+                      <button (click)="get()" class="col-span-12" color="primary" mat-raised-button>دریافت
+                        گزارش
+                      </button>
+                      <button (click)="removeAllFilters()" class="col-span-12 mt-1" color="primary"
+                              mat-raised-button>حذف فیلترها
+                      </button>
                     </div>
                   </div>
-
-                  <div class="col-1" *ngIf="identityService.doesHavePermission('CurrencyFieldAccess')">
+                  <div class="col-span-1 h-fit" *ngIf="identityService.doesHavePermission('CurrencyFieldAccess')">
                     <mat-checkbox color='primary' (change)="showCurrencyRelatedFields($event.checked)">
                       <mat-label class="mat-caption">نمایش فیلد های ارزی</mat-label>
                     </mat-checkbox>
@@ -220,8 +224,8 @@
             </div>
           </div>
         </div>
-        <div class="h-100 overflow-auto">
 
+        <div class="h-full overflow-auto">
           <app-table
             (excludeSelectedItemsEvent)="handleExcludeSelectedItemsEvent($event)"
             (includeOnlySelectedItemsEvent)="handleincludeOnlySelectedItemsEvent($event)"
@@ -236,9 +240,8 @@
             (rowDoubleClicked)="navigateToVoucherHead($event)"
           >
 
-
-            <div headerBtn_topSetting>
-              <button mat-raised-button  [matMenuTriggerFor]="rialExportActions">
+            <div headerBtn_topSetting class="flex gap-1">
+              <button mat-raised-button [matMenuTriggerFor]="rialExportActions">
                 <mat-label> ریالی</mat-label>
                 <mat-icon>print</mat-icon>
               </button>
@@ -247,7 +250,7 @@
                 <button mat-menu-item (click)="downloadRialExcel()">دانلود Excel</button>
               </mat-menu>
 
-              <button mat-raised-button  [matMenuTriggerFor]="dollarExportActions"
+              <button mat-raised-button [matMenuTriggerFor]="dollarExportActions"
                       *ngIf="identityService.doesHavePermission('PrintDollar')">
                 <mat-label> ارزی</mat-label>
                 <mat-icon>print</mat-icon>
@@ -257,7 +260,7 @@
                 <button mat-menu-item (click)="downloadDollarExcel()">دانلود Excel</button>
               </mat-menu>
 
-              <button mat-raised-button  [matMenuTriggerFor]="rialiDollarExportActions"
+              <button mat-raised-button [matMenuTriggerFor]="rialiDollarExportActions"
                       *ngIf="identityService.doesHavePermission('PrintDollar')">
                 <mat-label> ریالی،ارزی</mat-label>
                 <mat-icon>print</mat-icon>
@@ -266,13 +269,12 @@
                 <button mat-menu-item (click)="printDollarAndRial()">چاپ ارزی،ریالی</button>
                 <button mat-menu-item (click)="downloadRialDollarExcel()">دانلود Excel</button>
               </mat-menu>
-
             </div>
 
             <div footerContent>
-              <div class="me-auto d-flex flex-row gap-1">
+              <div class="me-auto flex flex-row gap-1">
 
-                <div class="d-flex flex-column" >
+                <div class="flex flex-col gap-1">
                   <button class="bg-blue-300" mat-stroked-button>
                     <span>جمع بدهکار: </span>
                     <span style="color: black">{{ totalDebit.value | money }}</span>
@@ -284,7 +286,7 @@
 
 
                 </div>
-                <div class="d-flex flex-column">
+                <div class="flex flex-col gap-1">
                   <button class="bg-blue-300" mat-stroked-button>
                     <span>جمع بستانکار: </span>
                     <span style="color: black">{{ totalCredit.value | money }}</span>
@@ -295,52 +297,52 @@
                     <span style="color: black">{{ totalCurrencyCredit.value | money }}</span>
                   </button>
                 </div>
-                <div class="d-flex flex-column">
+                <div class="flex flex-col">
                   <button class="bg-blue-300" mat-stroked-button>
                     <span>مانده : </span>
-<!--                    [ngClass]="((totalDebit.value - totalCredit.value) >= 0) ? 'text-red-600' : 'text-green-900' "-->
+                    <!--                    [ngClass]="((totalDebit.value - totalCredit.value) >= 0) ? 'text-red-600' : 'text-green-900' "-->
                     <span dir="ltr"
-                         >{{
-                        remaining.value > 0 ? (remaining.value | money )
-                          :'(' + (remaining.value | money ) + ')'
+                    >{{
+                        remaining.value > 0 ? (remaining.value | money)
+                          : '(' + (remaining.value | money) + ')'
                       }}</span>
                   </button>
                   <button class="bg-amber-300 mt-1" mat-stroked-button *ngIf="showCurrencyFields">
                     <span>مانده ارزی: </span>
-<!--            (totalDebit.value - totalCredit.value) | money        -->
+                    <!--            (totalDebit.value - totalCredit.value) | money        -->
                     <span dir="ltr"
-                          >{{
-                        currencyRemain.value > 0 ? ( currencyRemain.value | money )
-                          :'(' +(currencyRemain.value| money ) + ')'
+                    >{{
+                        currencyRemain.value > 0 ? (currencyRemain.value | money)
+                          : '(' + (currencyRemain.value| money) + ')'
 
                       }}</span>
                   </button>
                 </div>
-
-                             </div>
+              </div>
 
             </div>
           </app-table>
         </div>
       </mat-tab>
-      <mat-tab class="h-100" tabindex="1" label="فیلتر پیشرفته" [formGroup]="form">
-        <div class="w-100 p-3">
-          <div class="row w-100 p-0 m-0 gap-3">
-            <div class="card col-12 p-0">
-              <div class="card-header">فیلتر</div>
-              <div class="card-body">
-                <div class="row">
-                  <div class="col-2">
+
+      <mat-tab class="h-full" tabindex="1" label="فیلتر پیشرفته" [formGroup]="form">
+        <div class="w-full p-3">
+          <div class="flex flex-col w-full p-0 m-0 gap-3">
+            <div class="col-span-12 rounded-xl shadow p-0 border border-gray-200">
+              <div class="px-4 py-2 border-b border-gray-200 bg-gray-100 text-gray-700 font-semibold text-sm">فیلتر</div>
+              <div class="p-4">
+                <div class="grid grid-cols-12 gap-3 items-center">
+                  <div class="col-span-2">
                     <mat-form-field>
                       <mat-label>در سطح</mat-label>
                       <mat-select formControlName="level">
                         <mat-option *ngFor="let level of accountLevels" [value]="level.id">
-                          {{level.title}}
+                          {{ level.title }}
                         </mat-option>
                       </mat-select>
                     </mat-form-field>
                   </div>
-                  <div class="col-2">
+                  <div class="col-span-2">
                     <mat-form-field>
                       <mat-label>از تاریخ</mat-label>
                       <input matInput [matDatepicker]="picker3" formControlName="voucherDateFrom">
@@ -352,7 +354,7 @@
                       <mat-datepicker #picker3></mat-datepicker>
                     </mat-form-field>
                   </div>
-                  <div class="col-2">
+                  <div class="col-span-2">
                     <mat-form-field>
                       <mat-label>تا تاریخ</mat-label>
                       <input matInput [matDatepicker]="picker4" formControlName="voucherDateTo">
@@ -364,32 +366,36 @@
                       <mat-datepicker #picker4></mat-datepicker>
                     </mat-form-field>
                   </div>
-                  <button (click)="get()" class="col-1 me-auto" color="primary" mat-raised-button>دریافت گزارش</button>
-                  <button (click)="removeAllFilters()" class="col-1 me-auto" color="primary" mat-raised-button>حذف فیلتر
-                    ها</button>
+                  <button (click)="get()" class="h-fit" color="primary" mat-raised-button>دریافت گزارش
+                  </button>
+                  <button (click)="removeAllFilters()" class="h-fit" color="primary" mat-raised-button>حذف
+                    فیلتر ها
+                  </button>
                 </div>
               </div>
             </div>
 
-            <div class="card col-12 p-0">
-              <div class="card-header">حساب ها</div>
-              <div class="card-body">
-                <div class="flex-column gap-5">
-                  <div class="row">
+            <div class="col-span-12 rounded-xl shadow p-0 border border-gray-200">
+              <div class="px-4 py-2 border-b border-gray-200 bg-gray-100 text-gray-700 font-semibold text-sm">حساب ها</div>
+              <div class="p-4">
+                <div class="flex-col gap-5">
+                  <div class="grid grid-cols-12 gap-3">
 
-                    <div class="col-5">
-                      <div class="row flex-column">
+                    <div class="col-span-5">
+                      <div class="flex flex-col">
                         <div>
                           <mat-form-field>
                             <mat-label>حساب</mat-label>
                             <input matInput type="text" [formControl]="accountHeadControl"
-                              [matAutocomplete]="accountHeadAuto">
+                                   [matAutocomplete]="accountHeadAuto">
 
                             <mat-autocomplete autoActiveFirstOption #accountHeadAuto="matAutocomplete"
-                              (optionSelected)="handleAccountHeadSelection($event.option.value)"
-                              [displayWith]="accountingManagerService.accountHeadDisplayFn.bind(accountingManagerService)">
-                              <mat-option *ngFor="let accountHead of accountingManagerService.accountHeadLastLevels | arrayFilter : accountHeadControl.value : ['title', 'code'] " [value]="accountHead.id">
-                                {{accountHead.fullCode + ' ' + accountHead.title}}
+                                              (optionSelected)="handleAccountHeadSelection($event.option.value)"
+                                              [displayWith]="accountingManagerService.accountHeadDisplayFn.bind(accountingManagerService)">
+                              <mat-option class="!text-xs"
+                                *ngFor="let accountHead of accountingManagerService.accountHeadLastLevels | arrayFilter : accountHeadControl.value : ['title', 'code'] "
+                                [value]="accountHead.id">
+                                {{ accountHead.fullCode + ' ' + accountHead.title }}
                               </mat-option>
                             </mat-autocomplete>
                           </mat-form-field>
@@ -398,8 +404,8 @@
                           <mat-chip-list>
                             <mat-chip
                               *ngFor="let accountHeadId of form.controls['accountHeadIds'].value; let i = index">
-                              {{accountingManagerService.accountHeadDisplayFn(accountHeadId)}}
-                              <mat-icon style="cursor: pointer;" (click)="removeAccountHead(accountHeadId)">close
+                              {{ accountingManagerService.accountHeadDisplayFn(accountHeadId) }}
+                              <mat-icon class="cursor-pointer !text-xs" (click)="removeAccountHead(accountHeadId)">close
                               </mat-icon>
                             </mat-chip>
                           </mat-chip-list>
@@ -408,20 +414,22 @@
                       </div>
                     </div>
 
-                    <div class="col-3">
-                      <div class="row flex-column">
+                    <div class="col-span-3">
+                      <div class="flex flex-col">
                         <div>
                           <mat-form-field>
                             <mat-label>گروه تفصیل</mat-label>
                             <input matInput type="text" [formControl]="accountReferencesGroupControl"
-                              [matAutocomplete]="accountReferencesGroupAuto">
+                                   [matAutocomplete]="accountReferencesGroupAuto">
 
                             <mat-autocomplete autoActiveFirstOption #accountReferencesGroupAuto="matAutocomplete"
-                              (optionSelected)="handleAccountReferencesGroupSelection($event.option.value)"
-                              [displayWith]="accountingManagerService.accountReferenceGroupDisplayFn.bind(accountingManagerService)">
-                              <mat-option *ngFor="let accountReferencesGroup of accountingManagerService.accountReferenceGroups.value | arrayFilter : accountReferencesGroupControl.value : ['title', 'code'] "
+                                              (optionSelected)="handleAccountReferencesGroupSelection($event.option.value)"
+                                              [displayWith]="accountingManagerService.accountReferenceGroupDisplayFn.bind(accountingManagerService)">
+                              <mat-option
+                                class="!text-xs"
+                                *ngFor="let accountReferencesGroup of accountingManagerService.accountReferenceGroups.value | arrayFilter : accountReferencesGroupControl.value : ['title', 'code'] "
                                 [value]="accountReferencesGroup.id">
-                                {{accountReferencesGroup.code + ' ' + accountReferencesGroup.title}}
+                                {{ accountReferencesGroup.code + ' ' + accountReferencesGroup.title }}
                               </mat-option>
                             </mat-autocomplete>
                           </mat-form-field>
@@ -430,9 +438,9 @@
                           <mat-chip-list>
                             <mat-chip
                               *ngFor="let accountReferencesGroupId of form.controls['referenceGroupIds'].value; let i = index">
-                              {{accountingManagerService.accountReferenceGroupDisplayFn(accountReferencesGroupId)}}
+                              {{ accountingManagerService.accountReferenceGroupDisplayFn(accountReferencesGroupId) }}
                               <mat-icon style="cursor: pointer;"
-                                (click)="removeAccountReferencesGroup(accountReferencesGroupId)">close
+                                        (click)="removeAccountReferencesGroup(accountReferencesGroupId)">close
                               </mat-icon>
                             </mat-chip>
                           </mat-chip-list>
@@ -440,20 +448,22 @@
                       </div>
                     </div>
 
-                    <div class="col-4">
-                      <div class="row">
+                    <div class="col-span-4">
+                      <div class="flex flex-col">
                         <div>
                           <mat-form-field>
                             <mat-label>تفصیل</mat-label>
                             <input matInput type="text" [formControl]="accountReferenceControl"
-                              [matAutocomplete]="accountReferenceAuto">
+                                   [matAutocomplete]="accountReferenceAuto">
 
                             <mat-autocomplete autoActiveFirstOption #accountReferenceAuto="matAutocomplete"
-                              (optionSelected)="handleAccountReferenceSelection($event.option.value)"
-                              [displayWith]="accountingManagerService.accountReferenceDisplayFn.bind(accountingManagerService)">
-                              <mat-option *ngFor="let accountReference of accountingManagerService.accountReferences.value | arrayFilter : accountReferenceControl.value : ['title', 'code'] "
+                                              (optionSelected)="handleAccountReferenceSelection($event.option.value)"
+                                              [displayWith]="accountingManagerService.accountReferenceDisplayFn.bind(accountingManagerService)">
+                              <mat-option
+                                class="!text-xs"
+                                *ngFor="let accountReference of accountingManagerService.accountReferences.value | arrayFilter : accountReferenceControl.value : ['title', 'code'] "
                                 [value]="accountReference.id">
-                                {{accountReference.code + ' ' + accountReference.title}}
+                                {{ accountReference.code + ' ' + accountReference.title }}
                               </mat-option>
                             </mat-autocomplete>
                           </mat-form-field>
@@ -462,7 +472,7 @@
                           <mat-chip-list>
                             <mat-chip
                               *ngFor="let accountReferenceId of form.controls['referenceIds'].value; let i = index">
-                              {{accountingManagerService.accountReferenceDisplayFn(accountReferenceId)}}
+                              {{ accountingManagerService.accountReferenceDisplayFn(accountReferenceId) }}
                               <mat-icon style="cursor: pointer;" (click)="removeAccountReference(accountReferenceId)">
                                 close
                               </mat-icon>
@@ -471,24 +481,25 @@
                         </div>
                       </div>
                     </div>
-
                   </div>
-                  <div class="row">
 
-                    <div class="col-5">
-                      <div class="row">
+                  <div class="grid grid-cols-12 gap-3">
+                    <div class="col-span-5">
+                      <div class="flex flex-col">
                         <div>
                           <mat-form-field>
                             <mat-label>نوع سند</mat-label>
                             <input matInput type="text" [formControl]="codeVoucherGroupControl"
-                              [matAutocomplete]="codeVoucherGroupAuto">
+                                   [matAutocomplete]="codeVoucherGroupAuto">
 
                             <mat-autocomplete autoActiveFirstOption #codeVoucherGroupAuto="matAutocomplete"
-                              [displayWith]="accountingManagerService.codeVoucherGroupDisplayFn.bind(accountingManagerService)"
-                              (optionSelected)="handleCodeVoucherGroupSelection($event.option.value)">
-                              <mat-option *ngFor="let codeVoucherGroup of accountingManagerService.codeVoucherGroups.value | arrayFilter : codeVoucherGroupControl.value : ['title', 'code'] "
+                                              [displayWith]="accountingManagerService.codeVoucherGroupDisplayFn.bind(accountingManagerService)"
+                                              (optionSelected)="handleCodeVoucherGroupSelection($event.option.value)">
+                              <mat-option
+                                class="!text-xs"
+                                *ngFor="let codeVoucherGroup of accountingManagerService.codeVoucherGroups.value | arrayFilter : codeVoucherGroupControl.value : ['title', 'code'] "
                                 [value]="codeVoucherGroup.id">
-                                {{codeVoucherGroup.code + ' ' + codeVoucherGroup.title}}
+                                {{ codeVoucherGroup.code + ' ' + codeVoucherGroup.title }}
                               </mat-option>
                             </mat-autocomplete>
                           </mat-form-field>
@@ -497,7 +508,7 @@
                           <mat-chip-list>
                             <mat-chip
                               *ngFor="let codeVoucherGroupId of form.controls['codeVoucherGroupIds'].value; let i = index">
-                              {{accountingManagerService.codeVoucherGroupDisplayFn(codeVoucherGroupId)}}
+                              {{ accountingManagerService.codeVoucherGroupDisplayFn(codeVoucherGroupId) }}
                               <mat-icon style="cursor: pointer;" (click)="removeCodeVoucherGroup(codeVoucherGroupId)">
                                 close
                               </mat-icon>
@@ -507,12 +518,12 @@
                       </div>
                     </div>
 
-                    <div class="col-3">
+                    <div class="col-span-3">
                       <mat-form-field>
                         <mat-label>نوع حساب</mat-label>
                         <mat-select formControlName="transferId">
                           <mat-option *ngFor="let accountType of accountTypes" [value]="accountType.id">
-                            {{accountType.title}}
+                            {{ accountType.title }}
                           </mat-option>
                         </mat-select>
                       </mat-form-field>
@@ -522,35 +533,35 @@
               </div>
             </div>
 
-            <div class="card col-12 p-0">
-              <div class="card-header">آرتیکل سند</div>
-              <div class="card-body">
-                <div class="row">
-                  <div class="col-2">
+            <div class="col-span-12 rounded-xl shadow p-0 border border-gray-200">
+              <div class="px-4 py-2 border-b border-gray-200 bg-gray-100 text-gray-700 font-semibold text-sm">آرتیکل سند</div>
+              <div class="p-4">
+                <div class="grid grid-cols-12 gap-3">
+                  <div class="col-span-2">
                     <mat-form-field>
                       <mat-label>مبلغ بستانکار از</mat-label>
                       <input formControlName="creditFrom" type="text" matInput>
                     </mat-form-field>
                   </div>
-                  <div class="col-2">
+                  <div class="col-span-2">
                     <mat-form-field>
                       <mat-label> مبلغ بستانکار تا</mat-label>
                       <input formControlName="creditTo" type="text" matInput>
                     </mat-form-field>
                   </div>
-                  <div class="col-2">
+                  <div class="col-span-2">
                     <mat-form-field>
                       <mat-label>مبلغ بدهکار از</mat-label>
                       <input formControlName="debitFrom" type="text" matInput>
                     </mat-form-field>
                   </div>
-                  <div class="col-2">
+                  <div class="col-span-2">
                     <mat-form-field>
                       <mat-label> مبلغ بدهکار تا</mat-label>
                       <input formControlName="debitTo" type="text" matInput>
                     </mat-form-field>
                   </div>
-                  <div class="col-4">
+                  <div class="col-span-4">
                     <mat-form-field>
                       <mat-label> شرح آرتیکل</mat-label>
                       <input formControlName="voucherRowDescription" type="text" matInput>

@@ -1,4 +1,4 @@
-<mat-card class="h-100 d-flex flex-column" >
+<mat-card class="h-full flex flex-col" >
   <div class="row mb-1">
     <div class="col-md-2">
       <mat-form-field >
@@ -46,7 +46,7 @@
 
   </div>
   <app-action-bar class="p-3" (onAdd)="addNewCountForm()"  ></app-action-bar>
-<div class="h-100 overflow-auto">
+<div class="h-full overflow-auto">
   <app-table-virtual-scrolling
     [tableRows]="warehouseCountFormConflict"
     [requestsIndex]="requestsIndex"

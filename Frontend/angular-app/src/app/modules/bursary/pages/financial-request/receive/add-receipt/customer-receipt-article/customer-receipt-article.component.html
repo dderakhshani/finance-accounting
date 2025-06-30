@@ -1,6 +1,6 @@
 <mat-card [formGroup]="form">
 
-  <div class="d-flex justify-content-around">
+  <div class="flex justify-content-around">
     <div>
       <mat-label style="font-size: x-small">نوع سند </mat-label>
       <mat-button-toggle-group style="font-size: x-small" [formControl]="form.get('documentTypeBaseId')" formControlName="documentTypeBaseId" (click)="changeDocumentsType(form)" name="fontStyle" aria-label="Font Style">
@@ -24,18 +24,18 @@
           </mat-option>
         </mat-select>
       </mat-form-field>
-    
+
 
       <mat-checkbox color="primary"   formControlName="bedCurrencyStatus">
         <mat-label> نمایش ارزی بدهکار </mat-label>
         </mat-checkbox>
-    
+
         <mat-checkbox color="primary"   formControlName="besCurrencyStatus">
           <mat-label> نمایش ارزی بستانکار </mat-label>
           </mat-checkbox>
-      
+
     </div>
-     
+
     <!-- <mat-button-toggle-group style="font-size: x-small" [formControl]="form.get('nonReferenceCode')" formControlName="nonReferenceCode" (click)="disableCredits(form)" name="fontStyle" aria-label="Font Style">
       <mat-button-toggle *ngFor="let item of useReferenceTypes" [value]="item.value">{{ item.title }}</mat-button-toggle>
     </mat-button-toggle-group> -->
@@ -54,7 +54,7 @@
   </div>
 
   <div class="col-12">
-    <div class="d-flex justify-content-around gap-3 mt-3">
+    <div class="flex justify-content-around gap-3 mt-3">
       <div class="col-md-3">
 
         <mat-checkbox color="primary" (click)="disableCredit()" formControlName="isCreditAccountHead">
@@ -97,7 +97,7 @@
 
 
     <div class="col-12">
-      <div class="d-flex justify-content-around gap-3 mt-2">
+      <div class="flex justify-content-around gap-3 mt-2">
         <div class="col-md-3">
 
           <mat-checkbox color="primary" (click)="disableDebits()" formControlName="isDebitAccountHead">
@@ -140,7 +140,7 @@
 
       </div>
     </div>
-    <div class="d-flex justify-content-around gap-3 mt-2">
+    <div class="flex justify-content-around gap-3 mt-2">
       <mat-form-field>
         <mat-label>نوع مبنا </mat-label>
         <mat-select formControlName="financialReferenceTypeBaseId">
@@ -243,7 +243,7 @@
              [isInternalSearch]="true">
 
             </app-combo-search>
- 
+
 
           </div>
           <div class="col-4">
@@ -369,7 +369,7 @@
 
   <!-- نقدی -->
   <div *ngIf="form.get('documentTypeBaseId')?.value == documents.Cash" class="m-2 p-2">
-    <div class="d-flex justify-content-around gap-3 my-3">
+    <div class="flex justify-content-around gap-3 my-3">
 
 <div class="row col-12">
   <div class="col-3">
@@ -430,7 +430,7 @@
 
 
   <!-- <div class="p-2">
-    <app-uploader class="d-flex justify-content-center" [autoUpload]="true" (filesChange)="files=$event" (isUploadingChange)="isUploading" ></app-uploader>
+    <app-uploader class="flex justify-center" [autoUpload]="true" (filesChange)="files=$event" (isUploadingChange)="isUploading" ></app-uploader>
 
   </div> -->
 
