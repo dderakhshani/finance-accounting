@@ -56,7 +56,7 @@ namespace Eefa.Commodity.Application.Queries.Commodity
                                    Code = com.Code,
                                    CommodityCategoryTitle = com.CategoryTitle,
                                    CommodityNationalId = com.CommodityNationalId,
-                                   ThirdCode = com.CompactCode,
+                                   //ThirdCode = com.CompactCode,
                                    CommodityNationalTitle = com.CommodityNationalTitle,
                                    //InventoryType = com.InventoryType,
                                    IsActive=com.IsActive,
