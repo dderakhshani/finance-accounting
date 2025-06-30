@@ -77,6 +77,10 @@
       {
          "Name": "[common].[BomsView]",
          "ObjectType": 3
+      },
+      {
+         "Name": "[common].[CommoditeisView]",
+         "ObjectType": 3
       }
    ],
    "UiHint": null,

@@ -46,6 +46,7 @@ public partial class CommodityUnitOfWork : AuditableDbContext, ICommodityUnitOfW
     public virtual DbSet<MeasureUnit> MeasureUnits { get; set; }
 
     public virtual DbSet<MeasureUnitConversion> MeasureUnitConversions { get; set; }
+
     public virtual DbSet<CommoditeisView> CommoditeisView { get; set; } = default!;
     public virtual DbSet<BomsView> BomsView { get; set; } = default!;
 
@@ -59,6 +60,7 @@ public partial class CommodityUnitOfWork : AuditableDbContext, ICommodityUnitOfW
         modelBuilder.ApplyConfiguration(new Configurations.BomValueHeaderConfiguration());
         modelBuilder.ApplyConfiguration(new Configurations.BomsViewConfiguration());
         modelBuilder.ApplyConfiguration(new Configurations.CategoryPropertyMappingConfiguration());
+        modelBuilder.ApplyConfiguration(new Configurations.CommoditeisViewConfiguration());
         modelBuilder.ApplyConfiguration(new Configurations.CommodityConfiguration());
         modelBuilder.ApplyConfiguration(new Configurations.CommodityCategoryConfiguration());
         modelBuilder.ApplyConfiguration(new Configurations.CommodityCategoryPropertyConfiguration());

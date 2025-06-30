@@ -43,7 +43,7 @@
     if (!string.IsNullOrEmpty(NamespaceHint))
     {
 #>
-namespace Eefa.Commodity.Data.Entities;
+namespace <#= NamespaceHint #>;
 
 <#
     }
